@@ -1,0 +1,29 @@
+<nav id="sidebar" class="bg-primary">
+    <div class="p-4 pt-5">
+        <a href="{{ path('admin_home') }}" class="img d-block mb-5 text-center">
+            <img src="{{ asset('build/images/logo.png') }}" alt="Logo"/>
+        </a>
+        <ul class="list-unstyled p-0 mb-5">
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="{{ app.request.attributes.get('_route') == 'admin_home' ? 'active' }}">
+                <a href="{{ path('admin_home') }}">{{ 'home.btn'|trans({}, 'admin') }}</a>
+            </li>
+            <li class="{{ app.request.attributes.get('_route') starts with 'admin_user_' ? 'active' }}">
+                <a href="#userSubmenu" data-toggle="collapse" aria-expanded="{{ app.request.attributes.get('_route') starts with 'admin_user_' ? 'true' : 'false' }}" class="dropdown-toggle">{{ 'user.button.home'|trans({}, 'admin') }}</a>
+                <ul class="collapse list-unstyled {{ app.request.attributes.get('_route') starts with 'admin_user_' ? 'show' }}" id="userSubmenu">
+                    <li class="{{ app.request.attributes.get('_route') == 'admin_user_home' ? 'active' }}">
+                        <a href="{{ path('admin_user_home') }}">{{ 'user.button.gestion'|trans({}, 'admin') }}</a>
+                    </li>
+                    <li class="{{ app.request.attributes.get('_route') == 'admin_user_create' ? 'active' }}">
+                        <a href="{{ path('admin_user_create') }}">{{ 'user.button.create'|trans({}, 'admin') }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="footer text-center">
+            <p>Copyright &copy; {{ "now"|date('Y') }} </p>
+        </div>
+
+    </div>
+</nav>
