@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block content %}
+	<h1>Administration</h1>
+
+	<p class="mb-4">Bienvenue sur l'interface d'administration.</p>
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('bootstrap_extended') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('admin_home') }}
+{% endblock %}

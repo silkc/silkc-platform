@@ -1,0 +1,54 @@
+{{ form_start(form, {attr: attr|default({})}) }}
+
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.firstname) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.lastname) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.username) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.email) }}
+        </div>
+    </div>
+    {% if form.offsetExists('password') %}
+    <div class="row special">
+        {{ form_row(form.password) }}
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.roles) }}
+        </div>
+    </div>
+
+    <p>
+        {{ form_widget(form.save, {'label': (user is defined) ? 'label.edit' : 'label.create'}) }}
+
+        {{
+            (user is defined) ?
+                form_widget(form.save_and_create, {'label': 'label.save_and_keep'}) :
+                form_widget(form.save_and_create, {'label': 'label.save_and_create_new'})
+        }}
+
+        {% if include_back_to_home_link|default(true) %}
+            <a href="{{ path('admin_user_home') }}" class="btn btn-link">
+                <i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'action.back_to_list'|trans }}
+            </a>
+        {% endif %}
+    </p>
+{{ form_end(form) }}
+
+<style>
+    .special div {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+</style>

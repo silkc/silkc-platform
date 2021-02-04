@@ -1,0 +1,42 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container mt-5 mb-5">
+
+        <div class="justify-content-center row">
+
+            <div class="col-12 col-lg-5">
+                <div class="login-form">
+                    <h5 class="text-center py-4">
+                        Inscription
+                    </h5>
+
+                    {{ form_start(form, {attr: attr|default({})}) }}
+
+                        <fieldset>
+                            <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'form.signup_title'|trans({}, 'login') }}</legend>
+
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    {{ 'form.disconnect_message'|trans({'%username%': app.user.username }, 'login') }}, <a href="{{ path('app_logout') }}">{{ 'form.disconnect_button'|trans({}, 'login') }}</a>
+                                    {{ 'form.or'|trans({}, 'login') }} <a href="{{ path('admin_home') }}">{{ 'form.admin_access_button'|trans({}, 'login') }}</a>
+                                </div>
+                            {% endif %}
+
+                            {{ form(form) }}
+                        </fieldset>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
