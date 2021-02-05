@@ -1,0 +1,21 @@
+form:
+    title:
+        connect: Connect
+        signup: Inscription
+    label:
+        username: Username
+        firstname: Firstname
+        lastname: Lastname
+        email: Email
+        password: 
+            password: Password
+            first: Password
+            second: Confirm password
+    button:
+        save: Save
+        save_and_create: Save and create
+        
+    You do not have an account?: You do not have an account?
+    Sign up: Sign up
+    Sign in: Sign in
+        

@@ -7,7 +7,7 @@
 {% endblock %}
 
 
-{% block body %}
+{% block body %}   
 
     <div class="container mt-5 mb-5">
 
@@ -15,15 +15,11 @@
 
             <div class="col-12 col-lg-5">
                 <div class="login-form">
-                    <h5 class="text-center py-4">
-                        Inscription
-                    </h5>
-
                     {{ form_start(form, {attr: attr|default({})}) }}
+                    <fieldset>
+                        <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'form.title.signup'|trans({}, 'login') }}</legend>
 
-                        <fieldset>
-                            <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'form.signup_title'|trans({}, 'login') }}</legend>
-
+                        <div>
                             {% if app.user %}
                                 <div class="mb-3">
                                     {{ 'form.disconnect_message'|trans({'%username%': app.user.username }, 'login') }}, <a href="{{ path('app_logout') }}">{{ 'form.disconnect_button'|trans({}, 'login') }}</a>
@@ -31,8 +27,63 @@
                                 </div>
                             {% endif %}
 
-                            {{ form(form) }}
-                        </fieldset>
+
+                            <div class="form-group">
+                                {{ form_widget(form.lastname, {'attr' : {'placeholder': 'form.label.lastname'|trans({}, 'login')} }) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.firstname, {'attr' : {'placeholder': 'form.label.firstname'|trans({}, 'login')} }) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.username, {'attr' : {'placeholder': 'form.label.username'|trans({}, 'login')} }) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.email, {'attr' : {'placeholder': 'form.label.email'|trans({}, 'login')} }) }}
+                            </div>
+
+                            <div class="form-group">
+
+
+                                {% for batch in form.roles|batch(1, 'No item') %}
+                                    <div class="batchRow">
+                                        {% for option in batch %}
+                                            <div class="yourClassName">
+                                                {{ form_widget(option) }}
+                                                {{ form_label(option) }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+
+
+
+                                {#                            {{ form_widget(form.roles) }}#}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.password.first, {'attr' : {'placeholder': 'form.label.password.first'|trans({}, 'login')} }) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.password.second, {'attr' : {'placeholder': 'form.label.password.second'|trans({}, 'login')} }) }}
+                            </div>
+
+
+                            <div id="user">
+                                <div>
+                                    {{ form_widget(form.save, { 'label': 'form.button.save'|trans({}, 'login') }) }}
+                                </div>
+                                <div>
+                                    {{ form_widget(form.save_and_create, { 'label': 'form.button.save_and_create'|trans({}, 'login') }) }}
+                                </div>
+                            </div>
+
+                            {{ form_rest(form) }}
+                        </div>
+                    </fieldset>
                     {{ form_end(form) }}
                 </div>
             </div>

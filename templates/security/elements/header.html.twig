@@ -1,7 +1,41 @@
-<header>
-    <nav class="container-fluid text-right p-3">
-        <a href="{{ path('app_home') }}">
-            <img src="{{asset('build/images/logo.png')}}" alt="Logo" />
-        </a>
-    </nav>
+<header id="main-header">
+    <div class="container-fluid p-3">
+        <div>
+            <div class="dropdown">
+                <a class="dropdown-left" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/" class="dropdown-item"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span></span></a>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <a href="{{ path('app_home') }}">
+                <img src="{{asset('build/images/logo.png')}}" alt="Logo" />
+            </a>
+        </div>
+
+        <div>
+            <div class="dropdown">
+                <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Yves Lemée
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href=""></a>
+                </div>
+            </div>
+            <div class="profil-photo">
+                <div>
+                    <img src="{{asset('build/images/profil.png')}}" alt="Image profil" />
+                </div>
+            </div>
+
+            <div>
+                <a href="" class="fa fa-power-off"></a>
+            </div>
+        </div>
+    </div>
 </header>
