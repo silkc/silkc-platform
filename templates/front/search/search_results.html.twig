@@ -1,0 +1,166 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %}
+	Results
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('search_results') }}
+{% endblock %}
+
+{% block body %}
+	<div id="search-results">
+		<div class="container">
+
+			<form class="form-inline search">
+				<label for="input-search">Training opportunities to land your dream job as:</label>
+				<input type="text" class="form-control ml-2 mr-2" id="input-search">
+				<button type="submit" class="btn btn-primary mr-2">Search</button>
+				<button type="submit" class="btn btn-primary" disabled>Advanced search</button>
+			</form>
+
+			<div class="results">
+
+
+				<div id="accordion">
+					{% if trainings is defined %}
+						{% for training in trainings %}
+							<div class="card">
+								<div class="card-header" id="headingOne">
+									<h5 class="d-flex justify-content-between align-items-center">
+										<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
+											<div class="title">
+												{{ attribute(training, 'title') ? training.title : '' }}
+												({{ attribute(training, 'match') ? training.match : '' }}% match)
+											</div>
+										</button>
+										<div class="count">
+											({{ loop.index }}
+											of
+											{{ trainings|length }}
+											training -
+											<a href="">Login to finetune</a>)
+										</div>
+									</h5>
+								</div>
+
+								<div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+									<div class="card-body">
+
+
+										<div class="row">
+											<div class="col-md-6">
+
+												<div class="row mb-3">
+													<div class="col-lg-4">
+														<span class="title">Institution name</span>
+													</div>
+													<div class="col-lg-8">
+														<span>Ut wisi enim ad minim veniam</span>
+													</div>
+												</div>
+
+												<div class="row mb-3">
+													<div class="col-lg-4">
+														<span class="title">Location</span>
+													</div>
+													<div class="col-lg-8">
+														<iframe src="https://maps.google.com/maps?q=paris=&z=6&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>
+													</div>
+												</div>
+
+												<div class="row mb-3">
+													<div class="col-lg-4">
+														<span class="title">Duration</span>
+													</div>
+													<div class="col-lg-8">
+														<span>40h</span>
+													</div>
+												</div>
+
+												<div class="row mb-3">
+													<div class="col-lg-4">
+														<span class="title">Description</span>
+													</div>
+													<div class="col-lg-8">
+														<p class="text-justify m-0">
+															At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
+														</p>
+													</div>
+												</div>
+
+												<div class="row mb-3">
+													<div class="col-lg-4">
+														<span class="title">Price</span>
+													</div>
+													<div class="col-lg-8">
+														<span>400€</span>
+													</div>
+												</div>
+
+
+											</div>
+											<div class="col-md-6">
+												<div class="mb-3">
+													<span class="required-skills d-block mb-3 title">Required skills</span>
+													<ul class="list-group">
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+														</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+														</li>
+													</ul>
+												</div>
+
+												<div class="mb-3">
+													<span class="required-skills d-block mb-3 title">Skills you can acquire</span>
+													<ul class="list-group">
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+														</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+														</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+														</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+															<span class="badge badge-success badge-pill"><i class="fas fa-check"></i></span>
+														</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center">
+															Cras justo odio
+															<span class="badge badge-success badge-pill"><i class="fas fa-check"></i></span>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+
+                                        <div class="text-center">
+                                            <a href="#" class="btn btn-primary">More info</a>
+                                        </div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-6"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('search_results') }}
+{% endblock %}

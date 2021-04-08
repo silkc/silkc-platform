@@ -1,0 +1,101 @@
+$web-font-path: 'data:text/css;base64,';
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+
+@import "~bootswatch/dist/flatly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/bootswatch";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
+
+
+/* =============================================================================
+    =   Account
+============================================================================= */
+#institutional {
+    .form-block {
+        margin-top: 60px;
+    }
+
+    .button-group {
+        margin-top: 30px;
+    }
+
+    /* TAB TRAINING */
+    #content-training {
+        label {
+            white-space: nowrap;
+            text-align: left;
+            display: block;
+        }
+
+        .info {
+            font-weight: bold;
+            margin: 15px 0 30px;
+        }
+
+        fieldset {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        #training-input {
+            flex: 0 0 300px;
+        }
+
+        #list-trainings {
+            margin-top: 60px;
+
+            .clone {
+                font-size: 1.4rem;
+            }
+
+            .icon[data-toggle="collapse"] {
+                font-size: 1.4rem;
+                line-height: 1;
+            }
+
+
+
+
+            .skill {
+                .content-collapse {
+                    padding: 7px 0 8px;
+                }
+
+                .icon[data-toggle="collapse"] {
+                    font-size: 1.1rem;
+                }
+            }
+
+            .rmv, .more {
+                font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            .link {
+                background-color: #007bff;
+                color: #fff;
+                width: 22px;
+                height: 22px;
+                flex: 0 0 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 25px;
+                font-size: 0.8rem;
+            }
+
+            .feedback {
+                font-size: 1.4rem;
+                line-height: 1;
+            }
+        }
+    }
+}

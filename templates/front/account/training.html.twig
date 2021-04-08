@@ -1,0 +1,39 @@
+<fieldset>
+	<div class="info">
+		Please indicate any professional training that you have followed in the last 5 years
+	</div>
+
+	<div class="d-inline-flex align-items-end">
+		<label for="training-input">Training name</label>
+		<input type="text" class="form-control" id="training-input">
+	</div>
+
+	<div class="list-trainings">
+
+
+		<ul class="list-group">
+			{% for i in 0..1 %}
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<div>
+						<span>web developer</span>
+					</div>
+					<div class="d-inline-flex align-items-center justify-content-end">
+						<a href="" class="link mr-2" title="Skills linked to this training">
+							<i class="fas fa-link"></i>
+						</a>
+						<a href="" class="text-danger rmv mr-2" title="Remove this training">
+							<i class="fas fa-times-circle"></i>
+						</a>
+						<a href="" class="text-success feedback" title="Provide feedback">
+							<i class="fas fa-plus-circle"></i>
+						</a>
+					</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</fieldset>
+
+<div class="form-group button-group text-right">
+	<button type="submit" class="btn btn-primary">Save</button>
+</div>

@@ -1,7 +1,5 @@
 $web-font-path: 'data:text/css;base64,';
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$lato-font-path: '~lato-font/fonts';
-
 
 @import "~bootswatch/dist/flatly/variables";
 @import "~bootstrap/scss/bootstrap";
@@ -12,54 +10,158 @@ $lato-font-path: '~lato-font/fonts';
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
 
-@import '~lato-font/scss/_public-api';
-@include lato-include-font('normal');
-@include lato-include-font('bold');
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
 
-body { background-color: #f5f5f5; color: #292b2c; }
+body { font-family: 'Roboto', sans-serif!important; background-color: #f5f5f5; color: #292b2c; }
 
-header { background-color: #2c4969; }
 
-#main-header {
+/* =============================================================================
+    =   Interest
+============================================================================= */
+.blc-interest {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    padding: 15px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 10px;
     
-    a {
-        color: #fff;
+    &:first-child {
+        margin-top: 15px;
     }
     
-    > div {
+    > span {
+        font-size: 1.4rem;
+        margin: 0;
+        text-transform: uppercase;
+        color: #595959;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        align-items: baseline;
+        font-weight: bold;
         
+        > span {
+            margin-left: 10px;
+        }
+    }
+    
+    &#interest-skill {
         > div {
+            margin: 0 -2px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-flow: row wrap;
             
-            &:first-child {
-                font-size: 1.4rem;
+            .skill {
+                margin: 2px;
+                padding: 4px;
+                color: #fff;
+                border-radius: 4px;
+                text-decoration: none;
+                font-size: 0.8rem;
+                color: #fff;
+                background-color: $color_1; 
+                
+                &.active {
+                    background-color: #6c9e02;
+                }
+                
+                &:hover {
+                    opacity: .8;
+                }
+                
+                &:focus {
+                    opacity: 1;
+                }
             }
         }
     }
     
-    .profil-photo {
-        position: relative;
+    &#interest-occupation-skill {
         
-        > div {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            margin: 0 10px;
-            overflow: hidden;
-            border: 4px solid #f5f5f5;
-            border-radius: 25px;
-            background-color: #fff;
+        .current, .wanted {
+            margin-top: 0;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 3px;
+            
+            > span {
+                display: block;
+                font-weight: 500;
+                text-transform: uppercase;
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            }
         }
         
-        img {
-            max-width: 50px;
+        .wanted {
+            margin-top: 15px;
+        }
+        
+        
+        .occupation {
+            margin-bottom: 15px;
+        }
+        
+        .skills {
+            display: flex;
+            flex-flow: row wrap;
+            margin: 0 -2px;
+            
+            .skill {
+                margin: 2px;
+                padding: 4px;
+                color: #fff;
+                border-radius: 4px;
+                text-decoration: none;
+                font-size: 0.8rem;
+                color: #fff;
+                background-color: #2c4969; 
+                
+                &.active {
+                    background-color: #6c9e02;
+                }
+                
+                &:hover {
+                    opacity: .8;
+                }
+                
+                &:focus {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    
+    .action {
+        width: 100%;
+        
+        > span {
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            display: inline-block;
+            padding: 9px 30px 7px;
+            color: #fff;
+            font-size: 1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 0;
+            cursor: pointer;
+            
+            &:hover:not(.disabled) {
+                opacity: .8;
+                outline: none;
+                border: 0;
+            }
+            
+            &.disabled {
+                opacity: .6;
+                cursor: not-allowed;
+            }
         }
     }
 }

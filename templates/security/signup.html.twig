@@ -6,6 +6,9 @@
     {{ encore_entry_link_tags('login') }}
 {% endblock %}
 
+{% block header %}
+    {{ include('security/elements/header.html.twig') }}
+{% endblock %}
 
 {% block body %}   
 
@@ -45,8 +48,6 @@
                             </div>
 
                             <div class="form-group">
-
-
                                 {% for batch in form.roles|batch(1, 'No item') %}
                                     <div class="batchRow">
                                         {% for option in batch %}
@@ -57,10 +58,6 @@
                                         {% endfor %}
                                     </div>
                                 {% endfor %}
-
-
-
-                                {#                            {{ form_widget(form.roles) }}#}
                             </div>
 
                             <div class="form-group">

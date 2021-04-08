@@ -1,0 +1,48 @@
+/* =============================================================================
+    =   MIXINS
+============================================================================= */
+@mixin fieldset() {
+    border-radius: 4px;
+    border: solid #eaeaea;
+    //background-color: #fff;
+}
+
+
+@mixin media-breakpoint-up($class) {
+    // Small devices (landscape phones, 576px and up)
+    @if $class == xs {
+        @media (max-width: 576px) {
+            @content;
+        }
+    }
+    // Small devices (landscape phones, 576px and up)
+    @if $class == sm {
+        @media (min-width: 576px) {
+            @content;
+        }
+    }
+    // Medium devices (tablets, 768px and up)
+    @else if $class == md {
+        @media (min-width: 768px) {
+            @content;
+        }
+    }
+    // Large devices (desktops, 992px and up)
+    @else if $class == lg {
+        @media (min-width: 992px) {
+            @content;
+        }
+    }
+    // Extra large devices (large desktops, 1200px and up)
+    @else if $class == xl {
+        @media (min-width: 1200px) {
+            @content;
+        }
+    }
+    // Extra large devices (large desktops, 1200px and up)
+    @else if $class == xxl {
+        @media (min-width: 1400px) {
+            @content;
+        }
+    }
+}

@@ -1,0 +1,56 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %}Search!
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('search') }}
+{% endblock %}
+
+{% block body %}
+	<div id="search">
+		<div class="container">
+			<div class="info">
+				<p class="text-center">
+					5000 people have found a trining through the Silkc Path<br>
+					800 training available<br>
+					2000 registered jobs
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 mx-auto">
+					<div class="search">
+						<p class="text-center">
+							Let's improve your professional situation!
+						</p>
+
+						<form>
+							<div class="input-group">
+								<div class="input-group mb-3">
+									<input type="text" class="form-control" placeholder="What is your dream job?" aria-label="Recipient's username" aria-describedby="basic-addon2">
+									<div class="input-group-append">
+										<span class="input-group-text" id="basic-addon2">
+											<i class="fas fa-search"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary">Find out how to get there!</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('search') }}
+{% endblock %}
