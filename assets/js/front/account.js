@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import 'autocomplete.js/dist/autocomplete.jquery';
+import autocomplete from 'autocompleter';
 //import '../../css/bootstrap-extended.css';
 
 // any CSS you import will output into a single css file (app.css in this case)
@@ -17,16 +17,54 @@ class Account {
     boundFunction = () => {
         return this.instanceProperty;
     }
-    
+
+    /**
+     * Autocompletion inputs 
+     * (ajouter l'attribut data-url et la class input-autocomplete à l'input de type text)
+     */
     runAutocompletion = () => {
-        a1 = $('#query').autocomplete({
-            width: 448,
-            delimiter: /(,|;)\s*/,
-            lookup: 'Andorra,Azerbaijan,Bahamas,Bahrain,Benin,Bhutan,Bolivia,Bosnia Herzegovina,Botswana,Brazil,Brunei,Bulgaria,Burkina, Burundi,Cambodia,Cameroon,Canada,Cape Verde,Central African Rep,Chile,China,Colombia,Comoros,Congo,Congo {Democratic Rep},Costa Rica,Croatia,Cuba,Cyprus,Czech Republic,Denmark,Djibouti,East Timor,Ecuador,Egypt,El Salvador,Equatorial Guinea,Eritrea,Fiji,France,Georgia,Germany,Ghana,Greece,Grenada,Guatemala,Guinea,Guinea-Bissau,Guyana,Haiti,Honduras,Hungary,India,Iraq,Ireland {Republic},Ivory Coast,Jamaica,Japan,Kazakhstan,Kiribati,Korea North,'.split(',')
-         }); 
+        var countries = [
+            { label: "Acheteur"},
+            { label: "Administrateur de base de données"},
+            { label: "Agent de sûreté aéroportuaire"},
+            { label: "Agent de transit"},
+            { label: "Agent d'entretien"},
+            { label: "Agent de presse"}
+        ];
+        
+        var inputs = document.getElementsByClassName('input-autocomplete');
+        if (inputs) {
+            for (var i = 0; i < inputs.length; i++) {
+                let input = inputs[i];
+                autocomplete({
+                    input: input,
+                    fetch: function(text, update) {
+                        text = text.toLowerCase();
+                        // you can also use AJAX requests instead of preloaded data
+                        var suggestions = countries.filter(n => n.label.toLowerCase().startsWith(text))
+                        update(suggestions);
+                    },
+                    onSelect: function(item) {
+                        input.value = item.label;
+                    }
+                });
+            }
+        }
     }
 
+    /**
+     * Au changement d'onglet
+     */
+    onShowTab () {
+        let _this = this;
+        $('#account a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            _this.runAutocompletion();
+        })
+    }
+
+
     init = function() {
+        this.onShowTab();
         this.runAutocompletion();
     }
 }
