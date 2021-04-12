@@ -1,3 +1,65 @@
+{%
+    set current_works = [
+        {
+            'id': '1',
+            'name': 'commercial director',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'rssayist',
+            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+        },
+        {
+            'id': '3',
+            'name': 'speech writer',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
+        },
+    ]
+%}
+
+{%
+    set previous_works = [
+        {
+            'id': '1',
+            'name': 'commercial director',
+            'description': 'Lorem ipsum dolor sit amet erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'rssayist',
+            'description': 'Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.at, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '3',
+            'name': 'speech writer',
+            'description': 'Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.t, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+    ]
+%}
+
+{%
+    set desired_works = [
+        {
+            'id': '1',
+            'name': 'commercial director',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'rssayist',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '3',
+            'name': 'speech writer',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+    ]
+
+%}
+
+
 <fieldset>
 	{# Current job #}
 	<div class="info">
@@ -6,27 +68,37 @@
 
 	<div class="d-inline-flex align-items-end">
 		<label for="current_job-input">Current job</label>
-		<input type="text" class="form-control input-autocomplete" id="current_job-input" data-url="url de recherche">
+		{% include 'front/elements/input_search.html.twig' with {'id': 'current_job-input', 'url': 'url de recherche', 'autocomplete': true} %}
 	</div>
 
 	<div id="list-current_job" class="list-job">
 		<ul class="list-group">
-			{% for i in 0..1 %}
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<div>
-						<a href="#" class="detail" data-toggle="modal" data-target="#exampleModal">
-							<span>commercial director</span>
-							<i class="fas fa-question-circle text-primary"></i>
-						</a>
-					</div>
-					<div class="d-inline-flex align-items-center justify-content-end">
-						<a href="" class="jobs-linked mr-2">8</a>
-						<a href="" class="text-danger rmv" title="Remove this job">
-							<i class="fas fa-times-circle"></i>
-						</a>
-					</div>
-				</li>
-			{% endfor %}
+			{% if current_works is defined %}
+				{% for k, current_work in current_works %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<div>
+							<a href="#" class="detail" 
+                                        data-name="{{ current_work.name }}" 
+                                        data-description="{{ current_work.description }}" 
+                                        data-id="{{ current_work.id }}">
+								<span>{{ current_work.name }}</span>
+								<i class="fas fa-question-circle text-primary"></i>
+							</a>
+						</div>
+						<div class="d-inline-flex align-items-center justify-content-end">
+							<a href="" class="jobs-linked mr-2">
+								<span class="badge badge-success">10</span>
+							</a>
+							<a href="" class="text-danger item rmv" title="Remove this job" 
+                                       data-name="{{ current_work.name }}" 
+                                       data-id="{{ current_work.id }}" 
+                                       data-url="url de suppression">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
 		</ul>
 	</div>
 </fieldset>
@@ -40,27 +112,37 @@
 
 	<div class="d-inline-flex align-items-end">
 		<label for="previous_job-input">Previous job</label>
-		<input type="text" class="form-control input-autocomplete" id="previous_job-input" data-url="url de recherche">
+		{% include 'front/elements/input_search.html.twig' with {'id': 'previous_job-input', 'url': 'url de recherche', 'autocomplete': true} %}
 	</div>
 
 	<div id="list-previous_job" class="list-job">
 		<ul class="list-group">
-			{% for i in 0..6 %}
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<div>
-						<a href="#" class="detail" data-toggle="modal" data-target="#exampleModal">
-							<span>numerical tool and process control programmer</span>
-							<i class="fas fa-question-circle text-primary"></i>
-						</a>
-					</div>
-					<div class="d-inline-flex align-items-center justify-content-end">
-						<a href="" class="jobs-linked mr-2">10</a>
-						<a href="" class="text-danger rmv" title="Remove this job">
-							<i class="fas fa-times-circle"></i>
-						</a>
-					</div>
-				</li>
-			{% endfor %}
+			{% if previous_works is defined %}
+				{% for k, previous_work in previous_works %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<div>
+							<a href="#" class="detail" 
+                                        data-name="{{ previous_work.name }}" 
+                                        data-description="{{ previous_work.description }}" 
+                                        data-id="{{ previous_work.id }}">
+								<span>{{ previous_work.name }}</span>
+								<i class="fas fa-question-circle text-primary"></i>
+							</a>
+						</div>
+						<div class="d-inline-flex align-items-center justify-content-end">
+							<a href="" class="jobs-linked mr-2">
+								<span class="badge badge-success">10</span>
+							</a>
+							<a href="" class="text-danger item rmv" title="Remove this job" 
+                                       data-name="{{ previous_work.name }}" 
+                                       data-id="{{ previous_work.id }}"
+                                       data-url="url de suppression">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
 		</ul>
 	</div>
 </fieldset>
@@ -74,31 +156,41 @@
 
 	<div class="d-inline-flex align-items-end">
 		<label for="previous_job-input">Desired job</label>
-		<input type="text" class="form-control input-autocomplete" id="desired_job-input" data-url="url de recherche">
+		{% include 'front/elements/input_search.html.twig' with {'id': 'desired_job-input', 'url': 'url de recherche', 'autocomplete': true} %}
 	</div>
 
 	<div id="list-desired_job" class="list-job">
 
-    		<ul class="list-group">
-			{% for i in 0..1 %}
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<div>
-						<a href="#" class="detail" data-toggle="modal" data-target="#exampleModal">
-							<span>commercial director</span>
-							<i class="fas fa-question-circle text-primary"></i>
-						</a>
-					</div>
-					<div class="d-inline-flex align-items-center justify-content-end">
-					<a href="" class="jobs-linked mr-2">10</a>
-					<a href="" class="text-danger rmv mr-2" title="Remove this job">
-						<i class="fas fa-times-circle"></i>
-					</a>
-					<a href="" class="search" title="Search for training required for this job">
-						<i class="fas fa-search-plus"></i>
-					</a>
-					</div>
-				</li>
-			{% endfor %}
+		<ul class="list-group">
+			{% if desired_works is defined %}
+				{% for k, desired_work in desired_works %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<div>
+							<a href="#" class="detail" 
+                                        data-name="{{ desired_work.name }}" 
+                                        data-description="{{ desired_work.description }}" 
+                                        data-id="{{ desired_work.id }}">
+								<span>{{ desired_work.name }}</span>
+								<i class="fas fa-question-circle text-primary"></i>
+							</a>
+						</div>
+						<div class="d-inline-flex align-items-center justify-content-end">
+							<a href="" class="jobs-linked mr-2">
+								<span class="badge badge-success">10</span>
+							</a>
+							<a href="" class="text-danger item rmv mr-2" title="Remove this job" 
+                                       data-name="{{ desired_work.name }}" 
+                                       data-id="{{ desired_work.id }}"
+                                       data-url="url de suppression">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+							<a href="" class="search" title="Search for training required for this job">
+								<i class="fas fa-search-plus"></i>
+							</a>
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
 		</ul>
 	</div>
 </fieldset>

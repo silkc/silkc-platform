@@ -1,0 +1,12 @@
+<div class="input-group">
+	<input type="text" class="form-control {{ autocomplete is defined and autocomplete == true ? 'input-autocomplete' : '' }}" 
+    {% if id is defined and id is not empty %}id="{{id}}" {% endif %}
+    {% if placeholder is defined and placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}
+    aria-describedby="basic-addon2" 
+    data-url="{{ url is defined ? url : '' }}">
+	<div class="input-group-append">
+		<span class="input-group-text" id="basic-addon2">
+			<i class="fas fa-search"></i>
+		</span>
+	</div>
+</div>

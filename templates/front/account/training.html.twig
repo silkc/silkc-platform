@@ -1,3 +1,23 @@
+{%
+    set trainings = [
+        {
+            'id': '1',
+            'name': 'commercial director',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'rssayist',
+            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+        },
+        {
+            'id': '3',
+            'name': 'speech writer',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
+        },
+    ]
+%}
+
 <fieldset>
 	<div class="info">
 		Please indicate any professional training that you have followed in the last 5 years
@@ -5,31 +25,31 @@
 
 	<div class="d-inline-flex align-items-end">
 		<label for="training-input">Training name</label>
-		<input type="text" class="form-control input-autocomplete" id="training-input" data-url="url de recherche">
+		{% include 'front/elements/input_search.html.twig' with {'id': 'training-input', 'url': 'url de recherche', 'autocomplete': true} %}
 	</div>
 
 	<div class="list-trainings">
-
-
 		<ul class="list-group">
-			{% for i in 0..1 %}
-				<li class="list-group-item d-flex justify-content-between align-items-center">
-					<div>
-						<span>web developer</span>
-					</div>
-					<div class="d-inline-flex align-items-center justify-content-end">
-						<a href="" class="link mr-2" title="Skills linked to this training">
-							<i class="fas fa-link"></i>
-						</a>
-						<a href="" class="text-danger rmv mr-2" title="Remove this training">
-							<i class="fas fa-times-circle"></i>
-						</a>
-						<a href="" class="text-success feedback" title="Provide feedback">
-							<i class="fas fa-plus-circle"></i>
-						</a>
-					</div>
-				</li>
-			{% endfor %}
+			{% if trainings is defined %}
+				{% for k, training in trainings %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<div>
+							<span>{{ training.name }}</span>
+						</div>
+						<div class="d-inline-flex align-items-center justify-content-end">
+							<a href="" class="link mr-2" title="Skills linked to this training">
+								<i class="fas fa-link"></i>
+							</a>
+							<a href="" class="text-danger item rmv mr-2" title="Remove this training" data-name="{{ training.name }}" data-id="{{ training.id }}" data-url="url de suppression">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+							<a href="" class="text-success feedback" title="Provide feedback">
+								<i class="fas fa-plus-circle"></i>
+							</a>
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
 		</ul>
 	</div>
 </fieldset>

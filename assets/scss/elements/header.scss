@@ -18,6 +18,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 ============================================================================= */
 #main-header {
     background-color: $color_1; 
+    position: relative;
+    z-index: 1;
     
     a {
         color: #fff;

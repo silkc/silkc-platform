@@ -1,3 +1,64 @@
+{%
+    set following_skills = [
+        {
+            'id': '1',
+            'name': 'commerce et administration non classés ailleurs',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'commerce et administration non définis',
+            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+        },
+        {
+            'id': '3',
+            'name': 'comptabilité et fiscalité',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
+        },
+    ]
+%}
+
+{%
+    set other_skills = [
+        {
+            'id': '1',
+            'name': 'compétences professionnelles',
+            'description': 'Lorem ipsum dolor sit amet erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'finance, banque et assurances',
+            'description': 'Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.at, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '3',
+            'name': 'gestion et administration',
+            'description': 'Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.t, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+    ]
+%}
+
+{%
+    set previously_skills = [
+        {
+            'id': '1',
+            'name': 'marketing et publicité',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '2',
+            'name': 'travail de secrétariat et de bureau',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+        {
+            'id': '3',
+            'name': 'vente en gros et au détail',
+            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+        },
+    ]
+
+%}
+
 <fieldset>
 	{# Following job #}
 	<div class="info">
@@ -5,36 +66,38 @@
 	</div>
 
 	<div id="list-following_skills" class="list-skills accordion">
-		{% for k in 0..4 %}
-			<div class="card">
-				<div class="card-header" id="heading_{{ k }}">
-					<div class="d-flex flex-nowrap justify-content-between">
-						<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_following_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_following_skills_{{ k }}">
-							<a class="text-primary icon mr-2" data-toggle="collapse" href="#skill_following_{{ k }}">
-								<i class="fas fa-chevron-circle-right"></i>
-							</a>
-							<a data-toggle="collapse" href="#skill_following_{{ k }}">
-								<span>precision engineering</span>
-							</a>
-						</div>
-						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
-								<i class="fas fa-question-circle text-primary"></i>
-							</a>
-							<a href="" class="text-danger rmv" title="Remove this skill">
-								<i class="fas fa-times-circle"></i>
-							</a>
+		{% if following_skills is defined %}
+			{% for k, following_skill in following_skills %}
+				<div class="card">
+					<div class="card-header" id="heading_{{ k }}">
+						<div class="d-flex flex-nowrap justify-content-between">
+							<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_following_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_following_skills_{{ k }}">
+								<a class="text-primary icon mr-2" data-toggle="collapse" href="#skill_following_{{ k }}">
+									<i class="fas fa-chevron-circle-right"></i>
+								</a>
+								<a data-toggle="collapse" href="#skill_following_{{ k }}">
+									<span>{{ following_skill.name }}</span>
+								</a>
+							</div>
+							<div class="d-inline-flex align-items-center justify-content-end">
+								<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
+									<i class="fas fa-question-circle text-primary"></i>
+								</a>
+								<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ following_skill.name }}" data-id="{{ following_skill.id }}" data-url="url de suppression">
+									<i class="fas fa-trash-alt"></i>
+								</a>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div id="collapse_following_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-following_skills">
-					<div class="card-body">
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+					<div id="collapse_following_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-following_skills">
+						<div class="card-body">
+							{{ following_skill.description }}
+						</div>
 					</div>
 				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		{% endif %}
 	</div>
 </fieldset>
 {# End: Following job #}
@@ -47,37 +110,39 @@
 
 	<div class="d-inline-flex align-items-end mb-4">
 		<label for="other_skills-input">Previous job</label>
-		<input type="text" class="form-control input-autocomplete" id="other_skills-input" data-url="url de recherche">
+		{% include 'front/elements/input_search.html.twig' with {'id': 'other_skills-input', 'url': 'url de recherche', 'autocomplete': true} %}
 	</div>
 
 	<div id="list-other_skills" class="list-skills">
-		{% for k in 0..4 %}
-			<div class="card">
-				<div class="card-header" id="heading_{{ k }}">
-					<div class="d-flex flex-nowrap justify-content-between">
-						<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_other_skills_{{ k }}">
-							<a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_{{ k }}">
-								<i class="fas fa-chevron-circle-right"></i>
-							</a>
-							<a data-toggle="collapse" href="#skills_other_{{ k }}">
-								<span>precision engineering</span>
-							</a>
-						</div>
-						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="" class="text-danger rmv" title="Remove this skill">
-								<i class="fas fa-times-circle"></i>
-							</a>
+		{% if other_skills is defined %}
+			{% for k, other_skill in other_skills %}
+				<div class="card">
+					<div class="card-header" id="heading_{{ k }}">
+						<div class="d-flex flex-nowrap justify-content-between">
+							<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_other_skills_{{ k }}">
+								<a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_{{ k }}">
+									<i class="fas fa-chevron-circle-right"></i>
+								</a>
+								<a data-toggle="collapse" href="#skills_other_{{ k }}">
+									<span>{{ other_skill.name }}</span>
+								</a>
+							</div>
+							<div class="d-inline-flex align-items-center justify-content-end">
+								<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ other_skill.name }}" data-id="{{ other_skill.id }}" data-url="url de suppression">
+									<i class="fas fa-trash-alt"></i>
+								</a>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div id="collapse_other_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-other_skills">
-					<div class="card-body">
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+					<div id="collapse_other_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-other_skills">
+						<div class="card-body">
+							{{ other_skill.description }}
+						</div>
 					</div>
 				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		{% endif %}
 	</div>
 </fieldset>
 {# End: Other skills #}
@@ -89,36 +154,38 @@
 	</div>
 
 	<div id="list-previously_unselected" class="list-skills">
-		{% for k in 0..4 %}
-			<div class="card">
-				<div class="card-header" id="heading_{{ k }}">
-					<div class="d-flex flex-nowrap justify-content-between">
-						<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_previously_unselected_{{ k }}" aria-expanded="false" aria-controls="collapse_previously_unselected_{{ k }}">
-							<a class="text-primary icon mr-2" data-toggle="collapse" href="#previously_unselected_{{ k }}">
-								<i class="fas fa-chevron-circle-right"></i>
-							</a>
-							<a data-toggle="collapse" href="#previously_unselected_{{ k }}">
-								<span>precision engineering</span>
-							</a>
-						</div>
-						<div class="d-inline-flex align-items-center justify-content-end">
-						<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
-							<i class="fas fa-question-circle text-primary"></i>
-						</a>
-						<a href="" class="text-success add" title="Remove this skill">
-							<i class="fas fa-plus-circle"></i>
-						</a>
+		{% if previously_skills is defined %}
+			{% for k, previously_skill in previously_skills %}
+				<div class="card">
+					<div class="card-header" id="heading_{{ k }}">
+						<div class="d-flex flex-nowrap justify-content-between">
+							<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_previously_unselected_{{ k }}" aria-expanded="false" aria-controls="collapse_previously_unselected_{{ k }}">
+								<a class="text-primary icon mr-2" data-toggle="collapse" href="#previously_unselected_{{ k }}">
+									<i class="fas fa-chevron-circle-right"></i>
+								</a>
+								<a data-toggle="collapse" href="#previously_unselected_{{ k }}">
+									<span>{{ previously_skill.name }}</span>
+								</a>
+							</div>
+							<div class="d-inline-flex align-items-center justify-content-end">
+								<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
+									<i class="fas fa-question-circle text-primary"></i>
+								</a>
+								<a href="" class="text-success add" title="Remove this skill">
+									<i class="fas fa-plus-circle"></i>
+								</a>
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div id="collapse_previously_unselected_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-previously_unselected">
-					<div class="card-body">
-						Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+					<div id="collapse_previously_unselected_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-previously_unselected">
+						<div class="card-body">
+							{{ previously_skill.description }}
+						</div>
 					</div>
 				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		{% endif %}
 	</div>
 </fieldset>
 {# End: Previously unselected #}

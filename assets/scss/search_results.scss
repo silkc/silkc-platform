@@ -22,12 +22,12 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     .search {
         margin-top: 60px;
 
-        label {
-            font-size: 1.2rem;
+        > .input-group {
+            flex: 1;
         }
 
-        input {
-            flex: 1;
+        label {
+            font-size: 1.2rem;
         }
     }
 

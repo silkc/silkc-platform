@@ -27,16 +27,11 @@
 						</p>
 
 						<form>
-							<div class="input-group">
-								<div class="input-group mb-3">
-									<input type="text" class="form-control" placeholder="What is your dream job?" aria-label="Recipient's username" aria-describedby="basic-addon2">
-									<div class="input-group-append">
-										<span class="input-group-text" id="basic-addon2">
-											<i class="fas fa-search"></i>
-										</span>
-									</div>
-								</div>
-							</div>
+                            <div class="mb-3">
+                                {% include 'front/elements/input_search.html.twig' with {'url': 'url de recherche', 
+                                                                                        'autocomplete': true,
+                                                                                        'placeholder': 'What is your dream job?' } %}
+                            </div>
 
 							<div class="text-center">
 								<button type="submit" class="btn btn-primary">Find out how to get there!</button>
@@ -48,7 +43,6 @@
 		</div>
 	</div>
 {% endblock %}
-
 
 {% block javascripts %}
 	{{ encore_entry_script_tags('main') }}

@@ -17,6 +17,23 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     =   Account
 ============================================================================= */
 #account {
+    margin-top: 60px;
+    
+    #profile-completion {
+        margin-bottom: 20px;
+        max-width: 200px;
+        width: 100%;
+
+        > span {
+            font-weight: 300;
+        }
+
+        .progress {
+            height: 20px;
+            width: 100%;
+        }
+    }
+
     .form-block {
         margin-top: 60px;
     }
@@ -77,12 +94,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             }
 
             .rmv {
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
 
             .jobs-linked {
-                background-color: #18bc9c;
+                line-height: 1;
+                /*background-color: #18bc9c;
                 color: #fff;
                 width: 22px;
                 height: 22px;
@@ -91,12 +109,12 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 align-items: center;
                 justify-content: center;
                 border-radius: 25px;
-                font-size: 0.8rem;
+                font-size: 0.8rem;*/
             }
 
             .search {
                 color: #007bff;
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
         }
@@ -154,12 +172,14 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             }
 
             .rmv {
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
 
             .link {
-                background-color: #007bff;
+                line-height: 1;
+                color: #007bff;
+                /*background-color: #007bff;
                 color: #fff;
                 width: 22px;
                 height: 22px;
@@ -168,11 +188,11 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 align-items: center;
                 justify-content: center;
                 border-radius: 25px;
-                font-size: 0.8rem;
+                font-size: 0.8rem;*/
             }
 
             .feedback {
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
         }
@@ -201,23 +221,23 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
 
         .icon[data-toggle="collapse"] {
-            font-size: 1.4rem;
+            //font-size: 1.4rem;
             line-height: 1;
         }
 
         .list-skills {
             .rmv {
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
 
             .add {
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
 
             .more {
-                font-size: 1.4rem;
+                //font-size: 1.4rem;
                 line-height: 1;
             }
         }
