@@ -21,12 +21,14 @@ class User implements UserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_MODERATOR = 'ROLE_MODERATOR';
+    public const ROLE_INSTITUTION = 'ROLE_INSTITUTION';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     protected static $rolesList = [
-        self::ROLE_USER         => 'Utilisateur',
-        self::ROLE_MODERATOR    => 'Modérateur',
-        self::ROLE_ADMIN        => 'Administrateur',
+        self::ROLE_USER         => 'User',
+        self::ROLE_MODERATOR    => 'Moderator',
+        self::ROLE_INSTITUTION  => 'Institution',
+        self::ROLE_ADMIN        => 'Administrator',
     ];
 
     /**
@@ -91,6 +93,21 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $homepage;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $yearOfBirth;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $address;
 
     public function __construct()
     {}
@@ -253,6 +270,42 @@ class User implements UserInterface
     public function setUsername(?string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getHomepage(): ?string
+    {
+        return $this->homepage;
+    }
+
+    public function setHomepage(?string $homepage): self
+    {
+        $this->homepage = $homepage;
+
+        return $this;
+    }
+
+    public function getYearOfBirth(): ?string
+    {
+        return $this->yearOfBirth;
+    }
+
+    public function setYearOfBirth(?string $yearOfBirth): self
+    {
+        $this->yearOfBirth = $yearOfBirth;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }
