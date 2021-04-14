@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      normalizationContext={"groups"={"occupation:read"}},
  *      denormalizationContext={"groups"={"occupation:write"}},
  *      attributes={
- *          "pagination_items_per_page"=30000,
+ *          "pagination_enabled"=false,
  *          "formats"={"json"}
  *     }
  * )
