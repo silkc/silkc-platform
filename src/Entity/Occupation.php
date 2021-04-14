@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Repository\OccupationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *      normalizationContext={"groups"={"occupation:read"}},
+ *      denormalizationContext={"groups"={"occupation:write"}}
+ * )
  */
 class Occupation
 {
@@ -16,70 +20,84 @@ class Occupation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"occupation:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $conceptType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $conceptUri;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read", "write"})
      */
     private $preferredLabel;
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read", "write"})
      */
     private $altLabels;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $hiddenLabels;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read", "write"})
      */
     private $status;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $modifiedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read", "write"})
      */
     private $regulatedProfessionNote;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $scopeNote;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $definition;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read", "write"})
      */
     private $inScheme;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read", "write"})
      */
     private $code;
 
