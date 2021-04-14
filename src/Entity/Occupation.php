@@ -10,6 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=OccupationRepository::class)
  * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
  *      normalizationContext={"groups"={"occupation:read"}},
  *      denormalizationContext={"groups"={"occupation:write"}}
  * )
@@ -38,71 +40,72 @@ class Occupation
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $preferredLabel;
     /**
      * @ORM\Column(type="text")
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $altLabels;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $hiddenLabels;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $status;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $modifiedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $regulatedProfessionNote;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $scopeNote;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $definition;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $inScheme;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read", "write"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $code;
 
     /**
      * @ORM\ManyToOne(targetEntity=IscoGroup::class, inversedBy="occupations")
+     * @Groups({"occupation:read"})
      */
     private $iscoGroup;
 

@@ -27,24 +27,23 @@
                                 {% if app.user %}
                                     <div class="mb-3">
                                         {{ 'form.disconnect_message'|trans({'%username%': app.user.username }, 'login') }}, <a href="{{ path('app_logout') }}">{{ 'form.disconnect_button'|trans({}, 'login') }}</a>
-                                        {{ 'form.or'|trans({}, 'login') }} <a href="{{ path('admin_home') }}">{{ 'form.admin_access_button'|trans({}, 'login') }}</a>
                                     </div>
+                                {% else %}
+                                    <div class="form-group">
+                                        <input type="username" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'form.label.email'|trans({}, 'login') }}" required autofocus>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'form.label.password.password'|trans({}, 'login') }}" required>
+                                    </div>
+
+                                    <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'Sign in'|trans({}, 'login') }}
+                                    </button>
                                 {% endif %}
-
-                                <div class="form-group">
-                                    <input type="username" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'form.label.email'|trans({}, 'login') }}" required autofocus>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'form.label.password.password'|trans({}, 'login') }}" required>
-                                </div>
-
-                                <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'Sign in'|trans({}, 'login') }}
-                                </button>
                             </div>
 
                             <div id="new-profile">

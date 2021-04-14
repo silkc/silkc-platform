@@ -6,9 +6,16 @@ use App\Repository\IscoGroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
  * @ORM\Entity(repositoryClass=IscoGroupRepository::class)
+ * @ApiResource(
+ *      normalizationContext={"groups"={"isco_group:read"}},
+ *      denormalizationContext={"groups"={"isco_group:write"}}
+ * )
  */
 class IscoGroup
 {
@@ -16,6 +23,7 @@ class IscoGroup
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"isco_group:read", "occupation:read"})
      */
     private $id;
 
