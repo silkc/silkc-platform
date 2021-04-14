@@ -33,20 +33,36 @@ class Main {
             { label: "Agent de presse"}
         ];
         
+
+        
+
+
         var inputs = document.getElementsByClassName('input-autocomplete');
         if (inputs) {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
-                autocomplete({
-                    input: input,
-                    fetch: function(text, update) {
-                        text = text.toLowerCase();
-                        // you can also use AJAX requests instead of preloaded data
-                        var suggestions = countries.filter(n => n.label.toLowerCase().startsWith(text))
-                        update(suggestions);
-                    },
-                    onSelect: function(item) {
-                        input.value = item.label;
+                let url = '/apip/occupations';
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data, textStatus, jqXHR) {
+
+
+                        console.log('data ==> ', data)
+
+                        autocomplete({
+                            input: input,
+                            fetch: function(text, update) {
+                                text = text.toLowerCase();
+                                // you can also use AJAX requests instead of preloaded data
+                                var suggestions = countries.filter(n => n.label.toLowerCase().startsWith(text))
+                                update(suggestions);
+                            },
+                            onSelect: function(item) {
+                                input.value = item.label;
+                            }
+                        });
                     }
                 });
             }

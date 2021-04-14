@@ -39,6 +39,7 @@ security:
         - { path: ^/api/forgot_password$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api/signup$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/apip/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/api/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
