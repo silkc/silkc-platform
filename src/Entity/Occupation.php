@@ -13,7 +13,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
  *      normalizationContext={"groups"={"occupation:read"}},
- *      denormalizationContext={"groups"={"occupation:write"}}
+ *      denormalizationContext={"groups"={"occupation:write"}},
+ *      attributes={
+ *          "pagination_items_per_page"=30000,
+ *          "formats"={"json"}
+ *     }
  * )
  */
 class Occupation

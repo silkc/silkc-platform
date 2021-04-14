@@ -2,11 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\SkillRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SkillRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=SkillRepository::class)
+ * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
+ *      attributes={
+ *          "pagination_items_per_page"=30000,
+ *          "formats"={"json"}
+ *     }
+ * )
  */
 class Skill
 {

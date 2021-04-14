@@ -24,59 +24,41 @@ class Main {
      * (ajouter l'attribut data-url et la class input-autocomplete à l'input de type text)
      */
      runAutocompletion = () => {
-        var countries = [
-            { label: "Acheteur"},
-            { label: "Administrateur de base de données"},
-            { label: "Agent de sûreté aéroportuaire"},
-            { label: "Agent de transit"},
-            { label: "Agent d'entretien"},
-            { label: "Agent de presse"}
-        ];
-        
-
-        
-
-
-        var inputs = document.getElementsByClassName('input-autocomplete');
+        let inputs = document.getElementsByClassName('input-autocomplete');
         if (inputs) {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
-                let url = '/apip/occupations';
+                let url = inputs[i].getAttribute('data-url');
 
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function (data, textStatus, jqXHR) {
-
-
-                        console.log('data ==> ', data)
-
-                        autocomplete({
-                            input: input,
-                            fetch: function(text, update) {
-                                text = text.toLowerCase();
-                                // you can also use AJAX requests instead of preloaded data
-                                var suggestions = countries.filter(n => n.label.toLowerCase().startsWith(text))
-                                update(suggestions);
-                            },
-                            onSelect: function(item) {
-                                input.value = item.label;
-                            }
-                        });
-                    }
-                });
+                if (url && input) {
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data, textStatus, jqXHR) {
+                            autocomplete({
+                                input: input,
+                                minLength: 3,
+                                emptyMsg: 'No elements found',
+                                render: function(item, currentValue) {
+                                    var div = document.createElement('div');
+                                    div.dataset.id = item.id;
+                                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : item.name; // preferredLabel => table ESCO, name => table training
+                                    return div;
+                                },
+                                fetch: function(text, callback) {
+                                    text = text.toLowerCase();
+                                    var suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : n.name.toLowerCase().startsWith(text))
+                                    callback(suggestions);
+                                },
+                                onSelect: function(item) {
+                                    input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;;
+                                }
+                            });
+                        }
+                    });
+                }
             }
         }
-    }
-
-    /**
-     * Au changement d'onglet
-     */
-    onShowTab () {
-        let _this = this;
-        $('#account a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            _this.runAutocompletion();
-        })
     }
 
     /**
@@ -140,7 +122,6 @@ class Main {
 
     init = function() {
         this.rmvItem();
-        this.onShowTab();
         this.runAutocompletion();
         this.clearModal();
     }

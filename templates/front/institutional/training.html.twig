@@ -208,7 +208,7 @@
 
 										<div class="mb-3">
 											<label for="skill-name-required_{{ k }}">Skill name</label>
-											{% include 'front/elements/input_search.html.twig' with {'id': 'skill-name-required' ~ k, 'url': 'url de recherche', 'autocomplete': true} %}
+											{% include 'front/elements/input_search.html.twig' with {'id': 'skill-name-required' ~ k, 'url': '/apip/skills', 'autocomplete': true} %}
 										</div>
 
 										<div class="skills-required-list">
@@ -251,7 +251,7 @@
 
 										<div class="mb-3">
 											<label for="skill-name-acquire_{{ k }}">Skill name</label>
-											{% include 'front/elements/input_search.html.twig' with {'id': 'skill-name-acquire_' ~ k, 'url': 'url de recherche', 'autocomplete': true} %}
+											{% include 'front/elements/input_search.html.twig' with {'id': 'skill-name-acquire_' ~ k, 'url': '/apip/skills', 'autocomplete': true} %}
 										</div>
 
 										<div class="skills-acquire-list">
@@ -307,106 +307,3 @@
 <div class="form-group button-group text-right">
 	<button type="submit" class="btn btn-primary">Save</button>
 </div>
-
-<script id="institutional-training" type="template/dotraining.js">
-	<form>
-		<input type="hidden" name="data" value="[[? it.data ]][[=it.data]][[?]]">
-		<div class="d-flex flex-nowrap justify-content-between">
-			<div class="d-flex flex-nowrap align-items-center">
-				<a class="text-primary icon mr-2" data-toggle="collapse" href="#training_[[=it.id]]">
-					<i class="fas fa-chevron-circle-right"></i>
-				</a>
-				<a data-toggle="collapse" href="#training_[[=it.id]]">
-					<span>[[=it.name]]</span>
-				</a>
-			</div>
-			<a href="" class="text-success clone" title="Clone this training">
-				<i class="fas fa-plus-circle"></i>
-			</a>
-		</div>
-
-		<div class="content-collapse">
-			<div class="collapse" id="training_[[=it.id]]">
-				<div>
-					<div class="card card-block">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="training-name_[[=it.id]]">Training name</label>
-									<input type="text" class="form-control" id="training-name_[[=it.id]]" value="[[? it.name ]][[=it.name]][[?]]">
-								</div>
-
-								<div class="form-group">
-									<label for="location_[[=it.id]]">Location</label>
-									<input type="text" class="form-control" id="location_[[=it.id]]" value="[[? it.location ]][[=it.location]][[?]]">
-								</div>
-
-								<div class="form-group">
-									<label for="duration_[[=it.id]]">Duration</label>
-									<input type="text" class="form-control" id="duration_[[=it.id]]" value="[[? it.duration ]][[=it.duration]][[?]]">
-								</div>
-
-								<div class="form-group">
-									<label for="description_[[=it.id]]">Description</label>
-									<textarea class="form-control" id="description_[[=it.id]]">[[? it.description ]][[=it.description]][[?]]</textarea>
-								</div>
-
-								<div class="form-group">
-									<label for="price_[[=it.id]]">Price</label>
-									<input type="text" class="form-control" id="price_[[=it.id]]" value="[[? it.price ]][[=it.price]][[?]]">
-								</div>
-
-								<div class="form-group">
-									<label for="start-date_[[=it.id]]">Start date</label>
-									<input type="date" class="form-control" id="start-date_[[=it.id]]" value="[[? it.start_date ]][[=it.start_date]][[?]]">
-								</div>
-
-								<div class="form-group">
-									<label for="end-date_[[=it.id]]">End date</label>
-									<input type="date" class="form-control" id="end-date_[[=it.id]]" value="[[? it.end_date ]][[=it.end_date]][[?]]">
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="training-info-url_[[=it.id]]">Training info URL</label>
-									<input type="url" class="form-control" id="training-info-url_[[=it.id]]" value="[[? it.url ]][[=it.url]][[?]]">
-								</div>
-
-								<div class="form-group">
-									<label for="upload-info-sheet_[[=it.id]]">Upload info sheet</label>
-									<div class="form-group custom-file">
-										<input type="file" class="custom-file-input" id="upload-info-sheet_[[=it.id]]">
-										<label class="custom-file-label" for="upload-info-sheet_[[=it.id]]" value="[[? it.file ]][[=it.file]][[?]]">Choose file</label>
-									</div>
-								</div>
-
-								<p class="title">Required skills</p>
-
-								<div class="form-group">
-									<label for="skill-name-required_[[=it.id]]">Skill name</label>
-									<input type="text" class="form-control" id="skill-name-required_[[=it.id]]">
-								</div>
-
-								<div class="skills-required-list"></div>
-
-								<p class="title">Skills students can acquire</p>
-
-								<div class="form-group">
-									<label for="skill-name-acquire_[[=it.id]]">Skill name</label>
-									<input type="text" class="form-control" id="skill-name-acquire_[[=it.id]]">
-								</div>
-
-								<div class="skills-acquire-list"></div>
-							</div>
-						</div>
-
-						<div class="form-group button-group text-center">
-							<button type="submit" class="btn btn-primary">Save</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
-</script>

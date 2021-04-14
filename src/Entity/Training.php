@@ -2,14 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\TrainingRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrainingRepository;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=TrainingRepository::class)
+ * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
+ *      attributes={
+ *          "pagination_items_per_page"=30000,
+ *          "formats"={"json"}
+ *     }
+ * )
  */
 class Training
 {
