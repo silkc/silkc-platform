@@ -1,9 +1,16 @@
 <div class="input-group">
-	<input type="text" class="form-control {{ autocomplete is defined and autocomplete == true ? 'input-autocomplete' : '' }}" 
-    {% if id is defined and id is not empty %}id="{{id}}" {% endif %}
-    {% if placeholder is defined and placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}
-    aria-describedby="basic-addon2" 
-    data-url="{{ url is defined ? url : '' }}">
+	<input
+		type="text"
+		class="form-control {{ autocomplete is defined and autocomplete == true ? 'input-autocomplete' : '' }}"
+		name="{{ name is defined ? name : '' }}"
+		{% if id is defined and id is not empty %}id="{{id}}" {% endif %}
+		{% if placeholder is defined and placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %}
+		aria-describedby="basic-addon2"
+		data-url="{{ url is defined ? url : '' }}"
+		data-formats="{{ formats is defined ? formats : 'json' }}"
+		data-pagination="{{ pagination is defined ? pagination : 'false' }}"
+	>
+	<input type="hidden" name="{{ name is defined ? 'hidden_' ~ name : '' }}" id="{{ name is defined ? 'hidden_' ~ name : '' }}"/>
 	<div class="input-group-append">
 		<span class="input-group-text" id="basic-addon2">
 			<i class="fas fa-search"></i>

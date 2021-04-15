@@ -26,11 +26,18 @@
 							Let's improve your professional situation!
 						</p>
 
-						<form>
+						<form method="POST" action="{{ path('app_search_results') }}">
                             <div class="mb-3">
-                                {% include 'front/elements/input_search.html.twig' with {'url': '/apip/occupations', 
-                                                                                        'autocomplete': true,
-                                                                                        'placeholder': 'What is your dream job?' } %}
+                                {% include 'front/elements/input_search.html.twig'
+									with {
+										'url': '/apip/occupations',
+										'autocomplete': true,
+										'placeholder': 'What is your dream job?',
+										'formats': 'json',
+										'pagination': 'false',
+										'name': 'training_search'
+									}
+								%}
                             </div>
 
 							<div class="text-center">

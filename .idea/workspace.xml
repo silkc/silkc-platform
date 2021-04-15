@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/front/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/front/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Occupation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Occupation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Training.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/elements/input_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/elements/input_search.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/search/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/search/search.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +171,7 @@
       <workItem from="1612426095668" duration="8401000" />
       <workItem from="1617953205990" duration="1549000" />
       <workItem from="1618132761771" duration="3731000" />
-      <workItem from="1618239817475" duration="21955000" />
+      <workItem from="1618239817475" duration="28960000" />
     </task>
     <servers />
   </component>
@@ -180,17 +186,18 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1230" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618299625271" />
-    <state x="-1180" y="275" key="FileChooserDialogImpl" timestamp="1618295674241">
+    <state x="-1180" y="275" key="FileChooserDialogImpl" timestamp="1618475167928">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618295674241" />
+    <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618475167928" />
     <state x="-1253" y="253" width="586" height="534" key="find.popup" timestamp="1618391698033">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1253" y="253" width="586" height="534" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618391698033" />
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1618391706969">
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1618476277889">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618391706969" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618476277889" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1618411968791" />
   </component>
 </project>

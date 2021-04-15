@@ -28,8 +28,15 @@ class Main {
         if (inputs) {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
-                let url = inputs[i].getAttribute('data-url');
+                let name = inputs[i].getAttribute('name');
+                let hiddenField = document.getElementById('hidden_' + name);
+                let baseUrl = inputs[i].getAttribute('data-url');
+                let formats = inputs[i].getAttribute('data-formats') || 'json';
+                let pagination = inputs[i].getAttribute('data-pagination') || false;
+                let params = $.param({'formats': formats, 'pagination': pagination});
 
+                let url = `${baseUrl}?${params}`;
+                console.log('Hiden', hiddenField);
                 if (url && input) {
                     $.ajax({
                         type: "GET",
@@ -51,7 +58,12 @@ class Main {
                                     callback(suggestions);
                                 },
                                 onSelect: function(item) {
-                                    input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;;
+                                    input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
+                                    console.log('ITEM', item.id, hiddenField)
+                                    if (hiddenField && item.id) {
+                                        console.log('OK');
+                                        hiddenField.value = item.id;
+                                    }
                                 }
                             });
                         }

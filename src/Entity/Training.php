@@ -65,9 +65,24 @@ class Training
     private $endAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
      */
     private $hasSessions;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     */
+    private $isOnline = 0;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     */
+    private $isOnlineMonitored = 0;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     */
+    private $isPresential = 0;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
