@@ -15,26 +15,20 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 body { font-family: 'Roboto', sans-serif!important; background-color: #f5f5f5; color: #292b2c; }
 
-body > .loader {
-    display: none;
-    
-    > div {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+.input-group {
+    .loader-search {
         display: flex;
         align-items: center;
-        justify-content: center;
-        background: #0000;
-
-        > .spinner-border {
-            width: 4rem;
-            height: 4rem;
-        }
+        position: absolute;
+        z-index: 1;
+        height: 100%;
+        padding: 0 15px;
+        top: 0;
+        bottom: 0;
+        right: 30px;
     }
 }
+
 body button .spinner-border {
     &.hide{
         display: none;
@@ -44,7 +38,6 @@ body button .spinner-border {
         display: inline-block;
     }
 }
-
 
 body > div.autocomplete{
     color: #7b8a8b;

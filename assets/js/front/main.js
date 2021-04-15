@@ -25,49 +25,73 @@ class Main {
      */
      runAutocompletion = () => {
         let inputs = document.getElementsByClassName('input-autocomplete');
+        //let prevUrl = false;
+        //let prevData = false;
+
+        let runAutocomplete = function (data, input) {
+
+            let name = input.getAttribute('name');
+            let hiddenField = document.getElementById('hidden_' + name);
+            let loader = document.getElementById('loader_' + name);
+
+            autocomplete({
+                input: input,
+                minLength: 3,
+                emptyMsg: 'No elements found',
+                render: function(item, currentValue) {
+                    var div = document.createElement('div');
+                    div.dataset.id = item.id;
+                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : item.name; // preferredLabel => table ESCO, name => table training
+                    return div;
+                },
+                fetch: function(text, callback) {
+                    text = text.toLowerCase();
+                    var suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : n.name.toLowerCase().startsWith(text));
+                    callback(suggestions);
+                },
+                onSelect: function(item) {
+                    input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
+                    if (hiddenField && item.id) {
+                        hiddenField.value = item.id;
+                    }
+                }
+            });
+
+            if (loader) {
+                loader.style.display = 'none';
+                input.disabled = false;
+                input.focus();
+            }
+        }
+        
         if (inputs) {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
-                let name = inputs[i].getAttribute('name');
-                let hiddenField = document.getElementById('hidden_' + name);
-                let baseUrl = inputs[i].getAttribute('data-url');
-                let formats = inputs[i].getAttribute('data-formats') || 'json';
-                let pagination = inputs[i].getAttribute('data-pagination') || false;
+                let baseUrl = input.getAttribute('data-url');
+                let formats = input.getAttribute('data-formats') || 'json';
+                let pagination = input.getAttribute('data-pagination') || false;
                 let params = $.param({'formats': formats, 'pagination': pagination});
+                //let dfd = jQuery.Deferred();
 
                 let url = `${baseUrl}?${params}`;
-                console.log('Hiden', hiddenField);
                 if (url && input) {
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        success: function (data, textStatus, jqXHR) {
-                            autocomplete({
-                                input: input,
-                                minLength: 3,
-                                emptyMsg: 'No elements found',
-                                render: function(item, currentValue) {
-                                    var div = document.createElement('div');
-                                    div.dataset.id = item.id;
-                                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : item.name; // preferredLabel => table ESCO, name => table training
-                                    return div;
-                                },
-                                fetch: function(text, callback) {
-                                    text = text.toLowerCase();
-                                    var suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : n.name.toLowerCase().startsWith(text))
-                                    callback(suggestions);
-                                },
-                                onSelect: function(item) {
-                                    input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
-                                    console.log('ITEM', item.id, hiddenField)
-                                    if (hiddenField && item.id) {
-                                        console.log('OK');
-                                        hiddenField.value = item.id;
-                                    }
-                                }
-                            });
-                        }
-                    });
+                    //if (prevUrl != url) {
+                        //prevUrl = url;
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            success: function (data, textStatus, jqXHR) {
+                                //prevData = data;
+                                runAutocomplete(data, input);
+                                //dfd.resolve();
+                            }
+                        });
+                    //} else {
+                        //dfd.then(function() {
+                            //console.log('test')
+                            //runAutocomplete(prevData, input);
+                        //});
+                    //}
                 }
             }
         }

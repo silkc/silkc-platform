@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
  *      attributes={
- *          "pagination_items_per_page"=30000,
  *          "formats"={"json"}
  *     }
  * )

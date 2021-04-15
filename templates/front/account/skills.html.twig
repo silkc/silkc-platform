@@ -109,8 +109,17 @@
 	</div>
 
 	<div class="d-inline-flex align-items-end mb-4">
-		<label for="other_skills-input">Previous job</label>
-		{% include 'front/elements/input_search.html.twig' with {'id': 'other_skills-input', 'url': '/apip/skills', 'autocomplete': true} %}
+		<label for="other_skills-input">Other skills</label>
+        {% include 'front/elements/input_search.html.twig'
+            with {
+                'id': 'other_skills-input',
+                'url': '/apip/skills',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'other_skills'
+            }
+        %}
 	</div>
 
 	<div id="list-other_skills" class="list-skills">

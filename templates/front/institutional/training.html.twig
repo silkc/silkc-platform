@@ -156,7 +156,17 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="training-name_{{ k }}">Training name</label>
-											<input type="text" class="form-control input-autocomplete" id="training-name_{{ k }}" value="{{ attribute(training, 'name') ? training.name : '' }}" data-url="url de recherche">
+                                            {% include 'front/elements/input_search.html.twig'
+                                                with {
+                                                    'id': 'training-name_' ~ k,
+                                                    'url': '/apip/trainings',
+                                                    'autocomplete': true,
+                                                    'formats': 'json',
+                                                    'pagination': 'false',
+                                                    'name': 'training-name_' ~ k,
+                                                    'value': attribute(training, 'name') ? training.name : ''
+                                                }
+                                            %}
 										</div>
 
 										<div class="form-group">
@@ -208,7 +218,16 @@
 
 										<div class="mb-3">
 											<label for="skill-name-required_{{ k }}">Skill name</label>
-											{% include 'front/elements/input_search.html.twig' with {'id': 'skill-name-required' ~ k, 'url': '/apip/skills', 'autocomplete': true} %}
+                                            {% include 'front/elements/input_search.html.twig'
+                                                with {
+                                                    'id': 'skill-name-required_' ~ k,
+                                                    'url': '/apip/skills',
+                                                    'autocomplete': true,
+                                                    'formats': 'json',
+                                                    'pagination': 'false',
+                                                    'name': 'skill-name-required_' ~ k
+                                                }
+                                            %}
 										</div>
 
 										<div class="skills-required-list">
@@ -251,7 +270,16 @@
 
 										<div class="mb-3">
 											<label for="skill-name-acquire_{{ k }}">Skill name</label>
-											{% include 'front/elements/input_search.html.twig' with {'id': 'skill-name-acquire_' ~ k, 'url': '/apip/skills', 'autocomplete': true} %}
+                                            {% include 'front/elements/input_search.html.twig'
+                                                with {
+                                                    'id': 'skill-name-acquire_' ~ k,
+                                                    'url': '/apip/skills',
+                                                    'autocomplete': true,
+                                                    'formats': 'json',
+                                                    'pagination': 'false',
+                                                    'name': 'skill-name-acquire_' ~ k
+                                                }
+                                            %}
 										</div>
 
 										<div class="skills-acquire-list">

@@ -2,17 +2,19 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SkillRepository;
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SkillRepository::class)
  * @ApiResource(
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
+  *     normalizationContext={"groups"={"skill:read"}},
+ *      denormalizationContext={"groups"={"skill:write"}},
  *      attributes={
- *          "pagination_items_per_page"=30000,
  *          "formats"={"json"}
  *     }
  * )
@@ -23,6 +25,7 @@ class Skill
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"occupation:read", "skill:read"})
      */
     private $id;
 
@@ -48,6 +51,7 @@ class Skill
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"skill:read"})
      */
     private $preferredLabel;
 
@@ -88,6 +92,7 @@ class Skill
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"skill:read"})
      */
     private $description;
 
