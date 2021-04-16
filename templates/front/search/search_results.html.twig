@@ -15,7 +15,17 @@
 
 			<form class="form-inline search">
 				<label for="input-search" class="mr-2">Training opportunities to land your dream job as:</label>
-				{% include 'front/elements/input_search.html.twig' with {'id': 'input-search', 'url': '/apip/occupations', 'autocomplete': true} %}
+                {% include 'front/elements/input_search.html.twig'
+                    with {
+                        'id': 'input-search',
+                        'url': '/apip/occupations',
+                        'autocomplete': true,
+                        'placeholder': 'What is your dream job?',
+                        'formats': 'json',
+                        'pagination': 'false',
+                        'name': 'input-search'
+                    }
+                %}
 				<button type="submit" class="btn btn-primary ml-2 mr-2">Search</button>
 				<button type="submit" class="btn btn-primary" disabled>Advanced search</button>
 			</form>

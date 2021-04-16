@@ -27,16 +27,16 @@ class HomeController extends AbstractController
      */
     public function searchResults(Request $request, OccupationRepository $occupationRepository, TrainingRepository $trainingRepository): Response
     {
-        $occupationId = $request->request->get('hidden_training_search');
+       /* $occupationId = $request->request->get('hidden_training_search');
         if (!$occupationId) {
 
         }
         $occupation = $occupationRepository->findOneBy(['id' => $occupationId]);
         if (!$occupation) {
 
-        }
+        }*/
 
-        /*$trainings = [
+        $trainings = [
             [
                 "title" => "accommodation manager",
                 "match" => 99,
@@ -53,10 +53,10 @@ class HomeController extends AbstractController
                 "title" => "cred nesciunt sapiente ea proident",
                 "match" => 20,
             ],
-        ];*/
+        ];
 
-        $trainings = $trainingRepository->findBy(['occupation' => $occupation]);
-        dd($trainings);
+        /*$trainings = $trainingRepository->findBy(['occupation' => $occupation]);
+        dd($trainings);*/
 
         return $this->render('front/search/search_results.html.twig', ['trainings' => $trainings]);
     }
