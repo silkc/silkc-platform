@@ -25,8 +25,6 @@ class Main {
      */
      runAutocompletion = () => {
         let inputs = document.getElementsByClassName('input-autocomplete');
-        //let prevUrl = false;
-        //let prevData = false;
 
         let runAutocomplete = function (data, input) {
 
@@ -75,23 +73,13 @@ class Main {
 
                 let url = `${baseUrl}?${params}`;
                 if (url && input) {
-                    //if (prevUrl != url) {
-                        //prevUrl = url;
-                        $.ajax({
-                            type: "GET",
-                            url: url,
-                            success: function (data, textStatus, jqXHR) {
-                                //prevData = data;
-                                runAutocomplete(data, input);
-                                //dfd.resolve();
-                            }
-                        });
-                    //} else {
-                        //dfd.then(function() {
-                            //console.log('test')
-                            //runAutocomplete(prevData, input);
-                        //});
-                    //}
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data, textStatus, jqXHR) {
+                            runAutocomplete(data, input);
+                        }
+                    });
                 }
             }
         }
