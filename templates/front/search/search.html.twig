@@ -19,16 +19,17 @@
 				</p>
 			</div>
 
-			<div class="row">
-				<div class="col-md-6 mx-auto">
-					<div class="search">
-						<p class="text-center">
-							Let's improve your professional situation!
-						</p>
+			<div class="search">
+				<p class="text-center">
+					Let's improve your professional situation!
+				</p>
 
+				<div class="row">
+					<div class="col-md-6 col-left">
 						<form method="POST" action="{{ path('app_search_results') }}">
-                            <div class="mb-3">
-                                {% include 'front/elements/input_search.html.twig'
+							<div class="mb-3">
+								<p class="title-search">Search by occupation</p>
+								{% include 'front/elements/input_search.html.twig'
 									with {
 										'url': '/apip/occupations',
 										'autocomplete': true,
@@ -38,14 +39,36 @@
 										'name': 'training_search'
 									}
 								%}
-                            </div>
+							</div>
 
 							<div class="text-center">
 								<button type="submit" class="btn btn-primary">Find out how to get there!</button>
 							</div>
 						</form>
 					</div>
-				</div>
+
+					<div class="col-md-6">
+						<form method="POST" action="{{ path('app_search_results') }}">
+							<div class="mb-3">
+								<p class="title-search">Search by skill</p>
+								{% include 'front/elements/input_search.html.twig'
+									with {
+										'url': '/apip/occupations',
+										'autocomplete': true,
+										'placeholder': 'What is your dream job?',
+										'formats': 'json',
+										'pagination': 'false',
+										'name': 'training_search'
+									}
+								%}
+							</div>
+
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary">Find out how to get there!</button>
+							</div>
+						</form>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
