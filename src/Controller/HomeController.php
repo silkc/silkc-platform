@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Repository\OccupationRepository;
+use App\Entity\User;
+use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +20,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(TrainingRepository $trainingRepository, OccupationRepository $occupationRepository, SkillRepository $skillRepository): Response
     {
+        /*$occupation = $occupationRepository->findOneBy(['id' => 92]);
+        $skill = $skillRepository->findOneBy(['id' => 3]);
+        $result = $trainingRepository->searchTrainingByOccupation($occupation);*/
+        //$res = $trainingRepository->searchTrainingBySkill($skill);
+
         return $this->render('front/search/search.html.twig');
     }
 
@@ -55,8 +63,8 @@ class HomeController extends AbstractController
             ],
         ];
 
-        /*$trainings = $trainingRepository->findBy(['occupation' => $occupation]);
-        dd($trainings);*/
+        //$trainings = $trainingRepository->findBy(['occupation' => $occupation]);
+        //dd($trainings);
 
         return $this->render('front/search/search_results.html.twig', ['trainings' => $trainings]);
     }

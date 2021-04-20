@@ -22,6 +22,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Training
 {
     /**
+     * Coéfficient de pondération pour la recherche de formation via formulaire
+     * par correspondance occupation-training
+     */
+    public const SEARCH_OCCUPATION_COEFFICIENT = 100;
+    /**
+     * Coéfficient de pondération pour la recherche de formation via formulaire
+     * par correspondance skill-training de type "requis" ou "optionnal"
+     */
+    public const SEARCH_SKILL_COEFFICIENT = 10;
+    public const SEARCH_OPTIONAL_SKILL_COEFFICIENT = 5;
+    /**
+     * Coéfficient de pondération pour la recherche de formation via formulaire
+     * par correspondance skill-training de type "non-requis" ou "optionnal"
+     */
+    public const SEARCH_KNOWLEDGE_COEFFICIENT = 2;
+    public const SEARCH_OPTIONAL_KNOWLEDGE_COEFFICIENT = 1;
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -106,12 +124,23 @@ class Training
     private $requiredSkills;
     private $toAcquireSkills;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Occupation::class, inversedBy="trainings")
+     */
+    private $occupations;
+
+    /**
+     * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
+     */
+    private $score = 0;
+
     public function __construct()
     {
         $this->requiredSkills = new ArrayCollection();
         $this->toAcquireSkills = new ArrayCollection();
         $this->sessions = new ArrayCollection();
         $this->trainingSkills = new ArrayCollection();
+        $this->occupations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -319,5 +348,41 @@ class Training
             ->andWhere(Criteria::expr()->eq('isToAcquire', 1));
 
         return $this->trainingSkills->matching($criteria);
+    }
+
+    /**
+     * @return Collection|Occupation[]
+     */
+    public function getOccupations(): Collection
+    {
+        return $this->occupations;
+    }
+
+    public function addOccupation(Occupation $occupation): self
+    {
+        if (!$this->occupations->contains($occupation)) {
+            $this->occupations[] = $occupation;
+        }
+
+        return $this;
+    }
+
+    public function removeOccupation(Occupation $occupation): self
+    {
+        $this->occupations->removeElement($occupation);
+
+        return $this;
+    }
+
+    public function getScore(): ?int
+    {
+        return $this->score;
+    }
+
+    public function setScore(?int $score): self
+    {
+        $this->score = $score;
+
+        return $this;
     }
 }
