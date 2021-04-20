@@ -1,3 +1,110 @@
+{% set trainings = [
+    {
+        id: 1,
+        name: 'Formation PHP',
+        location: 'Caen',
+        duration: '40min',
+        description: 'Formation à l\'utilisation du langage PHP',
+        price: '500€',
+        start_at: '2021-08-05',
+        end_at: '2021-12-03',
+        url: 'https://ec.europa.eu/esco/portal/home?resetLanguage=true&newLanguage=fr',
+        match: 90,
+        required_skills: [
+            {
+                id: 1,
+                preferred_label: 'abrasive machining processes',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 2,
+                preferred_label: 'abide by business ethical code of conducts',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 3,
+                preferred_label: 'abide by regulations on banned materials',
+                description: 'Comply with regulations banning heavy metals in solder, flame retardants in plastics, and phthalate plasticisers in plastics and wiring harness insulations, under EU RoHS/WEEE Directives and China RoHS legislation.',
+            },
+        ],
+        acquired_skills: [
+            {
+                id: 1,
+                preferred_label: 'accept constructive criticism',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 2,
+                preferred_label: 'accommodate cargo in freight transport vehicle',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 3,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+        ]
+    },
+    {
+        id: 2,
+        name: 'Formation HTML',
+        location: 'Caen',
+        duration: '40min',
+        description: 'Formation à l\'utilisation du langage PHP',
+        price: '500€',
+        start_at: '2021-08-05',
+        end_at: '2021-12-03',
+        url: 'https://ec.europa.eu/esco/portal/home?resetLanguage=true&newLanguage=fr',
+        match: 80,
+        required_skills: [],
+        acquired_skills: [
+            {
+                id: 1,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 2,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 3,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+        ]
+    },
+    {
+        id: 3,
+        name: 'Formation JS',
+        location: 'Caen',
+        duration: '40min',
+        description: 'Formation à l\'utilisation du langage PHP',
+        price: '500€',
+        start_at: '2021-08-05',
+        end_at: '2021-12-03',
+        url: 'https://ec.europa.eu/esco/portal/home?resetLanguage=true&newLanguage=fr',
+        match: 60,
+        required_skills: [
+            {
+                id: 1,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 2,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+            {
+                id: 3,
+                preferred_label: '3D lighting',
+                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
+            },
+        ]
+    }
+] %}
 {% extends 'front/layout.html.twig' %}
 
 {% block title %}
@@ -27,7 +134,21 @@
                     }
                 %}
 				<button type="submit" class="btn btn-primary ml-2 mr-2">Search</button>
-				<button type="submit" class="btn btn-primary" disabled>Advanced search</button>
+				<button type="button" class="btn btn-primary" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}disabled{% endif %}>Advanced search</button>
+                <!--<div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group col-md-6">
+                                <label for="firstname">Homepage</label>
+                                <input type="url" class="form-control" id="homepage">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="firstname">Homepage</label>
+                                <input type="url" class="form-control" id="homepage">
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
 			</form>
 
 			<div class="results">
@@ -41,8 +162,8 @@
 									<h5 class="d-flex justify-content-between align-items-center">
 										<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
 											<div class="title">
-												{{ attribute(training, 'title') ? training.title : '' }}
-												({{ attribute(training, 'match') ? training.match : '' }}% match)
+												{{ attribute(training, 'name') is defined ? training.name : '' }}
+												({{ attribute(training, 'match') is defined ? training.match : '' }}% match)
 											</div>
 										</button>
 										<div class="count">
@@ -65,7 +186,7 @@
 														<span class="title">Institution name</span>
 													</div>
 													<div class="col-lg-8">
-														<span>Ut wisi enim ad minim veniam</span>
+														<span>{{ attribute(training, 'name') is defined ? training.name : '' }}</span>
 													</div>
 												</div>
 
@@ -74,7 +195,8 @@
 														<span class="title">Location</span>
 													</div>
 													<div class="col-lg-8">
-														<iframe src="https://maps.google.com/maps?q=paris=&z=6&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                                        <div class="google-map" data-location="{{ attribute(training, 'location') is defined ? training.location : '' }}"></div>
+														<!--<iframe src="https://maps.google.com/maps?q=paris=&z=6&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>-->
 													</div>
 												</div>
 
@@ -83,7 +205,7 @@
 														<span class="title">Duration</span>
 													</div>
 													<div class="col-lg-8">
-														<span>40h</span>
+														<span>{{ attribute(training, 'duration') is defined ? training.duration : '' }}</span>
 													</div>
 												</div>
 
@@ -93,8 +215,8 @@
 													</div>
 													<div class="col-lg-8">
 														<p class="text-justify m-0">
-															At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
-														</p>
+															{{ attribute(training, 'description') is defined ? training.description : '' }}
+                                                        </p>
 													</div>
 												</div>
 
@@ -103,7 +225,7 @@
 														<span class="title">Price</span>
 													</div>
 													<div class="col-lg-8">
-														<span>400€</span>
+														<span>{{ attribute(training, 'price') is defined ? training.price : '' }}</span>
 													</div>
 												</div>
 
@@ -111,42 +233,29 @@
 											</div>
 											<div class="col-md-6">
 												<div class="mb-3">
-													<span class="required-skills d-block mb-3 title">Required skills</span>
-													<ul class="list-group">
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-														</li>
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-														</li>
-													</ul>
+                                                    {% if attribute(training, 'required_skills') is defined and training.required_skills is not empty and training.required_skills is iterable %}
+													    <span class="required-skills d-block mb-3 title">Required skills</span>
+                                                        <ul class="list-group">
+                                                            {% for skill in training.required_skills %}
+                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                    {{ attribute(skill, 'preferred_label') is defined ? skill.preferred_label : '' }}
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
 												</div>
 
 												<div class="mb-3">
-													<span class="required-skills d-block mb-3 title">Skills you can acquire</span>
-													<ul class="list-group">
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-														</li>
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-														</li>
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-														</li>
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-															<span class="badge badge-success badge-pill">
-																<i class="fas fa-check"></i>
-															</span>
-														</li>
-														<li class="list-group-item d-flex justify-content-between align-items-center">
-															Cras justo odio
-															<span class="badge badge-success badge-pill">
-																<i class="fas fa-check"></i>
-															</span>
-														</li>
-													</ul>
+													{% if attribute(training, 'acquired_skills') is defined and training.acquired_skills is not empty  and training.acquired_skills is iterable %}
+													    <span class="required-skills d-block mb-3 title">Skills you can acquire</span>
+                                                        <ul class="list-group">
+                                                            {% for skill in training.acquired_skills %}
+                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                    {{ attribute(skill, 'preferred_label') is defined ? skill.preferred_label : '' }}
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
 												</div>
 											</div>
 										</div>
@@ -173,6 +282,7 @@
 
 
 {% block javascripts %}
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXKcW5hC-fMWGZb0o_kU0JHanjpSOHByg"></script>-->
 	{{ encore_entry_script_tags('main') }}
 	{{ encore_entry_script_tags('search_results') }}
 {% endblock %}

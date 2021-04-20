@@ -68,8 +68,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
         .card-body {
 
-            iframe {
-                width: 100%;
+            .google-map {
+                height: 200px;
             }
 
             .title {

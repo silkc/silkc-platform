@@ -144,7 +144,48 @@ class Main {
         });
     }
 
+    /**
+     * Google map
+     */
+     initGoogleMap = () => {
+        let maps = document.getElementsByClassName('google-map');
+
+        if (maps) {
+            for (var i = 0; i < maps.length; i++) {
+                let dataLocation = maps[i].getAttribute('data-location');
+
+                //let url = `${baseUrl}?${params}`;
+
+
+
+                if (dataLocation) {
+                    const myLatLng = { lat: -25.363, lng: 131.044 };
+                    const map = new google.maps.Map(maps[i], {
+                        mapTypeControl: false,
+                        zoom: 4,
+                        center: myLatLng,
+                    });
+                    const contentString =
+                    '<div class="google-address">' +
+                    'Caen' +
+                    "</div>";
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                      });
+                    const marker = new google.maps.Marker({
+                      position: myLatLng,
+                      map,
+                    });
+                    marker.addListener("click", () => {
+                        infowindow.open(map, marker);
+                    });
+                }
+            }
+        }
+    }
+        
     init = function() {
+        this.initGoogleMap();
         this.rmvItem();
         this.runAutocompletion();
         this.clearModal();
