@@ -58,7 +58,7 @@ class Main {
             if (loader) {
                 loader.style.display = 'none';
                 input.disabled = false;
-                input.focus();
+                //input.focus();
             }
         }
         
