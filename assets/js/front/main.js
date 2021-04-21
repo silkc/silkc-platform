@@ -28,29 +28,69 @@ class Main {
 
         let runAutocomplete = function (data, input) {
 
+            let elemsDisabled = $(input).closest('form').find('.disabled-search');
             let name = input.getAttribute('name');
             let hiddenField = document.getElementById('hidden_' + name);
             let loader = document.getElementById('loader_' + name);
+            let minLength = 2;
+
+            $(input).closest('form').attr('autocomplete', 'off');
 
             autocomplete({
                 input: input,
-                minLength: 3,
+                minLength: minLength,
                 emptyMsg: 'No elements found',
                 render: function(item, currentValue) {
-                    var div = document.createElement('div');
+                    let div = document.createElement('div');
                     div.dataset.id = item.id;
-                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : item.name; // preferredLabel => table ESCO, name => table training
+                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table training
                     return div;
                 },
                 fetch: function(text, callback) {
                     text = text.toLowerCase();
-                    var suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : n.name.toLowerCase().startsWith(text));
+                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : (n.name != undefined) ? n.name.toLowerCase().startsWith(text) : '' );
                     callback(suggestions);
                 },
                 onSelect: function(item) {
                     input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
+                    elemsDisabled.prop('disabled', false);
                     if (hiddenField && item.id) {
                         hiddenField.value = item.id;
+                    }
+                },
+                autocompletechange: function(event, ui) {
+                    console.log('event, ui', event, ui);
+                }
+            });
+
+            /* Si on vide le champs
+            On desactive le bouton de recherche */
+            input.addEventListener('keyup', function() {
+                let search = this.value.toLowerCase();
+                if (!search || search.length == 0) {
+                    input.value = '';
+                    if (hiddenField) {
+                        hiddenField.value = '';
+                        elemsDisabled.prop('disabled', true);
+                    }
+                }
+            });
+
+            /* Si on sort du champs de recherche sans avoir sélectionner un item, on sélectionne la première proposition
+            Si il n'y a pas de propositions, on vide le champs */
+            input.addEventListener('focusout', function() {
+                let search = this.value.toLowerCase();
+                let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(search) : n.name.toLowerCase().startsWith(search));
+                if (suggestions && suggestions.length > 0 && search.length > 0) {
+                    let suggestion = suggestions[0];
+                    input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';
+                    if (hiddenField) hiddenField.value = (suggestion.id != undefined) ? suggestion.id : '';
+                    elemsDisabled.prop('disabled', false);
+                } else {
+                    input.value = '';
+                    if (hiddenField) {
+                        hiddenField.value = '';
+                        elemsDisabled.prop('disabled', true);
                     }
                 }
             });
@@ -58,7 +98,6 @@ class Main {
             if (loader) {
                 loader.style.display = 'none';
                 input.disabled = false;
-                //input.focus();
             }
         }
         

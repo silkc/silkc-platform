@@ -1,110 +1,3 @@
-{% set trainings = [
-    {
-        id: 1,
-        name: 'Formation PHP',
-        location: 'Caen',
-        duration: '40min',
-        description: 'Formation à l\'utilisation du langage PHP',
-        price: '500€',
-        start_at: '2021-08-05',
-        end_at: '2021-12-03',
-        url: 'https://ec.europa.eu/esco/portal/home?resetLanguage=true&newLanguage=fr',
-        match: 90,
-        required_skills: [
-            {
-                id: 1,
-                preferred_label: 'abrasive machining processes',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 2,
-                preferred_label: 'abide by business ethical code of conducts',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 3,
-                preferred_label: 'abide by regulations on banned materials',
-                description: 'Comply with regulations banning heavy metals in solder, flame retardants in plastics, and phthalate plasticisers in plastics and wiring harness insulations, under EU RoHS/WEEE Directives and China RoHS legislation.',
-            },
-        ],
-        acquired_skills: [
-            {
-                id: 1,
-                preferred_label: 'accept constructive criticism',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 2,
-                preferred_label: 'accommodate cargo in freight transport vehicle',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 3,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-        ]
-    },
-    {
-        id: 2,
-        name: 'Formation HTML',
-        location: 'Caen',
-        duration: '40min',
-        description: 'Formation à l\'utilisation du langage PHP',
-        price: '500€',
-        start_at: '2021-08-05',
-        end_at: '2021-12-03',
-        url: 'https://ec.europa.eu/esco/portal/home?resetLanguage=true&newLanguage=fr',
-        match: 80,
-        required_skills: [],
-        acquired_skills: [
-            {
-                id: 1,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 2,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 3,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-        ]
-    },
-    {
-        id: 3,
-        name: 'Formation JS',
-        location: 'Caen',
-        duration: '40min',
-        description: 'Formation à l\'utilisation du langage PHP',
-        price: '500€',
-        start_at: '2021-08-05',
-        end_at: '2021-12-03',
-        url: 'https://ec.europa.eu/esco/portal/home?resetLanguage=true&newLanguage=fr',
-        match: 60,
-        required_skills: [
-            {
-                id: 1,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 2,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-            {
-                id: 3,
-                preferred_label: '3D lighting',
-                description: 'The principles and usage of technologies for 3D body scanning used to capture the size and shape of the human body.',
-            },
-        ]
-    }
-] %}
 {% extends 'front/layout.html.twig' %}
 
 {% block title %}
@@ -120,9 +13,10 @@
 	<div id="search-results">
 		<div class="container">
 
-			<form class="form-inline search">
+			<form class="form-inline search" method="POST" action="{{ path('app_search_results') }}">
+				<input type="hidden" name="type_search" value="occupation"/>
 				<label for="input-search" class="mr-2">Training opportunities to land your dream job as:</label>
-                {% include 'front/elements/input_search.html.twig'
+				{% include 'front/elements/input_search.html.twig'
                     with {
                         'id': 'input-search',
                         'url': '/apip/occupations',
@@ -130,25 +24,36 @@
                         'placeholder': 'What is your dream job?',
                         'formats': 'json',
                         'pagination': 'false',
-                        'name': 'input-search'
+                        'name': 'training_search_by_occupation',
+                        'value': search is defined and attribute(search, 'name') is defined and search.name is not empty ? search.name : '',
+                        'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
                     }
                 %}
 				<button type="submit" class="btn btn-primary ml-2 mr-2">Search</button>
-				<button type="button" class="btn btn-primary" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}disabled{% endif %}>Advanced search</button>
-                <!--<div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group col-md-6">
-                                <label for="firstname">Homepage</label>
-                                <input type="url" class="form-control" id="homepage">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="firstname">Homepage</label>
-                                <input type="url" class="form-control" id="homepage">
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
+					Advanced search
+				</button>
+
+				<div class="collapse" id="advanced-search">
+					<div>
+						<div class="row">
+							<div class="col-md-6">
+
+
+
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="id_input_hidden" id="search_by_skill" value="occupation">
+									<label class="form-check-label" for="inlineRadio1">By occupation</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" name="id_input_hidden" id="search_by_occupation" value="skill">
+									<label class="form-check-label" for="inlineRadio2">By skill</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</form>
 
 			<div class="results">
@@ -162,8 +67,8 @@
 									<h5 class="d-flex justify-content-between align-items-center">
 										<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
 											<div class="title">
-												{{ attribute(training, 'name') is defined ? training.name : '' }}
-												({{ attribute(training, 'match') is defined ? training.match : '' }}% match)
+												{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}
+												({{ attribute(training, 'score') is defined and training.score is not empty ? training.score : '' }}% match)
 											</div>
 										</button>
 										<div class="count">
@@ -186,7 +91,7 @@
 														<span class="title">Institution name</span>
 													</div>
 													<div class="col-lg-8">
-														<span>{{ attribute(training, 'name') is defined ? training.name : '' }}</span>
+														<span>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '-' }}</span>
 													</div>
 												</div>
 
@@ -195,7 +100,7 @@
 														<span class="title">Location</span>
 													</div>
 													<div class="col-lg-8">
-                                                        <div class="google-map" data-location="{{ attribute(training, 'location') is defined ? training.location : '' }}"></div>
+														<div class="google-map" data-location="{{ attribute(training, 'location') is defined and training.location is not empty ? training.location : '-' }}"></div>
 														<!--<iframe src="https://maps.google.com/maps?q=paris=&z=6&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>-->
 													</div>
 												</div>
@@ -205,7 +110,7 @@
 														<span class="title">Duration</span>
 													</div>
 													<div class="col-lg-8">
-														<span>{{ attribute(training, 'duration') is defined ? training.duration : '' }}</span>
+														<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : '-' }}</span>
 													</div>
 												</div>
 
@@ -215,8 +120,8 @@
 													</div>
 													<div class="col-lg-8">
 														<p class="text-justify m-0">
-															{{ attribute(training, 'description') is defined ? training.description : '' }}
-                                                        </p>
+															{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : '-' }}
+														</p>
 													</div>
 												</div>
 
@@ -225,7 +130,7 @@
 														<span class="title">Price</span>
 													</div>
 													<div class="col-lg-8">
-														<span>{{ attribute(training, 'price') is defined ? training.price : '' }}</span>
+														<span>{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : '-' }}</span>
 													</div>
 												</div>
 
@@ -233,29 +138,29 @@
 											</div>
 											<div class="col-md-6">
 												<div class="mb-3">
-                                                    {% if attribute(training, 'required_skills') is defined and training.required_skills is not empty and training.required_skills is iterable %}
-													    <span class="required-skills d-block mb-3 title">Required skills</span>
-                                                        <ul class="list-group">
-                                                            {% for skill in training.required_skills %}
-                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                    {{ attribute(skill, 'preferred_label') is defined ? skill.preferred_label : '' }}
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    {% endif %}
+													{% if attribute(training, 'required_skills') is defined and training.required_skills is not empty and training.required_skills is iterable %}
+														<span class="required-skills d-block mb-3 title">Required skills</span>
+														<ul class="list-group">
+															{% for skill in training.required_skills %}
+																<li class="list-group-item d-flex justify-content-between align-items-center">
+																	{{ attribute(skill, 'preferred_label') is defined and training.preferred_label is not empty ? skill.preferred_label : '-' }}
+																</li>
+															{% endfor %}
+														</ul>
+													{% endif %}
 												</div>
 
 												<div class="mb-3">
 													{% if attribute(training, 'acquired_skills') is defined and training.acquired_skills is not empty  and training.acquired_skills is iterable %}
-													    <span class="required-skills d-block mb-3 title">Skills you can acquire</span>
-                                                        <ul class="list-group">
-                                                            {% for skill in training.acquired_skills %}
-                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                    {{ attribute(skill, 'preferred_label') is defined ? skill.preferred_label : '' }}
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    {% endif %}
+														<span class="required-skills d-block mb-3 title">Skills you can acquire</span>
+														<ul class="list-group">
+															{% for skill in training.acquired_skills %}
+																<li class="list-group-item d-flex justify-content-between align-items-center">
+																	{{ attribute(skill, 'preferred_label') is defined and training.preferred_label is not empty ? skill.preferred_label : '-' }}
+																</li>
+															{% endfor %}
+														</ul>
+													{% endif %}
 												</div>
 											</div>
 										</div>
@@ -282,7 +187,7 @@
 
 
 {% block javascripts %}
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXKcW5hC-fMWGZb0o_kU0JHanjpSOHByg"></script>-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=API_KEY"></script>
 	{{ encore_entry_script_tags('main') }}
 	{{ encore_entry_script_tags('search_results') }}
 {% endblock %}

@@ -33,39 +33,42 @@ class HomeController extends AbstractController
     /**
      * @Route("/search_results", name="search_results")
      */
-    public function searchResults(Request $request, OccupationRepository $occupationRepository, TrainingRepository $trainingRepository): Response
-    {
-       /* $occupationId = $request->request->get('hidden_training_search');
-        if (!$occupationId) {
-
+    public function searchResults(Request $request, OccupationRepository $occupationRepository, TrainingRepository $trainingRepository, SkillRepository $skillRepository): Response
+    {        
+        $type_search = $request->get('type_search');
+        $trainings = [];
+        $search = [];
+        
+        if ($type_search) {
+            $search['type_search'] = $type_search;
+            
+            switch ($type_search) {
+                case 'occupation':
+                        $occupation_id = $request->get('hidden_training_search_by_occupation');
+                        $occupation_name = $request->get('training_search_by_occupation');
+                        if ($occupation_id && $occupation_name) {
+                            $search['id'] = $occupation_id;
+                            $search['name'] = $occupation_name;
+                            $occupation = $occupationRepository->findOneBy(['id' => $occupation_id]);
+                            $trainings = $trainingRepository->searchTrainingByOccupation($occupation);
+                        }
+                    break;
+                case 'skill':
+                        $skill_id = $request->get('hidden_training_search_by_skill');
+                        $skill_name = $request->get('training_search_by_skill');
+                        if ($skill_id && $skill_name) {
+                            $search['id'] = $skill_id;
+                            $search['name'] = $skill_name;
+                            $skill = $skillRepository->findOneBy(['id' => $skill_id]);
+                            $trainings = $trainingRepository->searchTrainingBySkill($skill);
+                        }
+                    break;
+                default:
+                    $trainings = false;
+                    break;
+            }
         }
-        $occupation = $occupationRepository->findOneBy(['id' => $occupationId]);
-        if (!$occupation) {
 
-        }*/
-
-        $trainings = [
-            [
-                "title" => "accommodation manager",
-                "match" => 99,
-            ],
-            [
-                "title" => "art director",
-                "match" => 80,
-            ],
-            [
-                "title" => "anim pariatur cliche reprehenderit",
-                "match" => 60,
-            ],
-            [
-                "title" => "cred nesciunt sapiente ea proident",
-                "match" => 20,
-            ],
-        ];
-
-        //$trainings = $trainingRepository->findBy(['occupation' => $occupation]);
-        //dd($trainings);
-
-        return $this->render('front/search/search_results.html.twig', ['trainings' => $trainings]);
+        return $this->render('front/search/search_results.html.twig', ['trainings' => $trainings, 'search' => $search]);
     }
 }

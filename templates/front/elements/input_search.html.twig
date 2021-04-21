@@ -17,7 +17,7 @@
 		data-pagination="{{ pagination is defined ? pagination : 'false' }}"
 		{% if value is defined and value is not empty %}value="{{ value }}" {% endif %}
 	>
-	<input type="hidden" name="{{ name is defined ? 'hidden_' ~ name : '' }}" id="{{ name is defined ? 'hidden_' ~ name : '' }}"/>
+	<input type="hidden" name="{{ name is defined ? 'hidden_' ~ name : '' }}" id="{{ name is defined ? 'hidden_' ~ name : '' }}" value="{{ id_input_hidden is defined ? id_input_hidden : '' }}" />
 	<div class="input-group-append">
 		<span class="input-group-text" id="basic-addon2">
 			<i class="fas fa-search"></i>

@@ -30,6 +30,18 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             font-size: 1.2rem;
         }
     }
+    
+    #advanced-search  {
+        width: 100%;
+        
+        > div {
+            width: 100%;
+            border: 1px solid #ddd;
+            margin-top: 30px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+    }
 
     .results {
         margin-top: 60px;

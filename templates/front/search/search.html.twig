@@ -27,6 +27,7 @@
 				<div class="row">
 					<div class="col-md-6 col-left">
 						<form method="POST" action="{{ path('app_search_results') }}">
+                            <input type="hidden" name="type_search" value="occupation" />
 							<div class="mb-3">
 								<p class="title-search"><i class="far fa-list-alt"></i> Search by occupation</p>
 								{% include 'front/elements/input_search.html.twig'
@@ -42,13 +43,14 @@
 							</div>
 
 							<div class="text-center">
-								<button type="submit" class="btn btn-primary">Find out how to get there!</button>
+								<button type="submit" class="btn btn-primary disabled-search" disabled >Find out how to get there!</button>
 							</div>
 						</form>
 					</div>
 
 					<div class="col-md-6">
 						<form method="POST" action="{{ path('app_search_results') }}">
+                            <input type="hidden" name="type_search" value="skill" />
 							<div class="mb-3">
 								<p class="title-search"><i class="fas fa-list"></i> Search by skill</p>
 								{% include 'front/elements/input_search.html.twig'
@@ -64,7 +66,7 @@
 							</div>
 
 							<div class="text-center">
-								<button type="submit" class="btn btn-primary">Find out how to get there!</button>
+								<button type="submit" class="btn btn-primary disabled-search" disabled >Find out how to get there!</button>
 							</div>
 						</form>
 					</div>
