@@ -35,9 +35,9 @@ class HomeController extends AbstractController
      */
     public function searchResults(Request $request, OccupationRepository $occupationRepository, TrainingRepository $trainingRepository, SkillRepository $skillRepository): Response
     {        
-        $type_search = $request->get('type_search');
-        $trainings = [];
-        $search = [];
+        $type_search = $request->get('type_search'); // Type de recherche (occupation ou skill)
+        $trainings = []; // Listes des formations
+        $search = []; // Parametres de recherche renvoyés à la vue
         
         if ($type_search) {
             $search['type_search'] = $type_search;
@@ -70,5 +70,21 @@ class HomeController extends AbstractController
         }
 
         return $this->render('front/search/search_results.html.twig', ['trainings' => $trainings, 'search' => $search]);
+    }
+
+    /**
+     * @Route("/account", name="account")
+     */
+    public function account(): Response
+    {
+        return $this->render('front/account/index.html.twig');
+    }
+
+    /**
+     * @Route("/institution", name="institutional")
+     */
+    public function institution(): Response
+    {
+        return $this->render('front/institutional/index.html.twig');
     }
 }

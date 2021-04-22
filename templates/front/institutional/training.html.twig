@@ -140,12 +140,12 @@
 									</a>
 								</div>
 								<div class="d-inline-flex align-items-center justify-content-end">
-									<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
-										<i class="fas fa-question-circle text-primary"></i>
+									<a href="#" class="clone mr-2" title="close this training">
+                                        <i class="fas fa-plus text-primary"></i>
 									</a>
-									<a href="" class="text-danger item rmv" title="Remove this skill" data-name="{{ training.name }}" data-id="{{ training.id }}" data-url="url de suppression">
+									<!--<a href="" class="text-danger item rmv" title="Remove this skill" data-name="{{ training.name }}" data-id="{{ training.id }}" data-url="url de suppression">
 										<i class="fas fa-trash-alt"></i>
-									</a>
+									</a>-->
 								</div>
 							</div>
 						</div>
@@ -155,7 +155,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="training-name_{{ k }}">Training name</label>
+											<label for="training-name_{{ k }}">{{ attribute(training, 'name') is defined  ? training.name : '' }}</label>
                                             {% include 'front/elements/input_search.html.twig'
                                                 with {
                                                     'id': 'training-name_' ~ k,
@@ -164,52 +164,52 @@
                                                     'formats': 'json',
                                                     'pagination': 'false',
                                                     'name': 'training-name_' ~ k,
-                                                    'value': attribute(training, 'name') ? training.name : ''
+                                                    'value': attribute(training, 'name') is defined  ? training.name : ''
                                                 }
                                             %}
 										</div>
 
 										<div class="form-group">
 											<label for="location_{{ k }}">Location</label>
-											<input type="text" class="form-control" id="location_{{ k }}" value="{{ attribute(training, 'location') ? training.location : '' }}">
+											<input type="text" class="form-control" id="location_{{ k }}" value="{{ attribute(training, 'location') is defined ? training.location : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="duration_{{ k }}">Duration</label>
-											<input type="text" class="form-control" id="duration_{{ k }}" value="{{ attribute(training, 'duration') ? training.duration : '' }}">
+											<input type="text" class="form-control" id="duration_{{ k }}" value="{{ attribute(training, 'duration') is defined  ? training.duration : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="description_{{ k }}">Description</label>
-											<textarea class="form-control" id="description_{{ k }}">{{ attribute(training, 'description') ? training.description : '' }}</textarea>
+											<textarea class="form-control" id="description_{{ k }}">{{ attribute(training, 'description') is defined  ? training.description : '' }}</textarea>
 										</div>
 
 										<div class="form-group">
 											<label for="price_{{ k }}">Price</label>
-											<input type="text" class="form-control" id="price_{{ k }}" value="{{ attribute(training, 'price') ? training.price : '' }}">
+											<input type="text" class="form-control" id="price_{{ k }}" value="{{ attribute(training, 'price') is defined  ? training.price : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="start-date_{{ k }}">Start date</label>
-											<input type="date" class="form-control" id="start-date_{{ k }}" value="{{ attribute(training, 'start_date') ? training.start_date : '' }}">
+											<input type="date" class="form-control" id="start-date_{{ k }}" value="{{ attribute(training, 'start_date') is defined  ? training.start_date : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="end-date_{{ k }}">End date</label>
-											<input type="date" class="form-control" id="end-date_{{ k }}" value="{{ attribute(training, 'end_date') ? training.end_date : '' }}">
+											<input type="date" class="form-control" id="end-date_{{ k }}" value="{{ attribute(training, 'end_date') is defined  ? training.end_date : '' }}">
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="training-info-url_{{ k }}">Training info URL</label>
-											<input type="url" class="form-control" id="training-info-url_{{ k }}" value="{{ attribute(training, 'url') ? training.url : '' }}">
+											<input type="url" class="form-control" id="training-info-url_{{ k }}" value="{{ attribute(training, 'url') is defined  ? training.url : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="upload-info-sheet_{{ k }}">Upload info sheet</label>
 											<div class="form-group custom-file">
-												<input type="file" class="custom-file-input" id="upload-info-sheet_{{ k }}" value="{{ attribute(training, 'file') ? training.file : '' }}">
+												<input type="file" class="custom-file-input" id="upload-info-sheet_{{ k }}" value="{{ attribute(training, 'file') is defined  ? training.file : '' }}">
 												<label class="custom-file-label" for="upload-info-sheet_{{ k }}">Choose file</label>
 											</div>
 										</div>

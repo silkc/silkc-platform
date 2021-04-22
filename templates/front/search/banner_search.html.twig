@@ -1,0 +1,63 @@
+<form class="form-inline form-search" method="POST" action="{{ path('app_search_results') }}">
+	<label for="input-search" class="mr-2">Training opportunities to land your dream job as:</label>
+
+	<div class="form-search-occupation"  
+        style="display: {{ search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' ? 'none' : 'block' }}">
+		{% include 'front/elements/input_search.html.twig'
+            with {
+                'id': 'input-search-occupation',
+                'url': '/apip/occupations',
+                'autocomplete': true,
+                'placeholder': 'What is your dream job?',
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'training_search_by_occupation',
+                'value': search is defined and attribute(search, 'name') is defined and search.name is not empty ? search.name : '',
+                'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
+            }
+        %}
+	</div>
+
+	<div class="form-search-skill" 
+        style="display: {{ (search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation') 
+                                or (search is defined and search is empty) 
+                                or (search is not defined) ? 'none' : 'block' }}"}>
+		{% include 'front/elements/input_search.html.twig'
+            with {
+                'id': 'input-search-skill',
+                'url': '/apip/skills',
+                'autocomplete': true,
+                'placeholder': 'What is your dream job?',
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'training_search_by_skill',
+                'value': search is defined and attribute(search, 'name') is defined and search.name is not empty ? search.name : '',
+                'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
+            }
+        %}
+	</div>
+
+	<select class="form-control ml-2" name="type_search">
+		<option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>Search by occupation</option>
+		<option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>Search by skill</option>
+	</select>
+
+	<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>Search</button>
+
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
+		Advanced search
+	</button>
+
+	<div class="collapse" id="advanced-search">
+		<div>
+			<div class="row">
+				<div class="col-md-6">
+                    ??????????
+				</div>
+				<div class="col-md-6">
+                    ??????????
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

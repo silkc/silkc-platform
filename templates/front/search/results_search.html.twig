@@ -1,0 +1,117 @@
+<div class="results">
+	<div id="accordion">
+		{% if trainings is defined %}
+			{% for training in trainings %}
+				<div class="card">
+					<div class="card-header" id="headingOne">
+						<h5 class="d-flex justify-content-between align-items-center">
+							<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
+								<div class="title">
+									{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}
+									({{ attribute(training, 'score') is defined and training.score is not empty ? training.score : '' }}% match)
+								</div>
+							</button>
+							<div class="count">
+								({{ loop.index }}
+								of
+								{{ trainings|length }}
+								training {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} - <a href="{{ path('app_login') }}">Login to finetune</a>{% endif %}
+								)
+							</div>
+						</h5>
+					</div>
+
+					<div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6">
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Institution name</span>
+										</div>
+										<div class="col-lg-8">
+											<span>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '-' }}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Location</span>
+										</div>
+										<div class="col-lg-8">
+											<div class="google-map" data-location="{{ attribute(training, 'location') is defined and training.location is not empty ? training.location : '-' }}"></div>
+											<!--<iframe src="https://maps.google.com/maps?q=paris=&z=6&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Duration</span>
+										</div>
+										<div class="col-lg-8">
+											<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : '-' }}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Description</span>
+										</div>
+										<div class="col-lg-8">
+											<p class="text-justify m-0">
+												{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : '-' }}
+											</p>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Price</span>
+										</div>
+										<div class="col-lg-8">
+											<span>{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : '-' }}</span>
+										</div>
+									</div>
+
+
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										{% if attribute(training, 'required_skills') is defined and training.required_skills is not empty and training.required_skills is iterable %}
+											<span class="required-skills d-block mb-3 title">Required skills</span>
+											<ul class="list-group">
+												{% for skill in training.required_skills %}
+													<li class="list-group-item d-flex justify-content-between align-items-center">
+														{{ attribute(skill, 'preferred_label') is defined and training.preferred_label is not empty ? skill.preferred_label : '-' }}
+													</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</div>
+
+									<div class="mb-3">
+										{% if attribute(training, 'acquired_skills') is defined and training.acquired_skills is not empty  and training.acquired_skills is iterable %}
+											<span class="required-skills d-block mb-3 title">Skills you can acquire</span>
+											<ul class="list-group">
+												{% for skill in training.acquired_skills %}
+													<li class="list-group-item d-flex justify-content-between align-items-center">
+														{{ attribute(skill, 'preferred_label') is defined and training.preferred_label is not empty ? skill.preferred_label : '-' }}
+													</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+
+							<div class="text-center">
+								<a href="#" class="btn btn-primary">More info</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>

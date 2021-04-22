@@ -109,6 +109,11 @@ class User implements UserInterface
      */
     private $address;
 
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    private $completion;
+
     public function __construct()
     {}
 
@@ -306,6 +311,18 @@ class User implements UserInterface
     public function setAddress(?string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCompletion(): ?string
+    {
+        return $this->completion;
+    }
+
+    public function setCompletion(?string $completion): self
+    {
+        $this->completion = $completion;
 
         return $this;
     }

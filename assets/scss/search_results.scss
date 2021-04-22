@@ -19,15 +19,18 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 ============================================================================= */
 #search-results {
     
-    .search {
+    .form-search {
         margin-top: 60px;
 
         > .input-group {
             flex: 1;
         }
 
-        label {
+        > label {
             font-size: 1.2rem;
+            width: 100%;
+            justify-content: flex-start;
+            margin-bottom: 7px;
         }
     }
     
@@ -88,5 +91,14 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 font-weight: 500;
             }
         }
+    }
+
+    .form-search-occupation,
+    .form-search-skill {
+        flex: 1;
+    }
+
+    .form-search-skill {
+        display: none;
     }
 }
