@@ -78,12 +78,13 @@
 								</div>
 								<div class="col-md-6">
 									<div class="mb-3">
-										{% if attribute(training, 'required_skills') is defined and training.required_skills is not empty and training.required_skills is iterable %}
+										{% if attribute(training, 'requiredSkills') is defined and training.requiredSkills is not empty and training.requiredSkills is iterable %}
 											<span class="required-skills d-block mb-3 title">Required skills</span>
 											<ul class="list-group">
-												{% for skill in training.required_skills %}
+												{% for trainingSkill in training.requiredSkills %}
+													{% set skill = trainingSkill.skill %}
 													<li class="list-group-item d-flex justify-content-between align-items-center">
-														{{ attribute(skill, 'preferred_label') is defined and training.preferred_label is not empty ? skill.preferred_label : '-' }}
+														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : '-' }}
 													</li>
 												{% endfor %}
 											</ul>
@@ -91,12 +92,13 @@
 									</div>
 
 									<div class="mb-3">
-										{% if attribute(training, 'acquired_skills') is defined and training.acquired_skills is not empty  and training.acquired_skills is iterable %}
+										{% if attribute(training, 'toAcquireSkills') is defined and training.toAcquireSkills is not empty  and training.toAcquireSkills is iterable %}
 											<span class="required-skills d-block mb-3 title">Skills you can acquire</span>
 											<ul class="list-group">
-												{% for skill in training.acquired_skills %}
+												{% for trainingSkill in training.toAcquireSkills %}
+													{% set skill = trainingSkill.skill %}
 													<li class="list-group-item d-flex justify-content-between align-items-center">
-														{{ attribute(skill, 'preferred_label') is defined and training.preferred_label is not empty ? skill.preferred_label : '-' }}
+														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : '-' }}
 													</li>
 												{% endfor %}
 											</ul>

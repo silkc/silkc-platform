@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Skill;
+use App\Entity\Training;
 use App\Repository\TrainingSkillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,7 +26,7 @@ class TrainingSkill
     private $training;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Skill::class)
+     * @ORM\ManyToOne(targetEntity=Skill::class, fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $skill;

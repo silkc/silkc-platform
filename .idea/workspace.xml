@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Entity/OccupationSkill.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Training.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/TrainingRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TrainingRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/TrainingSkill.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/TrainingSkill.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/search/results_search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/search/results_search.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,6 +188,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618475167928" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1619102336769">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1619102336769" />
     <state x="-1828" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1618931170110">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
@@ -198,10 +200,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1253" y="253" width="586" height="534" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618391698033" />
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1618930879739">
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1619102026735">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618930879739" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1619102026735" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1618411968791" />
   </component>
 </project>
