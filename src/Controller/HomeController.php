@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
-use App\Repository\OccupationRepository;
 use App\Entity\User;
+use App\Entity\Training;
+use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\OccupationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("", name="app_")
@@ -20,14 +23,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(TrainingRepository $trainingRepository, OccupationRepository $occupationRepository, SkillRepository $skillRepository): Response
+    public function index(): Response
     {
-        /*$occupation = $occupationRepository->findOneBy(['id' => 92]);
-        $skill = $skillRepository->findOneBy(['id' => 3]);
-        $result = $trainingRepository->searchTrainingByOccupation($occupation);*/
-        //$res = $trainingRepository->searchTrainingBySkill($skill);
 
-        return $this->render('front/search/search.html.twig');
+        return $this->render('front/home/search.html.twig');
     }
 
     /**
@@ -69,7 +68,7 @@ class HomeController extends AbstractController
             }
         }
 
-        return $this->render('front/search/search_results.html.twig', ['trainings' => $trainings, 'search' => $search]);
+        return $this->render('front/search/index.html.twig', ['trainings' => $trainings, 'search' => $search]);
     }
 
     /**
@@ -83,8 +82,76 @@ class HomeController extends AbstractController
     /**
      * @Route("/institution", name="institutional")
      */
-    public function institution(): Response
+    public function institution(Request $request, TrainingRepository $trainingRepository): Response
     {
-        return $this->render('front/institutional/index.html.twig');
+
+        $tab_active = false; // false, 1, 2 ou 3 (correspond aux onglets)
+        $training_active = false; // ID du training actif
+
+        if ($request->isMethod('post')) {
+            if ($request->request->get('training_id')) { // Mise à jour
+                $training_id = $request->request->get('training_id');
+                $entityManager = $this->getDoctrine()->getManager();
+                $training = $trainingRepository->find($training_id);
+                if (!$training) {
+                    throw $this->createNotFoundException(
+                        'No training found for id '. $training_id
+                    );
+                }
+            } else { // Ajout
+                $training = new Training();
+            }
+            
+            if ($training) {
+                $training->setName($request->request->get('name'));
+                $training->setLocation($request->request->get('location'));
+                $training->setDuration($request->request->get('duration'));
+                $training->setDescription($request->request->get('description'));
+                $training->setPrice($request->request->get('price'));
+                $training->setStartAt(null);
+                $training->setEndAt(null);
+                $training->setUrl($request->request->get('url'));
+                //$training->setFile($request->request->get('file'));
+            }
+            
+            $entityManager->persist($training);
+            $entityManager->flush();
+            $tab_active = 2;
+            $training_active = $training->getId();
+        }
+        
+
+
+        /*if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
+        }*/
+
+
+
+
+        $trainings = $trainingRepository->findAll();
+        return $this->render('front/institutional/index.html.twig', 
+            [
+                'trainings'       => $trainings, 
+                'tab_active'      => $tab_active, 
+                'training_active' => $training_active
+            ]
+        );
+    }
+
+    /**
+     * @Route("/duplicate_training", name="duplicate_training")
+     */
+    public function duplicateTraining(Request $request, TrainingRepository $trainingRepository, SerializerInterface $serializer): Response
+    {
+        $trainingId = $request->get('training_id'); // id du training à dupliquer
+        if (!$trainingId) return false;
+        $training = $trainingRepository->findById($trainingId);
+        $jsonContent = $serializer->serialize($training, 'json');
+        return new JsonResponse($jsonContent);
     }
 }

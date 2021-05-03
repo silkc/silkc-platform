@@ -1,6 +1,6 @@
 //import $ from 'jquery';
-const $ = require('jquery');
-const doT = require("dot");
+import $ from 'jquery';
+import doT from 'dot';
 
 //import '../../css/bootstrap-extended.css';
 
@@ -19,7 +19,7 @@ class Institutional {
     boundFunction = () => {
         return this.instanceProperty;
     }
-    
+
     /**
      * Add new training
      */
@@ -45,17 +45,21 @@ class Institutional {
     addTraining = () => {    
         $('body').on('click', '#add-training', function(e) {
             e.preventDefault();
-    
-            let template = document.getElementById('institutional-training').innerHTML;
-            var compiledTemplate = doT.template(template);
 
-            let id = $('body').find('.list-trainings > form').length;
+            let tpl = document.getElementById('tpl_training');
+            if (!tpl) return false;
+            let tempFn = doT.template(tpl.textContent);
+            let id = $('body').find('#list-trainings').children().length;
             let name = $('#training-input').val();
-            let json = {id : id, name : name};
-
-            var result = compiledTemplate(json);
-            $(result).prependTo('.list-trainings');
+            let json = {k : id, name : name};
+            $('body').find('#list-trainings .collapse').collapse('hide');
+            let html = tempFn( json );
+            $(html).prependTo('#list-trainings');
             $('#training-input').val('');
+
+            // Trigger pour reinitialiser la recherche autocomplete dans le fichier main.js
+            const event = new Event('newTraining');
+            document.dispatchEvent(event);
         });
     }
 
@@ -63,11 +67,46 @@ class Institutional {
      * Duplicate a training
      */
     duplicateTraining = () => {
-
-        $('body').on('click', '.list-trainings .clone', function(e) {
+        $('body').on('click', '#list-trainings .clone', function(e) {
             e.preventDefault();
-    
 
+            let _this = this;
+            $(_this).hide().siblings('.loader').css('display', 'inline-block');
+            let id = $(_this).attr('data-id');
+            if (!id) return false;
+
+            let baseUrl = '/duplicate_training';
+            let params = $.param({'training_id': id});
+
+            let url = `${baseUrl}?${params}`;
+            if (url) {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data, textStatus, jqXHR) {
+                        if (!data || data == undefined) return false;
+                        data = JSON.parse(data);
+                        let json = data.shift();
+                        let tpl = document.getElementById('tpl_training');
+                        if (!tpl) return false;
+                        let tempFn = doT.template(tpl.textContent);
+                        json.k = $('body').find('#list-trainings').children().length;
+                        $('body').find('#list-trainings .collapse').collapse('hide');
+                        let html = tempFn( json );
+                        $(html).prependTo('#list-trainings');
+
+                        // Trigger pour reinitialiser la recherche autocomplete dans le fichier main.js
+                        const event = new Event('newTraining');
+                        document.dispatchEvent(event);
+                    },
+                    error : function(jqXHR, textStatus, errorThrown){},
+                    complete : function(jqXHR, textStatus ){
+                        $(_this).css('display', 'inline-block').siblings('.loader').hide();
+                    }
+                });
+            } else {
+                $(_this).css('display', 'inline-block').siblings('.loader').hide();
+            }
         });
     }
 

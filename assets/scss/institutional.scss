@@ -55,12 +55,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         #list-trainings {
             margin-top: 60px;
 
-            .clone {
-                //font-size: 1.4rem;
+            .block-clone {
+                .loader {
+                    display: none;
+                }
             }
 
             .icon[data-toggle="collapse"] {
-                //font-size: 1.4rem;
                 line-height: 1;
             }
 
@@ -68,32 +69,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 .content-collapse {
                     padding: 7px 0 8px;
                 }
-
-                .icon[data-toggle="collapse"] {
-                    //font-size: 1.1rem;
-                }
             }
 
             .rmv, .more {
-                //font-size: 1.4rem;
                 line-height: 1;
             }
 
-            /*.link {
-                background-color: #007bff;
-                color: #fff;
-                width: 22px;
-                height: 22px;
-                flex: 0 0 22px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 25px;
-                font-size: 0.8rem;
-            }*/
-
             .feedback {
-                //font-size: 1.4rem;
                 line-height: 1;
             }
 
@@ -105,6 +87,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 box-sizing: border-box;
                 margin-top: 30px;
             }
+            
+            .skill {
+                .card-block {
+                    font-style: italic;
+                    font-size: 0.9rem;
+                    border: 0;
+                    background: rgba(0, 0, 0, 0.03);
+                }
+            }
         }
+
     }
 }

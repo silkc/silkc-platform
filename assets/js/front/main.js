@@ -57,9 +57,6 @@ class Main {
                     if (hiddenField && item.id) {
                         hiddenField.value = item.id;
                     }
-                },
-                autocompletechange: function(event, ui) {
-                    console.log('event, ui', event, ui);
                 }
             });
 
@@ -108,14 +105,49 @@ class Main {
                 let formats = input.getAttribute('data-formats') || 'json';
                 let pagination = input.getAttribute('data-pagination') || false;
                 let params = $.param({'formats': formats, 'pagination': pagination});
-                //let dfd = jQuery.Deferred();
 
                 let url = `${baseUrl}?${params}`;
+
+                sessionStorage.clear();
+                localStorage.clear();
+
+                let sessionsAutocomplete = {};
+                if (window.sessionStorage) {
+                    /*sessionsAutocomplete.date = sessionStorage.getItem('autocompleterDate', Date.now());
+
+
+                    sessionsAutocomplete.occupations = sessionStorage.getItem(url, JSON.stringify('occupations'));
+                    sessionsAutocomplete.skills = sessionStorage.getItem(url, JSON.stringify('skills'));
+                    sessionsAutocomplete.trainings = sessionStorage.getItem(url, JSON.stringify('trainings'));*/
+
+                   
+
+
+                } else {
+
+                    // AJAX
+
+                }
+
+
+
+
                 if (url && input) {
                     $.ajax({
                         type: "GET",
                         url: url,
                         success: function (data, textStatus, jqXHR) {
+                            if (window.localStorage) {
+                                localStorage.setItem('autocompleterDate', Date.now());
+                                if (url.includes("skills"))
+                                    localStorage.setItem('skills', JSON.stringify(data));
+                                /*if (url.includes("occupations"))
+                                    localStorage.setItem('occupations', JSON.stringify(data));*/
+                            }
+
+                            //console.log('skills', localStorage.getItem('skills'));
+                            /*console.log('occupations', localStorage.getItem('occupations'));*/
+
                             runAutocomplete(data, input);
                         }
                     });
@@ -223,11 +255,19 @@ class Main {
         }
     }
         
+    listenTrigger = () => {
+        let _this = this;
+        document.addEventListener('newTraining', function (e) {
+            _this.runAutocompletion();
+        }, false);
+    }
+
     init = function() {
         this.initGoogleMap();
         this.rmvItem();
         this.runAutocompletion();
         this.clearModal();
+        this.listenTrigger();
     }
 }
 

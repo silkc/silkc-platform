@@ -1,82 +1,63 @@
-{% extends 'front/layout.html.twig' %}
+<form class="form-inline form-search" method="POST" action="{{ path('app_search_results') }}">
+	<label for="input-search" class="mr-2">Training opportunities to land your dream job as:</label>
 
-{% block title %}Search!
-{% endblock %}
+	<div class="form-search-occupation"  
+        style="display: {{ search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' ? 'none' : 'block' }}">
+		{% include 'front/elements/input_search.html.twig'
+            with {
+                'id': 'input-search-occupation',
+                'url': '/apip/occupations',
+                'autocomplete': true,
+                'placeholder': 'What is your dream job?',
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'training_search_by_occupation',
+                'value': search is defined and attribute(search, 'name') is defined and search.name is not empty ? search.name : '',
+                'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
+            }
+        %}
+	</div>
 
-{% block stylesheets %}
-	{{ encore_entry_link_tags('app') }}
-	{{ encore_entry_link_tags('search') }}
-{% endblock %}
+	<div class="form-search-skill" 
+        style="display: {{ (search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation') 
+                                or (search is defined and search is empty) 
+                                or (search is not defined) ? 'none' : 'block' }}"}>
+		{% include 'front/elements/input_search.html.twig'
+            with {
+                'id': 'input-search-skill',
+                'url': '/apip/skills',
+                'autocomplete': true,
+                'placeholder': 'What is your dream job?',
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'training_search_by_skill',
+                'value': search is defined and attribute(search, 'name') is defined and search.name is not empty ? search.name : '',
+                'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
+            }
+        %}
+	</div>
 
-{% block body %}
-	<div id="search">
-		<div class="container">
-			<div class="info">
-				<p class="text-center">
-					5000 people have found a trining through the Silkc Path<br>
-					800 training available<br>
-					2000 registered jobs
-				</p>
-			</div>
+	<select class="form-control ml-2" name="type_search">
+		<option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>Search by occupation</option>
+		<option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>Search by skill</option>
+	</select>
 
-			<div class="search">
-				<p class="text-center">
-					Let's improve your professional situation!
-				</p>
+	<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>Search</button>
 
-				<div class="row">
-					<div class="col-md-6 col-left">
-						<form method="POST" action="{{ path('app_search_results') }}">
-                            <input type="hidden" name="type_search" value="occupation" />
-							<div class="mb-3">
-								<p class="title-search"><i class="far fa-list-alt"></i> Search by occupation</p>
-								{% include 'front/elements/input_search.html.twig'
-									with {
-										'url': '/apip/occupations',
-										'autocomplete': true,
-										'placeholder': 'What is your dream job?',
-										'formats': 'json',
-										'pagination': 'false',
-										'name': 'training_search_by_occupation'
-									}
-								%}
-							</div>
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
+		Advanced search
+	</button>
 
-							<div class="text-center">
-								<button type="submit" class="btn btn-primary disabled-search" disabled >Find out how to get there!</button>
-							</div>
-						</form>
-					</div>
-
-					<div class="col-md-6">
-						<form method="POST" action="{{ path('app_search_results') }}">
-                            <input type="hidden" name="type_search" value="skill" />
-							<div class="mb-3">
-								<p class="title-search"><i class="fas fa-list"></i> Search by skill</p>
-								{% include 'front/elements/input_search.html.twig'
-									with {
-										'url': '/apip/skills',
-										'autocomplete': true,
-										'placeholder': 'What is your dream job?',
-										'formats': 'json',
-										'pagination': 'false',
-										'name': 'training_search_by_skill'
-									}
-								%}
-							</div>
-
-							<div class="text-center">
-								<button type="submit" class="btn btn-primary disabled-search" disabled >Find out how to get there!</button>
-							</div>
-						</form>
-					</div>
-				</form>
+	<div class="collapse" id="advanced-search">
+		<div>
+			<div class="row">
+				<div class="col-md-6">
+                    ??????????
+				</div>
+				<div class="col-md-6">
+                    ??????????
+				</div>
 			</div>
 		</div>
 	</div>
-{% endblock %}
-
-{% block javascripts %}
-	{{ encore_entry_script_tags('main') }}
-	{{ encore_entry_script_tags('search') }}
-{% endblock %}
+</form>

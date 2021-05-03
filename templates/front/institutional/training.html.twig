@@ -1,118 +1,3 @@
-{# A SUPPRIMER ================================================================================ #}
-{% 
-    set trainings = [
-        {
-            'id': '1',
-            'name': 'Duis autem vel eum iriure dolor in hendrerit',
-            'location': 'Paris',
-            'duration': '40 min',
-            'description': 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam eratraining.',
-            'price': '20€',
-            'start_date': '2019-04-22',
-            'end_date': '2023-08-05',
-            'url': 'https://symfony.com/',
-            'file': 'info.xls',
-            'required_skills': [
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'dolor in hendrerit',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                }
-            ],
-            'acquired_skills': [
-                {
-                    name: 'autem vel eum iriure dolor in hendrerit',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                }
-            ]
-        },
-        {
-            'id': '2',
-            'name': 'autem vel eum iriure dolor in hendrerit',
-            'location': 'Rennes',
-            'duration': '40 min',
-            'description': 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam eratraining.',
-            'price': '20€',
-            'start_date': '2019-04-22',
-            'end_date': '2023-08-05',
-            'url': 'https://symfony.com/',
-            'file': 'info.xls',
-            'required_skills': [
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                }
-            ],
-            'acquired_skills': [
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                }
-            ]
-        },
-        {
-            'id': '3',
-            'name': 'dolor in hendrerit',
-            'location': 'Caen',
-            'duration': '40 min',
-            'description': 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit ametraining. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam eratraining.',
-            'price': '20€',
-            'start_date': '2019-04-22',
-            'end_date': '2023-08-05',
-            'url': 'https://symfony.com/',
-            'file': 'doc.xls',
-            'required_skills': [
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                }
-            ],
-            'acquired_skills': [
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                },
-                {
-                    name: 'precision engineering',
-                    description: 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat',
-                }
-            ]
-        }
-    ]
-%}
-{# ========================================================================================== #}
-
 <fieldset>
 	<div class="info">
 		Please indicate the name of a training your institution provides
@@ -127,8 +12,9 @@
 	<div class="accordion" id="list-trainings">
 		{% if trainings is defined %}
 			{% for k, training in trainings %}
-				<div class="card">
-					<form>
+				<div class="card" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
+					<form method="POST" action="{{ path('app_institutional') }}">
+						<input type="hidden" name="training_id" value="{{ attribute(training, 'id') is defined ? training.id : '' }}"/>
 						<div class="card-header" id="heading_{{ k }}">
 							<div class="d-flex flex-nowrap justify-content-between">
 								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#training_{{ k }}" aria-expanded="false" aria-controls="training_{{ k }}">
@@ -136,34 +22,34 @@
 										<i class="fas fa-chevron-circle-right"></i>
 									</a>
 									<a data-toggle="collapse" href="#training_{{ k }}">
-										<span>{{ training.name }}</span>
+										<span>{{ attribute(training, 'name') is defined ? training.name : '' }}</span>
 									</a>
 								</div>
 								<div class="d-inline-flex align-items-center justify-content-end">
-									<a href="#" class="clone mr-2" title="close this training">
-                                        <i class="fas fa-plus text-primary"></i>
-									</a>
-									<!--<a href="" class="text-danger item rmv" title="Remove this skill" data-name="{{ training.name }}" data-id="{{ training.id }}" data-url="url de suppression">
-										<i class="fas fa-trash-alt"></i>
-									</a>-->
+                                    <div class="block-clone">
+                                        <span class="spinner-border spinner-border-sm loader" role="status" aria-hidden="true"></span>
+                                        <a href="#" class="clone" title="close this training" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
+                                            <i class="far fa-clone text-primary"></i>
+                                        </a>
+                                    </div>
 								</div>
 							</div>
 						</div>
 
-						<div id="training_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-trainings">
+						<div id="training_{{ k }}" class="collapse {% if tab_active is defined and tab_active == 2 and training_active is defined and training_active == training.id %}show{% endif %}" aria-labelledby="heading_{{ k }}" data-parent="#list-trainings">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="training-name_{{ k }}">{{ attribute(training, 'name') is defined  ? training.name : '' }}</label>
-                                            {% include 'front/elements/input_search.html.twig'
+											{% include 'front/elements/input_search.html.twig'
                                                 with {
                                                     'id': 'training-name_' ~ k,
                                                     'url': '/apip/trainings',
                                                     'autocomplete': true,
                                                     'formats': 'json',
                                                     'pagination': 'false',
-                                                    'name': 'training-name_' ~ k,
+                                                    'name': 'name',
                                                     'value': attribute(training, 'name') is defined  ? training.name : ''
                                                 }
                                             %}
@@ -171,45 +57,45 @@
 
 										<div class="form-group">
 											<label for="location_{{ k }}">Location</label>
-											<input type="text" class="form-control" id="location_{{ k }}" value="{{ attribute(training, 'location') is defined ? training.location : '' }}">
+											<input type="text" class="form-control" id="location_{{ k }}" name="location" value="{{ attribute(training, 'location') is defined ? training.location : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="duration_{{ k }}">Duration</label>
-											<input type="text" class="form-control" id="duration_{{ k }}" value="{{ attribute(training, 'duration') is defined  ? training.duration : '' }}">
+											<input type="text" class="form-control" id="duration_{{ k }}" name="duration" value="{{ attribute(training, 'duration') is defined ? training.duration : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="description_{{ k }}">Description</label>
-											<textarea class="form-control" id="description_{{ k }}">{{ attribute(training, 'description') is defined  ? training.description : '' }}</textarea>
+											<textarea class="form-control" id="description_{{ k }}" name="description">{{ attribute(training, 'description') is defined  ? training.description : '' }}</textarea>
 										</div>
 
 										<div class="form-group">
 											<label for="price_{{ k }}">Price</label>
-											<input type="text" class="form-control" id="price_{{ k }}" value="{{ attribute(training, 'price') is defined  ? training.price : '' }}">
+											<input type="text" class="form-control" id="price_{{ k }}" name="price" value="{{ attribute(training, 'price') is defined ? training.price : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="start-date_{{ k }}">Start date</label>
-											<input type="date" class="form-control" id="start-date_{{ k }}" value="{{ attribute(training, 'start_date') is defined  ? training.start_date : '' }}">
+											<input type="date" class="form-control" id="start-date_{{ k }}" name="start_at" value="{{ attribute(training, 'start_at') is defined ? training.start_at : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="end-date_{{ k }}">End date</label>
-											<input type="date" class="form-control" id="end-date_{{ k }}" value="{{ attribute(training, 'end_date') is defined  ? training.end_date : '' }}">
+											<input type="date" class="form-control" id="end-date_{{ k }}" name="end_at" value="{{ attribute(training, 'end_at') is defined ? training.end_at : '' }}">
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="training-info-url_{{ k }}">Training info URL</label>
-											<input type="url" class="form-control" id="training-info-url_{{ k }}" value="{{ attribute(training, 'url') is defined  ? training.url : '' }}">
+											<input type="url" class="form-control" id="training-info-url_{{ k }}" name="url" value="{{ attribute(training, 'url') is defined ? training.url : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="upload-info-sheet_{{ k }}">Upload info sheet</label>
 											<div class="form-group custom-file">
-												<input type="file" class="custom-file-input" id="upload-info-sheet_{{ k }}" value="{{ attribute(training, 'file') is defined  ? training.file : '' }}">
+												<input type="file" class="custom-file-input" id="upload-info-sheet_{{ k }}" name="file" value="{{ attribute(training, 'file') is defined ? training.file : '' }}">
 												<label class="custom-file-label" for="upload-info-sheet_{{ k }}">Choose file</label>
 											</div>
 										</div>
@@ -218,7 +104,7 @@
 
 										<div class="mb-3">
 											<label for="skill-name-required_{{ k }}">Skill name</label>
-                                            {% include 'front/elements/input_search.html.twig'
+											{% include 'front/elements/input_search.html.twig'
                                                 with {
                                                     'id': 'skill-name-required_' ~ k,
                                                     'url': '/apip/skills',
@@ -230,10 +116,12 @@
                                             %}
 										</div>
 
+										{% set idsRequiredSkills = [] %}
 										<div class="skills-required-list">
-											{% if attribute(training, 'required_skills') %}
-												{% set required_skills = training.required_skills %}
-												{% for i, required_skill in required_skills %}
+											{% if attribute(training, 'requiredSkills') is defined and training.requiredSkills is not empty and training.requiredSkills is iterable %}
+												{% for i, trainingSkill in training.requiredSkills %}
+													{% set skill = trainingSkill.skill %}
+													{% set idsRequiredSkills = idsRequiredSkills|merge([skill.id]) %}
 													<div class="skill">
 														<div class="d-flex flex-nowrap justify-content-between">
 															<div class="d-flex flex-nowrap align-items-center">
@@ -241,7 +129,7 @@
 																	<i class="fas fa-chevron-circle-right"></i>
 																</a>
 																<a data-toggle="collapse" href="#skill_required_{{ k }}_{{ i }}">
-																	<span>{{ attribute(required_skill, 'name') ? required_skill.name : '' }}</span>
+																	<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
 																</a>
 															</div>
 															<div>
@@ -255,8 +143,7 @@
 															<div class="collapse" id="skill_required_{{ k }}_{{ i }}">
 																<div>
 																	<div class="card card-block">
-																		{{ attribute(required_skill, 'description') ? required_skill.description : '' }}
-																		craft beer labore wes anderson cred nesciunt sapiente ea proidentraining.
+																		{{ attribute(skill, 'description') is defined ? skill.description : '' }}
 																	</div>
 																</div>
 															</div>
@@ -265,12 +152,13 @@
 												{% endfor %}
 											{% endif %}
 										</div>
+										<input type="hidden" value="{{ idsRequiredSkills ? idsRequiredSkills|json_encode() : '' }}" name="ids_required_skills"/>
 
 										<p class="title">Skills students can acquire</p>
 
 										<div class="mb-3">
 											<label for="skill-name-acquire_{{ k }}">Skill name</label>
-                                            {% include 'front/elements/input_search.html.twig'
+											{% include 'front/elements/input_search.html.twig'
                                                 with {
                                                     'id': 'skill-name-acquire_' ~ k,
                                                     'url': '/apip/skills',
@@ -282,10 +170,12 @@
                                             %}
 										</div>
 
+										{% set idsToAcquireSkills = [] %}
 										<div class="skills-acquire-list">
-											{% if attribute(training, 'required_skills') %}
-												{% set acquired_skills = training.acquired_skills %}
-												{% for i, acquired_skill in acquired_skills %}
+											{% if attribute(training, 'toAcquireSkills') is defined and training.toAcquireSkills is not empty  and training.toAcquireSkills is iterable %}
+												{% for i, trainingSkill in training.toAcquireSkills %}
+													{% set skill = trainingSkill.skill %}
+													{% set idsToAcquireSkills = idsToAcquireSkills|merge([skill.id]) %}
 													<div class="skill">
 														<div class="d-flex flex-nowrap justify-content-between">
 															<div class="d-flex flex-nowrap align-items-center">
@@ -293,7 +183,7 @@
 																	<i class="fas fa-chevron-circle-right"></i>
 																</a>
 																<a data-toggle="collapse" href="#skill_acquire_{{ k }}_{{ i }}">
-																	<span>{{ attribute(acquired_skill, 'name') ? acquired_skill.name : '' }}</span>
+																	<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
 																</a>
 															</div>
 															<div>
@@ -307,8 +197,7 @@
 															<div class="collapse" id="skill_acquire_{{ k }}_{{ i }}">
 																<div>
 																	<div class="card card-block">
-																		{{ attribute(acquired_skill, 'description') ? acquired_skill.description : '' }}
-																		craft beer labore wes anderson cred nesciunt sapiente ea proidentraining.
+																		{{ attribute(skill, 'description') is defined ? skill.description : '' }}
 																	</div>
 																</div>
 															</div>
@@ -317,6 +206,7 @@
 												{% endfor %}
 											{% endif %}
 										</div>
+										<input type="hidden" value="{{ idsToAcquireSkills ? idsToAcquireSkills|json_encode() : '' }}" name="ids_to_acquire_skills"/>
 									</div>
 								</div>
 							</div>
@@ -335,3 +225,202 @@
 <div class="form-group button-group text-right">
 	<button type="submit" class="btn btn-primary">Save</button>
 </div>
+
+<script id="tpl_training" type="text/x-dot-template">
+	<div class="card">
+		<form method="POST" action="{{ path('app_institutional') }}">
+			<div class="card-header" id="heading_[[? it.k ]][[=it.k]][[?]]">
+				<div class="d-flex flex-nowrap justify-content-between">
+					<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#training_[[? it.k ]][[=it.k]][[?]]" aria-expanded="false" aria-controls="training_[[? it.k ]][[=it.k]][[?]]">
+						<a class="text-primary icon mr-2" data-toggle="collapse" href="#training_[[? it.k ]][[=it.k]][[?]]">
+							<i class="fas fa-chevron-circle-right"></i>
+						</a>
+						<a data-toggle="collapse" href="#training_[[? it.k ]][[=it.k]][[?]]">
+							<span>[[? it.name ]][[=it.name]][[?]]</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div id="training_[[? it.k ]][[=it.k]][[?]]" class="collapse show" aria-labelledby="heading_[[? it.k ]][[=it.k]][[?]]" data-parent="#list-trainings">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="training-name_[[? it.k ]][[=it.k]][[?]]">[[? it.name ]][[=it.name]][[?]]</label>
+								{% include 'front/elements/input_search.html.twig'
+                                    with {
+                                        'id': 'training-name_[[? it.k ]][[=it.k]][[?]]',
+                                        'url': '/apip/trainings',
+                                        'autocomplete': true,
+                                        'formats': 'json',
+                                        'pagination': 'false',
+                                        'name': 'training-name_[[? it.k ]][[=it.k]][[?]]',
+                                        'value': '[[? it.name ]][[=it.name]][[?]]'
+                                    }
+                                %}
+							</div>
+
+							<div class="form-group">
+								<label for="location_[[? it.k ]][[=it.k]][[?]]">Location</label>
+								<input type="text" class="form-control" id="location_[[? it.k ]][[=it.k]][[?]]" value="[[? it.location ]][[=it.location]][[?]]">
+							</div>
+
+							<div class="form-group">
+								<label for="duration_[[? it.k ]][[=it.k]][[?]]">Duration</label>
+								<input type="text" class="form-control" id="duration_[[? it.k ]][[=it.k]][[?]]" value="[[? it.duration ]][[=it.duration]][[?]]">
+							</div>
+
+							<div class="form-group">
+								<label for="description_[[? it.k ]][[=it.k]][[?]]">Description</label>
+								<textarea class="form-control" id="description_[[? it.k ]][[=it.k]][[?]]">[[? it.description ]][[=it.description]][[?]]</textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="price_[[? it.k ]][[=it.k]][[?]]">Price</label>
+								<input type="text" class="form-control" id="price_[[? it.k ]][[=it.k]][[?]]" value="[[? it.price ]][[=it.price]][[?]]">
+							</div>
+
+							<div class="form-group">
+								<label for="start-date_[[? it.k ]][[=it.k]][[?]]">Start date</label>
+								<input type="date" class="form-control" id="start-date_[[? it.k ]][[=it.k]][[?]]" value="[[? it.start_at ]][[=it.start_at]][[?]]">
+							</div>
+
+							<div class="form-group">
+								<label for="end-date_[[? it.k ]][[=it.k]][[?]]">End date</label>
+								<input type="date" class="form-control" id="end-date_[[? it.k ]][[=it.k]][[?]]" value="[[? it.end_at ]][[=it.end_at]][[?]]">
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="training-info-url_[[? it.k ]][[=it.k]][[?]]">Training info URL</label>
+								<input type="url" class="form-control" id="training-info-url_[[? it.k ]][[=it.k]][[?]]" value="[[? it.url ]][[=it.url]][[?]]">
+							</div>
+
+							<div class="form-group">
+								<label for="upload-info-sheet_[[? it.k ]][[=it.k]][[?]]">Upload info sheet</label>
+								<div class="form-group custom-file">
+									<input type="file" class="custom-file-input" id="upload-info-sheet_[[? it.k ]][[=it.k]][[?]]" value="[[? it.file ]][[=it.file]][[?]]">
+									<label class="custom-file-label" for="upload-info-sheet_[[? it.k ]][[=it.k]][[?]]">Choose file</label>
+								</div>
+							</div>
+
+							<p class="title">Required skills</p>
+
+							<div class="mb-3">
+								<label for="skill-name-required_[[? it.k ]][[=it.k]][[?]]">Skill name</label>
+								{% include 'front/elements/input_search.html.twig'
+                                    with {
+                                        'id': 'skill-name-required_[[? it.k ]][[=it.k]][[?]]',
+                                        'url': '/apip/skills',
+                                        'autocomplete': true,
+                                        'formats': 'json',
+                                        'pagination': 'false',
+                                        'name': 'skill-name-required_[[? it.k ]][[=it.k]][[?]]'
+                                    }
+                                %}
+							</div>
+
+							<div class="skills-required-list">
+								[[? it.trainingSkills ]]
+                                    [[? it.trainingSkills.length ]]
+                                        [[~it.trainingSkills :item:i]]
+                                            [[? item.skill && item.isRequired && item.isRequired == true ]]
+                                                <div class="skill">
+                                                    <div class="d-flex flex-nowrap justify-content-between">
+                                                        <div class="d-flex flex-nowrap align-items-center">
+                                                            <a class="text-primary icon mr-2" data-toggle="collapse" href="#skill_required_[[? it.k ]][[=it.k]][[?]]_[[? i ]][[=i]][[?]]">
+                                                                <i class="fas fa-chevron-circle-right"></i>
+                                                            </a>
+                                                            <a data-toggle="collapse" href="#skill_required_[[? it.k ]][[=it.k]][[?]]_[[? i ]][[=i]][[?]]">
+                                                                <span>[[? item.skill.preferredLabel ]][[=item.skill.preferredLabel]][[?]]</span>
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="" class="text-danger rmv" title="Remove this skill">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="content-collapse">
+                                                        <div class="collapse" id="skill_required_[[? it.k ]][[=it.k]][[?]]_[[? i ]][[=i]][[?]]">
+                                                            <div>
+                                                                <div class="card card-block">
+                                                                    [[? item.skill.description ]][[=item.skill.description]][[?]]
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            [[?]]
+                                        [[~]]
+                                    [[?]]
+                                [[?]]
+							</div>
+
+							<p class="title">Skills students can acquire</p>
+
+							<div class="mb-3">
+								<label for="skill-name-acquire_[[? it.k ]][[=it.k]][[?]]">Skill name</label>
+								{% include 'front/elements/input_search.html.twig'
+                                    with {
+                                        'id': 'skill-name-acquire_[[? it.k ]][[=it.k]][[?]]',
+                                        'url': '/apip/skills',
+                                        'autocomplete': true,
+                                        'formats': 'json',
+                                        'pagination': 'false',
+                                        'name': 'skill-name-acquire_[[? it.k ]][[=it.k]][[?]]'
+                                    }
+                                %}
+							</div>
+
+							<div class="skills-acquire-list">
+								[[? it.trainingSkills ]]
+                                    [[? it.trainingSkills.length ]]
+                                        [[~it.trainingSkills :item:i]]
+                                            [[? item.skill && item.isToAcquire && item.isToAcquire == true ]]
+                                                <div class="skill">
+                                                    <div class="d-flex flex-nowrap justify-content-between">
+                                                        <div class="d-flex flex-nowrap align-items-center">
+                                                            <a class="text-primary icon mr-2" data-toggle="collapse" href="#skill_acquire_[[? it.k ]][[=it.k]][[?]]_[[? i ]][[=i]][[?]]">
+                                                                <i class="fas fa-chevron-circle-right"></i>
+                                                            </a>
+                                                            <a data-toggle="collapse" href="#skill_acquire_[[? it.k ]][[=it.k]][[?]]_[[? i ]][[=i]][[?]]">
+                                                                <span>[[? item.skill.preferredLabel ]][[=item.skill.preferredLabel]][[?]]</span>
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="" class="text-danger rmv" title="Remove this skill">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="content-collapse">
+                                                        <div class="collapse" id="skill_acquire_[[? it.k ]][[=it.k]][[?]]_[[? i ]][[=i]][[?]]">
+                                                            <div>
+                                                                <div class="card card-block">
+                                                                    [[? item.skill.description ]][[=item.skill.description]][[?]]
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            [[?]]
+                                        [[~]]
+                                    [[?]]
+                                [[?]]
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group button-group text-center">
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</script>

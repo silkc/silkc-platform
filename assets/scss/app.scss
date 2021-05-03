@@ -15,6 +15,27 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 body { font-family: 'Roboto', sans-serif!important; background-color: #f5f5f5; color: #292b2c; }
 
+#main-loader {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    > div {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
 .input-group {
     .loader-search {
         display: flex;
