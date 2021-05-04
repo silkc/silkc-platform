@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Training;
+use App\Form\Type\TrainingType;
 use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("", name="app_")
@@ -141,6 +144,38 @@ class HomeController extends AbstractController
                 'training_active' => $training_active
             ]
         );
+    }
+
+    /**
+     * @Route("/training/create", name="training_create")
+     */
+    public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator): Response
+    {
+        $training = new Training();
+
+        $form = $this->createForm(TrainingType::class, $training);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($training);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($training);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
+
+            return $this->redirectToRoute('app_training_create');
+        }
+
+        return $this->render('front/institutional/training_create.html.twig', [
+            'controller_name' => 'HomeController',
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

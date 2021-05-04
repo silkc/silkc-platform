@@ -1,0 +1,65 @@
+{{ form_start(form, {attr: attr|default({})}) }}
+
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.url) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.location) }}
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.duration) }}
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.description) }}
+
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.price) }}
+
+        </div>
+        <div class="col-6">
+            {{ form_row(form.isOnline) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.startAt) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.isOnlineMonitored) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.endAt) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.isPresential) }}
+        </div>
+    </div>
+
+    <p>
+        {{ form_widget(form.save, {'label': (training is defined) ? 'label.edit_training' : 'label.create'}) }}
+    </p>
+{{ form_end(form) }}

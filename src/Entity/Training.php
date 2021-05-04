@@ -84,7 +84,7 @@ class Training
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
      */
-    private $hasSessions;
+    private $hasSessions = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
@@ -107,7 +107,7 @@ class Training
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $files;
 
@@ -240,6 +240,42 @@ class Training
     public function setHasSessions(bool $hasSessions): self
     {
         $this->hasSessions = $hasSessions;
+
+        return $this;
+    }
+
+    public function getIsOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnlineMonitored(bool $isOnlineMonitored): self
+    {
+        $this->isOnline = $isOnlineMonitored;
+
+        return $this;
+    }
+
+    public function getIsOnlineMonitored(): ?bool
+    {
+        return $this->isOnlineMonitored;
+    }
+
+    public function setIsOnline(bool $isOnline): self
+    {
+        $this->isOnline = $isOnline;
+
+        return $this;
+    }
+
+    public function getIsPresential(): ?bool
+    {
+        return $this->isPresential;
+    }
+
+    public function setIsPresential(bool $isPresential): self
+    {
+        $this->isPresential = $isPresential;
 
         return $this;
     }
