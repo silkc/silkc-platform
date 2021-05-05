@@ -151,7 +151,8 @@ class HomeController extends AbstractController
             }
 
             $em = $this->getDoctrine()->getManager();
-            
+
+            $oldTrainingSkills = $training->getTrainingSkills();
             $newTrainingSkills = new ArrayCollection();
             if (
                 $request->request->get('hidden_trainingSkills') !== NULL &&
@@ -170,6 +171,7 @@ class HomeController extends AbstractController
                         $trainingSkill->setIsToAcquire(true);
                         $em->persist($trainingSkill);
                         $training->addTrainingSkill($trainingSkill);
+                        $newTrainingSkills->add($trainingSkill);
                     }
                 }
                 if (array_key_exists('required', $skills)) {
@@ -184,13 +186,18 @@ class HomeController extends AbstractController
                         $trainingSkill->setIsRequired(true);
                         $em->persist($trainingSkill);
                         $training->addTrainingSkill($trainingSkill);
+                        $newTrainingSkills->add($trainingSkill);
                     }
                 }
             }
 
+            foreach ($oldTrainingSkills as $trainingSkill) {
+                if (!$newTrainingSkills->contains($trainingSkill))
+                    $training->removeTrainingSkill($trainingSkill);
+            }
+
             $em->persist($training);
             $em->flush();
-            die();
 
             $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
 

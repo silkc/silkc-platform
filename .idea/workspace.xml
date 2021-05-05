@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Form/DataTransformer/SkillsToJsonTransformer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/front/institutional.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/front/institutional.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Type/TrainingType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Type/TrainingType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front/institutional/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/institutional/_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
