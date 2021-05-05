@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\TrainingSkill;
 use App\Entity\User;
 use App\Entity\Training;
 use App\Form\Type\TrainingType;
@@ -9,6 +10,7 @@ use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\OccupationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -136,12 +138,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/training/create", name="training_create")
      */
-    public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator): Response
+    public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
         $training = new Training();
-
         $form = $this->createForm(TrainingType::class, $training);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -151,8 +151,46 @@ class HomeController extends AbstractController
             }
 
             $em = $this->getDoctrine()->getManager();
+            
+            $newTrainingSkills = new ArrayCollection();
+            if (
+                $request->request->get('hidden_trainingSkills') !== NULL &&
+                @json_decode($request->request->get('hidden_trainingSkills')) !== NULL
+            ) {
+                $skills = json_decode($request->request->get('hidden_trainingSkills'));
+                if (array_key_exists('acquired', $skills)) {
+                    foreach ($skills as $skillId) {
+                        $skill = $skillRepository->findOneBy(['id' => $skillId]);
+                        if (!$skill)
+                            continue;
+
+                        $trainingSkill = new TrainingSkill();
+                        $trainingSkill->setSkill($skill);
+                        $trainingSkill->setTraining($training);
+                        $trainingSkill->setIsToAcquire(true);
+                        $em->persist($trainingSkill);
+                        $training->addTrainingSkill($trainingSkill);
+                    }
+                }
+                if (array_key_exists('required', $skills)) {
+                    foreach ($skills as $skillId) {
+                        $skill = $skillRepository->findOneBy(['id' => $skillId]);
+                        if (!$skill)
+                            continue;
+
+                        $trainingSkill = new TrainingSkill();
+                        $trainingSkill->setSkill($skill);
+                        $trainingSkill->setTraining($training);
+                        $trainingSkill->setIsRequired(true);
+                        $em->persist($trainingSkill);
+                        $training->addTrainingSkill($trainingSkill);
+                    }
+                }
+            }
+
             $em->persist($training);
             $em->flush();
+            die();
 
             $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
 

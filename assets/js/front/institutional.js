@@ -120,7 +120,7 @@ class Institutional {
             let type = $(this).closest('.add-skill');
             let skillName = $(this).closest('.add-skill').find('.input-autocomplete');
             let inputSkillToAdd = $(this).closest('.add-skill').find('input[type="hidden"]');
-            let inputSkillsList = $('body').find('#training_trainingSkills');
+            let inputSkillsList = $('body').find('#hidden_trainingSkills');
             let skillToAdd = {};
             let skillsList = {};
 

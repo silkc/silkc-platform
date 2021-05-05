@@ -16,6 +16,7 @@
             <p class="title">Required skills</p>
             <div class="mb-3 add-skill required">
                 <label for="skill-name-required">Skill name</label>
+                <input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" />
                 {% include 'front/elements/input_add_skills.html.twig'
                     with {
                         'id': 'skill-name-required',

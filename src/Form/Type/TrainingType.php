@@ -16,11 +16,16 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\DataTransformer\SkillsToJsonTransformer;
 
 class TrainingType extends AbstractType
 {
-    public function __construct()
-    {}
+    private $transformer;
+
+    public function __construct(SkillsToJsonTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -81,13 +86,16 @@ class TrainingType extends AbstractType
                 'label' => 'is_presential',
                 'required' => false
             ])
-            ->add('trainingSkills', HiddenType::class, [
+            /*->add('trainingSkills', HiddenType::class, [
                 'required' => false,
-            ])
+            ])*/
             ->add('save', SubmitType::class, [
                 'translation_domain' => 'label',
                 'label' => 'create'
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {});
+
+        /*$builder->get('trainingSkills')
+            ->addModelTransformer($this->transformer);*/
     }
 }

@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20210503145527.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/Type/TrainingType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front/institutional/training_create.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/DataTransformer/SkillsToJsonTransformer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/front/institutional.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/front/institutional.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Training.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Type/TrainingType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Type/TrainingType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/institutional/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/institutional/_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,14 +185,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1230" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1620134278193">
+    <state x="-1230" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1620207025265">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1230" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620134278193" />
-    <state x="-1180" y="275" key="FileChooserDialogImpl" timestamp="1620064594807">
+    <state x="-1230" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620207025265" />
+    <state x="-1180" y="275" key="FileChooserDialogImpl" timestamp="1620205333284">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620064594807" />
+    <state x="-1180" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620205333284" />
     <state width="498" height="446" key="SwitcherDM" timestamp="1619102336769">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
@@ -206,10 +205,14 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1253" y="253" width="586" height="534" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1618391698033" />
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1620136181300">
+    <state width="600" height="428" key="javadoc.popup" timestamp="1620208087957">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620136181300" />
+    <state width="600" height="428" key="javadoc.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620208087957" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1620208185074">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620208185074" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1618411968791" />
   </component>
 </project>
