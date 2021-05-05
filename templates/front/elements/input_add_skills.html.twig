@@ -1,0 +1,24 @@
+<div class="input-group">
+    <div class="loader-search loader mr-2" id="{{ name is defined ? 'loader_' ~ name : '' }}">
+        <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+	<input 
+		type="text" disabled="disabled" class="form-control {{ autocomplete is defined and autocomplete == true ? 'input-autocomplete' : '' }}" 
+		name="{{ name is defined ? name : '' }}" 
+		{% if id is defined and id is not empty %}id="{{id}}" {% endif %} 
+		{% if placeholder is defined and placeholder is not empty %}placeholder="{{ placeholder }}" {% endif %} 
+		aria-describedby="basic-addon2" 
+		data-url="{{ url is defined ? url : '' }}" 
+		data-formats="{{ formats is defined ? formats : 'json' }}" 
+		data-pagination="{{ pagination is defined ? pagination : 'false' }}" 
+		{% if value is defined and value is not empty %}value="{{ value }}" {% endif %} 
+	>
+    <input type="hidden" name="{{ name is defined ? 'hidden_' ~ name : '' }}" id="{{ name is defined ? 'hidden_' ~ name : '' }}" value="{{ id_input_hidden is defined ? id_input_hidden : '' }}" />
+	<div class="input-group-append">
+        <button type="button">
+            <i class="fas fa-plus"></i>
+        </button>
+	</div>
+</div>

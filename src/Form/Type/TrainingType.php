@@ -32,57 +32,62 @@ class TrainingType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['autofocus' => true],
-                'label' => 'label.name',
+                'translation_domain' => 'label',
+                'label' => 'name',
             ])
             ->add('location', TextType::class, [
-                'label' => 'label.location',
+                'translation_domain' => 'label',
+                'label' => 'location',
             ])
             ->add('duration', TextType::class, [
-                'label' => 'label.duration',
+                'translation_domain' => 'label',
+                'label' => 'duration',
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['rows' => 8/*, 'class' => 'tinymce'*/],
                 'help' => 'help.description',
-                'label' => 'label.description',
+                'translation_domain' => 'label',
+                'label' => 'description',
                 'required' => false,
             ])
             ->add('price', TextType::class, [
-                'label' => 'label.price',
+                'translation_domain' => 'label',
+                'label' => 'price',
             ])
             ->add('url', TextType::class, [
-                'label' => 'label.url',
+                'translation_domain' => 'label',
+                'label' => 'url',
             ])
             ->add('startAt', DateTimeType::class, [
-                'label' => 'label.start_at',
-                'translation_domain' => 'quiz',
+                'translation_domain' => 'label',
+                'label' => 'start_at',
             ])
             ->add('endAt', DateTimeType::class, [
+                'translation_domain' => 'label',
                 'label' => 'label.end_at',
-                'translation_domain' => 'quiz',
             ])
             ->add('isOnline', CheckboxType::class, [
-                'label' => 'label.online',
+                'translation_domain' => 'label',
+                'label' => 'online',
                 'required' => false
             ])
             ->add('isOnlineMonitored', CheckboxType::class, [
-                'label' => 'label.is_online_monitored',
+                'translation_domain' => 'label',
+                'label' => 'is_online_monitored',
                 'required' => false
             ])
             ->add('isPresential', CheckboxType::class, [
-                'label' => 'label.is_presential',
+                'translation_domain' => 'label',
+                'label' => 'is_presential',
                 'required' => false
             ])
             ->add('trainingSkills', HiddenType::class, [
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'label.create'
+                'translation_domain' => 'label',
+                'label' => 'create'
             ])
-            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-                /*$item = $event->getData();
-                if (null !== $itemLabel = $item->getLabel()) {
-                    $item->setSlug($this->slugger->slug($itemLabel)->lower());
-                }*/
-            });
+            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {});
     }
 }

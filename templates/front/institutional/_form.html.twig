@@ -1,65 +1,57 @@
 {{ form_start(form, {attr: attr|default({})}) }}
-
     <div class="row">
         <div class="col-6">
             {{ form_row(form.name) }}
+            {{ form_row(form.location) }}
+            {{ form_row(form.duration) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.price) }}
+            {{ form_row(form.startAt) }}
+            {{ form_row(form.endAt) }}            
         </div>
+
         <div class="col-6">
             {{ form_row(form.url) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.location) }}
-        </div>
-        <div class="col-6">
 
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.duration) }}
-        </div>
-        <div class="col-6">
+            <p class="title">Required skills</p>
+            <div class="mb-3 add-skill required">
+                <label for="skill-name-required">Skill name</label>
+                {% include 'front/elements/input_add_skills.html.twig'
+                    with {
+                        'id': 'skill-name-required',
+                        'url': '/apip/skills',
+                        'autocomplete': true,
+                        'formats': 'json',
+                        'pagination': 'false',
+                        'name': 'skill-name-required'
+                    }
+                %}
+                <div class="content-list-skill"></div>
+            </div>
 
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.description) }}
+            <p class="title">Acquired skills</p>
+            <div class="mb-3 add-skill acquired">
+                <label for="skill-name-required">Skill name</label>
+                {% include 'front/elements/input_add_skills.html.twig'
+                    with {
+                        'id': 'skill-name-acquired',
+                        'url': '/apip/skills',
+                        'autocomplete': true,
+                        'formats': 'json',
+                        'pagination': 'false',
+                        'name': 'skill-name-acquired'
+                    }
+                %}
+                <div class="content-list-skill"></div>
+            </div>
 
-        </div>
-        <div class="col-6">
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.price) }}
-
-        </div>
-        <div class="col-6">
             {{ form_row(form.isOnline) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.startAt) }}
-        </div>
-        <div class="col-6">
             {{ form_row(form.isOnlineMonitored) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.endAt) }}
-        </div>
-        <div class="col-6">
             {{ form_row(form.isPresential) }}
         </div>
     </div>
 
-    <p>
-        {{ form_widget(form.save, {'label': (training is defined) ? 'label.edit_training' : 'label.create'}) }}
+    <p class="text-center">
+        {{ form_widget(form.save, {'label': (training is defined) ? 'edit_training' : 'create'}) }}
     </p>
 {{ form_end(form) }}

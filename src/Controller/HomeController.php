@@ -88,7 +88,7 @@ class HomeController extends AbstractController
     public function institution(Request $request, TrainingRepository $trainingRepository): Response
     {
 
-        $tab_active = false; // false, 1, 2 ou 3 (correspond aux onglets)
+        /*$tab_active = false; // false, 1, 2 ou 3 (correspond aux onglets)
         $training_active = false; // ID du training actif
 
         if ($request->isMethod('post')) {
@@ -121,27 +121,14 @@ class HomeController extends AbstractController
             $entityManager->flush();
             $tab_active = 2;
             $training_active = $training->getId();
-        }
-        
-
-
-        /*if ($form->isSubmitted() && $form->isValid()) {
-
-            $this->addFlash(
-                'notice',
-                'Your changes were saved!'
-            );
         }*/
-
-
-
 
         $trainings = $trainingRepository->findAll();
         return $this->render('front/institutional/index.html.twig', 
             [
                 'trainings'       => $trainings, 
-                'tab_active'      => $tab_active, 
-                'training_active' => $training_active
+                /*'tab_active'      => $tab_active, 
+                'training_active' => $training_active*/
             ]
         );
     }

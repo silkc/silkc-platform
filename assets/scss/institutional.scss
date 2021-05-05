@@ -99,4 +99,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
 
     }
+
+}
+
+form[name="training"] {
+    .content-list-skill {
+        > .skill {
+            margin: 10px 0;
+        }
+    }
 }

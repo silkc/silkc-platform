@@ -110,11 +110,106 @@ class Institutional {
         });
     }
 
+    /**
+     * Ajout de compétences à un training
+     */
+     addSkillsToTraining = () => {
+
+        $('body').on('click', '.add-skill button', function() {
+
+            let type = $(this).closest('.add-skill');
+            let skillName = $(this).closest('.add-skill').find('.input-autocomplete');
+            let inputSkillToAdd = $(this).closest('.add-skill').find('input[type="hidden"]');
+            let inputSkillsList = $('body').find('#training_trainingSkills');
+            let skillToAdd = {};
+            let skillsList = {};
+
+            if (inputSkillToAdd && inputSkillsList) {
+                skillToAdd = inputSkillToAdd.val();
+                skillsList = inputSkillsList.val();
+                
+                if (skillsList) {
+                    skillsList = JSON.parse(inputSkillsList.val());
+
+                    if (type.hasClass('required')) {
+                        if ('required' in skillsList) {
+                            if (type.hasClass('required'))
+                                skillsList.required = [skillToAdd, ...skillsList.required];
+                        } else {
+                            if (type.hasClass('required'))
+                                skillsList.required = [skillToAdd];
+                        }
+                    }
+
+                    if (type.hasClass('acquired')) {
+                        if ('acquired' in skillsList) {
+                            if (type.hasClass('acquired'))
+                                skillsList.acquired = [skillToAdd, ...skillsList.acquired];
+                        } else {
+                            if (type.hasClass('acquired'))
+                                skillsList.acquired = [skillToAdd];
+                        }
+                    }
+
+                } else {
+                    skillsList = {};
+                    if (type.hasClass('required'))
+                        skillsList.required = [skillToAdd];
+                    if (type.hasClass('acquired'))
+                        skillsList.acquired = [skillToAdd];
+                }
+                
+                inputSkillsList.val(JSON.stringify(skillsList))
+
+                let html = `<div class="skill">
+                                <div class="d-flex flex-nowrap justify-content-between">
+                                    <div class="d-flex flex-nowrap align-items-center">
+                                        <span>${skillName.val()}</span>
+                                    </div>
+                                    <div>
+                                        <a href="" class="text-danger rmv" data-id="${skillToAdd}" data-type="${type.hasClass('required') ? 'required' : 'acquired'}" title="Remove this skill">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                $(html).appendTo(type.find('.content-list-skill'));
+                skillName.val('');
+                inputSkillToAdd.val('');
+
+            }
+        });
+    }
+
+    /**
+     * Suppression de compétences à un training
+     */
+     removeSkillsToTraining = () => {
+
+        $('body').on('click', 'form .content-list-skill .rmv', function() {
+
+            let _this = this;
+            let type = $(_this).attr('data-type');
+            let id = $(_this).attr('data-id');
+            let inputSkillsList = $('body').find('#training_trainingSkills');
+
+            if (type && id && inputSkillsList) {
+                let skillsList = inputSkillsList.val();
+                if (skillsList) {
+                    
+                }
+            }
+        });
+    }
+
 
     init = function() {
         this.dotjs();
         this.addTraining();
         this.duplicateTraining();
+        this.addSkillsToTraining();
+        this.removeSkillsToTraining();
     }
 }
 
