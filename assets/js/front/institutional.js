@@ -244,16 +244,10 @@ class Institutional {
                                     </div>`;
                         if (data && data.length > 0) {
                             for (let i = 0; i < data.length; i++) {
-                                /*html += `<div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="${data[i].id}" data-name="${data[i].preferredLabel}">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    ${data[i].preferredLabel}
-                                                </label>
-                                            </div>`*/
                                 html += `<div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="${data[i].id}" data-name="preferredLabel">
+                                                <input class="form-check-input" type="checkbox" value="${data[i].id}" data-name="${data[i].skill.preferredLabel}">
                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                    preferredLabel
+                                                    ${data[i].skill.preferredLabel}
                                                 </label>
                                             </div>`
 
@@ -282,7 +276,6 @@ class Institutional {
         $('#modal_skills').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-body').children().remove();
             $('body').find('.occupations-select select').val($('.occupations-select select option:first').val());
-
         });
 
         $('body').on('click', '#modal_skills .add', function () {
@@ -291,7 +284,7 @@ class Institutional {
                 if (this.checked) {
                     let id = $(this).val();
                     let name = $(this).attr('data-name');
-                    let type = $('.add-skill.required');
+                    let type = $('.add-skill.acquired');
                     let skillName = $(this).attr('data-name');
                     let inputSkillsList = $('body').find('form[name="training"]').find('.hidden_trainingSkills');
                     _this.addSkills(type, skillName, false, inputSkillsList, id);

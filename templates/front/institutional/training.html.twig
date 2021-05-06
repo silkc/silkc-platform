@@ -13,7 +13,7 @@
 		{% if trainings is defined %}
 			{% for k, training in trainings %}
 				<div class="card" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
-					<form method="POST" action="{{ path('app_institutional') }}">
+					<form method="POST" action="{{ path('app_institution') }}">
 						<input type="hidden" name="training_id" value="{{ attribute(training, 'id') is defined ? training.id : '' }}"/>
 						<div class="card-header" id="heading_{{ k }}">
 							<div class="d-flex flex-nowrap justify-content-between">
@@ -36,14 +36,14 @@
 							</div>
 						</div>
 
-                        {#{{ render(controller(
-                            'App\\Controller\\HomeController::form_trainings',
-                            { 'training_id': training.id }
-                        )) }}#}
 
 						<div id="training_{{ k }}" class="collapse {% if tab_active is defined and tab_active == 2 and training_active is defined and training_active == training.id %}show{% endif %}" aria-labelledby="heading_{{ k }}" data-parent="#list-trainings">
 							<div class="card-body">
-								<div class="row">
+                        {{ render(controller(
+                            'App\\Controller\\HomeController::form_training_edit',
+                            { 'id': training.id }
+                        )) }}
+								{#<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="training-name_{{ k }}">{{ attribute(training, 'name') is defined  ? training.name : '' }}</label>
@@ -213,12 +213,12 @@
 										</div>
 										<input type="hidden" value="{{ idsToAcquireSkills ? idsToAcquireSkills|json_encode() : '' }}" name="ids_to_acquire_skills"/>
 									</div>
-								</div>
+								</div>#}
 							</div>
 
-							<div class="form-group button-group text-center">
+							{#<div class="form-group button-group text-center">
 								<button type="submit" class="btn btn-primary">Save</button>
-							</div>
+							</div>#}
 						</div>
 					</form>
 				</div>
@@ -233,7 +233,7 @@
 
 <script id="tpl_training" type="text/x-dot-template">
 	<div class="card">
-		<form method="POST" action="{{ path('app_institutional') }}">
+		<form method="POST" action="{{ path('app_institution') }}">
 			<div class="card-header" id="heading_[[? it.k ]][[=it.k]][[?]]">
 				<div class="d-flex flex-nowrap justify-content-between">
 					<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#training_[[? it.k ]][[=it.k]][[?]]" aria-expanded="false" aria-controls="training_[[? it.k ]][[=it.k]][[?]]">
