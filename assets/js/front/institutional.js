@@ -115,67 +115,76 @@ class Institutional {
      */
      addSkillsToTraining = () => {
 
+        let _this = this; 
+
         $('body').on('click', '.add-skill button', function() {
 
             let type = $(this).closest('.add-skill');
             let skillName = $(this).closest('.add-skill').find('.input-autocomplete');
             let inputSkillToAdd = skillName.siblings('input[type="hidden"]');
             let inputSkillsList = $(this).closest('form[name="training"]').find('.hidden_trainingSkills');
-            let skillToAdd = {};
-            let skillsList = {};
 
-            if (inputSkillToAdd && inputSkillsList) {
-                skillToAdd = inputSkillToAdd.val();
-                skillsList = inputSkillsList.val();
-
-                if (skillsList) {
-                    skillsList = JSON.parse(inputSkillsList.val());
-                    if (type.hasClass('required')) {
-                        if ('required' in skillsList) {
-                            if (type.hasClass('required'))
-                                skillsList.required = [skillToAdd, ...skillsList.required];
-                        } else {
-                            if (type.hasClass('required'))
-                                skillsList.required = [skillToAdd];
-                        }
-                    }
-                    if (type.hasClass('acquired')) {
-                        if ('acquired' in skillsList) {
-                            if (type.hasClass('acquired'))
-                                skillsList.acquired = [skillToAdd, ...skillsList.acquired];
-                        } else {
-                            if (type.hasClass('acquired'))
-                                skillsList.acquired = [skillToAdd];
-                        }
-                    }
-                } else {
-                    skillsList = {};
-                    if (type.hasClass('required'))
-                        skillsList.required = [skillToAdd];
-                    if (type.hasClass('acquired'))
-                        skillsList.acquired = [skillToAdd];
-                }
-                
-                inputSkillsList.val(JSON.stringify(skillsList))
-
-                let html = `<div class="skill">
-                                <div class="d-flex flex-nowrap justify-content-between">
-                                    <div class="d-flex flex-nowrap align-items-center">
-                                        <span>${skillName.val()}</span>
-                                    </div>
-                                    <div>
-                                        <a href="" class="text-danger rmv" data-id="${skillToAdd}" data-type="${type.hasClass('required') ? 'required' : 'acquired'}" title="Remove this skill">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>`;
-
-                $(html).appendTo(type.find('.content-list-skill'));
-                skillName.val('');
-                inputSkillToAdd.val('');
-            }
+            _this.addSkills(type, skillName, inputSkillToAdd, inputSkillsList);
         });
+    }
+
+
+     addSkills = (type, skillName, inputSkillToAdd = false, inputSkillsList, skillIdToAdd = false) => {
+
+        let skillToAdd = {};
+        let skillsList = {};
+
+        if ((inputSkillToAdd && inputSkillsList) || (skillIdToAdd && inputSkillsList)) {
+            skillToAdd = (inputSkillToAdd) ? inputSkillToAdd.val() : skillIdToAdd;
+            skillsList = inputSkillsList.val();
+
+            if (skillsList) {
+                skillsList = JSON.parse(inputSkillsList.val());
+                if (type.hasClass('required')) {
+                    if ('required' in skillsList) {
+                        if (type.hasClass('required'))
+                            skillsList.required = [skillToAdd, ...skillsList.required];
+                    } else {
+                        if (type.hasClass('required'))
+                            skillsList.required = [skillToAdd];
+                    }
+                }
+                if (type.hasClass('acquired')) {
+                    if ('acquired' in skillsList) {
+                        if (type.hasClass('acquired'))
+                            skillsList.acquired = [skillToAdd, ...skillsList.acquired];
+                    } else {
+                        if (type.hasClass('acquired'))
+                            skillsList.acquired = [skillToAdd];
+                    }
+                }
+            } else {
+                skillsList = {};
+                if (type.hasClass('required'))
+                    skillsList.required = [skillToAdd];
+                if (type.hasClass('acquired'))
+                    skillsList.acquired = [skillToAdd];
+            }
+            
+            inputSkillsList.val(JSON.stringify(skillsList))
+
+            let html = `<div class="skill">
+                            <div class="d-flex flex-nowrap justify-content-between">
+                                <div class="d-flex flex-nowrap align-items-center">
+                                    <span>${typeof skillName == "string" ? skillName : skillName.val()}</span>
+                                </div>
+                                <div>
+                                    <a href="" class="text-danger rmv" data-id="${skillToAdd}" data-type="${type.hasClass('required') ? 'required' : 'acquired'}" title="Remove this skill">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>`;
+
+            $(html).appendTo(type.find('.content-list-skill'));
+            if (typeof skillName != "string") skillName.val('');
+            if (inputSkillToAdd) inputSkillToAdd.val('');
+        }
     }
 
     /**
@@ -196,7 +205,7 @@ class Institutional {
                 if (skillsList) {
                     skillsList = JSON.parse(skillsList);
                     if (type in skillsList) {
-                        if (skillsList[type].indexOf(parseInt(id)) != -1) {
+                        if (skillsList[type].includes(id)) {
                             skillsList[type] = skillsList[type].filter(function (el) {
                                 return el != id;
                             });
@@ -209,12 +218,96 @@ class Institutional {
         });
     }
 
+    selectSkillsByOccupation = () => {
+
+        let _this = this;
+
+        $('body').on('change', '.occupations-select select', function () {
+            let occupation_id = $(this).val();
+
+            let baseUrl = '/apip/occupation_skills';
+            let params = $.param({'occupation': occupation_id});
+
+            let url = `${baseUrl}?${params}`;
+
+            if (occupation_id && url) {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data, textStatus, jqXHR) {
+                        let modal = $('#modal_skills');
+                        let html = `<div class="form-check check-all">
+                                        <input class="form-check-input" type="checkbox" id="check-all">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Check All
+                                        </label>
+                                    </div>`;
+                        if (data && data.length > 0) {
+                            for (let i = 0; i < data.length; i++) {
+                                /*html += `<div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="${data[i].id}" data-name="${data[i].preferredLabel}">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    ${data[i].preferredLabel}
+                                                </label>
+                                            </div>`*/
+                                html += `<div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="${data[i].id}" data-name="preferredLabel">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    preferredLabel
+                                                </label>
+                                            </div>`
+
+
+                                if (i == data.length - 1) {
+                                    $(html).appendTo(modal.find('.modal-body'))
+                                    modal.modal('show');
+                                }
+                            }
+                        }
+                    },
+                    error : function(jqXHR, textStatus, errorThrown){},
+                    complete : function(jqXHR, textStatus ){
+                        //$(_this).css('display', 'inline-block').siblings('.loader').hide();
+                    }
+                });
+            } else {
+                //$(_this).css('display', 'inline-block').siblings('.loader').hide();
+            }
+        });
+
+        $('body').on('change', '#modal_skills #check-all', function () {
+            $('#modal_skills .form-check-input').prop('checked', $(this).prop('checked'));
+        });
+
+        $('#modal_skills').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-body').children().remove();
+            $('body').find('.occupations-select select').val($('.occupations-select select option:first').val());
+
+        });
+
+        $('body').on('click', '#modal_skills .add', function () {
+            let modal = $('#modal_skills');
+            modal.find('.form-check-input:not(#check-all)').each(function() {
+                if (this.checked) {
+                    let id = $(this).val();
+                    let name = $(this).attr('data-name');
+                    let type = $('.add-skill.required');
+                    let skillName = $(this).attr('data-name');
+                    let inputSkillsList = $('body').find('form[name="training"]').find('.hidden_trainingSkills');
+                    _this.addSkills(type, skillName, false, inputSkillsList, id);
+                }
+            });
+            modal.modal('hide');
+        });
+    }
+
     init = function() {
         this.dotjs();
         this.addTraining();
         this.duplicateTraining();
         this.addSkillsToTraining();
         this.removeSkillsToTraining();
+        this.selectSkillsByOccupation();
     }
 }
 

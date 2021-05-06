@@ -103,7 +103,7 @@ class TrainingType extends AbstractType
                 'expanded' => false,
                 'required'   => false,
                 'by_reference' => false,
-                'placeholder' => 'label.occupation',
+                'placeholder' => '',
             ])
             /*->add('trainingSkills', HiddenType::class, [
                 'required' => false,
