@@ -36,6 +36,11 @@
 							</div>
 						</div>
 
+                        {#{{ render(controller(
+                            'App\\Controller\\HomeController::form_trainings',
+                            { 'training_id': training.id }
+                        )) }}#}
+
 						<div id="training_{{ k }}" class="collapse {% if tab_active is defined and tab_active == 2 and training_active is defined and training_active == training.id %}show{% endif %}" aria-labelledby="heading_{{ k }}" data-parent="#list-trainings">
 							<div class="card-body">
 								<div class="row">

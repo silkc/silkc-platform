@@ -108,4 +108,20 @@ form[name="training"] {
             margin: 10px 0;
         }
     }
+    
+    label {
+        white-space: nowrap;
+        text-align: left;
+        display: block;
+        font-weight: 500;
+    }
+
+    .title {
+        text-align: left;
+        font-weight: 500;
+        background-color: rgba(0, 0, 0, 0.03);
+        padding: 10px;
+        box-sizing: border-box;
+        margin-top: 30px;
+    }
 }

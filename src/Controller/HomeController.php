@@ -141,17 +141,17 @@ class HomeController extends AbstractController
     public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
         $training = new Training();
+
         $form = $this->createForm(TrainingType::class, $training);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $errors = $validator->validate($training);
             if (count($errors) > 0) {
                 return new Response((string) $errors, 400);
             }
-
+            
             $em = $this->getDoctrine()->getManager();
-
             $oldTrainingSkills = $training->getTrainingSkills();
             $newTrainingSkills = new ArrayCollection();
             if (
@@ -159,8 +159,8 @@ class HomeController extends AbstractController
                 @json_decode($request->request->get('hidden_trainingSkills')) !== NULL
             ) {
                 $skills = json_decode($request->request->get('hidden_trainingSkills'));
-                if (array_key_exists('acquired', $skills)) {
-                    foreach ($skills as $skillId) {
+                if (property_exists($skills, 'acquired')) {
+                    foreach ($skills->acquired as $skillId) {
                         $skill = $skillRepository->findOneBy(['id' => $skillId]);
                         if (!$skill)
                             continue;
@@ -174,8 +174,9 @@ class HomeController extends AbstractController
                         $newTrainingSkills->add($trainingSkill);
                     }
                 }
-                if (array_key_exists('required', $skills)) {
-                    foreach ($skills as $skillId) {
+
+                if (property_exists($skills, 'required')) {
+                    foreach ($skills->required as $skillId) {
                         $skill = $skillRepository->findOneBy(['id' => $skillId]);
                         if (!$skill)
                             continue;
@@ -207,6 +208,82 @@ class HomeController extends AbstractController
         return $this->render('front/institutional/training_create.html.twig', [
             'controller_name' => 'HomeController',
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
+    {
+
+        $form = $this->createForm(TrainingType::class, $training);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($training);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+            
+            $em = $this->getDoctrine()->getManager();
+            $oldTrainingSkills = $training->getTrainingSkills();
+            $newTrainingSkills = new ArrayCollection();
+            if (
+                $request->request->get('hidden_trainingSkills') !== NULL &&
+                @json_decode($request->request->get('hidden_trainingSkills')) !== NULL
+            ) {
+                $skills = json_decode($request->request->get('hidden_trainingSkills'));
+                if (property_exists($skills, 'acquired')) {
+                    foreach ($skills->acquired as $skillId) {
+                        $skill = $skillRepository->findOneBy(['id' => $skillId]);
+                        if (!$skill)
+                            continue;
+
+                        $trainingSkill = new TrainingSkill();
+                        $trainingSkill->setSkill($skill);
+                        $trainingSkill->setTraining($training);
+                        $trainingSkill->setIsToAcquire(true);
+                        $em->persist($trainingSkill);
+                        $training->addTrainingSkill($trainingSkill);
+                        $newTrainingSkills->add($trainingSkill);
+                    }
+                }
+
+                if (property_exists($skills, 'required')) {
+                    foreach ($skills->required as $skillId) {
+                        $skill = $skillRepository->findOneBy(['id' => $skillId]);
+                        if (!$skill)
+                            continue;
+
+                        $trainingSkill = new TrainingSkill();
+                        $trainingSkill->setSkill($skill);
+                        $trainingSkill->setTraining($training);
+                        $trainingSkill->setIsRequired(true);
+                        $em->persist($trainingSkill);
+                        $training->addTrainingSkill($trainingSkill);
+                        $newTrainingSkills->add($trainingSkill);
+                    }
+                }
+            }
+
+            foreach ($oldTrainingSkills as $trainingSkill) {
+                if (!$newTrainingSkills->contains($trainingSkill))
+                    $training->removeTrainingSkill($trainingSkill);
+            }
+
+            $em->persist($training);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
+
+            return $this->redirectToRoute('app_edit', ['id' => $training->getId()]);
+        }
+
+        return $this->render('front/institutional/training_create.html.twig', [
+            'controller_name' => 'HomeController',
+            'form' => $form->createView(),
+            'training' => $training,
         ]);
     }
 

@@ -1,3 +1,30 @@
+{% set skillsIdsRequired = [] %}
+{% set skillsIdsAcquired = [] %}
+
+{% if training is defined %}
+    {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+        {% for k, trainingSkill in training.trainingSkills %}
+            {% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
+            {% set skill =  trainingSkill.skill %}
+                {% set skillsIdsRequired = skillsIdsRequired|merge([skill.id]) %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+{% if training is defined %}
+    {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+        {% for k, trainingSkill in training.trainingSkills %}
+            {% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
+            {% set skill =  trainingSkill.skill %}
+                {% set skillsIdsAcquired = skillsIdsAcquired|merge([skill.id]) %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endif %}
+
+{% set skillsHidden = {'required': skillsIdsRequired, 'acquired': skillsIdsAcquired,} %}
+
 {{ form_start(form, {attr: attr|default({})}) }}
     <div class="row">
         <div class="col-6">
@@ -16,7 +43,7 @@
             <p class="title">Required skills</p>
             <div class="mb-3 add-skill required">
                 <label for="skill-name-required">Skill name</label>
-                <input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" />
+                <input type="hidden" name="hidden_trainingSkills" class="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
                 {% include 'front/elements/input_add_skills.html.twig'
                     with {
                         'id': 'skill-name-required',
@@ -27,7 +54,29 @@
                         'name': 'skill-name-required'
                     }
                 %}
-                <div class="content-list-skill"></div>
+                <div class="content-list-skill">
+                    {% if training is defined %}
+                        {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+                            {% for k, trainingSkill in training.trainingSkills %}
+                                {% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
+                                {% set skill =  trainingSkill.skill %}
+                                    <div class="skill">
+                                        <div class="d-flex flex-nowrap justify-content-between">
+                                            <div class="d-flex flex-nowrap align-items-center">
+                                                <span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+                                            </div>
+                                            <div>
+                                                <a href="" class="text-danger rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="required" title="Remove this skill">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
 
             <p class="title">Acquired skills</p>
@@ -43,7 +92,29 @@
                         'name': 'skill-name-acquired'
                     }
                 %}
-                <div class="content-list-skill"></div>
+                <div class="content-list-skill">
+                    {% if training is defined %}
+                        {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+                            {% for k, trainingSkill in training.trainingSkills %}
+                                {% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
+                                {% set skill =  trainingSkill.skill %}
+                                    <div class="skill">
+                                        <div class="d-flex flex-nowrap justify-content-between">
+                                            <div class="d-flex flex-nowrap align-items-center">
+                                                <span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+                                            </div>
+                                            <div>
+                                                <a href="" class="text-danger rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="acquired" title="Remove this skill">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
 
             {{ form_row(form.isOnline) }}

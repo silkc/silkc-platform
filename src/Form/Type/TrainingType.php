@@ -43,14 +43,15 @@ class TrainingType extends AbstractType
             ->add('location', TextType::class, [
                 'translation_domain' => 'label',
                 'label' => 'location',
+                'required' => false,
             ])
             ->add('duration', TextType::class, [
                 'translation_domain' => 'label',
                 'label' => 'duration',
+                'required' => false,
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['rows' => 8/*, 'class' => 'tinymce'*/],
-                'help' => 'help.description',
                 'translation_domain' => 'label',
                 'label' => 'description',
                 'required' => false,
@@ -58,18 +59,22 @@ class TrainingType extends AbstractType
             ->add('price', TextType::class, [
                 'translation_domain' => 'label',
                 'label' => 'price',
+                'required' => false,
             ])
             ->add('url', TextType::class, [
                 'translation_domain' => 'label',
                 'label' => 'url',
+                'required' => false,
             ])
             ->add('startAt', DateTimeType::class, [
                 'translation_domain' => 'label',
                 'label' => 'start_at',
+                'required' => false,
             ])
             ->add('endAt', DateTimeType::class, [
                 'translation_domain' => 'label',
                 'label' => 'label.end_at',
+                'required' => false,
             ])
             ->add('isOnline', CheckboxType::class, [
                 'translation_domain' => 'label',

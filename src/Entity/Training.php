@@ -117,7 +117,7 @@ class Training
     private $sessions;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrainingSkill::class, mappedBy="training", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=TrainingSkill::class, mappedBy="training", orphanRemoval=true, fetch="EAGER")
      */
     private $trainingSkills;
 

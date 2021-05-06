@@ -25,6 +25,7 @@ class Main {
      */
      runAutocompletion = () => {
         let inputs = document.getElementsByClassName('input-autocomplete');
+        let datas = {};
 
         let runAutocomplete = function (data, input) {
 
@@ -108,49 +109,42 @@ class Main {
 
                 let url = `${baseUrl}?${params}`;
 
-                sessionStorage.clear();
-                localStorage.clear();
-
-                let sessionsAutocomplete = {};
-                if (window.sessionStorage) {
-                    /*sessionsAutocomplete.date = sessionStorage.getItem('autocompleterDate', Date.now());
-
-
-                    sessionsAutocomplete.occupations = sessionStorage.getItem(url, JSON.stringify('occupations'));
-                    sessionsAutocomplete.skills = sessionStorage.getItem(url, JSON.stringify('skills'));
-                    sessionsAutocomplete.trainings = sessionStorage.getItem(url, JSON.stringify('trainings'));*/
-
-                   
-
-
-                } else {
-
-                    // AJAX
-
-                }
-
-
-
 
                 if (url && input) {
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        success: function (data, textStatus, jqXHR) {
-                            if (window.localStorage) {
-                                localStorage.setItem('autocompleterDate', Date.now());
+                    if (datas
+                        && (
+                            (url.includes("skills") && 'skills' in datas)
+                            || (url.includes("occupations") && 'occupations' in datas)
+                            || (url.includes("trainings") && 'trainings' in datas)
+                        )) {
+                        
+                        let data = {};
+                        if (url.includes("skills"))
+                            data = JSON.parse(datas.skills);
+                        if (url.includes("occupations"))
+                            data = JSON.parse(datas.occupations);
+                        if (url.includes("trainings"))
+                            data = JSON.parse(datas.trainings);
+
+                        runAutocomplete(data, input);
+                        
+                    } else {
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            async: false,
+                            success: function (data, textStatus, jqXHR) {
                                 if (url.includes("skills"))
-                                    localStorage.setItem('skills', JSON.stringify(data));
-                                /*if (url.includes("occupations"))
-                                    localStorage.setItem('occupations', JSON.stringify(data));*/
+                                    datas.skills = JSON.stringify(data);
+                                if (url.includes("occupations"))
+                                    datas.occupations = JSON.stringify(data);
+                                if (url.includes("trainings"))
+                                    datas.trainings = JSON.stringify(data);
+
+                                runAutocomplete(data, input);
                             }
-
-                            //console.log('skills', localStorage.getItem('skills'));
-                            /*console.log('occupations', localStorage.getItem('occupations'));*/
-
-                            runAutocomplete(data, input);
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }

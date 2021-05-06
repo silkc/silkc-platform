@@ -119,18 +119,17 @@ class Institutional {
 
             let type = $(this).closest('.add-skill');
             let skillName = $(this).closest('.add-skill').find('.input-autocomplete');
-            let inputSkillToAdd = $(this).closest('.add-skill').find('input[type="hidden"]');
-            let inputSkillsList = $('body').find('#hidden_trainingSkills');
+            let inputSkillToAdd = skillName.siblings('input[type="hidden"]');
+            let inputSkillsList = $(this).closest('form[name="training"]').find('.hidden_trainingSkills');
             let skillToAdd = {};
             let skillsList = {};
 
             if (inputSkillToAdd && inputSkillsList) {
                 skillToAdd = inputSkillToAdd.val();
                 skillsList = inputSkillsList.val();
-                
+
                 if (skillsList) {
                     skillsList = JSON.parse(inputSkillsList.val());
-
                     if (type.hasClass('required')) {
                         if ('required' in skillsList) {
                             if (type.hasClass('required'))
@@ -140,7 +139,6 @@ class Institutional {
                                 skillsList.required = [skillToAdd];
                         }
                     }
-
                     if (type.hasClass('acquired')) {
                         if ('acquired' in skillsList) {
                             if (type.hasClass('acquired'))
@@ -150,7 +148,6 @@ class Institutional {
                                 skillsList.acquired = [skillToAdd];
                         }
                     }
-
                 } else {
                     skillsList = {};
                     if (type.hasClass('required'))
@@ -177,7 +174,6 @@ class Institutional {
                 $(html).appendTo(type.find('.content-list-skill'));
                 skillName.val('');
                 inputSkillToAdd.val('');
-
             }
         });
     }
@@ -187,22 +183,31 @@ class Institutional {
      */
      removeSkillsToTraining = () => {
 
-        $('body').on('click', 'form .content-list-skill .rmv', function() {
+        $('body').on('click', 'form .content-list-skill .rmv', function(e) {
+            e.preventDefault();
 
             let _this = this;
             let type = $(_this).attr('data-type');
             let id = $(_this).attr('data-id');
-            let inputSkillsList = $('body').find('#training_trainingSkills');
+            let inputSkillsList = $(this).closest('form[name="training"]').find('.hidden_trainingSkills');
 
             if (type && id && inputSkillsList) {
                 let skillsList = inputSkillsList.val();
                 if (skillsList) {
-                    
+                    skillsList = JSON.parse(skillsList);
+                    if (type in skillsList) {
+                        if (skillsList[type].indexOf(parseInt(id)) != -1) {
+                            skillsList[type] = skillsList[type].filter(function (el) {
+                                return el != id;
+                            });
+                            inputSkillsList.val(JSON.stringify(skillsList));
+                            $(_this).closest('div.skill').remove();
+                        }
+                    }
                 }
             }
         });
     }
-
 
     init = function() {
         this.dotjs();
@@ -212,7 +217,6 @@ class Institutional {
         this.removeSkillsToTraining();
     }
 }
-
 
 $(document).ready(function() {
     var institutional = new Institutional();
