@@ -125,9 +125,10 @@ class Training
     private $toAcquireSkills;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Occupation::class, inversedBy="trainings")
+     * @ORM\ManyToOne(targetEntity=Occupation::class)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $occupations;
+    private $occupation;
 
     /**
      * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
@@ -140,7 +141,6 @@ class Training
         $this->toAcquireSkills = new ArrayCollection();
         $this->sessions = new ArrayCollection();
         $this->trainingSkills = new ArrayCollection();
-        $this->occupations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -386,26 +386,15 @@ class Training
         return $this->trainingSkills->matching($criteria);
     }
 
-    /**
-     * @return Collection|Occupation[]
-     */
-    public function getOccupations(): Collection
+    public function getOccupation(): ?occupation
     {
-        return $this->occupations;
+        return $this->occupation;
     }
 
-    public function addOccupation(Occupation $occupation): self
-    {
-        if (!$this->occupations->contains($occupation)) {
-            $this->occupations[] = $occupation;
-        }
 
-        return $this;
-    }
-
-    public function removeOccupation(Occupation $occupation): self
+    public function setOccupation(?Occupation $occupation): self
     {
-        $this->occupations->removeElement($occupation);
+        $this->occupation = $occupation;
 
         return $this;
     }

@@ -6,9 +6,24 @@ use App\Entity\Skill;
 use App\Entity\Occupation;
 use App\Repository\OccupationSkillRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationSkillRepository::class)
+ * @ApiResource(
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"},
+ *      attributes={
+ *          "formats"={"json"}
+ *     }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "occupation": "exact"
+ * })
  */
 class OccupationSkill
 {
@@ -95,18 +110,6 @@ class OccupationSkill
     public function setSkillType(string $skillType): self
     {
         $this->skillType = $skillType;
-
-        return $this;
-    }
-
-    public function getSkillUri(): ?string
-    {
-        return $this->skillUri;
-    }
-
-    public function setSkillUri(string $skillUri): self
-    {
-        $this->skillUri = $skillUri;
 
         return $this;
     }

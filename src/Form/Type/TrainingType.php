@@ -2,7 +2,9 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Occupation;
 use App\Entity\Training;
+use App\Repository\OccupationRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormEvent;
@@ -22,9 +24,10 @@ class TrainingType extends AbstractType
 {
     private $transformer;
 
-    public function __construct(SkillsToJsonTransformer $transformer)
+    public function __construct(OccupationRepository $occupationRepository, SkillsToJsonTransformer $transformer)
     {
         $this->transformer = $transformer;
+        $this->occupationRepository = $occupationRepository;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -90,6 +93,17 @@ class TrainingType extends AbstractType
                 'translation_domain' => 'label',
                 'label' => 'is_presential',
                 'required' => false
+            ])
+            ->add('occupation', EntityType::class, [
+                'attr' => ["class" => "selectpicker"],
+                'class' => Occupation::class,
+                'choices' => $this->occupationRepository->findAll(),
+                'choice_label' => 'preferredLabel',
+                'multiple' => false,
+                'expanded' => false,
+                'required'   => false,
+                'by_reference' => false,
+                'placeholder' => 'label.occupation',
             ])
             /*->add('trainingSkills', HiddenType::class, [
                 'required' => false,
