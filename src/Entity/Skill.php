@@ -12,8 +12,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
-  *     normalizationContext={"groups"={"skill:read"}},
- *      denormalizationContext={"groups"={"skill:write"}},
+  *     normalizationContext={"groups"={"skill:read", "occupationSkill:read"}},
+ *      denormalizationContext={"groups"={"skill:write", "occupationSkill:read"}},
  *      attributes={
  *          "formats"={"json"}
  *     }
@@ -25,33 +25,37 @@ class Skill
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"occupation:read", "skill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $conceptType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $conceptUri;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $skillType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $reuseLevel;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"skill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $preferredLabel;
 
@@ -92,7 +96,7 @@ class Skill
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"skill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
      */
     private $description;
 

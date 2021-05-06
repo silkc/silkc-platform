@@ -11,10 +11,12 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationSkillRepository::class)
  * @ApiResource(
+ *      normalizationContext={"groups"={"occupationSkill:read"}},
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
  *      attributes={
@@ -36,28 +38,33 @@ class OccupationSkill
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"occupationSkill:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Occupation::class, inversedBy="occupationSkills")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"occupationSkill:read"})
      */
     private $occupation;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupationSkill:read"})
      */
     private $relationType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"occupationSkill:read"})
      */
     private $skillType;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Skill::class, inversedBy="skillOccupations")
+     * @ORM\ManyToOne(targetEntity=Skill::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"occupationSkill:read"})
      */
     private $skill;
 
