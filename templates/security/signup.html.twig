@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 {{ form_widget(form.email, {'attr' : {'placeholder': 'form.label.email'|trans({}, 'login')} }) }}
                             </div>
-
+                            {#
                             <div class="form-group">
                                 {% for batch in form.roles|batch(1, 'No item') %}
                                     <div class="batchRow">
@@ -59,6 +59,7 @@
                                     </div>
                                 {% endfor %}
                             </div>
+                            #}
 
                             <div class="form-group">
                                 {{ form_widget(form.password.first, {'attr' : {'placeholder': 'form.label.password.first'|trans({}, 'login')} }) }}
@@ -68,13 +69,9 @@
                                 {{ form_widget(form.password.second, {'attr' : {'placeholder': 'form.label.password.second'|trans({}, 'login')} }) }}
                             </div>
 
-
                             <div id="user">
                                 <div>
                                     {{ form_widget(form.save, { 'label': 'form.button.save'|trans({}, 'login') }) }}
-                                </div>
-                                <div>
-                                    {{ form_widget(form.save_and_create, { 'label': 'form.button.save_and_create'|trans({}, 'login') }) }}
                                 </div>
                             </div>
 

@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Form/Type/PublicUserType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/OccupationSkill.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/OccupationSkill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Skill.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Type/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Type/UserType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/account/personal_informations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/account/personal_informations.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/signup.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/signup.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +152,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Symfony/Sfinga" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -172,6 +176,7 @@
       <workItem from="1618239817475" duration="29975000" />
       <workItem from="1620050576440" duration="3851000" />
       <workItem from="1620131657933" duration="3009000" />
+      <workItem from="1620374891066" duration="1770000" />
     </task>
     <servers />
   </component>
@@ -206,10 +211,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state width="600" height="428" key="javadoc.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620208087957" />
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1620314358703">
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1620376629175">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620314358703" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1620376629175" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1618411968791" />
   </component>
 </project>

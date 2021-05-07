@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,14 +34,20 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'form.label.email',
                 'translation_domain' => 'login',
-            ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'label.roles',
-                'multiple' => true,
-                'expanded' => true,
-                'required'   => true,
-                'choices' => User::getRolesList(),
             ]);
+            if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
+                /*$builder->add('roles', HiddenType::class, [
+                    'data' => User::ROLE_USER
+                ]);*/
+            } else {
+                $builder->add('roles', ChoiceType::class, [
+                    'label'    => 'label.roles',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'required' => true,
+                    'choices'  => User::getRolesList(),
+                ]);
+            }
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
                 $builder->add('password', RepeatedType::class, [
                     'type'               => PasswordType::class,
@@ -53,9 +60,6 @@ class UserType extends AbstractType
             }
             $builder->add('save', SubmitType::class, [
                 'label' => 'form.button.submit',
-            ])
-            ->add('save_and_create', SubmitType::class, [
-                'label' => 'label.save_and_create_new',
             ]);
     }
 
@@ -63,7 +67,8 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'require_password' => true,
+            'require_password' => false,
+            'is_personal' => false,
             'csrf_protection' => false, // Possibilité de créer un compte en API
         ]);
     }

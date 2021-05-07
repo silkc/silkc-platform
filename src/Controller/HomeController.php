@@ -81,7 +81,9 @@ class HomeController extends AbstractController
      */
     public function account(): Response
     {
-        return $this->render('front/account/index.html.twig');
+        $user = $this->getUser();
+
+        return $this->render('front/account/index.html.twig', ['user' => $user]);
     }
 
     /**
