@@ -93,44 +93,23 @@ class HomeController extends AbstractController
     {
 
         /*$tab_active = false; // false, 1, 2 ou 3 (correspond aux onglets)
-        $training_active = false; // ID du training actif
-
-        if ($request->isMethod('post')) {
-            if ($request->request->get('training_id')) { // Mise à jour
-                $training_id = $request->request->get('training_id');
-                $entityManager = $this->getDoctrine()->getManager();
-                $training = $trainingRepository->find($training_id);
-                if (!$training) {
-                    throw $this->createNotFoundException(
-                        'No training found for id '. $training_id
-                    );
-                }
-            } else { // Ajout
-                $training = new Training();
-            }
-            
-            if ($training) {
-                $training->setName($request->request->get('name'));
-                $training->setLocation($request->request->get('location'));
-                $training->setDuration($request->request->get('duration'));
-                $training->setDescription($request->request->get('description'));
-                $training->setPrice($request->request->get('price'));
-                $training->setStartAt(null);
-                $training->setEndAt(null);
-                $training->setUrl($request->request->get('url'));
-                //$training->setFile($request->request->get('file'));
-            }
-            
-            $entityManager->persist($training);
-            $entityManager->flush();
-            $tab_active = 2;
-            $training_active = $training->getId();
-        }*/
+        $training_active = false; // ID du training actif*/
+        $forms = [];
+        //$form = $this->createForm(TrainingType::class, $training);
+       
 
         $trainings = $trainingRepository->findAll();
+        if ($trainings) {
+            foreach ($trainings as $key => $training) {
+                $form = $this->createForm(TrainingType::class, $training);
+                $forms[$key] = $form->createView(),
+            }
+        }
+
         return $this->render('front/institutional/index.html.twig', 
             [
-                'trainings'       => $trainings, 
+                'trainings'   => $trainings, 
+                'forms'       => $forms, 
                 /*'tab_active'      => $tab_active, 
                 'training_active' => $training_active*/
             ]
@@ -290,13 +269,14 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/form_training/{id}", name="form_training_edit")
+     * @Route("/form_training", name="form_training_edit")
      */
-    public function form_training_edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
+    public function form_training_edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {
 
+        $training = new Training();
         $form = $this->createForm(TrainingType::class, $training);
-        $form->handleRequest($request);
+        /*$form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $errors = $validator->validate($training);
@@ -356,7 +336,7 @@ class HomeController extends AbstractController
             $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
 
             return $this->redirectToRoute('app_institution');
-        }
+        }*/
 
         return $this->render('front/institutional/_form.html.twig', [
             'controller_name' => 'HomeController',
