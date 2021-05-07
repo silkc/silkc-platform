@@ -9,6 +9,9 @@
 		<button type="button" class="btn btn-primary" id="add-training">Add</button>
 	</div>
 
+
+
+
 	<div class="accordion" id="list-trainings">
 		{% if trainings is defined %}
 			{% for k, training in trainings %}
@@ -40,9 +43,6 @@
 						<div id="training_{{ k }}" class="collapse {% if tab_active is defined and tab_active == 2 and training_active is defined and training_active == training.id %}show{% endif %}" aria-labelledby="heading_{{ k }}" data-parent="#list-trainings">
 							<div class="card-body">
                      
-                     
-
-                    
 
 								{#<div class="row">
 									<div class="col-md-6">
