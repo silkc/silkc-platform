@@ -43,9 +43,10 @@ class Main {
                 emptyMsg: 'No elements found',
                 render: function(item, currentValue) {
                     let div = document.createElement('div');
-                    div.dataset.id = item.id;
+                    div.dataset.id = item.id;                    
                     div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table training
                     return div;
+
                 },
                 fetch: function(text, callback) {
                     text = text.toLowerCase();
@@ -53,6 +54,11 @@ class Main {
                     callback(suggestions);
                 },
                 onSelect: function(item) {
+                    console.log(item)
+                    console.log($(item))
+                    console.log("$(item).attr('data-associated')", $(item).attr('data-associated'))
+                    if ($(item).attr('data-associated') == true) return false;
+
                     input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
                     elemsDisabled.prop('disabled', false);
                     if (hiddenField && item.id) {
@@ -250,10 +256,10 @@ class Main {
     }
         
     listenTrigger = () => {
-        let _this = this;
-        document.addEventListener('newTraining', function (e) {
-            _this.runAutocompletion();
-        }, false);
+        /*let _this = this;
+        document.addEventListener('addSkillToTraining', function (e) {
+            
+        }, false);*/
     }
 
     init = function() {

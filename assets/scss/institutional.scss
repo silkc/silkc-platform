@@ -118,10 +118,33 @@ form[name="training"] {
   .title {
     text-align: left;
     font-weight: 500;
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: #2c4969;
     padding: 10px;
     box-sizing: border-box;
     margin-top: 30px;
+    color: #fff;
+  }
+
+  .content-skills {
+    border: 2px solid #eee;
+    border-top: 0;
+
+    .rmv,
+    .add {
+      color: #fff;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rmv {
+      background-color: #dc3545;
+    }
+
+    .add {
+      background-color: #28a745;
+    }
   }
 }
 

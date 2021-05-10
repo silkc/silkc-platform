@@ -91,27 +91,10 @@ class HomeController extends AbstractController
      */
     public function institution(Request $request, TrainingRepository $trainingRepository): Response
     {
-
-        /*$tab_active = false; // false, 1, 2 ou 3 (correspond aux onglets)
-        $training_active = false; // ID du training actif*/
-        $forms = [];
-        //$form = $this->createForm(TrainingType::class, $training);
-       
-
         $trainings = $trainingRepository->findAll();
-        if ($trainings) {
-            foreach ($trainings as $key => $training) {
-                $form = $this->createForm(TrainingType::class, $training);
-                $forms[$key] = $form->createView(),
-            }
-        }
-
         return $this->render('front/institutional/index.html.twig', 
             [
-                'trainings'   => $trainings, 
-                'forms'       => $forms, 
-                /*'tab_active'      => $tab_active, 
-                'training_active' => $training_active*/
+                'trainings'   => $trainings
             ]
         );
     }
@@ -193,7 +176,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="edit")
+     * @Route("/training/edit/{id}", name="training_edit")
      */
     public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {
