@@ -1,6 +1,6 @@
 //import $ from 'jquery';
 import $ from 'jquery';
-import doT from 'dot';
+import autocomplete from 'autocompleter';
 
 //import '../../css/bootstrap-extended.css';
 
@@ -70,12 +70,28 @@ class Institutional {
                 return false;
             }
 
-            let data = {id: skillId, preferredLabel: skillName};
-            let html = _this.tplSkill(data, type, true);
-            $(html).appendTo(ul);
+            let ulOccupationsAcquired = $('#skills-occupations-acquired');
+            let statusAppend = true;
+
+            if (type != "required" && ulOccupationsAcquired) {
+                if (ulOccupationsAcquired.find('li').length > 0) {
+                    ulOccupationsAcquired.find('li').each(function(k) {
+                        let li = $(this);
+                        if (li.find('[data-id="' + skillId + '"]').length > 0) {
+                            li.find('a').trigger('click');
+                            statusAppend = false;
+                        }
+                    });
+                }
+            }
 
             skillNameInput.val('');
             skillIdInput.val('');
+
+            if (!statusAppend) return false;
+            let data = {id: skillId, preferredLabel: skillName};
+            let html = _this.tplSkill(data, type, true);
+            $(html).appendTo(ul);
         });
     }
 
@@ -298,7 +314,143 @@ class Institutional {
         });
     }
 
+    
+    /**
+     * Autocompletion inputs 
+     * (ajouter l'attribut data-url et la class input-autocomplete à l'input de type text)
+     */
+     runAutocompletion = () => {
+        let inputs = document.getElementsByClassName('input-autocomplete');
+        let datas = {};
+
+        let runAutocomplete = function (data, input) {
+
+            let elemsDisabled = $(input).closest('form').find('.disabled-search');
+            let name = input.getAttribute('name');
+            let hiddenField = document.getElementById('hidden_' + name);
+            let loader = document.getElementById('loader_' + name);
+            let minLength = 2;
+
+            $(input).closest('form').attr('autocomplete', 'off');
+
+            autocomplete({
+                input: input,
+                minLength: minLength,
+                emptyMsg: 'No elements found',
+                render: function(item, currentValue) {
+                    let div = document.createElement('div');
+                    div.dataset.id = item.id;                    
+                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table training
+                    return div;
+
+                },
+                fetch: function(text, callback) {
+                    text = text.toLowerCase();
+                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : (n.name != undefined) ? n.name.toLowerCase().startsWith(text) : '' );
+                    callback(suggestions);
+                },
+                onSelect: function(item) {
+                    if ($(item).attr('data-associated') == true) return false;
+
+                    input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
+                    elemsDisabled.prop('disabled', false);
+                    if (hiddenField && item.id) {
+                        hiddenField.value = item.id;
+                    }
+                }
+            });
+
+            /* Si on vide le champs
+            On desactive le bouton de recherche */
+            input.addEventListener('keyup', function() {
+                let search = this.value.toLowerCase();
+                if (!search || search.length == 0) {
+                    input.value = '';
+                    if (hiddenField) {
+                        hiddenField.value = '';
+                        elemsDisabled.prop('disabled', true);
+                    }
+                }
+            });
+
+            /* Si on sort du champs de recherche sans avoir sélectionner un item, on sélectionne la première proposition
+            Si il n'y a pas de propositions, on vide le champs */
+            input.addEventListener('focusout', function() {
+                let search = this.value.toLowerCase();
+                let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(search) : n.name.toLowerCase().startsWith(search));
+                if (suggestions && suggestions.length > 0 && search.length > 0) {
+                    let suggestion = suggestions[0];
+                    input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';
+                    if (hiddenField) hiddenField.value = (suggestion.id != undefined) ? suggestion.id : '';
+                    elemsDisabled.prop('disabled', false);
+                } else {
+                    input.value = '';
+                    if (hiddenField) {
+                        hiddenField.value = '';
+                        elemsDisabled.prop('disabled', true);
+                    }
+                }
+            });
+
+            if (loader) {
+                loader.style.display = 'none';
+                input.disabled = false;
+            }
+        }
+        
+        if (inputs) {
+            for (var i = 0; i < inputs.length; i++) {
+                let input = inputs[i];
+                let baseUrl = input.getAttribute('data-url');
+                let formats = input.getAttribute('data-formats') || 'json';
+                let pagination = input.getAttribute('data-pagination') || false;
+                let params = $.param({'formats': formats, 'pagination': pagination});
+
+                let url = `${baseUrl}?${params}`;
+
+
+                if (url && input) {
+                    if (datas
+                        && (
+                            (url.includes("skills") && 'skills' in datas)
+                            || (url.includes("occupations") && 'occupations' in datas)
+                            || (url.includes("trainings") && 'trainings' in datas)
+                        )) {
+                        
+                        let data = {};
+                        if (url.includes("skills"))
+                            data = JSON.parse(datas.skills);
+                        if (url.includes("occupations"))
+                            data = JSON.parse(datas.occupations);
+                        if (url.includes("trainings"))
+                            data = JSON.parse(datas.trainings);
+
+                        runAutocomplete(data, input);
+                        
+                    } else {
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            async: false,
+                            success: function (data, textStatus, jqXHR) {
+                                if (url.includes("skills"))
+                                    datas.skills = JSON.stringify(data);
+                                if (url.includes("occupations"))
+                                    datas.occupations = JSON.stringify(data);
+                                if (url.includes("trainings"))
+                                    datas.trainings = JSON.stringify(data);
+
+                                runAutocomplete(data, input);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }
+    
     init = function() {
+        this.runAutocompletion();
         this.duplicateTraining();
         this.addSkillsToTraining();
         this.addSkillOccupation();

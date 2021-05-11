@@ -263,11 +263,11 @@ class Main {
     }
 
     init = function() {
-        this.initGoogleMap();
-        this.rmvItem();
+        //this.initGoogleMap();
+        //this.rmvItem();
         this.runAutocompletion();
-        this.clearModal();
-        this.listenTrigger();
+        //this.clearModal();
+        //this.listenTrigger();
     }
 }
 

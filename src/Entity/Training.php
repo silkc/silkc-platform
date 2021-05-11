@@ -386,7 +386,7 @@ class Training
         return $this->trainingSkills->matching($criteria);
     }
 
-    public function getOccupation(): ?occupation
+    public function getOccupation(): ?Occupation
     {
         return $this->occupation;
     }

@@ -180,10 +180,10 @@ class HomeController extends AbstractController
      */
     public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {
-
+        
         $form = $this->createForm(TrainingType::class, $training);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $errors = $validator->validate($training);
             if (count($errors) > 0) {
@@ -208,9 +208,9 @@ class HomeController extends AbstractController
                         $trainingSkill->setSkill($skill);
                         $trainingSkill->setTraining($training);
                         $trainingSkill->setIsToAcquire(true);
-                        $em->persist($trainingSkill);
                         $training->addTrainingSkill($trainingSkill);
                         $newTrainingSkills->add($trainingSkill);
+                        $em->persist($trainingSkill);
                     }
                 }
 
@@ -224,9 +224,9 @@ class HomeController extends AbstractController
                         $trainingSkill->setSkill($skill);
                         $trainingSkill->setTraining($training);
                         $trainingSkill->setIsRequired(true);
-                        $em->persist($trainingSkill);
                         $training->addTrainingSkill($trainingSkill);
                         $newTrainingSkills->add($trainingSkill);
+                        $em->persist($trainingSkill);
                     }
                 }
             }
@@ -241,7 +241,7 @@ class HomeController extends AbstractController
 
             $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
 
-            return $this->redirectToRoute('app_edit', ['id' => $training->getId()]);
+            return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
         }
 
         return $this->render('front/institutional/training_create.html.twig', [
