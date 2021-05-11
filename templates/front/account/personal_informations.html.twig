@@ -1,29 +1,33 @@
+{{ form_start(form, {attr: attr|default({})}) }}
+
 <div class="form-block">
 	<div class="row">
 		<div class="form-group col-md-6">
-			<label for="lastname">Lastname</label>
-			<input type="text" class="form-control" value="{{ user.lastname }}" id="lastname">
+			{{ form_row(form.firstname) }}
 		</div>
 
 		<div class="form-group col-md-6">
-			<label for="firstname">Firstname</label>
-			<input type="text" class="form-control" value="{{ user.firstname }}" id="firstname">
+			{{ form_row(form.lastname) }}
 		</div>
-	</div>
-
-	<div class="row">
-		<div class="form-group col-md-6">
-			<label for="username">Username</label>
-			<input type="text" class="form-control" value="{{ user.username }}" id="username">
-		</div>
-
-		<div class="form-group col-md-6">
-			<label for="email">Email</label>
-			<input type="text" class="form-control" id="email"  value="{{ user.email }}" placeholder="name@example.com">
-		</div>
-	</div>
-
-	<div class="form-group button-group text-right">
-		<button type="submit" class="btn btn-primary">Save</button>
 	</div>
 </div>
+<div class="row">
+	<div class="form-group col-md-6">
+		{{ form_row(form.username) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.email) }}
+	</div>
+</div>
+
+{% if form.offsetExists('password') %}
+	<div class="row special">
+		{{ form_row(form.password) }}
+	</div>
+{% endif %}
+
+<div class="form-group button-group text-right">
+	{{ form_widget(form.save, {'label': (user is defined) ? 'label.edit' : 'label.create'}) }}
+</div>
+
+{{ form_end(form) }}

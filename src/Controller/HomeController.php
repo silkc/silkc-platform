@@ -6,6 +6,7 @@ use App\Entity\TrainingSkill;
 use App\Entity\User;
 use App\Entity\Training;
 use App\Form\Type\TrainingType;
+use App\Form\Type\UserType;
 use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -79,11 +81,33 @@ class HomeController extends AbstractController
     /**
      * @Route("/account", name="account")
      */
-    public function account(): Response
+    public function account(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, UserPasswordEncoderInterface $passwordEncoder):Response
     {
         $user = $this->getUser();
 
-        return $this->render('front/account/index.html.twig', ['user' => $user]);
+        $form = $this->createForm(UserType::class, $user, ['is_personal' => true]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                die('error');
+                return new Response((string)$errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('user.updated_successfully', [], 'admin'));
+
+            return $this->redirectToRoute('app_account');
+        }
+
+        return $this->render('front/account/index.html.twig', ['user' => $user, 'form' => $form->createView()]);
     }
 
     /**
@@ -180,7 +204,6 @@ class HomeController extends AbstractController
      */
     public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {
-        
         $form = $this->createForm(TrainingType::class, $training);
         $form->handleRequest($request);
 
