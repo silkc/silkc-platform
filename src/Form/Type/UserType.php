@@ -18,36 +18,53 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
+            $builder
+                ->add('firstname', TextType::class, [
+                    'label' => 'form.label.firstname',
+                    'translation_domain' => 'login',
+                ])
+                ->add('lastname', TextType::class, [
+                    'label' => 'form.label.lastname',
+                    'translation_domain' => 'login',
+                ])
+                ->add('username', TextType::class, [
+                    'label' => 'form.label.pseudo',
+                    'translation_domain' => 'login',
+                ]);
+        }
+        else {
+            $builder
+                ->add('username', TextType::class, [
+                    'label' => 'form.label.institution_name',
+                    'translation_domain' => 'login',
+                ])
+                ->add('homepage', TextType::class, [
+                    'label' => 'form.label.homepage',
+                    'translation_domain' => 'login',
+                ])
+                ->add('address', TextType::class, [
+                    'label' => 'form.label.address',
+                    'translation_domain' => 'login',
+                ]);
+        }
+        /*
+            $builder->add('roles', ChoiceType::class, [
+                'label'    => 'label.roles',
+                'multiple' => true,
+                'expanded' => true,
+                'required' => true,
+                'choices'  => User::getRolesList(),
+            ]);
+        */
+
+
         $builder
-            ->add('firstname', TextType::class, [
-                'label' => 'form.label.firstname',
-                'translation_domain' => 'login',
-            ])
-            ->add('lastname', TextType::class, [
-                'label' => 'form.label.lastname',
-                'translation_domain' => 'login',
-            ])
-            ->add('username', TextType::class, [
-                'label' => 'form.label.pseudo',
-                'translation_domain' => 'login',
-            ])
             ->add('email', EmailType::class, [
                 'label' => 'form.label.email',
                 'translation_domain' => 'login',
             ]);
-            if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
-                /*$builder->add('roles', HiddenType::class, [
-                    'data' => User::ROLE_USER
-                ]);*/
-            } else {
-                $builder->add('roles', ChoiceType::class, [
-                    'label'    => 'label.roles',
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required' => true,
-                    'choices'  => User::getRolesList(),
-                ]);
-            }
+
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
                 $builder->add('password', RepeatedType::class, [
                     'type'               => PasswordType::class,

@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -114,15 +116,68 @@ class User implements UserInterface
      */
     private $completion;
 
+    private $prePersisted = false;
+
     public function __construct()
     {}
 
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function prePersist(LifecycleEventArgs $args)
     {
         $this->createdAt = new \DateTime();
+
+        if ($this->prePersisted)
+            return;
+
+        $user = $args->getObject();
+        $this->_defineCompletion($user);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
+        if ($this->prePersisted)
+            return;
+
+        $user = $args->getObject();
+        $this->_defineCompletion($user);
+    }
+
+    protected function _defineCompletion(User $user)
+    {
+        $userToCompleteProperties = [
+            'firstname',
+            'lastname',
+            'email',
+            'username'
+        ];
+        $institutionToCompleteProperties = [
+            'username',
+            'email',
+            'address',
+            'homepage'
+        ];
+
+        $completed = 0;
+        $properties = (
+            property_exists($user, 'roles') &&
+            is_array($user->roles) &&
+            in_array(User::ROLE_INSTITUTION, $user->roles)
+        ) ?
+            $institutionToCompleteProperties :
+            $userToCompleteProperties;
+
+        foreach ($properties as $property) {
+            if (property_exists($user, $property) && $user->{$property} !== NULL && !empty($user->{$property}))
+                $completed++;
+        }
+
+        $completion = ($completed === 0) ? 0 : floor(($completed / count($properties)) * 100);
+        $user->completion = $completion;
     }
 
     /**

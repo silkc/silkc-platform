@@ -39,6 +39,14 @@
                                 {{ form_widget(form.firstname, {'attr' : {'placeholder': 'form.label.firstname'|trans({}, 'login')} }) }}
                             </div>
 
+                            <div class="form-group" style="display: none;">
+                                {{ form_widget(form.address, {'attr' : {'placeholder': 'form.label.address'|trans({}, 'login')} }) }}
+                            </div>
+
+                            <div class="form-group" style="display: none;">
+                                {{ form_widget(form.homepage, {'attr' : {'placeholder': 'form.label.homepage'|trans({}, 'login')} }) }}
+                            </div>
+
                             <div class="form-group">
                                 {{ form_widget(form.username, {'attr' : {'placeholder': 'form.label.username'|trans({}, 'login')} }) }}
                             </div>
