@@ -24,54 +24,24 @@ class UserType extends AbstractType
                 ->add('firstname', TextType::class, [
                     'label' => 'form.label.firstname',
                     'translation_domain' => 'login',
+                    'required'   => false,
                 ])
                 ->add('lastname', TextType::class, [
                     'label' => 'form.label.lastname',
                     'translation_domain' => 'login',
-                ])
-                ->add('username', TextType::class, [
-                    'label' => 'form.label.pseudo',
-                    'translation_domain' => 'login',
-                ]);
-        } elseif (array_key_exists('is_institution', $options) && $options['is_institution'] === true) {
-            $builder
-                ->add('username', TextType::class, [
-                    'label' => 'form.label.institution_name',
-                    'translation_domain' => 'login',
-                ])
-                ->add('homepage', TextType::class, [
-                    'label' => 'form.label.homepage',
-                    'translation_domain' => 'login',
-                ])
-                ->add('address', TextType::class, [
-                    'label' => 'form.label.address',
-                    'translation_domain' => 'login',
+                    'required'   => false,
                 ]);
         } else {
             $builder
-                ->add('firstname', TextType::class, [
-                    'label' => 'form.label.firstname',
-                    'translation_domain' => 'login',
-                ])
-                ->add('lastname', TextType::class, [
-                    'label' => 'form.label.lastname',
-                    'translation_domain' => 'login',
-                ])
-                ->add('username', TextType::class, [
-                    'label' => 'form.label.pseudo',
-                    'translation_domain' => 'login',
-                ])
-                ->add('username', TextType::class, [
-                    'label' => 'form.label.institution_name',
-                    'translation_domain' => 'login',
-                ])
                 ->add('homepage', TextType::class, [
-                    'label' => 'form.label.homepage',
+                    'label'              => 'form.label.homepage',
                     'translation_domain' => 'login',
+                    'required'           => false,
                 ])
                 ->add('address', TextType::class, [
-                    'label' => 'form.label.address',
+                    'label'              => 'form.label.address',
                     'translation_domain' => 'login',
+                    'required'           => false,
                 ]);
         }
         /*
@@ -84,8 +54,12 @@ class UserType extends AbstractType
             ]);
         */
 
-
         $builder
+            ->add('username', TextType::class, [
+                'label' => 'form.label.pseudo',
+                'translation_domain' => 'login',
+                'required'   => true,
+            ])
             ->add('email', EmailType::class, [
                 'label' => 'form.label.email',
                 'translation_domain' => 'login',

@@ -44,15 +44,14 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/signup", name="app_signup")
+     * @Route("/signup/{type}", name="app_signup", defaults={"type": "user"})
      */
-    public function signup(ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder, Request $request, UserRepository $userRepository): Response
+    public function signup(string $type, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder, Request $request, UserRepository $userRepository): Response
     {
         // On bloque l'inscription pour le moment :
         //return $this->redirectToRoute('app_login');
-
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, ['require_password' => true]);
+        $form = $this->createForm(UserType::class, $user, ['require_password' => true, 'is_personal' => ($type === 'user')]);
 
         $form->handleRequest($request);
 
