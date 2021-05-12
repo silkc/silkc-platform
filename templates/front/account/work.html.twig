@@ -59,23 +59,23 @@
 
 %}
 
-
 <fieldset>
 	{# Current job #}
 	<div class="info">
 		Please indicate your current job. We will use it to guess your current skills.
 	</div>
 
-	<div class="d-inline-flex align-items-end">
+	<div class="d-inline-flex align-items-end add-job add-current-job">
 		<label for="current_job-input">Current job</label>
-        {% include 'front/elements/input_search.html.twig'
+        {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'current_job-input',
                 'url': '/apip/occupations',
                 'autocomplete': true,
                 'formats': 'json',
                 'pagination': 'false',
-                'name': 'current_job'
+                'name': 'current_job',
+                'placeholder': ""
             }
         %}
 	</div>
@@ -119,9 +119,9 @@
 		Please indicate any previous jobs. We will use them to guess skills. Use the + button to add more.
 	</div>
 
-	<div class="d-inline-flex align-items-end">
+	<div class="d-inline-flex align-items-end add-job add-previous-job">
 		<label for="previous_job-input">Previous job</label>
-        {% include 'front/elements/input_search.html.twig'
+        {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'previous_job-input',
                 'url': '/apip/occupations',
@@ -172,9 +172,9 @@
 		Please indicate your desired jobs. We will use them to suggest the best training based on your location and current skillset.
 	</div>
 
-	<div class="d-inline-flex align-items-end">
+	<div class="d-inline-flex align-items-end add-job add-desired-job">
 		<label for="previous_job-input">Desired job</label>
-        {% include 'front/elements/input_search.html.twig'
+        {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'desired_job-input',
                 'url': '/apip/occupations',
@@ -222,6 +222,8 @@
 	</div>
 </fieldset>
 {# Desired job #}
+
+<input type="hidden" name="jobs" id="jobs" />
 
 <div class="form-group button-group text-right">
 	<button type="submit" class="btn btn-primary">Save</button>

@@ -11,3 +11,4 @@ is_online_monitored: Is online monitored
 is_presential: Is presential
 create: Save
 edit_training: Save
+pseudo: Pseudo

@@ -23,9 +23,9 @@
 		Please indicate any professional training that you have followed in the last 5 years
 	</div>
 
-	<div class="d-inline-flex align-items-end">
+	<div class="d-inline-flex align-items-end add-training">
 		<label for="training-input">Training name</label>
-        {% include 'front/elements/input_search.html.twig'
+        {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'training-input',
                 'url': '/apip/trainings',
@@ -62,6 +62,9 @@
 		</ul>
 	</div>
 </fieldset>
+
+
+<input type="hidden" name="trainings" id="trainings" />
 
 <div class="form-group button-group text-right">
 	<button type="submit" class="btn btn-primary">Save</button>

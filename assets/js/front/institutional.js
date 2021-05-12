@@ -201,6 +201,7 @@ class Institutional {
             let ul = $('#skills-occupations-acquired');
             let ulNotOccupation = $('#skills-not-occupations-acquired');
 
+            // Si aucune selection d'un metier
             if (!occupation_id || !url) {
                 if (ul.find('li').length > 0) {
                     ul.find('li').each(function(k) {
@@ -214,6 +215,13 @@ class Institutional {
                         }
                     });
                 }
+
+                // Affichage "tout associer/tout desassocier"
+                if (ul.find('li').length > 0)
+                    $('body').find('.skills-associated').show();
+                else
+                    $('body').find('.skills-associated').hide();
+
                 return false;
             }
 
@@ -267,6 +275,18 @@ class Institutional {
                                 }
                                 if (i == data.length - 1) {
                                     $(html).appendTo(ul);
+
+                                    // Affichage "tout associer/tout desassocier"
+                                    if (ul.find('li').length > 0) {
+                                        $('body').find('.skills-associated').show();
+                                    } else {
+                                        $('body').find('.skills-associated').hide();
+                                    }
+                                    if (ul.find('.add').length > 0) {
+                                        $('body').find('.skills-associated').attr('id', 'all-associated').html('All associated')
+                                    } else {
+                                        $('body').find('.skills-associated').attr('id', 'all-unassociated').html('All unassociated')
+                                    }
                                 }
                             }
                         }
@@ -277,11 +297,61 @@ class Institutional {
             });
         });
 
+        let idOccupation = $('.occupations-select select').val();
+        if (idOccupation) {
+            $('.occupations-select select').val(idOccupation).trigger('change');
+        }
     }
 
     addSkillOccupation = () => {
 
         let _this = this;
+
+        $('body').on('click', '#all-associated', function(e) {
+            e.preventDefault();
+
+            let ul = $('#skills-occupations-acquired');
+            if (ul.find('li').length > 0) {
+                ul.find('li').each(function(k) {
+                    let skill = $(this).find('a.add');
+                    let skillId = skill.attr('data-id');
+                    let type = skill.attr('data-type');
+                    
+                    skill.addClass('associated');
+                    
+                    skill.toggleClass('add rmv');
+                    skill.children().remove();
+                    skill.append('<i class="fas fa-minus"></i>');
+                    
+                    _this.addSkillToHiddenField(type, skillId);
+                });
+
+                $(this).attr('id', 'all-unassociated').html('All unassociated')
+            }
+        });
+
+        $('body').on('click', '#all-unassociated', function(e) {
+            e.preventDefault();
+
+            let ul = $('#skills-occupations-acquired');
+            if (ul.find('li').length > 0) {
+                ul.find('li').each(function(k) {
+                    let skill = $(this).find('a.rmv');
+                    let skillId = skill.attr('data-id');
+                    let type = skill.attr('data-type');
+            
+                    skill.removeClass('associated');
+
+                    skill.toggleClass('rmv add');
+                    skill.children().remove();
+                    skill.append('<i class="fas fa-plus"></i>');
+                    
+                    _this.removeSkillToHiddenField(type, skillId);
+                });
+
+                $(this).attr('id', 'all-associated').html('All associated')
+            }
+        });
 
         $('body').on('click', '#skills-occupations-acquired .add', function(e) {
             e.preventDefault();

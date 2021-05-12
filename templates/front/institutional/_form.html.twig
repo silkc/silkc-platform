@@ -50,7 +50,7 @@
             <div class="p-4 content-skills">
                 <div class="mb-3 add-skill" data-type="required">
                     <input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
-                    {% include 'front/elements/input_add_skills.html.twig'
+                    {% include 'front/elements/input_add_search.html.twig'
                         with {
                             'id': 'skill-name-required',
                             'url': '/apip/skills',
@@ -92,7 +92,7 @@
             <p class="title mb-0">Acquired skills</p>
             <div class="p-4 content-skills">
                 <div class="mb-3 add-skill" data-type="acquired">
-                    {% include 'front/elements/input_add_skills.html.twig'
+                    {% include 'front/elements/input_add_search.html.twig'
                         with {
                             'id': 'skill-name-acquired',
                             'url': '/apip/skills',
@@ -106,11 +106,11 @@
                     <div class="content-list-skill">
                         <div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-secondary">
                             <div class="pl-2 pr-2 pb-2">ESCO</div>
-                            {{ dump(training) }}
                             <div class="occupation">
                                 <ul class="list-group ul-skills" id="skills-occupations-acquired">
                                 
                                 </ul>
+                                <a href="#" class="skills-associated" id="all-associated">All associated</a>
                             </div>
                         </div>
                         <div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-light">
@@ -147,7 +147,7 @@
         </div>
     </div>
 
-    <p class="text-center">
+    <p class="text-center mt-4">
         {{ form_widget(form.save, {'label': (training is defined) ? 'edit_training' : 'create'}) }}
     </p>
 {{ form_end(form) }}

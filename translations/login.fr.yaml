@@ -5,6 +5,7 @@ form:
     label:
         username: Username
         firstname: Firstname
+        pseudo: Pseudo
         lastname: Lastname
         email: Email
         password: 

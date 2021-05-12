@@ -153,3 +153,12 @@ form[name="training"] {
     margin-bottom: 15px;
   }
 }
+
+#list-trainings .form-check-input {
+    position: absolute;
+    left: 1.25rem;
+}
+
+#all-associated {
+    display: none;
+}

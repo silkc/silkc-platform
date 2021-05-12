@@ -188,7 +188,7 @@ class HomeController extends AbstractController
             $em->persist($training);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
+            $this->addFlash('success', $translator->trans('The training was created', [], 'admin'));
 
             return $this->redirectToRoute('app_training_create');
         }
@@ -262,89 +262,12 @@ class HomeController extends AbstractController
             $em->persist($training);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
+            $this->addFlash('success', $translator->trans('The training has been updated', [], 'admin'));
 
             return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
         }
 
         return $this->render('front/institutional/training_create.html.twig', [
-            'controller_name' => 'HomeController',
-            'form' => $form->createView(),
-            'training' => $training,
-        ]);
-    }
-
-    /**
-     * @Route("/form_training", name="form_training_edit")
-     */
-    public function form_training_edit(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
-    {
-
-        $training = new Training();
-        $form = $this->createForm(TrainingType::class, $training);
-        /*$form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $validator->validate($training);
-            if (count($errors) > 0) {
-                return new Response((string) $errors, 400);
-            }
-            
-            $em = $this->getDoctrine()->getManager();
-            $oldTrainingSkills = $training->getTrainingSkills();
-            $newTrainingSkills = new ArrayCollection();
-            if (
-                $request->request->get('hidden_trainingSkills') !== NULL &&
-                @json_decode($request->request->get('hidden_trainingSkills')) !== NULL
-            ) {
-                $skills = json_decode($request->request->get('hidden_trainingSkills'));
-                if (property_exists($skills, 'acquired')) {
-                    foreach ($skills->acquired as $skillId) {
-                        $skill = $skillRepository->findOneBy(['id' => $skillId]);
-                        if (!$skill)
-                            continue;
-
-                        $trainingSkill = new TrainingSkill();
-                        $trainingSkill->setSkill($skill);
-                        $trainingSkill->setTraining($training);
-                        $trainingSkill->setIsToAcquire(true);
-                        $em->persist($trainingSkill);
-                        $training->addTrainingSkill($trainingSkill);
-                        $newTrainingSkills->add($trainingSkill);
-                    }
-                }
-
-                if (property_exists($skills, 'required')) {
-                    foreach ($skills->required as $skillId) {
-                        $skill = $skillRepository->findOneBy(['id' => $skillId]);
-                        if (!$skill)
-                            continue;
-
-                        $trainingSkill = new TrainingSkill();
-                        $trainingSkill->setSkill($skill);
-                        $trainingSkill->setTraining($training);
-                        $trainingSkill->setIsRequired(true);
-                        $em->persist($trainingSkill);
-                        $training->addTrainingSkill($trainingSkill);
-                        $newTrainingSkills->add($trainingSkill);
-                    }
-                }
-            }
-
-            foreach ($oldTrainingSkills as $trainingSkill) {
-                if (!$newTrainingSkills->contains($trainingSkill))
-                    $training->removeTrainingSkill($trainingSkill);
-            }
-
-            $em->persist($training);
-            $em->flush();
-
-            $this->addFlash('success', $translator->trans('training.created_successfully', [], 'admin'));
-
-            return $this->redirectToRoute('app_institution');
-        }*/
-
-        return $this->render('front/institutional/_form.html.twig', [
             'controller_name' => 'HomeController',
             'form' => $form->createView(),
             'training' => $training,

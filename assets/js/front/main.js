@@ -163,7 +163,7 @@ class Main {
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
-          })
+        });
     }
 
     /**
