@@ -18,6 +18,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
             $builder
                 ->add('firstname', TextType::class, [
@@ -32,9 +33,34 @@ class UserType extends AbstractType
                     'label' => 'form.label.pseudo',
                     'translation_domain' => 'login',
                 ]);
-        }
-        else {
+        } elseif (array_key_exists('is_institution', $options) && $options['is_institution'] === true) {
             $builder
+                ->add('username', TextType::class, [
+                    'label' => 'form.label.institution_name',
+                    'translation_domain' => 'login',
+                ])
+                ->add('homepage', TextType::class, [
+                    'label' => 'form.label.homepage',
+                    'translation_domain' => 'login',
+                ])
+                ->add('address', TextType::class, [
+                    'label' => 'form.label.address',
+                    'translation_domain' => 'login',
+                ]);
+        } else {
+            $builder
+                ->add('firstname', TextType::class, [
+                    'label' => 'form.label.firstname',
+                    'translation_domain' => 'login',
+                ])
+                ->add('lastname', TextType::class, [
+                    'label' => 'form.label.lastname',
+                    'translation_domain' => 'login',
+                ])
+                ->add('username', TextType::class, [
+                    'label' => 'form.label.pseudo',
+                    'translation_domain' => 'login',
+                ])
                 ->add('username', TextType::class, [
                     'label' => 'form.label.institution_name',
                     'translation_domain' => 'login',

@@ -155,119 +155,33 @@ class Main {
             }
         }
     }
-
-    /**
-     * Suppression contenu de la modal
-     */
-    clearModal () {
-        $('#common-modal').on('hidden.bs.modal', function (e) {
-            $(this).find('.modal-title').children().remove();
-            $(this).find('.modal-body').children().remove();
-        });
-    }
-
-    /**
-     * Suppression d'un item
-     */
-     rmvItem = () => {
-        $('body').on('click', '.item.rmv', function(e) {
+    
+    tabsSignup = () => {
+        $('body').on('click', '.login-form .tabs-signup a', function(e) {
             e.preventDefault();
 
-            let $this = $(this);
-            let id = $this.attr('data-id');
-            let name = $this.attr('data-name');
-            let url = $this.attr('data-url');
-            let data = {};
+            var type = $(this).attr('href');
+            $('.login-form .tabs-signup a').removeClass('active');
+            $(this).addClass('active');
 
-            if (!id || !url) return false;
-            data.id = id
-
-            let dialog = bootbox.confirm({
-                message: `Do you want to delete ${name ? `"${name}"` : 'this item'}?`,
-                buttons: {
-                    cancel: {
-                        label: 'Cancel',
-                        className: 'btn-primary'
-                    },
-                    confirm: {
-                        label: '<span class="spinner-border spinner-border-sm hide" role="status" aria-hidden="true"></span> Yes',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function (result) {
-                    dialog.find('.bootbox-cancel').attr('disabled', 'disabled');
-                    dialog.find('.bootbox-accept .spinner-border').removeClass('hide');
-
-                    /*$.ajax({
-                        type: "POST",
-                        url: url,
-                        data: data,
-                        dataType: dataType,
-                        success: function (data, textStatus, jqXHR) {*/
-
-                            dialog.modal('hide');
-                            
-                        /*}
-                    });*/
-                    return false;
-                }
-            })
-        });
-    }
-
-    /**
-     * Google map
-     */
-     initGoogleMap = () => {
-        let maps = document.getElementsByClassName('google-map');
-
-        if (maps) {
-            for (var i = 0; i < maps.length; i++) {
-                let dataLocation = maps[i].getAttribute('data-location');
-
-                //let url = `${baseUrl}?${params}`;
-
-
-
-                if (dataLocation) {
-                    const myLatLng = { lat: -25.363, lng: 131.044 };
-                    const map = new google.maps.Map(maps[i], {
-                        mapTypeControl: false,
-                        zoom: 4,
-                        center: myLatLng,
-                    });
-                    const contentString =
-                    '<div class="google-address">' +
-                    'Caen' +
-                    "</div>";
-                    const infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                      });
-                    const marker = new google.maps.Marker({
-                      position: myLatLng,
-                      map,
-                    });
-                    marker.addListener("click", () => {
-                        infowindow.open(map, marker);
-                    });
-                }
-            }
-        }
-    }
-        
-    listenTrigger = () => {
-        /*let _this = this;
-        document.addEventListener('addSkillToTraining', function (e) {
+            $('.login-form .input-' + type).show();
             
-        }, false);*/
+            if (type == 'user') {
+                $('.form-group.placeholder input[type="text"]').attr('placeholder', 'Username');
+                $('.login-form .input-institution').hide();
+                $('.login-form .input-' + type).show();
+            }
+            if (type == 'institution') {
+                $('.form-group.placeholder input[type="text"]').attr('placeholder', 'Institution name');
+                $(this).closest('fieldset').removeClass('user');
+                $('.login-form .input-user').hide();
+            }
+        });
     }
 
     init = function() {
-        //this.initGoogleMap();
-        //this.rmvItem();
         this.runAutocompletion();
-        //this.clearModal();
-        //this.listenTrigger();
+        this.tabsSignup();
     }
 }
 

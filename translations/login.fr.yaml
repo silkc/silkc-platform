@@ -5,9 +5,12 @@ form:
     label:
         username: Username
         firstname: Firstname
+        institionname: Instition name
         pseudo: Pseudo
         lastname: Lastname
         email: Email
+        address: Address
+        homepage: Homepage
         password: 
             password: Password
             first: Password
