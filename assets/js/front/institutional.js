@@ -198,7 +198,7 @@ class Institutional {
             let baseUrl = '/apip/occupation_skills';
             let params = $.param({'occupation': occupation_id});
             let url = `${baseUrl}?${params}`;
-            let ul = $('#skills-occupations-acquired');
+            let ul = $('#skills-occupations-acquired');                             
             let ulNotOccupation = $('#skills-not-occupations-acquired');
 
             // Si aucune selection d'un metier
@@ -217,10 +217,14 @@ class Institutional {
                 }
 
                 // Affichage "tout associer/tout desassocier"
-                if (ul.find('li').length > 0)
-                    $('body').find('.skills-associated').show();
-                else
+
+                console.log('>>>>>>>', ul.find('li').length)
+                console.log($('body').find('.skills-associated'))
+
+                if (ul.find('li').length == 0)
                     $('body').find('.skills-associated').hide();
+                else
+                    $('body').find('.skills-associated').show();
 
                 return false;
             }
