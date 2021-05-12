@@ -157,7 +157,7 @@ class Main {
     }
     
     tabsSignup = () => {
-        $('body').on('click', '.login-form .tabs-signup a', function(e) {
+        /*$('body').on('click', '.login-form .tabs-signup a', function(e) {
             e.preventDefault();
 
             var type = $(this).attr('href');
@@ -176,7 +176,7 @@ class Main {
                 $(this).closest('fieldset').removeClass('user');
                 $('.login-form .input-user').hide();
             }
-        });
+        });*/
     }
 
     init = function() {
