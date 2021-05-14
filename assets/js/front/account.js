@@ -519,8 +519,6 @@ class Account {
             let token = $('body').attr('data-token');
             
             if (inputTraining && inputTraining.val()) {
-            
-                console.log('inputTraining.val()', inputTraining.val())
                 
                 let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
                                 <span class="sr-only">Loading...</span>
@@ -637,30 +635,22 @@ class Account {
 
             let inputSkills = $('body').find('#skills[type="hidden"]');
             let token = $('body').attr('data-token');
-            
+
             if (inputSkills && inputSkills.val()) {
-                
-            }
-
-
-
-            /*if (inputTraining && inputTraining.val()) {
             
-                console.log('inputTraining.val()', inputTraining.val())
-                
                 let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>`;
-                $(loader).prependTo('#content-training button[type="submit"]');
+                $(loader).prependTo('#content-skills button[type="submit"]');
                 
-                let trainings = JSON.parse(inputTraining.val());
-                let url = `/api/user_training`;
+                let skills = JSON.parse(inputSkills.val());
+                let url = `/api/user_skill`;
 
                 $.ajax({
                     url: url,
                     type: "POST",
                     dataType: 'json',
-                    data: {trainings: trainings},
+                    data: {skills: skills},
                     headers: {"X-auth-token": token},
                     success: function (data, textStatus, jqXHR) {
                         let html = `<div class="container">
@@ -673,15 +663,15 @@ class Account {
                         </div>`;
                         
                         $(html).prependTo('#account');
-                        $('#content-training button[type="submit"]').find('.spinner-button').remove();
+                        $('#content-skills button[type="submit"]').find('.spinner-button').remove();
                         let check = `<i class="fas fa-check mr-1"></i>`;
-                        $(check).prependTo('#content-training button[type="submit"]');
+                        $(check).prependTo('#content-skills button[type="submit"]');
                         setTimeout(function() {
-                            $('#content-training button[type="submit"]').find('svg').remove();
+                            $('#content-skills button[type="submit"]').find('svg').remove();
                         }, 1500);
                     }
                 });
-            }*/
+            }
         });
     }
 
