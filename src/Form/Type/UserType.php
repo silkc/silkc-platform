@@ -35,6 +35,16 @@ class UserType extends AbstractType
                     'label' => 'form.label.lastname',
                     'translation_domain' => 'login',
                     'required'   => false,
+                ])
+                ->add('address', TextType::class, [
+                    'label' => 'form.label.address',
+                    'translation_domain' => 'login',
+                    'required'   => false,
+                ])
+                ->add('yearOfBirth', TextType::class, [
+                    'label' => 'form.label.year_of_birth',
+                    'translation_domain' => 'login',
+                    'required'   => false,
                 ]);
         } else {
             $builder

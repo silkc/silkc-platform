@@ -128,12 +128,24 @@ class User implements UserInterface
      */
     private $userOccupations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Training::class)
+     */
+    private $trainings;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserSkill::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userSkills;
+
     public function __construct()
     {
         $this->userOccupations = new ArrayCollection();
         $this->currentOccupations = new ArrayCollection();
         $this->previousOccupations = new ArrayCollection();
         $this->desiredOccupations = new ArrayCollection();
+        $this->trainings = new ArrayCollection();
+        $this->userSkills = new ArrayCollection();
     }
 
     /**
@@ -168,7 +180,9 @@ class User implements UserInterface
             'firstname',
             'lastname',
             'email',
-            'username'
+            'username',
+            'address',
+            'yearOfBirth'
         ];
         $institutionToCompleteProperties = [
             'username',
@@ -464,5 +478,59 @@ class User implements UserInterface
     public function getUserOccupations(): Collection
     {
         return $this->userOccupations;
+    }
+
+    /**
+     * @return Collection|Training[]
+     */
+    public function getTrainings(): Collection
+    {
+        return $this->trainings;
+    }
+
+    public function addTraining(Training $training): self
+    {
+        if (!$this->trainings->contains($training)) {
+            $this->trainings[] = $training;
+        }
+
+        return $this;
+    }
+
+    public function removeTraining(Training $training): self
+    {
+        $this->trainings->removeElement($training);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserSkill[]
+     */
+    public function getUserSkills(): Collection
+    {
+        return $this->userSkills;
+    }
+
+    public function addSkill(UserSkill $userSkill): self
+    {
+        if (!$this->userSkills->contains($userSkill)) {
+            $this->userSkills[] = $userSkill;
+            $userSkill->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserSkills(UserSkill $userSkill): self
+    {
+        if ($this->userSkills->removeElement($userSkill)) {
+            // set the owning side to null (unless already changed)
+            if ($userSkill->getUser() === $this) {
+                $userSkill->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

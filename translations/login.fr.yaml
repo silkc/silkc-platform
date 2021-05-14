@@ -11,6 +11,7 @@ form:
         email: Email
         address: Address
         homepage: Homepage
+        year_of_birth: Year of birth
         password: 
             password: Password
             first: Password

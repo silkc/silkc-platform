@@ -202,9 +202,9 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/training/create", name="training_create")
+     * @Route("/training/create/{tab}", name="training_create")
      */
-    public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
+    public function training_create(int $tab = 1, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
         $training = new Training();
 
@@ -274,6 +274,7 @@ class HomeController extends AbstractController
         return $this->render('front/institutional/training_create.html.twig', [
             'controller_name' => 'HomeController',
             'form' => $form->createView(),
+            'tab' => $tab
         ]);
     }
 

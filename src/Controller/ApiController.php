@@ -37,12 +37,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/user_occupation", name="user_occupation", methods={"POST"})
      */
-    public function user_occupation(
-        Request $request,
-        UserRepository $userRepository,
-        UserOccupationRepository $userOccupationRepository,
-        OccupationRepository $occupationRepository
-    )
+    public function user_occupation(Request $request, OccupationRepository $occupationRepository)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -114,6 +109,40 @@ class ApiController extends AbstractController
                 $userOccupation->setIsDesired(true);
                 $user->addUserOccupation($userOccupation);
                 $em->persist($userOccupation);
+            }
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/user_training", name="user_training", methods={"POST"})
+     */
+    public function user_training(Request $request, TrainingRepository $trainingRepository)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $trainings_ids = $request->request->get('trainings');
+        if (!$user || !$trainings_ids || !is_array($trainings_ids))
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        $result = $trainingRepository->findBy(['id' => array_filter($trainings_ids, 'is_numeric')]);
+        $trainings = ($result) ? new ArrayCollection($result) : null;
+        $userTrainings = $user->getTrainings();
+
+        if ($trainings) {
+            foreach ($trainings as $training) {
+                if (!$userTrainings || !$userTrainings->contains($training))
+                    $user->addTraining($training);
+            }
+        }
+
+        foreach ($userTrainings as $userTraining) {
+            if (!$trainings->contains($userTraining)) {
+                $user->removeTraining($userTraining);
             }
         }
 

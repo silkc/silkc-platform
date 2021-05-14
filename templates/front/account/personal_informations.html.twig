@@ -19,6 +19,14 @@
 		{{ form_row(form.email) }}
 	</div>
 </div>
+<div class="row">
+	<div class="form-group col-md-6">
+		{{ form_row(form.address) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.yearOfBirth) }}
+	</div>
+</div>
 
 {% if form.offsetExists('password') %}
 	<div class="row special">
