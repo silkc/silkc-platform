@@ -268,29 +268,29 @@ class Account {
                 }
                 
                 if (div.hasClass('add-current-job')) {
-                    if ('current' in jobsList) {
-                        if (jobsList.current.includes(jobIdToAdd)) return false;
-                        jobsList.current = [jobIdToAdd, ...jobsList.current];
+                    if ('currentOccupations' in jobsList) {
+                        if (jobsList.currentOccupations.includes(jobIdToAdd)) return false;
+                        jobsList.currentOccupations = [jobIdToAdd, ...jobsList.currentOccupations];
                     } else {
-                        jobsList.current = [jobIdToAdd];
+                        jobsList.currentOccupations = [jobIdToAdd];
                     }
                 }
                 
                 if (div.hasClass('add-previous-job')) {
-                    if ('previous' in jobsList) {
-                        if (jobsList.previous.includes(jobIdToAdd)) return false;
-                        jobsList.previous = [jobIdToAdd, ...jobsList.previous];
+                    if ('previousOccupations' in jobsList) {
+                        if (jobsList.previousOccupations.includes(jobIdToAdd)) return false;
+                        jobsList.previousOccupations = [jobIdToAdd, ...jobsList.previousOccupations];
                     } else {
-                        jobsList.previous = [jobIdToAdd];
+                        jobsList.previousOccupations = [jobIdToAdd];
                     }
                 }
                 
                 if (div.hasClass('add-desired-job')) {
-                    if ('desired' in jobsList) {
-                        if (jobsList.desired.includes(jobIdToAdd)) return false;
-                        jobsList.desired = [jobIdToAdd, ...jobsList.desired];
+                    if ('desiredOccupations' in jobsList) {
+                        if (jobsList.desiredOccupations.includes(jobIdToAdd)) return false;
+                        jobsList.desiredOccupations = [jobIdToAdd, ...jobsList.desiredOccupations];
                     } else {
-                        jobsList.desired = [jobIdToAdd];
+                        jobsList.desiredOccupations = [jobIdToAdd];
                     }
                 }
 
@@ -425,6 +425,37 @@ class Account {
         });
     }
 
+    /**
+     * Suppression d'une formation
+     */
+     saveTraining = () => {
+
+        let _this = this;
+
+        $('body').on('click', '#content-work button[type="submit"]', function(e) {
+            e.preventDefault();
+
+            let inputOccupation = $('body').find('#jobs[type="hidden"]');
+            
+            if (inputOccupation && inputOccupation.val()) {
+
+                let occupations = JSON.stringify(inputOccupation.val());
+                let url = `api/user_occupation`;
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: occupations,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log('data', data)
+                    }
+                });
+            }
+        });
+    }
+
     init = function() {
         this.runDetail();
         this.runAutocompletion();
@@ -432,6 +463,7 @@ class Account {
         this.removeJob();
         this.removeTraining();
         this.addTraining();
+        this.saveTraining();
     }
 }
 
