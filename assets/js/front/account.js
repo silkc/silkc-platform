@@ -68,6 +68,35 @@ class Account {
         </li>`;
     }
 
+    tplSkill = (skill) => {
+
+        return `<div class="card" data-key'="${skill.k}">
+            <div class="card-header" id="heading_${skill.k}">
+                <div class="d-flex flex-nowrap justify-content-between">
+                    <div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_${skill.k}" aria-expanded="false" aria-controls="collapse_other_skills_${skill.k}">
+                        <a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_${skill.k}">
+                            <i class="fas fa-chevron-circle-right"></i>
+                        </a>
+                        <a data-toggle="collapse" href="#skills_other_${skill.k}">
+                            <span>${skill.name}</span>
+                        </a>
+                    </div>
+                    <div class="d-inline-flex align-items-center justify-content-end">
+                        <a href="" class="text-danger rmv item" title="Remove this skill" data-name="${skill.name}" data-id="${skill.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapse_other_skills_${skill.k}" class="collapse" aria-labelledby="heading_${skill.k}" data-parent="#list-other_skills">
+                <div class="card-body">
+                    ${skill.description}
+                </div>
+            </div>
+        </div>`;
+    }
+
     runDetail = () => {
         $('body').on('click', '.list-job .detail', function(e) {
             e.preventDefault();
@@ -328,7 +357,6 @@ class Account {
                     if (type in jobsList) {
                         if (jobsList[type].includes(parseInt(id))) {
                             jobsList[type] = jobsList[type].filter(function (el) {
-                                console.log(el, id)
                                 return el != id;
                             });
                             inputJobs.val(JSON.stringify(jobsList));
@@ -478,7 +506,7 @@ class Account {
     }
 
     /**
-     * Sauvegarde des occupations
+     * Sauvegarde des formations
      */
      saveTrainings = () => {
 
@@ -492,20 +520,21 @@ class Account {
             
             if (inputTraining && inputTraining.val()) {
             
+                console.log('inputTraining.val()', inputTraining.val())
                 
                 let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>`;
                 $(loader).prependTo('#content-training button[type="submit"]');
                 
-                let occupations = JSON.parse(inputOccupation.val());
+                let trainings = JSON.parse(inputTraining.val());
                 let url = `/api/user_training`;
-                
+
                 $.ajax({
                     url: url,
                     type: "POST",
                     dataType: 'json',
-                    data: occupations,
+                    data: {trainings: trainings},
                     headers: {"X-auth-token": token},
                     success: function (data, textStatus, jqXHR) {
                         let html = `<div class="container">
@@ -530,6 +559,172 @@ class Account {
         });
     }
 
+    /**
+     * Gestion des compétences
+     */
+     manageSkills = () => {
+
+        let _this = this;
+
+        // Add skills
+        $('body').on('click', '.add-skill button', function(e) {
+            e.preventDefault();
+
+            let skill = {};
+            //let inputSkills = $('body').find('#skills[type="hidden"]');
+            let div = $(this).closest('.add-skill');
+            let ul = $('#list-other_skills');
+            let inputSkillToAdd = div.find('input[type="hidden"]');
+            let inputAutocomplete = div.find('.input-autocomplete');
+            let skillDescription = inputAutocomplete.attr('data-description');
+            let name = inputAutocomplete.val();
+            //let skillsList = {};
+
+            if (inputSkillToAdd && inputSkillToAdd.val()) {
+                let skillIdToAdd = inputSkillToAdd.val();
+
+                inputAutocomplete.val('');
+                inputAutocomplete.removeAttr('data-description');
+                inputSkillToAdd.val();
+                
+                if (!skillIdToAdd) return false;
+
+                _this.addSkill(skillIdToAdd, 'associatedSkills');
+
+                skill.description = skillDescription;
+                skill.id = skillIdToAdd;
+                skill.name = name;
+
+                if (ul) {
+                    skill.k = 0;
+                    ul.find('.card').each(function() {
+                        let k = $(this).attr('data-key');
+                        if (parseInt(k) > skill.k) skill.k = parseInt(k) + 1;
+                    });
+                    let li = _this.tplSkill(skill);
+                    $(ul).append(li);
+                }
+            }
+        });
+
+        // Remove skills
+        $('body').on('click', '#content-skills .rmv.item', function(e) {
+            e.preventDefault();
+
+            let skillId = $(this).attr('data-id');
+            let card = $(this).closest('.card');
+            let div = $(this).closest('.card').find('.card-header > div > div:last-child');
+            let links = `<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-question-circle text-primary"></i>
+                        </a>
+                        <a href="" class="text-success add" title="Remove this skill">
+                        <i class="fas fa-plus text-primary"></i>
+                        </a>`;
+
+            div.children().remove();
+            $(links).prependTo(div);
+            let html = card.html();
+            $('<div class="card">' + html + '</div>').prependTo($('#list-previously_unselected'));
+            card.remove();
+
+            _this.removeSkill(skillId, 'disassociatedSkills');
+            _this.addSkill(skillId, 'disassociatedSkills');
+        });
+
+        // Sauvegarde skills
+        $('body').on('click', '#content-skills button[type="submit"]', function(e) {
+            e.preventDefault();
+
+            let inputSkills = $('body').find('#skills[type="hidden"]');
+            let token = $('body').attr('data-token');
+            
+            if (inputSkills && inputSkills.val()) {
+                
+            }
+
+
+
+            /*if (inputTraining && inputTraining.val()) {
+            
+                console.log('inputTraining.val()', inputTraining.val())
+                
+                let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
+                $(loader).prependTo('#content-training button[type="submit"]');
+                
+                let trainings = JSON.parse(inputTraining.val());
+                let url = `/api/user_training`;
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json',
+                    data: {trainings: trainings},
+                    headers: {"X-auth-token": token},
+                    success: function (data, textStatus, jqXHR) {
+                        let html = `<div class="container">
+                            <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                Updated data
+                            </div>
+                        </div>`;
+                        
+                        $(html).prependTo('#account');
+                        $('#content-training button[type="submit"]').find('.spinner-button').remove();
+                        let check = `<i class="fas fa-check mr-1"></i>`;
+                        $(check).prependTo('#content-training button[type="submit"]');
+                        setTimeout(function() {
+                            $('#content-training button[type="submit"]').find('svg').remove();
+                        }, 1500);
+                    }
+                });
+            }*/
+        });
+    }
+
+    removeSkill = (skillId, type) => {
+        
+        let inputSkills = $('body').find('#skills[type="hidden"]');
+        let skillsList = '{"associatedSkills": [],"disassociatedSkills": [] }';
+        
+        if (!skillId || !type) return false;
+
+        if (inputSkills && inputSkills.val())
+            skillsList = JSON.parse(inputSkills.val());
+            
+        if (type in skillsList) {
+            if (skillsList[type].includes(parseInt(skillId))) {
+                skillsList[type] = skillsList[type].filter(function (el) {
+                    return el != skillId;
+                });
+                inputSkills.val(JSON.stringify(skillsList));
+            }
+        }
+    } 
+
+    addSkill = (skillId, type) => {
+        
+        let inputSkills = $('body').find('#skills[type="hidden"]');
+        let skillsList = '{"associatedSkills": [],"disassociatedSkills": [] }';
+        
+        if (!skillId || !type) return false;
+
+        if (inputSkills && inputSkills.val())
+            skillsList = JSON.parse(inputSkills.val());
+
+        if (type in skillsList) {
+            if (skillsList[type].includes(skillId)) return false;
+            skillsList[type] = [skillId, ...skillsList[type]];
+        } else {
+            skillsList[type] = [skillId];
+        }
+
+        inputSkills.val(JSON.stringify(skillsList))
+    } 
+
     init = function() {
         this.runDetail();
         this.runAutocompletion();
@@ -539,6 +734,7 @@ class Account {
         this.addTraining();
         this.saveOccupations();
         this.saveTrainings();
+        this.manageSkills();
     }
 }
 
