@@ -384,7 +384,6 @@ class Account {
                 inputTrainings.val(JSON.stringify(trainingsList))
                 
                 if (ul) {
-                    console.log('training', training)
                     let li = _this.tplTraining(training);
                     $(ul).append(li);
                 }
@@ -436,20 +435,30 @@ class Account {
             e.preventDefault();
 
             let inputOccupation = $('body').find('#jobs[type="hidden"]');
+            let token = $('body').attr('data-token');
             
             if (inputOccupation && inputOccupation.val()) {
-
-                let occupations = JSON.stringify(inputOccupation.val());
-                let url = `api/user_occupation`;
+            
+                let occupations = JSON.parse(inputOccupation.val());
+                let url = `/api/user_occupation`;
 
                 $.ajax({
                     url: url,
                     type: "POST",
                     dataType: 'json',
-                    contentType: 'application/json',
                     data: occupations,
+                    headers: {"X-auth-token": token},
                     success: function (data, textStatus, jqXHR) {
-                        console.log('data', data)
+                        let html = `<div class="container">
+                                        <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            Updated data
+                                        </div>
+                                    </div>`;
+
+                        $(html).prependTo('#account');
                     }
                 });
             }

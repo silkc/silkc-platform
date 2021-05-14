@@ -9,7 +9,7 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet"> {% block stylesheets %}{% endblock %}
 		</head>
-		<body>
+		<body data-token="{{ user is defined and attribute(user, 'apiToken') is defined ? user.apiToken : false }}">
 			{% block header %}{% endblock %}
 			{% block body %}{% endblock %}
 			{% block javascripts %}{% endblock %}
