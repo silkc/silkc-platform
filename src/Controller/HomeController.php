@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Entity\Training;
 use App\Form\Type\TrainingType;
 use App\Form\Type\UserType;
+use App\Form\Type\UserPasswordType;
+use App\Repository\UserOccupationRepository;
 use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
@@ -86,8 +88,10 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user, ['is_personal' => true]);
+        $passwordForm = $this->createForm(UserPasswordType::class, $user);
 
         $form->handleRequest($request);
+        $passwordForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -105,20 +109,94 @@ class HomeController extends AbstractController
             $this->addFlash('success', $translator->trans('user.updated_successfully', [], 'admin'));
 
             return $this->redirectToRoute('app_account');
+        } else if ($passwordForm->isSubmitted()) {
+            if (!$passwordForm->isValid()) {
+                $errors = $validator->validate($user);
+                dd($errors);
+            }
+
+            //$data = $request->request->all('user_password');
+            //$result = $passwordEncoder->isPasswordValid($user, 'test');
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('user.password_updated_successfully', [], 'admin'));
         }
 
-        return $this->render('front/account/index.html.twig', ['user' => $user, 'form' => $form->createView()]);
+        return $this->render(
+            'front/account/index.html.twig',
+            [
+                'user' => $user,
+                'form' => $form->createView(),
+                'password_form' => $passwordForm->createView()
+            ]
+        );
     }
 
     /**
      * @Route("/institution", name="institution")
      */
-    public function institution(Request $request, TrainingRepository $trainingRepository): Response
+    public function institution(
+        Request $request,
+        TrainingRepository $trainingRepository,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder
+    ): Response
     {
+        if (!$this->isGranted(User::ROLE_INSTITUTION))
+            return $this->redirectToRoute('app_home');
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserType::class, $user, ['is_personal' => false]);
+        $passwordForm = $this->createForm(UserPasswordType::class, $user);
+
+        $form->handleRequest($request);
+        $passwordForm->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                die('error');
+                return new Response((string)$errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('user.updated_successfully', [], 'admin'));
+
+            return $this->redirectToRoute('app_institution');
+        } else if ($passwordForm->isSubmitted()) {
+            if (!$passwordForm->isValid()) {
+                $errors = $validator->validate($user);
+                dd($errors);
+            }
+
+            //$data = $request->request->all('user_password');
+            //$result = $passwordEncoder->isPasswordValid($user, 'test');
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('user.password_updated_successfully', [], 'admin'));
+        }
+
         $trainings = $trainingRepository->findAll();
         return $this->render('front/institutional/index.html.twig', 
             [
-                'trainings'   => $trainings
+                'trainings'   => $trainings,
+                'form' => $form->createView(),
+                'password_form' => $passwordForm->createView()
             ]
         );
     }

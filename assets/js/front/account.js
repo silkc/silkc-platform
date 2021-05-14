@@ -184,7 +184,7 @@ class Account {
                 let baseUrl = input.getAttribute('data-url');
                 let formats = input.getAttribute('data-formats') || 'json';
                 let pagination = input.getAttribute('data-pagination') || false;
-                let params = $.param({'formats': formats, 'pagination': pagination});
+                let params = $.param({'formats': formats, 'pagination': true});
 
                 let url = `${baseUrl}?${params}`;
 

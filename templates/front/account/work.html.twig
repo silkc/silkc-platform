@@ -82,30 +82,31 @@
 
 	<div id="list-current_job" class="list-job">
 		<ul class="list-group">
-			{% if current_works is defined %}
-				{% for k, current_work in current_works %}
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						<div>
-							<a href="#" class="detail" 
-                                        data-name="{{ current_work.name }}" 
-                                        data-description="{{ current_work.description }}" 
-                                        data-id="{{ current_work.id }}">
-								<span>{{ current_work.name }}</span>
-								<i class="fas fa-question-circle text-primary"></i>
-							</a>
-						</div>
-						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="" class="jobs-linked mr-2">
-								<span class="badge badge-success">10</span>
-							</a>
-							<a href="" class="text-danger item rmv" title="Remove this job" 
-                                       data-name="{{ current_work.name }}" 
-                                       data-id="{{ current_work.id }}" 
-                                       data-url="url de suppression">
-								<i class="fas fa-trash-alt text-danger"></i>
-							</a>
-						</div>
-					</li>
+			{% if user.currentOccupations is defined %}
+				{% for k, row in user.currentOccupations %}
+                    {% set occupation = row.occupation %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" class="detail"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-description="{{ occupation.description }}"
+                               data-id="{{ occupation.id }}">
+                                <span>{{ occupation.preferredLabel }}</span>
+                                <i class="fas fa-question-circle text-primary"></i>
+                            </a>
+                        </div>
+                        <div class="d-inline-flex align-items-center justify-content-end">
+                            <a href="" class="jobs-linked mr-2">
+                                <span class="badge badge-success">10</span>
+                            </a>
+                            <a href="" class="text-danger item rmv" title="Remove this job"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-id="{{ occupation.id }}"
+                               data-url="url de suppression">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </div>
+                    </li>
 				{% endfor %}
 			{% endif %}
 		</ul>
@@ -135,32 +136,33 @@
 
 	<div id="list-previous_job" class="list-job">
 		<ul class="list-group">
-			{% if previous_works is defined %}
-				{% for k, previous_work in previous_works %}
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						<div>
-							<a href="#" class="detail" 
-                                        data-name="{{ previous_work.name }}" 
-                                        data-description="{{ previous_work.description }}" 
-                                        data-id="{{ previous_work.id }}">
-								<span>{{ previous_work.name }}</span>
-								<i class="fas fa-question-circle text-primary"></i>
-							</a>
-						</div>
-						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="" class="jobs-linked mr-2">
-								<span class="badge badge-success">10</span>
-							</a>
-							<a href="" class="text-danger item rmv" title="Remove this job" 
-                                       data-name="{{ previous_work.name }}" 
-                                       data-id="{{ previous_work.id }}"
-                                       data-url="url de suppression">
-								<i class="fas fa-trash-alt text-danger"></i>
-							</a>
-						</div>
-					</li>
-				{% endfor %}
-			{% endif %}
+            {% if user.previousOccupations is defined %}
+                {% for k, row in user.previousOccupations %}
+                    {% set occupation = row.occupation %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" class="detail"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-description="{{ occupation.description }}"
+                               data-id="{{ occupation.id }}">
+                                <span>{{ occupation.preferredLabel }}</span>
+                                <i class="fas fa-question-circle text-primary"></i>
+                            </a>
+                        </div>
+                        <div class="d-inline-flex align-items-center justify-content-end">
+                            <a href="" class="jobs-linked mr-2">
+                                <span class="badge badge-success">10</span>
+                            </a>
+                            <a href="" class="text-danger item rmv" title="Remove this job"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-id="{{ occupation.id }}"
+                               data-url="url de suppression">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
 		</ul>
 	</div>
 </fieldset>
@@ -189,35 +191,36 @@
 	<div id="list-desired_job" class="list-job">
 
 		<ul class="list-group">
-			{% if desired_works is defined %}
-				{% for k, desired_work in desired_works %}
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						<div>
-							<a href="#" class="detail" 
-                                        data-name="{{ desired_work.name }}" 
-                                        data-description="{{ desired_work.description }}" 
-                                        data-id="{{ desired_work.id }}">
-								<span>{{ desired_work.name }}</span>
-								<i class="fas fa-question-circle text-primary"></i>
-							</a>
-						</div>
-						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="" class="jobs-linked mr-2">
-								<span class="badge badge-success">10</span>
-							</a>
-							<a href="" class="text-danger item rmv mr-2" title="Remove this job" 
-                                       data-name="{{ desired_work.name }}" 
-                                       data-id="{{ desired_work.id }}"
-                                       data-url="url de suppression">
-								<i class="fas fa-trash-alt text-danger"></i>
-							</a>
-							<a href="" class="search" title="Search for training required for this job">
-								<i class="fas fa-search-plus text-primary"></i>
-							</a>
-						</div>
-					</li>
-				{% endfor %}
-			{% endif %}
+            {% if user.desiredOccupations is defined %}
+                {% for k, row in user.desiredOccupations %}
+                    {% set occupation = row.occupation %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" class="detail"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-description="{{ occupation.description }}"
+                               data-id="{{ occupation.id }}">
+                                <span>{{ occupation.preferredLabel }}</span>
+                                <i class="fas fa-question-circle text-primary"></i>
+                            </a>
+                        </div>
+                        <div class="d-inline-flex align-items-center justify-content-end">
+                            <a href="" class="jobs-linked mr-2">
+                                <span class="badge badge-success">10</span>
+                            </a>
+                            <a href="" class="text-danger item rmv mr-2" title="Remove this job"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-id="{{ occupation.id }}"
+                               data-url="url de suppression">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                            <a href="" class="search" title="Search for training required for this job">
+                                <i class="fas fa-search-plus text-primary"></i>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
 		</ul>
 	</div>
 </fieldset>

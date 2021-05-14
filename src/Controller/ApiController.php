@@ -2,9 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\UserOccupation;
 use App\Repository\OccupationRepository;
 use App\Repository\TrainingRepository;
+use App\Repository\UserOccupationRepository;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -25,5 +32,94 @@ class ApiController extends AbstractController
             dump($skill->getSkill());
         }
         die();
+    }
+
+    /**
+     * @Route("/user_occupation", name="user_occupation", methods={"POST"})
+     */
+    public function user_occupation(
+        Request $request,
+        UserRepository $userRepository,
+        UserOccupationRepository $userOccupationRepository,
+        OccupationRepository $occupationRepository
+    )
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $params = $request->request->all();
+        if (
+            !$user ||
+            !is_array($params) ||
+            !array_key_exists('currentOccupations', $params) ||
+            !array_key_exists('desiredOccupations', $params) ||
+            !array_key_exists('previousOccupations', $params)
+        )
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        $previousIds = (is_array($params['previousOccupations'])) ? array_filter($params['previousOccupations'], 'is_numeric'): null;
+        $currentIds = (is_array($params['currentOccupations'])) ? array_filter($params['currentOccupations'], 'is_numeric') : null;
+        $desiredIds = (is_array($params['desiredOccupations'])) ? array_filter($params['desiredOccupations'], 'is_numeric') : null;
+
+        $previousOccupations = new ArrayCollection();
+        $currentOccupations = new ArrayCollection();
+        $desiredOccupations = new ArrayCollection();
+        $userOccupations = $user->getUserOccupations();
+        $newPreviousOccupations = new ArrayCollection($occupationRepository->findBy(['id' => $previousIds]));
+        $newCurrentOccupations = new ArrayCollection($occupationRepository->findBy(['id' => $currentIds]));
+        $newDesiredOccupations = new ArrayCollection($occupationRepository->findBy(['id' => $desiredIds]));
+
+        foreach ($userOccupations as $userOccupation) {
+            if ($userOccupation->getIsCurrent() === true) {
+                $currentOccupations->add($userOccupation->getOccupation());
+                if (!$newCurrentOccupations->contains($userOccupation->getOccupation()))
+                    $user->removeUserOccupation($userOccupation);
+            }
+            if ($userOccupation->getIsPrevious() === true) {
+                $previousOccupations->add($userOccupation->getOccupation());
+                if (!$newPreviousOccupations->contains($userOccupation->getOccupation()))
+                    $user->removeUserOccupation($userOccupation);
+            }
+            if ($userOccupation->getIsDesired() === true) {
+                $desiredOccupations->add($userOccupation->getOccupation());
+                if (!$newDesiredOccupations->contains($userOccupation->getOccupation()))
+                    $user->removeUserOccupation($userOccupation);
+            }
+        }
+
+        foreach ($newPreviousOccupations as $occupation) {
+            if (!$previousOccupations->contains($occupation)) {
+                $userOccupation = new UserOccupation();
+                $userOccupation->setUser($user);
+                $userOccupation->setOccupation($occupation);
+                $userOccupation->setIsPrevious(true);
+                $user->addUserOccupation($userOccupation);
+                $em->persist($userOccupation);
+            }
+        }
+        foreach ($newCurrentOccupations as $occupation) {
+            if (!$currentOccupations->contains($occupation)) {
+                $userOccupation = new UserOccupation();
+                $userOccupation->setUser($user);
+                $userOccupation->setOccupation($occupation);
+                $userOccupation->setIsCurrent(true);
+                $user->addUserOccupation($userOccupation);
+                $em->persist($userOccupation);
+            }
+        }
+        foreach ($newDesiredOccupations as $occupation) {
+            if (!$desiredOccupations->contains($occupation)) {
+                $userOccupation = new UserOccupation();
+                $userOccupation->setUser($user);
+                $userOccupation->setOccupation($occupation);
+                $userOccupation->setIsDesired(true);
+                $user->addUserOccupation($userOccupation);
+                $em->persist($userOccupation);
+            }
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }

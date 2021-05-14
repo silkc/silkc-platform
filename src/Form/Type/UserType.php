@@ -21,6 +21,11 @@ class UserType extends AbstractType
 
         if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
             $builder
+                ->add('username', TextType::class, [
+                    'label' => 'form.label.pseudo',
+                    'translation_domain' => 'login',
+                    'required'   => true,
+                ])
                 ->add('firstname', TextType::class, [
                     'label' => 'form.label.firstname',
                     'translation_domain' => 'login',
@@ -33,6 +38,11 @@ class UserType extends AbstractType
                 ]);
         } else {
             $builder
+                ->add('username', TextType::class, [
+                    'label' => 'form.label.institution_name',
+                    'translation_domain' => 'login',
+                    'required'   => true,
+                ])
                 ->add('homepage', TextType::class, [
                     'label'              => 'form.label.homepage',
                     'translation_domain' => 'login',
@@ -55,11 +65,6 @@ class UserType extends AbstractType
         */
 
         $builder
-            ->add('username', TextType::class, [
-                'label' => 'form.label.pseudo',
-                'translation_domain' => 'login',
-                'required'   => true,
-            ])
             ->add('email', EmailType::class, [
                 'label' => 'form.label.email',
                 'translation_domain' => 'login',

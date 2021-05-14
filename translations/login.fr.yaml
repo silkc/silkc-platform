@@ -5,7 +5,7 @@ form:
     label:
         username: Username
         firstname: Firstname
-        institionname: Instition name
+        institution_name: Institution name
         pseudo: Pseudo
         lastname: Lastname
         email: Email

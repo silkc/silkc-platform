@@ -95,6 +95,7 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+    private $currentPassword;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -116,10 +117,24 @@ class User implements UserInterface
      */
     private $completion;
 
+    private $currentOccupations;
+    private $previousOccupations;
+    private $desiredOccupations;
+
     private $prePersisted = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserOccupation::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userOccupations;
+
     public function __construct()
-    {}
+    {
+        $this->userOccupations = new ArrayCollection();
+        $this->currentOccupations = new ArrayCollection();
+        $this->previousOccupations = new ArrayCollection();
+        $this->desiredOccupations = new ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist
@@ -281,6 +296,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getCurrentPassword(): string
+    {
+        return (string) $this->currentPassword;
+    }
+
+    public function setCurrentPassword(string $password): self
+    {
+        $this->currentPassword = $password;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -380,5 +407,62 @@ class User implements UserInterface
         $this->completion = $completion;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|UserOccupation[]
+     */
+    public function getCurrentOccupations(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isCurrent', 1));
+
+        return $this->userOccupations->matching($criteria);
+    }
+
+    /**
+     * @return Collection|UserOccupation[]
+     */
+    public function getDesiredOccupations(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isDesired', 1));
+
+        return $this->userOccupations->matching($criteria);
+    }
+
+    /**
+     * @return Collection|UserOccupation[]
+     */
+    public function getPreviousOccupations(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isPrevious', 1));
+
+        return $this->userOccupations->matching($criteria);
+    }
+
+    public function addUserOccupation(UserOccupation $userOccupation): self
+    {
+        if (!$this->userOccupations->contains($userOccupation)) {
+            $this->userOccupations[] = $userOccupation;
+        }
+
+        return $this;
+    }
+
+    public function removeUserOccupation(UserOccupation $userOccupation): self
+    {
+        $this->userOccupations->removeElement($userOccupation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserOccupation[]
+     */
+    public function getUserOccupations(): Collection
+    {
+        return $this->userOccupations;
     }
 }
