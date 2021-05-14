@@ -609,6 +609,7 @@ class Account {
         $('body').on('click', '#content-skills .rmv.item', function(e) {
             e.preventDefault();
 
+            let status = true;
             let skillId = $(this).attr('data-id');
             let card = $(this).closest('.card');
             let div = $(this).closest('.card').find('.card-header > div > div:last-child');
@@ -619,14 +620,16 @@ class Account {
                         <i class="fas fa-plus text-primary"></i>
                         </a>`;
 
+            _this.removeSkill(skillId, 'associatedSkills');
+            status = _this.addSkill(skillId, 'disassociatedSkills');
+
             div.children().remove();
             $(links).prependTo(div);
             let html = card.html();
-            $('<div class="card">' + html + '</div>').prependTo($('#list-previously_unselected'));
+            if (status)
+                $('<div class="card">' + html + '</div>').prependTo($('#list-previously_unselected'));
             card.remove();
 
-            _this.removeSkill(skillId, 'disassociatedSkills');
-            _this.addSkill(skillId, 'disassociatedSkills');
         });
 
         // Sauvegarde skills
@@ -675,6 +678,9 @@ class Account {
         });
     }
 
+    /**
+     * Suppression skill ID du champs caché
+     */
     removeSkill = (skillId, type) => {
         
         let inputSkills = $('body').find('#skills[type="hidden"]');
@@ -684,17 +690,19 @@ class Account {
 
         if (inputSkills && inputSkills.val())
             skillsList = JSON.parse(inputSkills.val());
-            
-        if (type in skillsList) {
-            if (skillsList[type].includes(parseInt(skillId))) {
-                skillsList[type] = skillsList[type].filter(function (el) {
-                    return el != skillId;
-                });
-                inputSkills.val(JSON.stringify(skillsList));
-            }
+            if (type in skillsList) {
+                if (skillsList[type].includes(skillId)) {
+                    skillsList[type] = skillsList[type].filter(function (el) {
+                        return el != skillId;
+                    });
+                    inputSkills.val(JSON.stringify(skillsList));
+                }
         }
     } 
 
+    /**
+     * Ajout skill ID dans un champs caché
+     */
     addSkill = (skillId, type) => {
         
         let inputSkills = $('body').find('#skills[type="hidden"]');
@@ -713,6 +721,38 @@ class Account {
         }
 
         inputSkills.val(JSON.stringify(skillsList))
+        return true;
+    } 
+
+    /**
+     * Voir/masquer les compétences
+     */
+    displaySkills = (skillId, type) => {
+
+        // Show
+        $('body').on('click', '#content-skills .see-more', function(e) {
+            e.preventDefault();
+
+            $('#list-following_skills').find('.card').show();
+            $(this).html('See less');
+            $(this).toggleClass('see-more see-less');
+        });
+        
+        // Hide
+        $('body').on('click', '#content-skills .see-less', function(e) {
+            e.preventDefault();
+            
+            let cpt = 1;
+            $('#list-following_skills').find('.card').each(function() {
+                if (cpt > 10) {
+                    $(this).hide();
+                }
+                cpt++;
+            });
+
+            $(this).toggleClass('see-less see-more');
+            $(this).html('See less');
+        });
     } 
 
     init = function() {
@@ -725,6 +765,7 @@ class Account {
         this.saveOccupations();
         this.saveTrainings();
         this.manageSkills();
+        this.displaySkills();
     }
 }
 
