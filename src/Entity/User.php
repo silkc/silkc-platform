@@ -512,7 +512,7 @@ class User implements UserInterface
         return $this->userSkills;
     }
 
-    public function addSkill(UserSkill $userSkill): self
+    public function addUserSkill(UserSkill $userSkill): self
     {
         if (!$this->userSkills->contains($userSkill)) {
             $this->userSkills[] = $userSkill;
@@ -522,7 +522,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeUserSkills(UserSkill $userSkill): self
+    public function removeUserSkill(UserSkill $userSkill): self
     {
         if ($this->userSkills->removeElement($userSkill)) {
             // set the owning side to null (unless already changed)

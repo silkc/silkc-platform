@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\UserOccupation;
+use App\Entity\UserSkill;
 use App\Repository\OccupationRepository;
+use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\UserOccupationRepository;
 use App\Repository\UserRepository;
@@ -109,6 +111,69 @@ class ApiController extends AbstractController
                 $userOccupation->setIsDesired(true);
                 $user->addUserOccupation($userOccupation);
                 $em->persist($userOccupation);
+            }
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/user_skill", name="user_skill", methods={"POST"})
+     */
+    public function user_skill(Request $request, SkillRepository $skillRepository)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $params = $request->request->all();
+        if (
+            !$user ||
+            !is_array($params) ||
+            !array_key_exists('associatedSkills', $params) ||
+            !array_key_exists('disassociatedSkills', $params)
+        )
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        $associatedIds = (is_array($params['associatedSkills'])) ? array_filter($params['associatedSkills'], 'is_numeric'): null;
+        $disassociatedIds = (is_array($params['disassociatedSkills'])) ? array_filter($params['disassociatedSkills'], 'is_numeric') : null;
+
+        $allSkills = new ArrayCollection();
+        $userSkills = $user->getUserSkills();
+        $newAssociatedSkills = new ArrayCollection($skillRepository->findBy(['id' => $associatedIds]));
+        $newDisassociatedSkills = new ArrayCollection($skillRepository->findBy(['id' => $disassociatedIds]));
+
+        foreach ($userSkills as $userSkill) {
+            $allSkills->add($userSkill->getSkill());
+
+            if ($userSkill->getIsSelected() === true && !$newAssociatedSkills->contains($userSkill->getSkill())) {
+                $userSkill->setIsSelected(false);
+                $em->persist($userSkill);
+            } else if ($userSkill->getIsSelected() === false && $newAssociatedSkills->contains($userSkill->getSkill())) {
+                $userSkill->setIsSelected(true);
+                $em->persist($userSkill);
+            }
+        }
+
+        foreach ($newAssociatedSkills as $skill) {
+            if (!$allSkills->contains($skill)) {
+                $userSkill = new UserSkill();
+                $userSkill->setUser($user);
+                $userSkill->setSkill($skill);
+                $userSkill->setIsSelected(true);
+                $user->addUserSkill($userSkill);
+                $em->persist($userSkill);
+            }
+        }
+        foreach ($newDisassociatedSkills as $skill) {
+            if (!$allSkills->contains($skill)) {
+                $userSkill = new UserSkill();
+                $userSkill->setUser($user);
+                $userSkill->setSkill($skill);
+                $userSkill->setIsSelected(false);
+                $user->addUserSkill($userSkill);
+                $em->persist($userSkill);
             }
         }
 

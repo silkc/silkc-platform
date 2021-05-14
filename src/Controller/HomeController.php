@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Skill;
 use App\Entity\TrainingSkill;
 use App\Entity\User;
 use App\Entity\Training;
@@ -83,7 +84,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/account", name="account")
      */
-    public function account(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, UserPasswordEncoderInterface $passwordEncoder):Response
+    public function account(
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder,
+        SkillRepository $skillRepository
+    ):Response
     {
         $user = $this->getUser();
 
@@ -131,7 +138,8 @@ class HomeController extends AbstractController
             [
                 'user' => $user,
                 'form' => $form->createView(),
-                'password_form' => $passwordForm->createView()
+                'password_form' => $passwordForm->createView(),
+                'related_skills' => $skillRepository->getByOccupationAndTraining($user)
             ]
         );
     }
