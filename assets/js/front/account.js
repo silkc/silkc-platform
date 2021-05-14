@@ -425,9 +425,9 @@ class Account {
     }
 
     /**
-     * Suppression d'une formation
+     * Sauvegarde des occupations
      */
-     saveTraining = () => {
+     saveOccupations = () => {
 
         let _this = this;
 
@@ -477,6 +477,59 @@ class Account {
         });
     }
 
+    /**
+     * Sauvegarde des occupations
+     */
+     saveTrainings = () => {
+
+        let _this = this;
+
+        $('body').on('click', '#content-training button[type="submit"]', function(e) {
+            e.preventDefault();
+
+            let inputTraining = $('body').find('#trainings[type="hidden"]');
+            let token = $('body').attr('data-token');
+            
+            if (inputTraining && inputTraining.val()) {
+            
+                
+                let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
+                $(loader).prependTo('#content-training button[type="submit"]');
+                
+                let occupations = JSON.parse(inputOccupation.val());
+                let url = `/api/user_training`;
+                
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json',
+                    data: occupations,
+                    headers: {"X-auth-token": token},
+                    success: function (data, textStatus, jqXHR) {
+                        let html = `<div class="container">
+                            <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                Updated data
+                            </div>
+                        </div>`;
+                        
+                        $(html).prependTo('#account');
+                        $('#content-training button[type="submit"]').find('.spinner-button').remove();
+                        let check = `<i class="fas fa-check mr-1"></i>`;
+                        $(check).prependTo('#content-training button[type="submit"]');
+                        setTimeout(function() {
+                            $('#content-training button[type="submit"]').find('svg').remove();
+                        }, 1500);
+                    }
+                });
+            }
+        });
+    }
+
     init = function() {
         this.runDetail();
         this.runAutocompletion();
@@ -484,7 +537,8 @@ class Account {
         this.removeJob();
         this.removeTraining();
         this.addTraining();
-        this.saveTraining();
+        this.saveOccupations();
+        this.saveTrainings();
     }
 }
 
