@@ -14,6 +14,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "./abstracts/mixins";
 
 body { font-family: 'Roboto', sans-serif!important; background-color: #f5f5f5; color: #292b2c; }
+body button .spinner-border {
+    width: 1rem;
+    height: 1rem;
+}
 
 #main-loader {
     display: none;

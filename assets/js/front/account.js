@@ -297,8 +297,8 @@ class Account {
                 inputJobs.val(JSON.stringify(jobsList))
 
                 if (ulJobs) {
-                    let type = div.hasClass('add-desired-job') ? 'desired' : div.hasClass('add-current-job') ? 'current' : div.hasClass('add-previous-job') ? 'previous' : '';
-                    occupation.type = div.hasClass('add-desired-job') ? 'desired' : div.hasClass('add-current-job') ? 'current' : div.hasClass('add-previous-job') ? 'previous' : '';
+                    let type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
+                    occupation.type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
                     let li = _this.tplJob(occupation);
                     $(ulJobs).append(li);
                 }
@@ -324,11 +324,11 @@ class Account {
             
             if (inputJobs && inputJobs.val()) {
                 let jobsList = JSON.parse(inputJobs.val());
-                
                 if (id && type) {
                     if (type in jobsList) {
-                        if (jobsList[type].includes(id)) {
+                        if (jobsList[type].includes(parseInt(id))) {
                             jobsList[type] = jobsList[type].filter(function (el) {
+                                console.log(el, id)
                                 return el != id;
                             });
                             inputJobs.val(JSON.stringify(jobsList));
@@ -439,9 +439,15 @@ class Account {
             
             if (inputOccupation && inputOccupation.val()) {
             
+                
+                let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>`;
+                $(loader).prependTo('#content-work button[type="submit"]');
+                
                 let occupations = JSON.parse(inputOccupation.val());
                 let url = `/api/user_occupation`;
-
+                
                 $.ajax({
                     url: url,
                     type: "POST",
@@ -450,15 +456,21 @@ class Account {
                     headers: {"X-auth-token": token},
                     success: function (data, textStatus, jqXHR) {
                         let html = `<div class="container">
-                                        <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            Updated data
-                                        </div>
-                                    </div>`;
-
+                            <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                Updated data
+                            </div>
+                        </div>`;
+                        
                         $(html).prependTo('#account');
+                        $('#content-work button[type="submit"]').find('.spinner-button').remove();
+                        let check = `<i class="fas fa-check mr-1"></i>`;
+                        $(check).prependTo('#content-work button[type="submit"]');
+                        setTimeout(function() {
+                            $('#content-work button[type="submit"]').find('svg').remove();
+                        }, 1500);
                     }
                 });
             }

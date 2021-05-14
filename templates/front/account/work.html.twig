@@ -46,7 +46,7 @@
                             <a href="" class="text-danger item rmv" title="Remove this job"
                                data-name="{{ occupation.preferredLabel }}"
                                data-id="{{ occupation.id }}"
-                               data-url="url de suppression">
+                               data-type="currentOccupations">
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                         </div>
@@ -100,8 +100,8 @@
                             </a>
                             <a href="" class="text-danger item rmv" title="Remove this job"
                                data-name="{{ occupation.preferredLabel }}"
-                               data-id="{{ occupation.id }}"
-                               data-url="url de suppression">
+                               data-type="previousOccupations"
+                               data-id="{{ occupation.id }}">
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                         </div>
@@ -157,7 +157,7 @@
                             <a href="" class="text-danger item rmv mr-2" title="Remove this job"
                                data-name="{{ occupation.preferredLabel }}"
                                data-id="{{ occupation.id }}"
-                               data-url="url de suppression">
+                               data-type="desiredOccupations">
                                 <i class="fas fa-trash-alt text-danger"></i>
                             </a>
                             <a href="" class="search" title="Search for training required for this job">
