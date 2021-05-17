@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="" />
+    <list default="true" id="1d8149ff-bfaa-4016-ae81-7b1f62e9bad5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210204091316.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210413081112.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210413124248.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210413124357.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210413124426.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210503145527.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210506125634.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210510090010.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210510120359.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210512092807.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514075553.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514091629.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514125928.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514132513.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514132757.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514133727.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514133841.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210514133911.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20210517084237.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/account/training.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/account/training.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +35,9 @@
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -118,9 +146,18 @@
       <path value="$PROJECT_DIR$/vendor/jms/metadata" />
       <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/apache-pack" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/negotiation" />
+      <path value="$PROJECT_DIR$/vendor/fig/link-util" />
+      <path value="$PROJECT_DIR$/vendor/nelmio/cors-bundle" />
+      <path value="$PROJECT_DIR$/vendor/api-platform/core" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
     </include_path>
   </component>
   <component name="ProjectId" id="1o0ajC3LIbV7LnFCC3AFiDDk2Hu" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -151,13 +188,9 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1253" y="253" width="586" height="534" key="find.popup" timestamp="1612432211070">
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1621264422030">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1253" y="253" width="586" height="534" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1612432211070" />
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1612433504726">
-      <screen x="-1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1612433504726" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1621264422030" />
   </component>
 </project>

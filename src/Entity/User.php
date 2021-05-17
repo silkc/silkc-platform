@@ -51,19 +51,25 @@ class User implements UserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=100, nullable=true, unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=100, unique=true)
      * @Assert\NotNull
      * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Your email address must be at least {{ limit }} characters long",
+     *      maxMessage = "Your email address cannot be longer than {{ limit }} characters"
+     * )
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
      */
     private $apiToken;
 
