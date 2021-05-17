@@ -113,7 +113,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('user.updated_successfully', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
 
             return $this->redirectToRoute('app_account');
         } else if ($passwordForm->isSubmitted()) {
@@ -130,7 +130,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('user.password_updated_successfully', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
         }
 
         return $this->render(
@@ -179,7 +179,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('user.updated_successfully', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
 
             return $this->redirectToRoute('app_institution');
         } else if ($passwordForm->isSubmitted()) {
@@ -196,23 +196,27 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('user.password_updated_successfully', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
         }
+
+        $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : false;
+        setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
         $trainings = $trainingRepository->findAll();
         return $this->render('front/institutional/index.html.twig', 
             [
                 'trainings'   => $trainings,
                 'form' => $form->createView(),
-                'password_form' => $passwordForm->createView()
+                'password_form' => $passwordForm->createView(),
+                'tab' => $tab
             ]
         );
     }
 
     /**
-     * @Route("/training/create/{tab}", name="training_create")
+     * @Route("/training/create", name="training_create")
      */
-    public function training_create(int $tab = 1, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
+    public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
         $training = new Training();
 
@@ -276,13 +280,14 @@ class HomeController extends AbstractController
 
             $this->addFlash('success', $translator->trans('The training was created', [], 'admin'));
 
-            return $this->redirectToRoute('app_training_create');
+            return $this->redirectToRoute('app_training_edit', array('id' => $training->getId()));
         }
+
+        setcookie('tab_institution_silkc', 2, time() + 86400, "/");
 
         return $this->render('front/institutional/training_create.html.twig', [
             'controller_name' => 'HomeController',
-            'form' => $form->createView(),
-            'tab' => $tab
+            'form' => $form->createView()
         ]);
     }
 
@@ -353,6 +358,8 @@ class HomeController extends AbstractController
 
             return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
         }
+
+        setcookie('tab_institution_silkc', 2, time() + 86400, "/");
 
         return $this->render('front/institutional/training_create.html.twig', [
             'controller_name' => 'HomeController',

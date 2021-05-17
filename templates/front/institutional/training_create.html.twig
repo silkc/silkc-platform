@@ -10,8 +10,8 @@
     <div class="container">
 
         <nav aria-label="breadcrumb" class="mt-4">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ path('app_institution', {tab: 2}) }}">Training</a></li>
+            <ol class="breadcrumb create_training">
+                <li class="breadcrumb-item"><a href="{{ path('app_institution')}}">Training</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ attribute(training, 'name') is defined ? training.name : '' }}</li>
             </ol>
         </nav>

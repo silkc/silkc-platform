@@ -54,9 +54,6 @@ class Main {
                     callback(suggestions);
                 },
                 onSelect: function(item) {
-                    console.log(item)
-                    console.log($(item))
-                    console.log("$(item).attr('data-associated')", $(item).attr('data-associated'))
                     if ($(item).attr('data-associated') == true) return false;
 
                     input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;

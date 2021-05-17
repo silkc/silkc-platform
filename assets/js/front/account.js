@@ -41,9 +41,9 @@ class Account {
                     <i class="fas fa-trash-alt text-danger"></i>
                 </a>
                 ${occupation.type == 'desired' ? 
-                    `<a href="#" class="search ml-2" title="Search for training required for this job">
+                    `<!--<a href="#" class="search ml-2" title="Search for training required for this job">
                         <i class="fas fa-search-plus text-primary"></i>
-                    </a>` : '' }
+                    </a>-->` : '' }
             </div>
         </li>`;
     }
@@ -95,6 +95,30 @@ class Account {
                 </div>
             </div>
         </div>`;
+    }
+
+
+    tplMessageFlash = (status = true) => {
+
+        if (status) {
+            return `<div class="container message-flash">
+                <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    Updated data
+                </div>
+            </div>`;
+        } else {
+            return `<div class="container message-flash">
+                <div class=" mt-5 mb-5 alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    Update failed
+                </div>
+            </div>`;
+        }
     }
 
     runDetail = () => {
@@ -298,8 +322,14 @@ class Account {
                 
                 if (div.hasClass('add-current-job')) {
                     if ('currentOccupations' in jobsList) {
-                        if (jobsList.currentOccupations.includes(jobIdToAdd)) return false;
-                        jobsList.currentOccupations = [jobIdToAdd, ...jobsList.currentOccupations];
+                        if (jobsList.currentOccupations.length == 0) {
+                            jobsList.currentOccupations = [jobIdToAdd];
+                        } else { 
+                            for (let k in jobsList.currentOccupations) {
+                                if (jobsList.currentOccupations[k] == jobIdToAdd) return false;
+                                if (k == jobsList.currentOccupations.length - 1) jobsList.currentOccupations = [jobIdToAdd, ...jobsList.currentOccupations];
+                            }                        
+                        }
                     } else {
                         jobsList.currentOccupations = [jobIdToAdd];
                     }
@@ -307,8 +337,14 @@ class Account {
                 
                 if (div.hasClass('add-previous-job')) {
                     if ('previousOccupations' in jobsList) {
-                        if (jobsList.previousOccupations.includes(jobIdToAdd)) return false;
-                        jobsList.previousOccupations = [jobIdToAdd, ...jobsList.previousOccupations];
+                        if (jobsList.previousOccupations.length == 0) {
+                            jobsList.previousOccupations = [jobIdToAdd];
+                        } else {
+                            for (let k in jobsList.previousOccupations) {
+                                if (jobsList.previousOccupations[k] == jobIdToAdd) return false;
+                                if (k == jobsList.previousOccupations.length - 1) jobsList.previousOccupations = [jobIdToAdd, ...jobsList.previousOccupations];
+                            } 
+                        }
                     } else {
                         jobsList.previousOccupations = [jobIdToAdd];
                     }
@@ -316,8 +352,14 @@ class Account {
                 
                 if (div.hasClass('add-desired-job')) {
                     if ('desiredOccupations' in jobsList) {
-                        if (jobsList.desiredOccupations.includes(jobIdToAdd)) return false;
-                        jobsList.desiredOccupations = [jobIdToAdd, ...jobsList.desiredOccupations];
+                        if (jobsList.desiredOccupations.length == 0) {
+                            jobsList.desiredOccupations = [jobIdToAdd];
+                        } else {
+                            for (let k in jobsList.desiredOccupations) {
+                                if (jobsList.desiredOccupations[k] == jobIdToAdd) return false;
+                                if (k == jobsList.desiredOccupations.length - 1) jobsList.desiredOccupations = [jobIdToAdd, ...jobsList.desiredOccupations];
+                            } 
+                        }
                     } else {
                         jobsList.desiredOccupations = [jobIdToAdd];
                     }
@@ -355,12 +397,10 @@ class Account {
                 let jobsList = JSON.parse(inputJobs.val());
                 if (id && type) {
                     if (type in jobsList) {
-                        if (jobsList[type].includes(parseInt(id))) {
-                            jobsList[type] = jobsList[type].filter(function (el) {
-                                return el != id;
-                            });
-                            inputJobs.val(JSON.stringify(jobsList));
-                        }
+                        jobsList[type] = jobsList[type].filter(function (el) {
+                            return el != id;
+                        });
+                        inputJobs.val(JSON.stringify(jobsList));
                     }
                 }
 
@@ -391,7 +431,6 @@ class Account {
 
             if (inputTrainingToAdd && inputTrainingToAdd.val()) {
                 let trainingIdToAdd = inputTrainingToAdd.val();
-
                 inputAutocomplete.val('');
                 inputAutocomplete.removeAttr('data-description');
                 inputTrainingToAdd.val();
@@ -404,10 +443,15 @@ class Account {
                 if (inputTrainings && inputTrainings.val()) {
                     trainingsList = JSON.parse(inputTrainings.val());
                 }
-                
-                
-                if (trainingsList.includes(trainingIdToAdd)) return false;
-                trainingsList = [trainingIdToAdd, ...trainingsList];
+
+                if (trainingsList.length > 0) {
+                    for (let k in trainingsList) {
+                        if (trainingsList[k] == trainingIdToAdd) return false;
+                        if (k == trainingsList.length - 1) trainingsList = [trainingIdToAdd, ...trainingsList];
+                    }
+                } else {
+                    trainingsList = [trainingIdToAdd, ...trainingsList];
+                }
                 
                 inputTrainings.val(JSON.stringify(trainingsList))
                 
@@ -437,12 +481,10 @@ class Account {
                 let trainingsList = JSON.parse(inputTrainings.val());
                 
                 if (id) {
-                    if (trainingsList.includes(id)) {
-                        trainingsList = trainingsList.filter(function (el) {
-                            return el != id;
-                        });
-                        inputTrainings.val(JSON.stringify(trainingsList));
-                    }
+                    trainingsList = trainingsList.filter(function (el) {
+                        return el != id;
+                    });
+                    inputTrainings.val(JSON.stringify(trainingsList));
                 }
 
                 if (li) {
@@ -476,6 +518,12 @@ class Account {
                 let occupations = JSON.parse(inputOccupation.val());
                 let url = `/api/user_occupation`;
                 
+                $.each(occupations, function (k, occupation) {
+                    if (!occupation || occupation.length == 0) {
+                        occupations[k] = [null]
+                    }
+                });
+
                 $.ajax({
                     url: url,
                     type: "POST",
@@ -483,14 +531,7 @@ class Account {
                     data: occupations,
                     headers: {"X-auth-token": token},
                     success: function (data, textStatus, jqXHR) {
-                        let html = `<div class="container">
-                            <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                Updated data
-                            </div>
-                        </div>`;
+                        let html = _this.tplMessageFlash();
                         
                         $(html).prependTo('#account');
                         $('#content-work button[type="submit"]').find('.spinner-button').remove();
@@ -499,6 +540,15 @@ class Account {
                         setTimeout(function() {
                             $('#content-work button[type="submit"]').find('svg').remove();
                         }, 1500);
+                    },
+                    error: function () {
+                        let html = _this.tplMessageFlash(false);
+                        $(html).prependTo('#account');
+                        $('#content-work button[type="submit"]').find('.spinner-button').remove();
+                    },
+                    complete: function() {
+                        $('html, body').animate({scrollTop:0},500);
+                        _this.displayMessage();
                     }
                 });
             }
@@ -517,43 +567,48 @@ class Account {
 
             let inputTraining = $('body').find('#trainings[type="hidden"]');
             let token = $('body').attr('data-token');
-            
-            if (inputTraining && inputTraining.val()) {
-                
-                let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>`;
-                $(loader).prependTo('#content-training button[type="submit"]');
-                
-                let trainings = JSON.parse(inputTraining.val());
-                let url = `/api/user_training`;
+            let trainings = [null];
 
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: 'json',
-                    data: {trainings: trainings},
-                    headers: {"X-auth-token": token},
-                    success: function (data, textStatus, jqXHR) {
-                        let html = `<div class="container">
-                            <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                Updated data
-                            </div>
-                        </div>`;
-                        
-                        $(html).prependTo('#account');
-                        $('#content-training button[type="submit"]').find('.spinner-button').remove();
-                        let check = `<i class="fas fa-check mr-1"></i>`;
-                        $(check).prependTo('#content-training button[type="submit"]');
-                        setTimeout(function() {
-                            $('#content-training button[type="submit"]').find('svg').remove();
-                        }, 1500);
-                    }
-                });
+            if (inputTraining && inputTraining.val()) {
+                trainings = JSON.parse(inputTraining.val());
+                if (trainings && trainings.length == 0) {
+                    trainings = [null];
+                }
             }
+    
+            let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
+            $(loader).prependTo('#content-training button[type="submit"]');
+            let url = `/api/user_training`;
+                
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json',
+                data: {trainings: trainings},
+                headers: {"X-auth-token": token},
+                success: function (data, textStatus, jqXHR) {
+                    let html = _this.tplMessageFlash();
+                    
+                    $(html).prependTo('#account');
+                    $('#content-training button[type="submit"]').find('.spinner-button').remove();
+                    let check = `<i class="fas fa-check mr-1"></i>`;
+                    $(check).prependTo('#content-training button[type="submit"]');
+                    setTimeout(function() {
+                        $('#content-training button[type="submit"]').find('svg').remove();
+                    }, 1500);
+                },
+                error: function () {
+                    let html = _this.tplMessageFlash(false);
+                    $(html).prependTo('#account');
+                    $('#content-training button[type="submit"]').find('.spinner-button').remove();
+                },
+                complete: function() {
+                    $('html, body').animate({scrollTop:0},500);
+                }
+            });
         });
     }
 
@@ -576,7 +631,7 @@ class Account {
             let inputAutocomplete = div.find('.input-autocomplete');
             let skillDescription = inputAutocomplete.attr('data-description');
             let name = inputAutocomplete.val();
-            //let skillsList = {};
+            let status = true;
 
             if (inputSkillToAdd && inputSkillToAdd.val()) {
                 let skillIdToAdd = inputSkillToAdd.val();
@@ -587,7 +642,8 @@ class Account {
                 
                 if (!skillIdToAdd) return false;
 
-                _this.addSkill(skillIdToAdd, 'associatedSkills');
+                let status = _this.addSkill(skillIdToAdd, 'associatedSkills');
+                if (!status) return false;
 
                 skill.description = skillDescription;
                 skill.id = skillIdToAdd;
@@ -638,43 +694,57 @@ class Account {
 
             let inputSkills = $('body').find('#skills[type="hidden"]');
             let token = $('body').attr('data-token');
+            let skills = {};
+            skills.associatedSkills = [null];
+            skills.disassociatedSkills = [null];
 
             if (inputSkills && inputSkills.val()) {
-            
-                let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>`;
-                $(loader).prependTo('#content-skills button[type="submit"]');
-                
-                let skills = JSON.parse(inputSkills.val());
-                let url = `/api/user_skill`;
-
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: 'json',
-                    data: {skills: skills},
-                    headers: {"X-auth-token": token},
-                    success: function (data, textStatus, jqXHR) {
-                        let html = `<div class="container">
-                            <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                Updated data
-                            </div>
-                        </div>`;
-                        
-                        $(html).prependTo('#account');
-                        $('#content-skills button[type="submit"]').find('.spinner-button').remove();
-                        let check = `<i class="fas fa-check mr-1"></i>`;
-                        $(check).prependTo('#content-skills button[type="submit"]');
-                        setTimeout(function() {
-                            $('#content-skills button[type="submit"]').find('svg').remove();
-                        }, 1500);
+                let skillsJson = JSON.parse(inputSkills.val());
+                if (skillsJson) {
+                    for (let k in skillsJson) {
+                        if ('associatedSkills' in skillsJson && skillsJson.associatedSkills.length > 0) {
+                            skills.associatedSkills = skillsJson.associatedSkills;
+                        }
+                        if ('disassociatedSkills' in skillsJson && skillsJson.disassociatedSkills.length > 0) {
+                            skills.disassociatedSkills = skillsJson.disassociatedSkills;
+                        } 
                     }
-                });
+                }
             }
+
+            let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
+            $(loader).prependTo('#content-skills button[type="submit"]');
+            
+            let url = `/api/user_skill`;
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json',
+                data: skills,
+                headers: {"X-auth-token": token},
+                success: function (data, textStatus, jqXHR) {
+                    let html = _this.tplMessageFlash();
+                    
+                    $(html).prependTo('#account');
+                    $('#content-skills button[type="submit"]').find('.spinner-button').remove();
+                    let check = `<i class="fas fa-check mr-1"></i>`;
+                    $(check).prependTo('#content-skills button[type="submit"]');
+                    setTimeout(function() {
+                        $('#content-skills button[type="submit"]').find('svg').remove();
+                    }, 1500);
+                },
+                error: function () {
+                    let html = _this.tplMessageFlash(false);
+                    $(html).prependTo('#account');
+                    $('#content-skills button[type="submit"]').find('.spinner-button').remove();
+                },
+                complete: function() {
+                    $('html, body').animate({scrollTop:0},500);
+                }
+            });
         });
     }
 
@@ -706,16 +776,25 @@ class Account {
     addSkill = (skillId, type) => {
         
         let inputSkills = $('body').find('#skills[type="hidden"]');
-        let skillsList = '{"associatedSkills": [],"disassociatedSkills": [] }';
+        let skillsList = {};
+        skillsList.associatedSkills = [];
+        skillsList.disassociatedSkills = [];
         
         if (!skillId || !type) return false;
-
-        if (inputSkills && inputSkills.val())
+        
+        if (inputSkills && inputSkills.val()) {
             skillsList = JSON.parse(inputSkills.val());
+        }
 
         if (type in skillsList) {
-            if (skillsList[type].includes(skillId)) return false;
-            skillsList[type] = [skillId, ...skillsList[type]];
+            if (skillsList[type].length == 0) {
+                skillsList[type] = [skillId];
+            } else { 
+                for (let k in skillsList[type]) {
+                    if (skillsList[type][k] == skillId) return false;
+                    if (k == skillsList[type].length - 1) skillsList[type] = [skillId, ...skillsList[type]];
+                }                       
+            }
         } else {
             skillsList[type] = [skillId];
         }
@@ -755,6 +834,55 @@ class Account {
         });
     } 
 
+    /**
+     * Affichage occupations/trainings liées a une compétence
+     */
+    displayInfosSkill = () => {
+        $('body').on('click', '#content-skills .card .more', function(e) {
+            e.preventDefault();
+
+            let name = $(this).attr('data-name');
+            let trainings = $(this).attr('data-trainings');
+            let occupations = $(this).attr('data-occupations');
+            let $modal = $('#common-modal');
+            let html = '';
+
+            if (occupations) {
+                let occupationsHtml = '<h2 class="title-skill">Occupations</h2>'
+                occupationsHtml += `<p>${occupations}</p>`;
+                html += occupationsHtml;
+            }
+
+            if (trainings) {
+                let trainingsHtml = '<h2 class="title-skill">Trainings</h2>'
+                trainingsHtml += `<p>${trainings}</p>`;
+                html += trainingsHtml;
+            }
+
+            if ($modal && html) {
+                $modal.find('.modal-title').html(name);
+                $(html).appendTo($modal.find('.modal-body'));
+                $('#common-modal').modal('show');
+            }
+        });
+
+        $('#common-modal').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+        });
+    }
+
+    /**
+     * Affichage des messages de mises à jour
+     */
+    displayMessage = () => {
+        if ($('.message-flash').children().length > 0) {
+            setTimeout(function() {
+                $('.message-flash').children().remove();
+            }, 2000);
+        }
+    }
+
     init = function() {
         this.runDetail();
         this.runAutocompletion();
@@ -766,6 +894,8 @@ class Account {
         this.saveTrainings();
         this.manageSkills();
         this.displaySkills();
+        this.displayInfosSkill();
+        this.displayMessage();
     }
 }
 

@@ -217,10 +217,6 @@ class Institutional {
                 }
 
                 // Affichage "tout associer/tout desassocier"
-
-                console.log('>>>>>>>', ul.find('li').length)
-                console.log($('body').find('.skills-associated'))
-
                 if (ul.find('li').length == 0)
                     $('body').find('.skills-associated').hide();
                 else
@@ -522,7 +518,18 @@ class Institutional {
             }
         }
     }
-    
+  
+    /**
+     * Affichage des messages de mises à jour
+     */
+     displayMessage = () => {
+        if ($('.message-flash').children().length > 0) {
+            setTimeout(function() {
+                $('.message-flash').children().remove();
+            }, 2000);
+        }
+    }
+
     init = function() {
         this.runAutocompletion();
         this.duplicateTraining();
@@ -530,6 +537,8 @@ class Institutional {
         this.addSkillOccupation();
         this.getSkillsFromOccupation();
         this.removeSkillsToTraining();
+        this.displayMessage();
+        this.displayMessage();
     }
 }
 

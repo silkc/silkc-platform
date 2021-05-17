@@ -193,7 +193,7 @@ class ApiController extends AbstractController
         $trainings_ids = $request->request->get('trainings');
         if (!$user || !$trainings_ids || !is_array($trainings_ids))
             return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
-
+        
         $result = $trainingRepository->findBy(['id' => array_filter($trainings_ids, 'is_numeric')]);
         $trainings = ($result) ? new ArrayCollection($result) : null;
         $userTrainings = $user->getTrainings();
@@ -201,16 +201,18 @@ class ApiController extends AbstractController
         if ($trainings) {
             foreach ($trainings as $training) {
                 if (!$userTrainings || !$userTrainings->contains($training))
-                    $user->addTraining($training);
+                $user->addTraining($training);
             }
         }
-
-        foreach ($userTrainings as $userTraining) {
-            if (!$trainings->contains($userTraining)) {
-                $user->removeTraining($userTraining);
+        
+        if ($userTrainings) {
+            foreach ($userTrainings as $userTraining) {
+                if (($trainings && !$trainings->contains($userTraining)) || !$trainings) {
+                    $user->removeTraining($userTraining);
+                }
             }
         }
-
+        
         $em->persist($user);
         $em->flush();
 

@@ -35,6 +35,7 @@ class UserPasswordType extends AbstractType
 
         $builder->add('save', SubmitType::class, [
             'label' => 'form.button.submit',
+            'translation_domain' => 'login',
         ]);
     }
 
