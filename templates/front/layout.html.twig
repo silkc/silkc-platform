@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block header %}
+    {% include 'front/elements/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container message-flash">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class=" mt-5 mb-5 alert alert-{{ label }} alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}{% endblock %}

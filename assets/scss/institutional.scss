@@ -1,0 +1,170 @@
+$web-font-path: "data:text/css;base64,";
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import "~bootswatch/dist/flatly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/bootswatch";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
+
+/* =============================================================================
+    =   Account
+============================================================================= */
+#institutional {
+  margin-top: 60px;
+
+  .form-block {
+    margin-top: 60px;
+  }
+
+  .button-group {
+    margin-top: 30px;
+  }
+
+  /* TAB TRAINING */
+  #content-training {
+    label {
+      white-space: nowrap;
+      text-align: left;
+      display: block;
+      font-weight: 500;
+    }
+
+    .info {
+      font-weight: bold;
+      margin: 15px 0 30px;
+    }
+
+    fieldset {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    #training-input {
+      flex: 0 0 300px;
+    }
+
+    #list-trainings {
+      margin-top: 60px;
+
+      .block-clone {
+        .loader {
+          display: none;
+        }
+      }
+
+      .icon[data-toggle="collapse"] {
+        line-height: 1;
+      }
+
+      .skill {
+        .content-collapse {
+          padding: 7px 0 8px;
+        }
+      }
+
+      .rmv,
+      .more {
+        line-height: 1;
+      }
+
+      .feedback {
+        line-height: 1;
+      }
+
+      .title {
+        text-align: left;
+        font-weight: 500;
+        background-color: rgba(0, 0, 0, 0.03);
+        padding: 10px;
+        box-sizing: border-box;
+        margin-top: 30px;
+      }
+
+      .skill {
+        .card-block {
+          font-style: italic;
+          font-size: 0.9rem;
+          border: 0;
+          background: rgba(0, 0, 0, 0.03);
+        }
+      }
+    }
+  }
+}
+
+form[name="training"] {
+    padding-top: 30px;
+
+  .content-list-skill {
+    > .skill {
+      margin: 10px 0;
+    }
+  }
+
+  label {
+    white-space: nowrap;
+    text-align: left;
+    display: block;
+    font-weight: 500;
+  }
+
+  .title {
+    text-align: left;
+    font-weight: 500;
+    background-color: #2c4969;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 30px;
+    color: #fff;
+  }
+
+  .content-skills {
+    border: 2px solid #eee;
+    border-top: 0;
+
+    .rmv,
+    .add {
+      color: #fff;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rmv {
+      background-color: #dc3545;
+    }
+
+    .add {
+      background-color: #28a745;
+    }
+  }
+}
+
+#modal_skills {
+  .check-all {
+    margin-bottom: 15px;
+  }
+}
+
+#list-trainings .form-check-input {
+    position: absolute;
+    left: 1.25rem;
+}
+
+#all-associated {
+    display: none;
+}
+
+.skills-associated {
+    color: #fff!important;
+    font-weight: 600;
+    margin-top: 15px;
+}

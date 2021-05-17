@@ -1,0 +1,113 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block header %}
+	{{ include('security/elements/header.html.twig') }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mt-5 mb-5">
+
+		<div class="justify-content-center row">
+
+			<div class="col-12 col-lg-5">
+				<div class="login-form">
+					{{ form_start(form, {attr: attr|default({})}) }}
+					<input type="hidden" name="is_personal" value="1"/>
+
+					<fieldset class="user">
+
+						<ul class="nav nav-pills mb-3 tabs-signup">
+							<li class="nav-item">
+								<span class="nav-link active">I am a user</span>
+							</li>
+							<li class="nav-item">
+								<a href="{{ path('app_signup', {type: 'institution'}) }}" class="nav-link">I am an institution</a>
+							</li>
+						</ul>
+
+						<legend>
+							<i class="fa fa-lock" aria-hidden="true"></i>
+							{{ 'form.title.signup'|trans({}, 'login') }}</legend>
+
+						<div>
+							{% if app.user %}
+								<div class="mb-3">
+									{{ 'form.disconnect_message'|trans({'%username%': app.user.username }, 'login') }},
+									<a href="{{ path('app_logout') }}">{{ 'form.disconnect_button'|trans({}, 'login') }}</a>
+									{{ 'form.or'|trans({}, 'login') }}
+									<a href="{{ path('admin_home') }}">{{ 'form.admin_access_button'|trans({}, 'login') }}</a>
+								</div>
+							{% endif %}
+
+							<div class="form-group placeholder">
+								{{ form_widget(form.username, {'attr' : {'placeholder': 'form.label.username'|trans({}, 'login')} }) }}
+							</div>
+
+							<div class="form-group input-user">
+								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'form.label.lastname'|trans({}, 'login')} }) }}
+							</div>
+
+							<div class="form-group input-user">
+								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'form.label.firstname'|trans({}, 'login')} }) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(form.email, {'attr' : {'placeholder': 'form.label.email'|trans({}, 'login')} }) }}
+							</div>
+							{#
+							                            <div class="form-group">
+							                                {% for batch in form.roles|batch(1, 'No item') %}
+							                                    <div class="batchRow">
+							                                        {% for option in batch %}
+							                                            <div class="yourClassName">
+							                                                {{ form_widget(option) }}
+							                                                {{ form_label(option) }}
+							                                            </div>
+							                                        {% endfor %}
+							                                    </div>
+							                                {% endfor %}
+							                            </div>
+							                            #}
+
+							<div class="form-group">
+								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'form.label.password.first'|trans({}, 'login')} }) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'form.label.password.second'|trans({}, 'login')} }) }}
+							</div>
+
+							<div id="user">
+								<div>
+									{{ form_widget(form.save, { 'label': 'form.button.save'|trans({}, 'login') }) }}
+								</div>
+							</div>
+
+							{{ form_rest(form) }}
+						</div>
+
+                        <div id="new-profile">
+                            You have an account?
+                            <a href="{{ path('app_login') }}">
+                                Sign in
+                            </a>
+                        </div>
+					</fieldset>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('main') }}
+{% endblock %}

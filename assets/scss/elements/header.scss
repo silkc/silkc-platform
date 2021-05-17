@@ -1,0 +1,86 @@
+$web-font-path: 'data:text/css;base64,';
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+
+@import "~bootswatch/dist/flatly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/bootswatch";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+@import "../abstracts/variables";
+
+/* =============================================================================
+    =   HEADER
+============================================================================= */
+#main-header {
+    background-color: $color_1; 
+    position: relative;
+    z-index: 1;
+    
+    a {
+        color: #fff;
+    }
+    
+    > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1;
+            
+            &:first-child {
+                font-size: 1.4rem;
+            }
+        }
+    }
+    
+    .profil-photo {
+        position: relative;
+        
+        > div {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            overflow: hidden;
+            border: 4px solid #f5f5f5;
+            border-radius: 25px;
+            background-color: #fff;
+        }
+        
+        img {
+            max-width: 50px;
+        }
+    }
+    
+    .dropdown-menu a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: #595959;
+        
+        span {
+            margin-left: 5px;
+        }
+        
+        &:focus, 
+        &:hover {
+            color: #1d1e1f;
+            text-decoration: none;
+            background-color: #f7f7f9;
+        }
+    }
+}

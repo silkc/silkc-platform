@@ -1,0 +1,179 @@
+{% set currentOccupations = [] %}
+{% set previousOccupations = [] %}
+{% set desiredOccupations = [] %}
+
+<fieldset>
+	{# Current job #}
+	<div class="info">
+		Please indicate your current job. We will use it to guess your current skills.
+	</div>
+
+	<div class="d-inline-flex align-items-end add-job add-current-job">
+		<label for="current_job-input">Current job</label>
+        {% include 'front/elements/input_add_search.html.twig'
+            with {
+                'id': 'current_job-input',
+                'url': '/apip/occupations',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'current_job',
+                'placeholder': ""
+            }
+        %}
+	</div>
+
+	<div id="list-current_job" class="list-job">
+		<ul class="list-group">
+			{% if user.currentOccupations is defined %}
+				{% for k, row in user.currentOccupations %}
+                    {% set occupation = row.occupation %}
+                    {% set currentOccupations = currentOccupations|merge([occupation.id]) %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" class="detail"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-description="{{ occupation.description }}"
+                               data-id="{{ occupation.id }}">
+                                <span>{{ occupation.preferredLabel }}</span>
+                                <i class="fas fa-question-circle text-primary"></i>
+                            </a>
+                        </div>
+                        <div class="d-inline-flex align-items-center justify-content-end">
+                            <a href="" class="jobs-linked mr-2">
+                                <span class="badge badge-success">10</span>
+                            </a>
+                            <a href="" class="text-danger item rmv" title="Remove this job"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-id="{{ occupation.id }}"
+                               data-type="currentOccupations">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </div>
+                    </li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+</fieldset>
+{# End: Current job #}
+
+<fieldset>
+	{# Previous job #}
+	<div class="info">
+		Please indicate any previous jobs. We will use them to guess skills. Use the + button to add more.
+	</div>
+
+	<div class="d-inline-flex align-items-end add-job add-previous-job">
+		<label for="previous_job-input">Previous job</label>
+        {% include 'front/elements/input_add_search.html.twig'
+            with {
+                'id': 'previous_job-input',
+                'url': '/apip/occupations',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'previous_job'
+            }
+        %}
+	</div>
+
+	<div id="list-previous_job" class="list-job">
+		<ul class="list-group">
+            {% if user.previousOccupations is defined %}
+                {% for k, row in user.previousOccupations %}
+                    {% set occupation = row.occupation %}
+                    {% set previousOccupations = previousOccupations|merge([occupation.id]) %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" class="detail"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-description="{{ occupation.description }}"
+                               data-id="{{ occupation.id }}">
+                                <span>{{ occupation.preferredLabel }}</span>
+                                <i class="fas fa-question-circle text-primary"></i>
+                            </a>
+                        </div>
+                        <div class="d-inline-flex align-items-center justify-content-end">
+                            <a href="" class="jobs-linked mr-2">
+                                <span class="badge badge-success">10</span>
+                            </a>
+                            <a href="" class="text-danger item rmv" title="Remove this job"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-type="previousOccupations"
+                               data-id="{{ occupation.id }}">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+		</ul>
+	</div>
+</fieldset>
+{# End: Previous job #}
+
+<fieldset>
+	{# Desired job #}
+	<div class="info">
+		Please indicate your desired jobs. We will use them to suggest the best training based on your location and current skillset.
+	</div>
+
+	<div class="d-inline-flex align-items-end add-job add-desired-job">
+		<label for="previous_job-input">Desired job</label>
+        {% include 'front/elements/input_add_search.html.twig'
+            with {
+                'id': 'desired_job-input',
+                'url': '/apip/occupations',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'desired_job'
+            }
+        %}
+	</div>
+
+	<div id="list-desired_job" class="list-job">
+
+		<ul class="list-group">
+            {% if user.desiredOccupations is defined %}
+                {% for k, row in user.desiredOccupations %}
+                    {% set occupation = row.occupation %}
+                    {% set desiredOccupations = desiredOccupations|merge([occupation.id]) %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <a href="#" class="detail"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-description="{{ occupation.description }}"
+                               data-id="{{ occupation.id }}">
+                                <span>{{ occupation.preferredLabel }}</span>
+                                <i class="fas fa-question-circle text-primary"></i>
+                            </a>
+                        </div>
+                        <div class="d-inline-flex align-items-center justify-content-end">
+                            <a href="" class="jobs-linked mr-2">
+                                <span class="badge badge-success">10</span>
+                            </a>
+                            <a href="" class="text-danger item rmv" title="Remove this job"
+                               data-name="{{ occupation.preferredLabel }}"
+                               data-id="{{ occupation.id }}"
+                               data-type="desiredOccupations">
+                                <i class="fas fa-trash-alt text-danger"></i>
+                            </a>
+                            <!--<a href="" class="search" title="Search for training required for this job">
+                                <i class="fas fa-search-plus text-primary"></i>
+                            </a>-->
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+		</ul>
+	</div>
+</fieldset>
+{# Desired job #}
+
+<input type="hidden" name="jobs" id="jobs" value='{"currentOccupations": {{ currentOccupations|json_encode() }},"previousOccupations":{{ previousOccupations|json_encode() }},"desiredOccupations":{{ desiredOccupations|json_encode() }}}'/>
+
+<div class="form-group button-group text-right">
+	<button type="submit" class="btn btn-primary">Save</button>
+</div>

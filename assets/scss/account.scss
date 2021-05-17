@@ -1,0 +1,282 @@
+$web-font-path: "data:text/css;base64,";
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import "~bootswatch/dist/flatly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/bootswatch";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
+
+/* =============================================================================
+    =   Account
+============================================================================= */
+#account {
+  margin-top: 60px;
+
+  #profile-completion {
+    margin-bottom: 20px;
+    max-width: 200px;
+    width: 100%;
+
+    > span {
+      font-weight: 300;
+    }
+
+    .progress {
+      height: 20px;
+      width: 100%;
+    }
+  }
+
+  .form-block {
+    margin-top: 60px;
+  }
+
+  .button-group {
+    margin-top: 30px;
+  }
+
+  /* TAB WORK */
+  #content-work {
+    label {
+      white-space: nowrap;
+      width: 150px;
+      text-align: left;
+    }
+
+    input[type="text"] {
+      width: 300px;
+    }
+
+    .info {
+      font-weight: bold;
+      margin: 15px 0 30px;
+    }
+
+    fieldset {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .list-job {
+      margin: 60px 0 30px;
+
+      > div {
+        margin-bottom: 15px;
+
+        > div {
+          &:first-child {
+            width: 400px;
+            text-align: left;
+
+            a {
+              span {
+                color: #292b2c;
+              }
+
+              &:hover,
+              &:focus {
+                text-decoration: none;
+              }
+            }
+          }
+
+          &:last-child {
+            width: 80px;
+            text-align: right;
+          }
+        }
+      }
+
+      .rmv {
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .jobs-linked {
+        line-height: 1;
+        /*background-color: #18bc9c;
+                color: #fff;
+                width: 22px;
+                height: 22px;
+                flex: 0 0 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 25px;
+                font-size: 0.8rem;*/
+      }
+
+      .search {
+        color: #007bff;
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  /* TAB TRAINING */
+  #content-training {
+    label {
+      white-space: nowrap;
+      width: 150px;
+      text-align: left;
+    }
+
+    input[type="text"] {
+      width: 300px;
+    }
+
+    .info {
+      font-weight: bold;
+      margin: 15px 0 30px;
+    }
+
+    fieldset {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .list-trainings {
+      margin: 60px 0 30px;
+
+      > div {
+        margin-bottom: 15px;
+
+        > div {
+          &:first-child {
+            width: 400px;
+            text-align: left;
+
+            a {
+              span {
+                color: #292b2c;
+              }
+
+              &:hover,
+              &:focus {
+                text-decoration: none;
+              }
+            }
+          }
+
+          &:last-child {
+            width: 80px;
+            text-align: right;
+          }
+        }
+      }
+
+      .rmv {
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .link {
+        line-height: 1;
+        color: #007bff;
+        /*background-color: #007bff;
+                color: #fff;
+                width: 22px;
+                height: 22px;
+                flex: 0 0 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 25px;
+                font-size: 0.8rem;*/
+      }
+
+      .feedback {
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  /* TAB SKILLS */
+  #content-skills {
+    label {
+      white-space: nowrap;
+      width: 150px;
+      text-align: left;
+    }
+
+    input[type="text"] {
+      width: 300px;
+    }
+
+    .info {
+      font-weight: bold;
+      margin: 15px 0 30px;
+    }
+
+    fieldset {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .icon[data-toggle="collapse"] {
+      //font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .list-skills {
+      .rmv {
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .add {
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .more {
+        //font-size: 1.4rem;
+        line-height: 1;
+      }
+    }
+
+    .see-more {
+      font-weight: 600;
+      text-decoration: underline;
+      margin-top: 10px;
+      display: inline-block;
+    }
+  }
+}
+
+.text-field {
+  -moz-box-sizing: border-box;
+  border: 1px solid #eeeeee;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 0.73684em;
+  font-weight: 600;
+  height: 37px;
+  margin: 0;
+  padding: 5px;
+  width: 100%;
+}
+.autocomplete-suggestion {
+  overflow: hidden;
+  padding: 2px 5px;
+  white-space: nowrap;
+}
+.autocomplete-suggestions strong {
+  color: #3399ff;
+  font-weight: normal;
+}
+.autocomplete-selected {
+  background: #f0f0f0;
+}
+
+.title-skill {
+    font-size: 1.2rem;
+}

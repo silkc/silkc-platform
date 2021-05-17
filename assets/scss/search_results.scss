@@ -1,0 +1,104 @@
+$web-font-path: 'data:text/css;base64,';
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import "~bootswatch/dist/flatly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/bootswatch";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
+
+
+/* =============================================================================
+    =   Search results
+============================================================================= */
+#search-results {
+    
+    .form-search {
+        margin-top: 60px;
+
+        > .input-group {
+            flex: 1;
+        }
+
+        > label {
+            font-size: 1.2rem;
+            width: 100%;
+            justify-content: flex-start;
+            margin-bottom: 7px;
+        }
+    }
+    
+    #advanced-search  {
+        width: 100%;
+        
+        > div {
+            width: 100%;
+            border: 1px solid #ddd;
+            margin-top: 30px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+    }
+
+    .results {
+        margin-top: 60px;
+
+        h5 {
+            margin: 0;
+            font-size: 1.1rem;
+            outline: none;
+            border: 0;
+            
+            &:focus, &:hover {
+                outline: none;
+                box-shadow: 0 0 0;
+                border: 0;
+            }
+            
+            button {
+                flex: 1;
+                text-align: left;
+                outline: none;
+                border: 0;
+                
+                &:focus, &:hover {
+                    outline: none;
+                    box-shadow: 0 0 0;
+                    border: 0;
+                    text-decoration: none;
+                }
+            }
+
+            .count {
+                font-size: 0.8rem;
+            }
+
+        }
+
+        .card-body {
+
+            .google-map {
+                height: 200px;
+            }
+
+            .title {
+                font-weight: 500;
+            }
+        }
+    }
+
+    .form-search-occupation,
+    .form-search-skill {
+        flex: 1;
+    }
+
+    .form-search-skill {
+        display: none;
+    }
+}

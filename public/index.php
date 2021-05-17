@@ -1,5 +1,7 @@
 <?php
 
+ini_set('memory_limit', -1);
+
 use App\Kernel;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\ErrorHandler\Debug;

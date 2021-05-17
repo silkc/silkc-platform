@@ -33,10 +33,16 @@ Encore
     .addStyleEntry('bootstrap_extended', './assets/css/bootstrap-extended.css')
 
     .addEntry('app', './assets/js/app.js')
+    .addEntry('main', './assets/js/front/main.js')
     .addEntry('login', './assets/js/login.js')
     .addEntry('admin', './assets/js/admin.js')
     .addEntry('admin_home', './assets/js/admin/home.js')
     .addEntry('admin_utils', './assets/js/admin/utils.js')
+
+    .addEntry('search_results', './assets/js/front/search_results.js')
+    .addEntry('search', './assets/js/front/search.js')
+    .addEntry('account', './assets/js/front/account.js')
+    .addEntry('institutional', './assets/js/front/institutional.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
@@ -81,7 +87,7 @@ Encore
 //.enableIntegrityHashes(Encore.isProduction())
 
 // uncomment if you're having problems with a jQuery plugin
-//.autoProvidejQuery()
+.autoProvidejQuery()
 
 // uncomment if you use API Platform Admin (composer require api-admin)
 //.enableReactPreset()

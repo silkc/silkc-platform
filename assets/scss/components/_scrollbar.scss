@@ -1,0 +1,23 @@
+/* =============================================================================
+    =   SCROLLBAR
+============================================================================= */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $scrollbar;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: $scrollbar_hover;
+}
+
+* {
+    scrollbar-color: red;
+    scrollbar-width: thin;
+}

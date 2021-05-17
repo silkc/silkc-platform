@@ -1,7 +1,5 @@
 $web-font-path: 'data:text/css;base64,';
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$lato-font-path: '~lato-font/fonts';
-
 
 @import "~bootswatch/dist/flatly/variables";
 @import "~bootstrap/scss/bootstrap";
@@ -12,9 +10,225 @@ $lato-font-path: '~lato-font/fonts';
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
 
-@import '~lato-font/scss/_public-api';
-@include lato-include-font('normal');
-@include lato-include-font('bold');
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
 
-body { background-color: #f5f5f5; color: #292b2c; }
-header { background-color: #2c4969; }
+body { font-family: 'Roboto', sans-serif!important; background-color: #f5f5f5; color: #292b2c; }
+body button .spinner-border {
+    width: 1rem;
+    height: 1rem;
+}
+
+#main-loader {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    > div {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.input-group {
+    .loader-search {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        z-index: 1;
+        height: 100%;
+        padding: 0 15px;
+        top: 0;
+        bottom: 0;
+        right: 30px;
+    }
+}
+
+body button .spinner-border {
+    &.hide{
+        display: none;
+    }
+
+    &.show{
+        display: inline-block;
+    }
+}
+
+body > div.autocomplete{
+    color: #7b8a8b;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    max-height: 300px!important;
+    overflow: auto;
+
+    > div {
+        padding: 4px 12px;
+
+        &.selected {
+            background-color: #2c4969;
+            color: #fff;
+        }
+    }
+}
+
+
+/* =============================================================================
+    =   Interest
+============================================================================= */
+.blc-interest {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    padding: 15px;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    
+    &:first-child {
+        margin-top: 15px;
+    }
+    
+    > span {
+        font-size: 1.4rem;
+        margin: 0;
+        text-transform: uppercase;
+        color: #595959;
+        display: flex;
+        align-items: baseline;
+        font-weight: bold;
+        
+        > span {
+            margin-left: 10px;
+        }
+    }
+    
+    &#interest-skill {
+        > div {
+            margin: 0 -2px;
+            display: flex;
+            flex-flow: row wrap;
+            
+            .skill {
+                margin: 2px;
+                padding: 4px;
+                color: #fff;
+                border-radius: 4px;
+                text-decoration: none;
+                font-size: 0.8rem;
+                color: #fff;
+                background-color: $color_1; 
+                
+                &.active {
+                    background-color: #6c9e02;
+                }
+                
+                &:hover {
+                    opacity: .8;
+                }
+                
+                &:focus {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    
+    &#interest-occupation-skill {
+        
+        .current, .wanted {
+            margin-top: 0;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: 3px;
+            
+            > span {
+                display: block;
+                font-weight: 500;
+                text-transform: uppercase;
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            }
+        }
+        
+        .wanted {
+            margin-top: 15px;
+        }
+        
+        
+        .occupation {
+            margin-bottom: 15px;
+        }
+        
+        .skills {
+            display: flex;
+            flex-flow: row wrap;
+            margin: 0 -2px;
+            
+            .skill {
+                margin: 2px;
+                padding: 4px;
+                color: #fff;
+                border-radius: 4px;
+                text-decoration: none;
+                font-size: 0.8rem;
+                color: #fff;
+                background-color: #2c4969; 
+                
+                &.active {
+                    background-color: #6c9e02;
+                }
+                
+                &:hover {
+                    opacity: .8;
+                }
+                
+                &:focus {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    
+    .action {
+        width: 100%;
+        
+        > span {
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            display: inline-block;
+            padding: 9px 30px 7px;
+            color: #fff;
+            font-size: 1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            border: 0;
+            cursor: pointer;
+            
+            &:hover:not(.disabled) {
+                opacity: .8;
+                outline: none;
+                border: 0;
+            }
+            
+            &.disabled {
+                opacity: .6;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

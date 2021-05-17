@@ -1,0 +1,61 @@
+$web-font-path: 'data:text/css;base64,';
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import "~bootswatch/dist/flatly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/flatly/bootswatch";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+@import "./abstracts/variables";
+@import "./abstracts/mixins";
+
+/* =============================================================================
+    =   Search
+============================================================================= */
+#search {
+    .info {
+        font-size: 1.4rem;
+        font-weight: 200;
+        margin-top: 60px;
+    }
+
+    .search {
+        
+        .title-search {
+            font-weight: 300;
+            color: #1e2b37;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        > p {
+            font-size: 1.2rem;
+            font-weight: 200;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            @include media-breakpoint-up('md') {
+                margin-bottom: 60px;
+            }
+        }
+    }
+
+    form {
+        padding: 30px 15px 30px;
+        box-sizing: border-box;
+        @include media-breakpoint-up('lg') {
+            padding: 60px 30px 30px;
+        }
+    }
+
+    .col-left {
+        border-right: 0;
+        @include media-breakpoint-up('md') {
+            border-right: 1px solid #ddd;
+        }
+    }
+}

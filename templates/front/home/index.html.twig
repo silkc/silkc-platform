@@ -1,0 +1,111 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <section id="interest-occupation-skill" class="blc-interest">
+                    <span>
+                        <i class="fa fa-cogs"></i>
+                        <span>Occupation skills</span>
+                    </span>
+                    <hr>
+                    <div>
+                        <div class="current">
+                            <span>Current occupation(s)</span>
+
+                            <div class="occupation">
+                                <span>OCCUPATION</span>
+                                <div class="skills">
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="">
+                                    There are no skills declared in your profile.
+                                    Please fill it.<br />
+                                    It helps MyLK to give you advices!
+                                </a>
+                            </div>
+                        </div>
+                        <div class="wanted">
+                            <span>Wanted occupation(s)</span>
+                            <div class="occupation">
+                                <span>OCCUPATION</span>
+                                <div class="skills">
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                    <a href="" class="skill">SKILL</a>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a href="">
+                                    There are no skills declared in your profile.
+                                    Please fill it.<br />
+                                    It helps MyLK to give you advices!
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="action">
+                            <hr>
+                            <span>Select one or more skills and press below.</span>
+                            <button type="button" class="disabled" disabled>Learning suggestions</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="interest-skill" class="blc-interest">
+                    <span>
+                        <i class="fa fa-cogs"></i>
+                        <span>SKILLS NOT RELATED TO WORK</span>
+                    </span>
+                    <hr>
+                    <div>
+                        <a href="" class="skill">SKILL</a>
+                        <a href="" class="skill">SKILL</a>
+                        <a href="" class="skill">SKILL</a>
+                        <a href="" class="skill">SKILL</a>
+                        <a href="" class="skill">SKILL</a>
+                        <div>
+                            <a href="">
+                                There are no skills declared in your profile.
+                                Please fill it.<br />
+                                It helps MyLK to give you advices!
+                            </a>
+                        </div>
+                        <div class="action">
+                            <hr>
+                            <span>Select one or more skills and press below.</span>
+                            <button type="button" class="disabled" disabled>Learning suggestions</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('main') }}
+{% endblock %}

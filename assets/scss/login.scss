@@ -1,6 +1,5 @@
 $web-font-path: 'data:text/css;base64,';
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$lato-font-path: '~lato-font/fonts';
 
 
 @import "~bootswatch/dist/flatly/variables";
@@ -12,9 +11,98 @@ $lato-font-path: '~lato-font/fonts';
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
 
-@import '~lato-font/scss/_public-api';
-@include lato-include-font('normal');
-@include lato-include-font('bold');
-
 body { background-color: #f5f5f5; color: #292b2c; }
 header { background-color: #2c4969; }
+
+#main-loader {
+    display: none;
+}
+
+.login-form {
+    font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 0;
+    
+    h2 {
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid #bfbfbf;
+        padding: 15px;
+        margin: 0;
+    }
+    
+    legend {
+        text-align: center;
+        font-weight: bold;
+        //border-bottom: 1px solid #bfbfbf;
+        padding: 15px;
+        margin: 0;
+    }
+    
+    fieldset {   
+        > div {
+            padding: 15px;
+        }
+    }
+    
+    #new-profile {
+        margin-top: 15px;
+        font-size: 0.9rem;
+        border-top: 1px solid #bfbfbf;
+        color: #656565;
+        text-align: center;
+    }
+    
+    input[type='username'], 
+    input[type='text'], 
+    input[type='email'], 
+    input[type='password'] {
+        padding: 5px 0;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #000;
+        background: none;
+        outline: none;
+        border-radius: 0;
+        outline: none;
+        
+        &:hover, &:focus {
+            box-shadow: 0 0 0;
+        }
+    }
+    
+    button {
+        color: #fff;
+        background-color: #1198d1;
+        width: 100%;
+        border: 0;
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        border: 0;
+        box-shadow: 0 0 0;
+    }
+
+    .tabs-signup {
+        display: flex;
+        justify-content: center;
+        margin: 15px;
+
+        > li {
+            flex: 1;
+
+            span, a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        background-color: #1198d1;
+    }
+}

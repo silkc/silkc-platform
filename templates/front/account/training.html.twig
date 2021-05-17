@@ -1,0 +1,53 @@
+{% set trainingsInput = [] %}
+
+<fieldset>
+	<div class="info">
+		Please indicate any professional training that you have followed in the last 5 years
+	</div>
+
+	<div class="d-inline-flex align-items-end add-training">
+		<label for="training-input">Training name</label>
+        {% include 'front/elements/input_add_search.html.twig'
+            with {
+                'id': 'training-input',
+                'url': '/apip/trainings',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'training'
+            }
+        %}
+	</div>
+
+	<div class="list-trainings">
+		<ul class="list-group">
+			{% if user.trainings is defined %}
+				{% for k, training in user.trainings %}
+                    {% set trainingsInput = trainingsInput|merge([training.id]) %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<div>
+							<span>{{ training.name }}</span>
+						</div>
+						<div class="d-inline-flex align-items-center justify-content-end">
+							<a href="" class="link mr-2" title="Skills linked to this training">
+								<i class="fas fa-link text-primary"></i>
+							</a>
+							<a href="" class="text-danger item rmv mr-2" title="Remove this training" data-name="{{ training.name }}" data-id="{{ training.id }}" data-url="url de suppression">
+								<i class="fas fa-trash-alt text-danger"></i>
+							</a>
+							<a href="" class="text-success feedback" title="Provide feedback">
+								<i class="fas fa-plus text-primary"></i>
+							</a>
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+</fieldset>
+
+<input type="hidden" name="trainings" id="trainings" value="{{ trainingsInput|json_encode() }}" />
+
+<div class="form-group button-group text-right">
+	<button type="submit" class="btn btn-primary">Save</button>
+</div>

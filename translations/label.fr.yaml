@@ -1,0 +1,14 @@
+name: Name
+location: Location
+duration: Duration
+description: Description
+price: Price
+start_at: Start at
+end_at: End at
+url: URL
+online: Online
+is_online_monitored: Is online monitored
+is_presential: Is presential
+create: Save
+edit_training: Save
+pseudo: Pseudo

@@ -1,0 +1,27 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %}
+	Results
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('search_results') }}
+{% endblock %}
+
+{% block body %}
+	<div id="search-results">
+		<div class="container">
+
+            {% include 'front/search/search.html.twig' %}
+            {% include 'front/search/results.html.twig' %}
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	<script src="https://maps.googleapis.com/maps/api/js?key=API_KEY"></script>
+	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('search_results') }}
+{% endblock %}

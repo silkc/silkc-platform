@@ -1,0 +1,163 @@
+{% set associatedSkills = [] %}
+{% set disassociatedSkills = [] %}
+
+<fieldset>
+	{# Following job #}
+	<div class="info">
+		The following skills have been calculated based on your work experiences and training history
+	</div>
+
+	<div id="list-following_skills" class="list-skills accordion">
+		{% if related_skills is defined %}
+			{% for k, row in related_skills %}
+                <div class="card" style="{{ k > 9 ? 'display: none;' : '' }}">
+                    <div class="card-header" id="heading_{{ k }}">
+                        <div class="d-flex flex-nowrap justify-content-between">
+                            <div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_following_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_following_skills_{{ k }}">
+                                <a class="text-primary icon mr-2" data-toggle="collapse" href="#skill_following_{{ k }}">
+                                    <i class="fas fa-chevron-circle-right"></i>
+                                </a>
+                                <a data-toggle="collapse" href="#skill_following_{{ k }}">
+                                    <span>{{ row.skillPreferredLabel }}</span>
+                                </a>
+                            </div>
+                            <div class="d-inline-flex align-items-center justify-content-end">
+                                <a href="#" class="more mr-2" data-name="{{ row.skillPreferredLabel }}" data-trainings="{{ row.trainingNames }}" data-occupations="{{ row.occupationPreferredLabels }}">
+                                    <i class="fas fa-question-circle text-primary"></i>
+                                </a>
+                                <a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ row.skillPreferredLabel }}" data-id="{{ row.skillId }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="collapse_following_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-following_skills">
+                        <div class="card-body">
+                            {{ row.skillDescription }}
+                        </div>
+                    </div>
+                </div>
+			{% endfor %}
+		{% endif %}
+        {% if associatedSkills|length > 10 %}
+            <a href="#" class="see-more">See more</a>
+        {% endif %}
+	</div>
+</fieldset>
+{# End: Following job #}
+
+{# Other skills #}
+<fieldset>
+	<div class="info">
+		Other skills
+	</div>
+
+	<div class="d-inline-flex align-items-end mb-4 add-skill">
+		<label for="other_skills-input">Other skills</label>
+        {% include 'front/elements/input_add_search.html.twig'
+            with {
+                'id': 'other_skills-input',
+                'url': '/apip/skills',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'other_skills'
+            }
+        %}
+	</div>
+
+	<div id="list-other_skills" class="list-skills">
+		{% if user.userSkills is defined %}
+			{% for k, userSkill in user.userSkills %}
+				{% if userSkill.isSelected == true %}
+					{% set skill = userSkill.skill %}
+                    {% if skill.id|number_format not in associatedSkills %}
+                        {% set associatedSkills = associatedSkills|merge([skill.id|number_format]) %}
+                    {% endif %}
+					<div class="card" data-key="{{ k }}">
+						<div class="card-header" id="heading_{{ k }}">
+							<div class="d-flex flex-nowrap justify-content-between">
+								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_other_skills_{{ k }}">
+									<a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_{{ k }}">
+										<i class="fas fa-chevron-circle-right"></i>
+									</a>
+									<a data-toggle="collapse" href="#skills_other_{{ k }}">
+										<span>{{ skill.preferredLabel }}</span>
+									</a>
+								</div>
+								<div class="d-inline-flex align-items-center justify-content-end">
+									<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ skill.preferredLabel }}" data-id="{{ skill.id }}" data-url="url de suppression">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div id="collapse_other_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-other_skills">
+							<div class="card-body">
+								{{ skill.description }}
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</fieldset>
+{# End: Other skills #}
+
+{# Previously unselected #}
+<fieldset>
+	<div class="info">
+		Previously unselected
+	</div>
+
+	<div id="list-previously_unselected" class="list-skills">
+		{% if user.userSkills is defined %}
+			{% for k, userSkill in user.userSkills %}
+				{% if userSkill.isSelected == false %}
+					{% set skill = userSkill.skill %}
+                    {% if skill.id|number_format not in disassociatedSkills %}
+					    {% set disassociatedSkills = disassociatedSkills|merge([skill.id|number_format]) %}
+                    {% endif %}
+					<div class="card">
+						<div class="card-header" id="heading_{{ k }}">
+							<div class="d-flex flex-nowrap justify-content-between">
+								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_previously_unselected_{{ k }}" aria-expanded="false" aria-controls="collapse_previously_unselected_{{ k }}">
+									<a class="text-primary icon mr-2" data-toggle="collapse" href="#previously_unselected_{{ k }}">
+										<i class="fas fa-chevron-circle-right"></i>
+									</a>
+									<a data-toggle="collapse" href="#previously_unselected_{{ k }}">
+										<span>{{ skill.preferredLabel }}</span>
+									</a>
+								</div>
+								<div class="d-inline-flex align-items-center justify-content-end">
+									<a href="#" class="more mr-2" data-name="{{ skill.preferredLabel }}" data-trainings="" data-occupations="">
+										<i class="fas fa-question-circle text-primary"></i>
+									</a>
+									<a href="" class="text-success add" title="Remove this skill">
+										<i class="fas fa-plus text-primary"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div id="collapse_previously_unselected_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-previously_unselected">
+							<div class="card-body">
+								{{ skill.description }}
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</fieldset>
+{# End: Previously unselected #}
+
+<input type="hidden" name="skills" id="skills" value='{"associatedSkills": {{ associatedSkills|json_encode() }},"disassociatedSkills":{{ disassociatedSkills|json_encode() }} }' />
+
+<div class="form-group button-group text-right">
+	<button type="submit" class="btn btn-primary">Save</button>
+</div>

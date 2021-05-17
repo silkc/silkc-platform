@@ -1,0 +1,151 @@
+<fieldset>
+
+	<div class="d-flex align-items-end justify-content-start">
+		<a href="{{ path('app_training_create') }}" class="btn btn-primary">Add a training</a>
+	</div>
+
+	<div class="accordion" id="list-trainings">
+		{% if trainings is defined %}
+			{% for k, training in trainings %}
+				<div class="card" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
+					<form method="POST" action="{{ path('app_institution') }}">
+						<input type="hidden" name="training_id" value="{{ attribute(training, 'id') is defined ? training.id : '' }}"/>
+						<div class="card-header" id="heading_{{ k }}">
+							<div class="d-flex flex-nowrap justify-content-between">
+								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#training_{{ k }}" aria-expanded="false" aria-controls="training_{{ k }}">
+									<a class="icon mr-2" data-toggle="collapse" href="#training_{{ k }}">
+										<span>{{ attribute(training, 'name') is defined ? training.name : '' }}</span>
+									</a>
+								</div>
+								<div class="d-inline-flex align-items-center justify-content-end">
+									<div class="block-clone">
+										<span class="spinner-border spinner-border-sm loader" role="status" aria-hidden="true"></span>
+										<a href="{{ path('app_training_edit', {id: training.id}) }}" title="Edit this training">
+											<i class="far fa-edit text-primary"></i>
+										</a>
+										<a href="#" title="Clone this training">
+											<i class="far fa-clone text-primary"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="training_{{ k }}" class="collapse {% if tab_active is defined and tab_active == 2 and training_active is defined and training_active == training.id %}show{% endif %}" aria-labelledby="heading_{{ k }}" data-parent="#list-trainings">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="training-name_{{ k }}">{{ attribute(training, 'name') is defined  ? training.name : '' }}</label>
+											<input type="text" class="form-control" disabled id="location_{{ k }}" name="name" value="{{ attribute(training, 'name') is defined ? training.name : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="location_{{ k }}">Location</label>
+											<input type="text" class="form-control" disabled id="location_{{ k }}" name="location" value="{{ attribute(training, 'location') is defined ? training.location : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="duration_{{ k }}">Duration</label>
+											<input type="text" class="form-control" disabled id="duration_{{ k }}" name="duration" value="{{ attribute(training, 'duration') is defined ? training.duration : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="description_{{ k }}">Description</label>
+											<textarea class="form-control" disabled id="description_{{ k }}" name="description">{{ attribute(training, 'description') is defined  ? training.description : '' }}</textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="price_{{ k }}">Price</label>
+											<input type="text" class="form-control" disabled id="price_{{ k }}" name="price" value="{{ attribute(training, 'price') is defined ? training.price : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="start-date_{{ k }}">Start date</label>
+											<input type="date" class="form-control" disabled id="start-date_{{ k }}" name="start_at" value="{{ attribute(training, 'start_at') is defined ? training.start_at : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="end-date_{{ k }}">End date</label>
+											<input type="date" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ attribute(training, 'end_at') is defined ? training.end_at : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="training-info-url_{{ k }}">Training info URL</label>
+											<input type="url" class="form-control" disabled id="training-info-url_{{ k }}" name="url" value="{{ attribute(training, 'url') is defined ? training.url : '' }}">
+										</div>
+
+										<div class="form-group">
+											<div class="form-check">
+												<input type="checkbox" id="training_isOnline_{{ k }}" name="training-online_{{ k }}" class="form-check-input" value="1" disabled {{ attribute(training, 'isOnline') is defined and training.isOnline == 1 ? 'checked="checked"' : '' }}>
+												<label class="form-check-label" for="training_isOnline_{{ k }}">Online</label>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="form-check">
+												<input type="checkbox" id="training_isOnline_monitored_{{ k }}" name="training-online_monitored_{{ k }}" class="form-check-input" value="1" disabled {{ attribute(training, 'isOnlineMonitored') is defined and training.isOnlineMonitored == 1 ? 'checked="checked"' : '' }}>
+												<label class="form-check-label" for="training_isOnline_monitored_{{ k }}">Is online monitored</label>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="form-check">
+												<input type="checkbox" id="training_presential_{{ k }}" name="training-presential_{{ k }}" class="form-check-input" value="1" disabled {{ attribute(training, 'isPresential') is defined and training.isPresential == 1 ? 'checked="checked"' : '' }}>
+												<label class="form-check-label" for="training_presential_{{ k }}">Is presential</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<p class="title">Required skills</p>
+										<div class="skills-required-list">
+											<ul class="list-group ul-skills" id="skills-required">
+												{% if training is defined %}
+													{% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+														{% for k, trainingSkill in training.trainingSkills %}
+															{% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
+																{% set skill =  trainingSkill.skill %}
+																<li class="list-group-item">
+																	<div class="d-flex flex-nowrap justify-content-between">
+																		<div>
+																			<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+																		</div>
+																	</div>
+																</li>
+															{% endif %}
+														{% endfor %}
+													{% endif %}
+												{% endif %}
+											</ul>
+										</div>
+
+										<p class="title">Acquired skills</p>
+										<div class="skills-acquire-list">
+											{% if training is defined %}
+												{% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+													{% for k, trainingSkill in training.trainingSkills %}
+														{% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
+															{% set skill =  trainingSkill.skill %}
+															<li class="list-group-item">
+																<div class="d-flex flex-nowrap justify-content-between">
+																	<div>
+																		<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+																	</div>
+																</div>
+															</li>
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</fieldset>
