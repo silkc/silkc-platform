@@ -1,129 +1,4 @@
 {%
-    set following_skills = [
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-        {
-            'id': '1',
-            'name': 'commerce et administration non classés ailleurs',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'id': '2',
-            'name': 'commerce et administration non définis',
-            'description': 'Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        },
-        {
-            'id': '3',
-            'name': 'comptabilité et fiscalité',
-            'description': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt .'
-        },
-    ]
-%}
-
-{%
     set other_skills = [
         {
             'id': '1',
@@ -164,8 +39,6 @@
 
 %}
 
-
-
 {% set associatedSkills = [] %}
 {% set disassociatedSkills = [] %}
 
@@ -176,9 +49,9 @@
 	</div>
 
 	<div id="list-following_skills" class="list-skills accordion">
-		{% if following_skills is defined %}
-			{% for k, following_skill in following_skills %}
-                {% set associatedSkills = associatedSkills|merge([following_skill.id]) %}
+		{% if related_skills is defined %}
+			{% for k, row in related_skills %}
+                {% set associatedSkills = associatedSkills|merge([row.skillId]) %}
 				<div class="card" style="{{ k > 9 ? 'display: none;' : '' }}">
 					<div class="card-header" id="heading_{{ k }}">
 						<div class="d-flex flex-nowrap justify-content-between">
@@ -187,14 +60,14 @@
 									<i class="fas fa-chevron-circle-right"></i>
 								</a>
 								<a data-toggle="collapse" href="#skill_following_{{ k }}">
-									<span>{{ following_skill.name }}</span>
+									<span>{{ row.skillPreferredLabel }}</span>
 								</a>
 							</div>
 							<div class="d-inline-flex align-items-center justify-content-end">
-								<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
+								<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal" data-trainings="{{ row.trainingNames }}" data-occupations="{{ row.occupationPreferredLabels }}">
 									<i class="fas fa-question-circle text-primary"></i>
 								</a>
-								<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ following_skill.name }}" data-id="{{ following_skill.id }}" data-url="url de suppression">
+								<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ row.skillPreferredLabel }}" data-id="{{ row.skillId }}">
 									<i class="fas fa-trash-alt"></i>
 								</a>
 							</div>
@@ -203,7 +76,7 @@
 
 					<div id="collapse_following_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-following_skills">
 						<div class="card-body">
-							{{ following_skill.description }}
+							{{ row.skillDescription }}
 						</div>
 					</div>
 				</div>
@@ -237,34 +110,37 @@
 	</div>
 
 	<div id="list-other_skills" class="list-skills">
-		{% if other_skills is defined %}
-			{% for k, other_skill in other_skills %}
-            {% set associatedSkills = associatedSkills|merge([other_skill.id]) %}
-				<div class="card" data-key="{{ k }}">
-					<div class="card-header" id="heading_{{ k }}">
-						<div class="d-flex flex-nowrap justify-content-between">
-							<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_other_skills_{{ k }}">
-								<a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_{{ k }}">
-									<i class="fas fa-chevron-circle-right"></i>
-								</a>
-								<a data-toggle="collapse" href="#skills_other_{{ k }}">
-									<span>{{ other_skill.name }}</span>
-								</a>
-							</div>
-							<div class="d-inline-flex align-items-center justify-content-end">
-								<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ other_skill.name }}" data-id="{{ other_skill.id }}" data-url="url de suppression">
-									<i class="fas fa-trash-alt"></i>
-								</a>
+		{% if user.userSkills is defined %}
+			{% for k, userSkill in user.userSkills %}
+				{% if userSkill.isSelected == true %}
+					{% set skill = userSkill.skill %}
+            		{% set associatedSkills = associatedSkills|merge([skill.id]) %}
+					<div class="card" data-key="{{ k }}">
+						<div class="card-header" id="heading_{{ k }}">
+							<div class="d-flex flex-nowrap justify-content-between">
+								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_{{ k }}" aria-expanded="false" aria-controls="collapse_other_skills_{{ k }}">
+									<a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_{{ k }}">
+										<i class="fas fa-chevron-circle-right"></i>
+									</a>
+									<a data-toggle="collapse" href="#skills_other_{{ k }}">
+										<span>{{ skill.preferredLabel }}</span>
+									</a>
+								</div>
+								<div class="d-inline-flex align-items-center justify-content-end">
+									<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ skill.preferredLabel }}" data-id="{{ skill.id }}" data-url="url de suppression">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div id="collapse_other_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-other_skills">
-						<div class="card-body">
-							{{ other_skill.description }}
+						<div id="collapse_other_skills_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-other_skills">
+							<div class="card-body">
+								{{ skill.description }}
+							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 			{% endfor %}
 		{% endif %}
 	</div>
@@ -278,37 +154,40 @@
 	</div>
 
 	<div id="list-previously_unselected" class="list-skills">
-		{% if previously_skills is defined %}
-			{% for k, previously_skill in previously_skills %}
-                {% set disassociatedSkills = disassociatedSkills|merge([previously_skill.id]) %}
-				<div class="card">
-					<div class="card-header" id="heading_{{ k }}">
-						<div class="d-flex flex-nowrap justify-content-between">
-							<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_previously_unselected_{{ k }}" aria-expanded="false" aria-controls="collapse_previously_unselected_{{ k }}">
-								<a class="text-primary icon mr-2" data-toggle="collapse" href="#previously_unselected_{{ k }}">
-									<i class="fas fa-chevron-circle-right"></i>
-								</a>
-								<a data-toggle="collapse" href="#previously_unselected_{{ k }}">
-									<span>{{ previously_skill.name }}</span>
-								</a>
-							</div>
-							<div class="d-inline-flex align-items-center justify-content-end">
-								<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
-									<i class="fas fa-question-circle text-primary"></i>
-								</a>
-								<a href="" class="text-success add" title="Remove this skill">
-									<i class="fas fa-plus text-primary"></i>
-								</a>
+		{% if user.userSkills is defined %}
+			{% for k, userSkill in user.userSkills %}
+				{% if userSkill.isSelected == false %}
+					{% set skill = userSkill.skill %}
+					{% set disassociatedSkills = disassociatedSkills|merge([skill.id]) %}
+					<div class="card">
+						<div class="card-header" id="heading_{{ k }}">
+							<div class="d-flex flex-nowrap justify-content-between">
+								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_previously_unselected_{{ k }}" aria-expanded="false" aria-controls="collapse_previously_unselected_{{ k }}">
+									<a class="text-primary icon mr-2" data-toggle="collapse" href="#previously_unselected_{{ k }}">
+										<i class="fas fa-chevron-circle-right"></i>
+									</a>
+									<a data-toggle="collapse" href="#previously_unselected_{{ k }}">
+										<span>{{ skill.preferredLabel }}</span>
+									</a>
+								</div>
+								<div class="d-inline-flex align-items-center justify-content-end">
+									<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
+										<i class="fas fa-question-circle text-primary"></i>
+									</a>
+									<a href="" class="text-success add" title="Remove this skill">
+										<i class="fas fa-plus text-primary"></i>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div id="collapse_previously_unselected_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-previously_unselected">
-						<div class="card-body">
-							{{ previously_skill.description }}
+						<div id="collapse_previously_unselected_{{ k }}" class="collapse" aria-labelledby="heading_{{ k }}" data-parent="#list-previously_unselected">
+							<div class="card-body">
+								{{ skill.description }}
+							</div>
 						</div>
 					</div>
-				</div>
+				{% endif %}
 			{% endfor %}
 		{% endif %}
 	</div>
