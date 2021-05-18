@@ -43,7 +43,8 @@ class HomeController extends AbstractController
      * @Route("/search_results", name="search_results")
      */
     public function searchResults(Request $request, OccupationRepository $occupationRepository, TrainingRepository $trainingRepository, SkillRepository $skillRepository): Response
-    {        
+    {
+        $user = $this->getUser();
         $type_search = $request->get('type_search'); // Type de recherche (occupation ou skill)
         $trainings = []; // Listes des formations
         $search = []; // Parametres de recherche renvoyés à la vue
@@ -59,7 +60,7 @@ class HomeController extends AbstractController
                             $search['id'] = $occupation_id;
                             $search['name'] = $occupation_name;
                             $occupation = $occupationRepository->findOneBy(['id' => $occupation_id]);
-                            $trainings = $trainingRepository->searchTrainingByOccupation($occupation);
+                            $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation);
                         }
                     break;
                 case 'skill':

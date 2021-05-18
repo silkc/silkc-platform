@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Occupation;
 use App\Entity\OccupationSkill;
 use App\Entity\Training;
@@ -29,7 +30,7 @@ class TrainingRepository extends ServiceEntityRepository
      *
      * @access public
      */
-    public function searchTrainingByOccupation(Occupation $occupation): ?array
+    public function searchTrainingByOccupation(User $user, Occupation $occupation): ?array
     {
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMappingBuilder($entityManager);
@@ -87,6 +88,7 @@ class TrainingRepository extends ServiceEntityRepository
             ORDER BY score DESC
             ", $rsm);
         $query->setParameter('occupationId', $occupation->getId());
+        //$query->setParameter('userId', $user->getId());
         $query->setParameter('essentialRelationType', OccupationSkill::RELATION_TYPE_ESSENTIAL);
         $query->setParameter('optionalRelationType', OccupationSkill::RELATION_TYPE_OPTIONAL);
         $query->setParameter('knowledgeSkillType', OccupationSkill::SKILL_TYPE_KNOWLEDGE);
