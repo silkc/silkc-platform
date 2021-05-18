@@ -30,7 +30,7 @@ class TrainingRepository extends ServiceEntityRepository
      *
      * @access public
      */
-    public function searchTrainingByOccupation(User $user, Occupation $occupation): ?array
+    public function searchTrainingByOccupation(?User $user = null, Occupation $occupation): ?array
     {
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMappingBuilder($entityManager);

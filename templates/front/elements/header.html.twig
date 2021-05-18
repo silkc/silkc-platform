@@ -9,7 +9,11 @@
         <div class="d-flex justify-content-end">
             <div class="dropdown mr-2">
                 <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ app.user.firstname }} {{ app.user.lastname }}
+                    {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                        {{ app.user.username }}
+                    {% elseif app.user is defined and app.user is not null %}
+                        {{ app.user.firstname }} {{ app.user.lastname }}
+                    {% endif %}
                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
