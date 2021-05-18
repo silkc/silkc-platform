@@ -51,14 +51,16 @@ class SecurityController extends AbstractController
         // On bloque l'inscription pour le moment :
         //return $this->redirectToRoute('app_login');
         $user = new User();
+
         $form = $this->createForm(UserType::class, $user, ['require_password' => true, 'is_personal' => ($type === 'user')]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+            $isInstitution = !(bool) intval($request->request->get('is_personal'));
 
-            $roles = ['ROLE_USER'];
+            $roles = ($isInstitution) ? [User::ROLE_INSTITUTION, User::ROLE_USER] : [User::ROLE_USER];
             $createdAt = new \DateTime('now');
             $password = $user->getPassword();
             $password = $passwordEncoder->encodePassword($user, $password);

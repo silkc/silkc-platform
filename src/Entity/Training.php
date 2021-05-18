@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrainingRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -11,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=TrainingRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @ApiResource(
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
@@ -45,6 +48,11 @@ class Training
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="questions")
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -135,6 +143,13 @@ class Training
      */
     private $score = 0;
 
+    /**
+     * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
+     */
+    private $completion = 0;
+
+    private $prePersisted = false;
+
     public function __construct()
     {
         $this->requiredSkills = new ArrayCollection();
@@ -143,9 +158,69 @@ class Training
         $this->trainingSkills = new ArrayCollection();
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $this->createdAt = new \DateTime();
+
+        if ($this->prePersisted)
+            return;
+
+        $training = $args->getObject();
+        $this->_defineCompletion($training);
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
+        if ($this->prePersisted)
+            return;
+
+        $training = $args->getObject();
+        $this->_defineCompletion($training);
+    }
+
+    protected function _defineCompletion(Training $training)
+    {
+        $toCompleteProperties = [
+            'name',
+            'location',
+            'duration',
+            'description',
+            'price',
+            'url'
+        ];
+
+
+        $completed = 0;
+        foreach ($toCompleteProperties as $property) {
+            if (property_exists($training, $property) && $training->{$property} !== NULL && !empty($training->{$property}))
+                $completed++;
+        }
+
+        $completion = ($completed === 0) ? 0 : floor(($completed / count($toCompleteProperties)) * 100);
+        $training->completion = $completion;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -407,6 +482,18 @@ class Training
     public function setScore(?int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getCompletion(): int
+    {
+        return $this->completion;
+    }
+
+    public function setCompletion(int $completion): self
+    {
+        $this->completion = $completion;
 
         return $this;
     }

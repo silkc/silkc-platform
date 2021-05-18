@@ -202,7 +202,7 @@ class HomeController extends AbstractController
         $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : false;
         setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
-        $trainings = $trainingRepository->findAll();
+        $trainings = $trainingRepository->findBy(['user' => $user]);
         return $this->render('front/institutional/index.html.twig', 
             [
                 'trainings'   => $trainings,
@@ -218,6 +218,7 @@ class HomeController extends AbstractController
      */
     public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
+        $user = $this->getUser();
         $training = new Training();
 
         $form = $this->createForm(TrainingType::class, $training);
@@ -275,6 +276,7 @@ class HomeController extends AbstractController
                     $training->removeTrainingSkill($trainingSkill);
             }
 
+            $training->setUser($user);
             $em->persist($training);
             $em->flush();
 

@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * @Route("/api", name="api_")
@@ -217,5 +219,17 @@ class ApiController extends AbstractController
         $em->flush();
 
         return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/skills", name="skills", methods={"GET"})
+     */
+    public function skills(SkillRepository $skillRepository, CacheInterface $cache)
+    {
+        $skills = $cache->get('skills', function(ItemInterface $item) use ($skillRepository) {
+            $item->expiresAfter(15);
+            return $skillRepository->findAll();
+        });
+        return $this->json($skills, 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }

@@ -46,10 +46,68 @@ class TrainingRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT 
                 t.*,
-                CAST(sq1.weight AS UNSIGNED) + CAST(sq2.occupationWeight AS UNSIGNED) AS score
+                (
+                    CAST(sq1.weight AS UNSIGNED) + 
+                    CAST(sq2.occupationWeight AS UNSIGNED) 
+                ) 
+                    * CAST(sq2.institutionCompletion AS UNSIGNED) 
+                    * CAST(sq2.trainingCompletion AS UNSIGNED) 
+                AS score
             FROM training AS t
             LEFT JOIN (
                 SELECT 
+                    ssq1.training_id,
+                    CAST(ssq1.knowledgeCoeff AS UNSIGNED) + CAST(ssq1.knowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.skillCoeff AS UNSIGNED) + CAST(ssq1.skillOptionalCoeff AS UNSIGNED) AS weight
+                FROM (
+                    SELECT
+                        t.id AS training_id,
+                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :knowledgeSkillType, :knowledgeCoefficient, 0)) AS knowledgeCoeff,
+                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :knowledgeSkillType, :knowledgeOptionalCoefficient, 0)) AS knowledgeOptionalCoeff,
+                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :skillSkillType, :skillCoefficient, 0)) AS skillCoeff,
+                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :skillSkillType, :skillOptionalCoefficient, 0)) AS skillOptionalCoeff
+                    FROM training t
+                    INNER JOIN occupation_skill os ON os.occupation_id = :occupationId
+                    INNER JOIN training_skill ts ON ts.training_id = t.id AND os.skill_id = ts.skill_id
+                    GROUP BY t.id
+                ) AS ssq1
+                GROUP BY ssq1.training_id
+            ) AS sq1 ON sq1.training_id = t.id
+            LEFT JOIN (
+                SELECT
+                    t.id AS training_id,
+                    t.completion AS trainingCompletion,
+                    i.completion AS institutionCompletion,
+                    IF (t.occupation_id IS NOT NULL, :occupationCoefficient, 1) AS occupationWeight
+                FROM training t
+                INNER JOIN user i ON i.id = t.user_id
+                GROUP BY t.id
+            ) AS sq2 ON sq2.training_id = t.id
+            GROUP BY t.id
+            HAVING score IS NOT NULL AND score > 0
+            ORDER BY score DESC
+            ", $rsm);
+        $query->setParameter('occupationId', $occupation->getId());
+        $query->setParameter('essentialRelationType', OccupationSkill::RELATION_TYPE_ESSENTIAL);
+        $query->setParameter('optionalRelationType', OccupationSkill::RELATION_TYPE_OPTIONAL);
+        $query->setParameter('knowledgeSkillType', OccupationSkill::SKILL_TYPE_KNOWLEDGE);
+        $query->setParameter('skillSkillType', OccupationSkill::SKILL_TYPE_SKILL);
+        $query->setParameter('occupationCoefficient', Training::SEARCH_OCCUPATION_COEFFICIENT);
+        $query->setParameter('skillCoefficient', Training::SEARCH_SKILL_COEFFICIENT);
+        $query->setParameter('skillOptionalCoefficient', Training::SEARCH_OPTIONAL_SKILL_COEFFICIENT);
+        $query->setParameter('knowledgeCoefficient', Training::SEARCH_KNOWLEDGE_COEFFICIENT);
+        $query->setParameter('knowledgeOptionalCoefficient', Training::SEARCH_OPTIONAL_KNOWLEDGE_COEFFICIENT);
+
+        return $query->getResult();
+    }
+    /*public function searchTrainingByOccupation(Occupation $occupation): ?array
+    {
+        $query = $this->getEntityManager()->createNativeQuery("
+            SELECT
+                t.*,
+                CAST(sq1.weight AS UNSIGNED) + CAST(sq2.occupationWeight AS UNSIGNED) AS score
+            FROM training AS t
+            LEFT JOIN (
+                SELECT
                     ssq1.training_id,
                     CAST(ssq1.knowledgeCoeff AS UNSIGNED) + CAST(ssq1.knowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.skillCoeff AS UNSIGNED) + CAST(ssq1.skillOptionalCoeff AS UNSIGNED) AS weight
                 FROM (
@@ -90,7 +148,7 @@ class TrainingRepository extends ServiceEntityRepository
         $query->setParameter('knowledgeOptionalCoefficient', Training::SEARCH_OPTIONAL_KNOWLEDGE_COEFFICIENT);
 
         return $query->getResult();
-    }
+    }*/
 
     /**
      * Recherche de formation par compétence

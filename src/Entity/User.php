@@ -119,9 +119,9 @@ class User implements UserInterface
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=5, nullable=true)
+     * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
      */
-    private $completion;
+    private $completion = 0;
 
     private $currentOccupations;
     private $previousOccupations;
@@ -417,12 +417,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCompletion(): ?string
+    public function getCompletion(): int
     {
         return $this->completion;
     }
 
-    public function setCompletion(?string $completion): self
+    public function setCompletion(int $completion): self
     {
         $this->completion = $completion;
 
