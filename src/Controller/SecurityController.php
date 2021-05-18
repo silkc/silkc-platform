@@ -60,7 +60,7 @@ class SecurityController extends AbstractController
             $user = $form->getData();
             $isInstitution = !(bool) intval($request->request->get('is_personal'));
 
-            $roles = ($isInstitution) ? [User::ROLE_INSTITUTION, User::ROLE_USER] : [User::ROLE_USER];
+            $roles = ($isInstitution) ? [User::ROLE_INSTITUTION] : [User::ROLE_USER];
             $createdAt = new \DateTime('now');
             $password = $user->getPassword();
             $password = $passwordEncoder->encodePassword($user, $password);
