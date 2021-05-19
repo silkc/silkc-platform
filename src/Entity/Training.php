@@ -42,6 +42,9 @@ class Training
     public const SEARCH_KNOWLEDGE_COEFFICIENT = 2;
     public const SEARCH_OPTIONAL_KNOWLEDGE_COEFFICIENT = 1;
 
+    public const SEARCH_ACQUIRED_REQUIRED_SKILL_COEFFICIENT = 2;
+    public const SEARCH_NOT_ACQUIRED_REQUIRED_SKILL_COEFFICIENT = 20;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -50,7 +53,7 @@ class Training
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $user;
 

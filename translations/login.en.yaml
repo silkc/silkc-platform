@@ -6,6 +6,7 @@ form:
         username: Username
         firstname: Firstname
         institionname: Instition name
+        institution_name: Instition name
         pseudo: Pseudo
         lastname: Lastname
         email: Email

@@ -35,21 +35,36 @@ class TrainingRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMappingBuilder($entityManager);
         $rsm->addRootEntityFromClassMetadata('App\Entity\Training', 't');
-        $rsm->addFieldResult('t', 'score', 'score');
-        /*$rsm->addScalarResult('total_weight', 'total_weight');
-        $rsm->addScalarResult('weight', 'weight');
-        $rsm->addScalarResult('occupationWeight', 'occupationWeight');
-        $rsm->addScalarResult('knowledgeCoeff', 'knowledgeCoeff');
-        $rsm->addScalarResult('knowledgeOptionalCoeff', 'knowledgeOptionalCoeff');
-        $rsm->addScalarResult('skillCoeff', 'skillCoeff');
-        $rsm->addScalarResult('skillOptionalCoeff', 'skillOptionalCoeff');*/
+        /*$rsm->addFieldResult('t', 'score', 'score');
+        $rsm->addScalarResult('knowledge_coeff', 'knowledge_coeff');
+        $rsm->addScalarResult('knowledge_optional_coeff', 'knowledge_optional_coeff');
+        $rsm->addScalarResult('skill_coeff', 'skill_coeff');
+        $rsm->addScalarResult('skill_optional_coeff', 'skill_optional_coeff');
+        $rsm->addScalarResult('skill_weight', 'skill_weight');
+        $rsm->addScalarResult('training_completion', 'training_completion');
+        $rsm->addScalarResult('institution_completion', 'institution_completion');
+        $rsm->addScalarResult('occupation_weight', 'occupation_weight');
+        $rsm->addScalarResult('acquired_skill_coefficient', 'acquired_skill_coefficient');
+        $rsm->addScalarResult('not_acquired_skill_coefficient', 'not_acquired_skill_coefficient');*/
 
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT 
                 t.*,
+                IFNULL(sq1.weight, 0) AS skill_weight,
+                IFNULL(sq2.trainingCompletion, 0) AS training_completion,
+                IFNULL(sq2.institutionCompletion, 0) AS institution_completion,
+                IFNULL(sq2.occupationWeight, 0) AS occupation_weight,
+                IFNULL(sq1.knowledgeCoeff, 0) AS knowledge_coeff,
+                IFNULL(sq1.knowledgeOptionalCoeff, 0) AS knowledge_optional_coeff,
+                IFNULL(sq1.skillCoeff, 0) AS skill_coeff,
+                IFNULL(sq1.skillOptionalCoeff, 0) AS skill_optional_coeff,
+                IFNULL(sq3.acquiredSkillCoefficient, 0) AS acquired_skill_coefficient,
+                IFNULL(sq3.notAcquiredSkillCoefficient, 0) AS not_acquired_skill_coefficient,
                 (
-                    CAST(sq1.weight AS UNSIGNED) + 
-                    CAST(sq2.occupationWeight AS UNSIGNED) 
+                    IFNULL(CAST(sq1.weight AS UNSIGNED), 0) + 
+                    IFNULL(CAST(sq2.occupationWeight AS UNSIGNED), 0) +
+                    IFNULL(CAST(sq3.acquiredSkillCoefficient AS UNSIGNED), 0) -
+                    IFNULL(CAST(sq3.notAcquiredSkillCoefficient AS UNSIGNED), 0)
                 ) 
                     * CAST(sq2.institutionCompletion AS UNSIGNED) 
                     * CAST(sq2.trainingCompletion AS UNSIGNED) 
@@ -58,6 +73,10 @@ class TrainingRepository extends ServiceEntityRepository
             LEFT JOIN (
                 SELECT 
                     ssq1.training_id,
+                    ssq1.knowledgeCoeff,
+                    ssq1.knowledgeOptionalCoeff,
+                    ssq1.skillCoeff,
+                    ssq1.skillOptionalCoeff,
                     CAST(ssq1.knowledgeCoeff AS UNSIGNED) + CAST(ssq1.knowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.skillCoeff AS UNSIGNED) + CAST(ssq1.skillOptionalCoeff AS UNSIGNED) AS weight
                 FROM (
                     SELECT
@@ -67,8 +86,8 @@ class TrainingRepository extends ServiceEntityRepository
                         SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :skillSkillType, :skillCoefficient, 0)) AS skillCoeff,
                         SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :skillSkillType, :skillOptionalCoefficient, 0)) AS skillOptionalCoeff
                     FROM training t
-                    INNER JOIN occupation_skill os ON os.occupation_id = :occupationId
-                    INNER JOIN training_skill ts ON ts.training_id = t.id AND os.skill_id = ts.skill_id
+                    INNER JOIN training_skill ts ON ts.training_id = t.id AND ts.is_to_acquire = 1
+                    INNER JOIN occupation_skill os ON os.occupation_id = :occupationId AND os.skill_id = ts.skill_id
                     GROUP BY t.id
                 ) AS ssq1
                 GROUP BY ssq1.training_id
@@ -78,17 +97,27 @@ class TrainingRepository extends ServiceEntityRepository
                     t.id AS training_id,
                     t.completion AS trainingCompletion,
                     i.completion AS institutionCompletion,
-                    IF (t.occupation_id IS NOT NULL, :occupationCoefficient, 1) AS occupationWeight
+                    IF (t.occupation_id IS NOT NULL, :occupationCoefficient, 0) AS occupationWeight
                 FROM training t
                 INNER JOIN user i ON i.id = t.user_id
                 GROUP BY t.id
             ) AS sq2 ON sq2.training_id = t.id
+            LEFT JOIN (
+                SELECT 
+                    t.id AS training_id,
+                    SUM(IF(us.id IS NOT NULL, 1, 0)) * :acquiredCoefficient AS acquiredSkillCoefficient,
+                    SUM(IF(us.id IS NULL, 1, 0)) * :notAcquiredCoefficient AS notAcquiredSkillCoefficient
+                FROM training t
+                    INNER JOIN training_skill ts ON ts.training_id = t.id AND ts.is_required = 1
+                    LEFT JOIN user_skill us ON us.skill_id = ts.skill_id AND us.is_selected = 1 AND us.user_id = :userId
+                    GROUP BY t.id
+            ) AS sq3 ON sq3.training_id = t.id
             GROUP BY t.id
             HAVING score IS NOT NULL AND score > 0
             ORDER BY score DESC
             ", $rsm);
         $query->setParameter('occupationId', $occupation->getId());
-        //$query->setParameter('userId', $user->getId());
+        $query->setParameter('userId', $user->getId());
         $query->setParameter('essentialRelationType', OccupationSkill::RELATION_TYPE_ESSENTIAL);
         $query->setParameter('optionalRelationType', OccupationSkill::RELATION_TYPE_OPTIONAL);
         $query->setParameter('knowledgeSkillType', OccupationSkill::SKILL_TYPE_KNOWLEDGE);
@@ -98,6 +127,8 @@ class TrainingRepository extends ServiceEntityRepository
         $query->setParameter('skillOptionalCoefficient', Training::SEARCH_OPTIONAL_SKILL_COEFFICIENT);
         $query->setParameter('knowledgeCoefficient', Training::SEARCH_KNOWLEDGE_COEFFICIENT);
         $query->setParameter('knowledgeOptionalCoefficient', Training::SEARCH_OPTIONAL_KNOWLEDGE_COEFFICIENT);
+        $query->setParameter('acquiredCoefficient', Training::SEARCH_ACQUIRED_REQUIRED_SKILL_COEFFICIENT);
+        $query->setParameter('notAcquiredCoefficient', Training::SEARCH_NOT_ACQUIRED_REQUIRED_SKILL_COEFFICIENT);
 
         return $query->getResult();
     }
