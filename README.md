@@ -9,7 +9,8 @@ Requirements
 **Fetch git repository**
 
     git clone https://github.com/TonyHaikara/silk-platform.git silk
-Move into Silk installation folder
+
+**Move into Silk installation folder**
 
     cd silk
 
@@ -22,12 +23,14 @@ composer install
 
 **Set folder rights**
 
-    chmod -R 777 /var/log
-    chmod -R 777 /var/cache
+    chmod -R 777 var/log
+    chmod -R 777 var/cache
+
 **Create and migrate database**
 
     php bin/console doctrine:database:create
     php bin/console doctrine:migrations:migrate
+
 **Install packages and generate assets**
 
     yarn install
