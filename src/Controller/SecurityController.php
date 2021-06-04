@@ -47,7 +47,8 @@ class SecurityController extends AbstractController
      * @Route("/signup/{type}", name="app_signup", defaults={"type": "user"})
      */
     public function signup(
-        string $type, ValidatorInterface $validator,
+        string $type,
+        ValidatorInterface $validator,
         UserPasswordEncoderInterface $passwordEncoder,
         Request $request,
         UserRepository $userRepository,
@@ -125,6 +126,19 @@ class SecurityController extends AbstractController
             );
 
             return $this->redirectToRoute('app_login');
+        } elseif ($form->isSubmitted()) {
+            $errors = $validator->validate($user);
+            if ($errors && count($errors) > 0) {
+                $errorsMessages = [];
+                foreach ($errors as $error) {
+                    $errorsMessages[] = $error->getMessage();
+                }
+                $this->addFlash(
+                    'warning',
+                    ($errorsMessages && count($errorsMessages) > 0) ? implode("\n", $errorsMessages) : 'An error occured'
+                );
+                return $this->redirectToRoute('app_signup');
+            }
         }
 
         return $this->render(($type === 'user') ? 'security/signup_user.html.twig' : 'security/signup_institution.html.twig', ['form' =>  $form->createView()]);

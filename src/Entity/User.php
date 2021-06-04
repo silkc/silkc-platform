@@ -20,10 +20,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="user", indexes={@ORM\Index(columns={"firstname", "lastname", "username", "email"}, flags={"fulltext"})})
  * @UniqueEntity(
- *     fields={"username"}
+ *     fields={"username"},
+ *     message="This username already exists."
  * )
  * @UniqueEntity(
- *     fields={"email"}
+ *     fields={"email"},
+ *     message="This email already exists."
  * )
  */
 class User implements UserInterface
