@@ -13,11 +13,18 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="user", indexes={@ORM\Index(columns={"firstname", "lastname", "username", "email"}, flags={"fulltext"})})
+ * @UniqueEntity(
+ *     fields={"username"}
+ * )
+ * @UniqueEntity(
+ *     fields={"email"}
+ * )
  */
 class User implements UserInterface
 {

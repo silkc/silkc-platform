@@ -17,7 +17,13 @@
                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>My account</span></a>
+
+                    {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                        <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>My institution</span></a>
+                    {% else %}
+                        <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>My account</span></a>
+                    {% endif %}
+
                     <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></a>
                 </div>
             </div>

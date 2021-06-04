@@ -44,6 +44,8 @@ security:
         - { path: ^/api/validate_account, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/account$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/institution$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: ROLE_ADMIN

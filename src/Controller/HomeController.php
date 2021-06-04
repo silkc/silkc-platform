@@ -2,28 +2,30 @@
 
 namespace App\Controller;
 
-use App\Entity\Skill;
-use App\Entity\TrainingSkill;
 use App\Entity\User;
+use App\Entity\Skill;
 use App\Entity\Training;
-use App\Form\Type\TrainingType;
 use App\Form\Type\UserType;
-use App\Form\Type\UserPasswordType;
-use App\Repository\UserOccupationRepository;
+use App\Entity\TrainingSkill;
+use App\Form\Type\TrainingType;
 use App\Repository\UserRepository;
+use App\Form\Type\UserPasswordType;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\OccupationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\UserOccupationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("", name="app_")
@@ -90,9 +92,13 @@ class HomeController extends AbstractController
         ValidatorInterface $validator,
         TranslatorInterface $translator,
         UserPasswordEncoderInterface $passwordEncoder,
-        SkillRepository $skillRepository
+        SkillRepository $skillRepository,
+        UserRepository $userRepository
     ):Response
     {
+        if ($this->isGranted(User::ROLE_INSTITUTION))
+        return $this->redirectToRoute('app_home');
+
         $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user, ['is_personal' => true]);
@@ -113,9 +119,9 @@ class HomeController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
+            
             $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
-
+            
             return $this->redirectToRoute('app_account');
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
@@ -369,17 +375,5 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
             'training' => $training,
         ]);
-    }
-
-    /**
-     * @Route("/duplicate_training", name="duplicate_training")
-     */
-    public function duplicateTraining(Request $request, TrainingRepository $trainingRepository, SerializerInterface $serializer): Response
-    {
-        $trainingId = $request->get('training_id'); // id du training à dupliquer
-        if (!$trainingId) return false;
-        $training = $trainingRepository->findById($trainingId);
-        $jsonContent = $serializer->serialize($training, 'json');
-        return new JsonResponse($jsonContent);
     }
 }
