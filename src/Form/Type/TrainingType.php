@@ -76,7 +76,7 @@ class TrainingType extends AbstractType
             ])
             ->add('endAt', DateTimeType::class, [
                 'translation_domain' => 'label',
-                'label' => 'label.end_at',
+                'label' => 'end_at',
                 'required' => false,
             ])
             ->add('isOnline', CheckboxType::class, [
