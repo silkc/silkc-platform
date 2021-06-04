@@ -20,10 +20,18 @@ final class Version20210413124248 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE récupéré_feuil1');
-        $this->addSql('DROP TABLE tmp_isco_group');
-        $this->addSql('DROP TABLE tmp_occupation');
-        $this->addSql('DROP TABLE tmp_skill');
+        if ($schema->hasTable('récupéré_feuil1')) {
+            $this->addSql('DROP TABLE récupéré_feuil1');
+        }
+        if ($schema->hasTable('tmp_isco_group')) {
+            $this->addSql('DROP TABLE tmp_isco_group');
+        }
+        if ($schema->hasTable('tmp_occupation')) {
+            $this->addSql('DROP TABLE tmp_occupation');
+        }
+        if ($schema->hasTable('tmp_skill')) {
+            $this->addSql('DROP TABLE tmp_skill');
+        }
         $this->addSql('ALTER TABLE skill CHANGE scope_note scope_note LONGTEXT DEFAULT NULL');
         $this->addSql('ALTER TABLE training_session_skill CHANGE is_required is_required TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE is_to_acquire is_to_acquire TINYINT(1) DEFAULT \'0\' NOT NULL');
         $this->addSql('ALTER TABLE training_skill CHANGE is_required is_required TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE is_to_acquire is_to_acquire TINYINT(1) DEFAULT \'0\' NOT NULL');

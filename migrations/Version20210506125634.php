@@ -20,8 +20,23 @@ final class Version20210506125634 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE training_occupation');
-        $this->addSql('ALTER TABLE training ADD occupation_id INT DEFAULT NULL, CHANGE has_sessions has_sessions TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE is_online is_online TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE is_online_monitored is_online_monitored TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE is_presential is_presential TINYINT(1) DEFAULT \'0\' NOT NULL');
+        if ($schema->hasTable('training_occupation')) {
+            $this->addSql('DROP TABLE training_occupation');
+        }
+        $table = $schema->getTable('training');
+        $this->addSql('ALTER TABLE training ADD occupation_id INT DEFAULT NULL');
+        if ($table->hasColumn('has_sessions')) {
+            $this->addSql('ALTER TABLE training CHANGE has_sessions has_sessions TINYINT(1) DEFAULT \'0\' NOT NULL');
+        }
+        if ($table->hasColumn('is_online')) {
+            $this->addSql('ALTER TABLE training CHANGE is_online is_online TINYINT(1) DEFAULT \'0\' NOT NULL');
+        }
+        if ($table->hasColumn('is_online_monitored')) {
+            $this->addSql('ALTER TABLE training CHANGE is_online_monitored is_online_monitored TINYINT(1) DEFAULT \'0\' NOT NULL');
+        }
+        if ($table->hasColumn('is_presential')) {
+            $this->addSql('ALTER TABLE training CHANGE is_presential is_presential TINYINT(1) DEFAULT \'0\' NOT NULL');
+        }
         $this->addSql('ALTER TABLE training ADD CONSTRAINT FK_D5128A8F22C8FC20 FOREIGN KEY (occupation_id) REFERENCES occupation (id)');
         $this->addSql('CREATE INDEX IDX_D5128A8F22C8FC20 ON training (occupation_id)');
         $this->addSql('ALTER TABLE training_session_skill CHANGE is_required is_required TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE is_to_acquire is_to_acquire TINYINT(1) DEFAULT \'0\' NOT NULL');
