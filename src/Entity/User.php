@@ -123,6 +123,16 @@ class User implements UserInterface
      */
     private $completion = 0;
 
+    /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     */
+    private $isValidated = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
+     */
+    private $code;
+
     private $currentOccupations;
     private $previousOccupations;
     private $desiredOccupations;
@@ -536,6 +546,30 @@ class User implements UserInterface
                 $userSkill->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    public function setCode(int $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

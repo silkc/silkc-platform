@@ -46,7 +46,13 @@ class SecurityController extends AbstractController
     /**
      * @Route("/signup/{type}", name="app_signup", defaults={"type": "user"})
      */
-    public function signup(string $type, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder, Request $request, UserRepository $userRepository): Response
+    public function signup(
+        string $type, ValidatorInterface $validator,
+        UserPasswordEncoderInterface $passwordEncoder,
+        Request $request,
+        UserRepository $userRepository,
+        MailerInterface $mailer
+    ): Response
     {
         // On bloque l'inscription pour le moment :
         //return $this->redirectToRoute('app_login');
@@ -82,21 +88,71 @@ class SecurityController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            $existingUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
-            if ($existingUser) {
+
+            $existingEmailUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
+            $existingUsernameUser = $userRepository->findOneBy(['username' => $user->getUsername()]);
+            if ($existingUsernameUser || $existingEmailUser) {
                 $this->addFlash(
-                    'error',
-                    "Cet adresse e-mail est déjà utilisée"
+                    'warning',
+                    ($existingEmailUser) ? "Cet adresse e-mail est déjà utilisée" : "Cet identifiant est déjà utilisé"
                 );
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_signup');
             }
+            $code = random_int(100000, 999999);
+            $user->setCode($code);
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $link = 'https://silkc-platform.org/validate_account/' . $code;
+            $html = $this->render('emails/send_code.html.twig', [
+                'validation_link' => $link
+            ])->getContent();
+            $email = (new Email())
+                ->from('contact@silkc-platform.org')
+                ->to($user->getEmail())
+                ->subject('Accès application SILKC')
+                ->text('Bonjour, merci de valider votre compte en cliquant sur le lien suivant : ' . $code)
+                ->html($html);
+
+            try {
+                $result = $mailer->send($email);
+            } catch (\Throwable $exception) {}
+
+            $this->addFlash(
+                'info',
+                "Un lien de validation vous a été envoyé par e-mail"
+            );
 
             return $this->redirectToRoute('app_login');
         }
 
         return $this->render(($type === 'user') ? 'security/signup_user.html.twig' : 'security/signup_institution.html.twig', ['form' =>  $form->createView()]);
+    }
+
+    /**
+     * @Route("/validate_account/{code}", name="validate_account", methods={"GET"})
+     */
+    public function validate_account($code, Request $request, UserRepository $userRepository)
+    {
+        $user = $userRepository->findOneBy(['code' => $code]);
+        if ($user) {
+            $user->setIsValidated(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+                'info',
+                "Votre compte est maintenant validé, merci."
+            );
+        } else {
+            $this->addFlash(
+                'warning',
+                "Le code de validation est invalide."
+            );
+        }
+
+        return $this->redirectToRoute('app_login');
     }
 }
