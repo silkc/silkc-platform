@@ -122,7 +122,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash(
                 'info',
-                "Un lien de validation vous a été envoyé par e-mail"
+                "A validation link has been sent to you by e-mail"
             );
 
             return $this->redirectToRoute('app_login');
