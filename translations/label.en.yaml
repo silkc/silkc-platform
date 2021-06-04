@@ -8,7 +8,7 @@ end_at: End at
 url: URL
 online: Online
 is_online_monitored: Is online monitored
-is_presential: Is presential
+is_presential: Is in person
 create: Save
 edit_training: Save
 pseudo: Pseudo
