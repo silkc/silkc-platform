@@ -118,7 +118,8 @@ class User implements UserInterface
     private $homepage;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, nullable=true)
+     * @var string A "Y-m-d H:i:s" formatted value
      */
     private $yearOfBirth;
 
@@ -412,15 +413,13 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getYearOfBirth(): ?string
+    public function getYearOfBirth(): ?\DateTimeInterface
     {
         return $this->yearOfBirth;
     }
-
-    public function setYearOfBirth(?string $yearOfBirth): self
+    public function setYearOfBirth(\DateTimeInterface $yearOfBirth): self
     {
         $this->yearOfBirth = $yearOfBirth;
-
         return $this;
     }
 

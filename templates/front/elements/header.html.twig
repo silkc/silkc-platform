@@ -18,6 +18,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
 
+                    <a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-search"></i><span>Full search page</span></a>
                     {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
                         <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>My institution</span></a>
                     {% else %}

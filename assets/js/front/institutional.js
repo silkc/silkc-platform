@@ -538,7 +538,6 @@ class Institutional {
         this.getSkillsFromOccupation();
         this.removeSkillsToTraining();
         this.displayMessage();
-        this.displayMessage();
     }
 }
 

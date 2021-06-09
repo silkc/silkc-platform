@@ -39,6 +39,7 @@ Encore
     .addEntry('admin_home', './assets/js/admin/home.js')
     .addEntry('admin_utils', './assets/js/admin/utils.js')
 
+    .addEntry('common', './assets/js/front/common.js')
     .addEntry('search_results', './assets/js/front/search_results.js')
     .addEntry('search', './assets/js/front/search.js')
     .addEntry('account', './assets/js/front/account.js')

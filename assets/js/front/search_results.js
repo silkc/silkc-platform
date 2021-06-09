@@ -47,8 +47,47 @@ class SearchResults {
         }); 
     }
 
+    /**
+     * Actions utilisateur lors de la recherche d'une formation (score)
+     */
+     setScore = () => {
+
+        // Collapse show
+        $('#search-results #accordion').on('show.bs.collapse', function (e) {
+            let card = $(e.target).closest('.card');
+            let id = card.attr('data-id');
+
+            let params = $.param({'id': id, 'score': 50});
+            let url = `/set_score?${params}`;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {}
+            });
+        })
+
+        // More info
+        $('body').on('click', '#search-results #accordion .btn-more', function (e) {
+            let card = $(this).closest('.card');
+            let id = card.attr('data-id');
+
+            let params = $.param({'id': id, 'score': 100});
+            let url = `/set_score?${params}`;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {}
+            });
+        })
+    }
+
     init = function() {
         this.runTypeSearch();
+        this.setScore();
     }
 }
 

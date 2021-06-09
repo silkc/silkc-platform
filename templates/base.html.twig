@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<title>
@@ -7,7 +7,9 @@
 			{% endblock %}
 		</title>
 		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet"> {% block stylesheets %}{% endblock %}
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet"> 
+        {% block stylesheets %}{% endblock %}
+        
 		</head>
 		<body data-token="{{ user is defined and attribute(user, 'apiToken') is defined ? user.apiToken : false }}">
 			{% block header %}{% endblock %}
