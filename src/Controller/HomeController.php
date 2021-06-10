@@ -376,4 +376,72 @@ class HomeController extends AbstractController
             'training' => $training,
         ]);
     }
+
+    
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin(
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder,
+        SkillRepository $skillRepository,
+        UserRepository $userRepository
+    ):Response
+    {
+        if ($this->isGranted(User::ROLE_INSTITUTION))
+        return $this->redirectToRoute('app_home');
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserType::class, $user, ['is_personal' => true]);
+        $passwordForm = $this->createForm(UserPasswordType::class, $user);
+
+        $form->handleRequest($request);
+        $passwordForm->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                die('error');
+                return new Response((string)$errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            
+            return $this->redirectToRoute('app_account');
+        } else if ($passwordForm->isSubmitted()) {
+            if (!$passwordForm->isValid()) {
+                $errors = $validator->validate($user);
+                dd($errors);
+            }
+
+            //$data = $request->request->all('user_password');
+            //$result = $passwordEncoder->isPasswordValid($user, 'test');
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+        }
+
+        return $this->render(
+            'front/admin/index.html.twig',
+            [
+                'user' => $user,
+                'form' => $form->createView(),
+                'password_form' => $passwordForm->createView(),
+                //'related_skills' => $skillRepository->getByOccupationAndTraining($user)
+            ]
+        );
+    }
 }
