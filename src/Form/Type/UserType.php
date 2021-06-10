@@ -42,8 +42,8 @@ class UserType extends AbstractType
                     'translation_domain' => 'login',
                     'required'   => false,
                 ])
-                ->add('yearOfBirth', DateType::class, [
-                    'label' => 'form.label.year_of_birth',
+                ->add('dateOfBirth', DateType::class, [
+                    'label' => 'form.label.date_of_birth',
                     'widget' => 'single_text',
                     'translation_domain' => 'login',
                     'required'   => false,

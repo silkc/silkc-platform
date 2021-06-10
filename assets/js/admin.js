@@ -105,6 +105,8 @@ class Admin {
     init = function() {
         this.runDatatableHome();
         this.runDatatableWork();
+
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 

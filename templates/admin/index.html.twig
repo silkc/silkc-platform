@@ -1,4 +1,4 @@
-{% extends 'front/layout.html.twig' %}
+{% extends 'admin/layout.html.twig' %}
 
 {% block title %}Admin
 {% endblock %}
@@ -33,19 +33,19 @@
 
 					<div class="tab-content" id="account-tab-content">
 						<div class="tab-pane fade {% if (tab is defined and (tab == 1 or tab == false)) or tab is not defined %}show active{% endif %}" id="content-home" role="tabpanel">
-							{% include 'front/admin/home.html.twig' %}
+							{% include 'admin/home.html.twig' %}
 						</div>
 						<div class="tab-pane fade {% if tab is defined and tab == 2 %}show active{% endif %}" id="content-personal_informations" role="tabpanel">
-							{% include 'front/admin/personal_informations.html.twig' %}
+							{% include 'admin/personal_informations.html.twig' %}
 						</div>
 						<div class="tab-pane fade {% if tab is defined and tab == 3 %}show active{% endif %}" id="content-work" role="tabpanel">
-							{% include 'front/admin/work.html.twig' %}
+							{% include 'admin/work.html.twig' %}
 						</div>
 						<div class="tab-pane fade {% if tab is defined and tab == 4 %}show active{% endif %}" id="content-training" role="tabpanel">
-							{% include 'front/admin/training.html.twig' %}
+							{% include 'admin/training.html.twig' %}
 						</div>
 						<div class="tab-pane fade {% if tab is defined and tab == 5 %}show active{% endif %}" id="content-change_password" role="tabpanel">
-							{% include 'front/admin/change_password.html.twig' %}
+							{% include 'admin/change_password.html.twig' %}
 						</div>
 					</div>
 				</section>
@@ -53,7 +53,7 @@
 		</div>
 	</div>
 
-	{% include 'front/elements/modal.html.twig' %}
+	{% include 'admin/elements/modal.html.twig' %}
 {% endblock %}
 
 

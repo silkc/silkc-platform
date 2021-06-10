@@ -121,7 +121,7 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true, nullable=true)
      * @var string A "Y-m-d H:i:s" formatted value
      */
-    private $yearOfBirth;
+    private $dateOfBirth;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -208,7 +208,7 @@ class User implements UserInterface
             'email',
             'username',
             'address',
-            'yearOfBirth'
+            'dateOfBirth'
         ];
         $institutionToCompleteProperties = [
             'username',
@@ -413,13 +413,13 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getYearOfBirth(): ?\DateTimeInterface
+    public function getDateOfBirth(): ?\DateTimeInterface
     {
-        return $this->yearOfBirth;
+        return $this->dateOfBirth;
     }
-    public function setYearOfBirth(\DateTimeInterface $yearOfBirth): self
+    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
     {
-        $this->yearOfBirth = $yearOfBirth;
+        $this->dateOfBirth = $dateOfBirth;
         return $this;
     }
 

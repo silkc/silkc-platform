@@ -85,6 +85,11 @@ class Training
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
     private $startAt;
 
     /**
@@ -151,7 +156,32 @@ class Training
      */
     private $completion = 0;
 
+    /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     */
+    private $isValidated = 0;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $validatedAt;
+
+    /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     */
+    private $isRejected = 0;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $rejectedAt;
+
     private $prePersisted = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TrainingFeedback::class, mappedBy="training")
+     */
+    private $trainingFeedback;
 
     public function __construct()
     {
@@ -159,6 +189,7 @@ class Training
         $this->toAcquireSkills = new ArrayCollection();
         $this->sessions = new ArrayCollection();
         $this->trainingSkills = new ArrayCollection();
+        $this->trainingFeedback = new ArrayCollection();
     }
 
     /**
@@ -282,6 +313,18 @@ class Training
     public function setPrice(?string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -497,6 +540,84 @@ class Training
     public function setCompletion(int $completion): self
     {
         $this->completion = $completion;
+
+        return $this;
+    }
+
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getValidatedAt(): ?\DateTimeInterface
+    {
+        return $this->validatedAt;
+    }
+
+    public function setValidatedAt(?\DateTimeInterface $validatedAt): self
+    {
+        $this->validatedAt = $validatedAt;
+
+        return $this;
+    }
+
+    public function getIsRejected(): ?bool
+    {
+        return $this->isRejected;
+    }
+
+    public function setIsRejected(bool $isRejected): self
+    {
+        $this->isRejected = $isRejected;
+
+        return $this;
+    }
+
+    public function getRejectedAt(): ?\DateTimeInterface
+    {
+        return $this->rejectedAt;
+    }
+
+    public function setRejectedAt(?\DateTimeInterface $rejectedAt): self
+    {
+        $this->rejectedAt = $rejectedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrainingFeedback[]
+     */
+    public function getTrainingFeedback(): Collection
+    {
+        return $this->trainingFeedback;
+    }
+
+    public function addTrainingFeedback(TrainingFeedback $trainingFeedback): self
+    {
+        if (!$this->trainingFeedback->contains($trainingFeedback)) {
+            $this->trainingFeedback[] = $trainingFeedback;
+            $trainingFeedback->setTraining($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrainingFeedback(TrainingFeedback $trainingFeedback): self
+    {
+        if ($this->trainingFeedback->removeElement($trainingFeedback)) {
+            // set the owning side to null (unless already changed)
+            if ($trainingFeedback->getTraining() === $this) {
+                $trainingFeedback->setTraining(null);
+            }
+        }
 
         return $this;
     }

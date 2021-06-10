@@ -1,0 +1,20 @@
+notification:
+    label:
+        date: Date
+        subject: Subject
+    no_item: No element
+
+work:
+    label:
+        name: Name
+        registered_on: Registered on
+        registered_by: Registered by
+        status: Status
+        action: Action
+        approved: Approved
+        pending: Pending
+        rejected: Rejected
+    action:
+        approve: Approve
+        see_details: See details
+        delete: Delete

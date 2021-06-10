@@ -1,0 +1,24 @@
+<a href="" class="btn btn-primary">Mark selected as read</a>
+
+<table id="datatable-subject" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th style="text-align: center;"><input type="checkbox" class="selectAll" /></th>
+            <th>{{ 'notification.label.date'|trans({}, 'admin') }}</th>
+            <th>{{ 'notification.label.subject'|trans({}, 'admin') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if notifications is defined and notifications is iterable and notifications|length > 0 %}
+            {% for notification in notifications %}
+                <tr class="{{ (notification.isRead == false) ? 'font-weight-bold' }}">
+                    <td></td>
+                    <td>{{ notification.createdAt|date('Y/m/d') }}</td>
+                    <td>{{ notification.title }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td colspan="3">{{ 'notification.no_item'|trans({}, 'admin') }}</td></tr>
+        {% endif %}
+    </tbody>
+</table>

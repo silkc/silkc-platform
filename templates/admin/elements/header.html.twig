@@ -1,0 +1,33 @@
+<header id="main-header">
+    <div class="container p-3">
+        <div class="justify-content-left">
+            <a href="{{ path('app_home') }}">
+                <img src="{{asset('build/images/logo.png')}}" alt="Logo" />
+            </a>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <div class="dropdown mr-2">
+                <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                        {{ app.user.username }}
+                    {% elseif app.user is defined and app.user is not null %}
+                        {{ app.user.firstname }} {{ app.user.lastname }}
+                    {% endif %}
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+
+                    <a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-search"></i><span>Full search page</span></a>
+                    {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                        <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>My institution</span></a>
+                    {% else %}
+                        <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>My account</span></a>
+                    {% endif %}
+
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

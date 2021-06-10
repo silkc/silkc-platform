@@ -5,14 +5,14 @@ form:
     label:
         username: Username
         firstname: Firstname
-        institionname: Instition name
         institution_name: Instition name
         pseudo: Pseudo
         lastname: Lastname
         email: Email
+        email_or_username: Email or username
         address: Address
         homepage: Homepage
-        year_of_birth: Year of birth
+        date_of_birth: Date of birth
         password: 
             password: Password
             first: Password
