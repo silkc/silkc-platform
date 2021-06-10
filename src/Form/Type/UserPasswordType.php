@@ -30,7 +30,7 @@ class UserPasswordType extends AbstractType
                 'required'           => (array_key_exists('require_password', $options) && $options['require_password'] === true) ? true : false,
                 'first_options'      => ['label' => 'form.label.password', "always_empty" => true],
                 'second_options'     => ['label' => 'form.label.confirm_password', 'always_empty' => true],
-                'invalid_message'    => 'Les mots de passe saisis ne sont pas identiques.',
+                'invalid_message'    => 'The passwords entered are not identical.',
             ]);
 
         $builder->add('save', SubmitType::class, [
