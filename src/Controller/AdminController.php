@@ -94,4 +94,21 @@ class AdminController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("/read", name="read")
+     */
+    public function read(
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder,
+        SkillRepository $skillRepository,
+        UserRepository $userRepository,
+        NotificationRepository $notificationRepository,
+        TrainingRepository $trainingRepository
+    ): Response
+    {
+        
+    }
 }

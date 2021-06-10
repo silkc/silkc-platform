@@ -1,9 +1,13 @@
-<a href="" class="btn btn-primary">Mark selected as read</a>
+
+<form action="{{ path('admin_read') }}" method="post">
+    <input type="hidden" value="[]" id="notifications-read" />
+    <button type="submit" class="btn btn-primary btn-read" disabled>Mark selected as read</button>
+</form>
 
 <table id="datatable-subject" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-            <th style="text-align: center;"><input type="checkbox" class="selectAll" /></th>
+            <th style="text-align: center; width: 20px;"><input type="checkbox" class="selectAll" /></th>
             <th>{{ 'notification.label.date'|trans({}, 'admin') }}</th>
             <th>{{ 'notification.label.subject'|trans({}, 'admin') }}</th>
         </tr>
@@ -11,8 +15,8 @@
     <tbody>
         {% if notifications is defined and notifications is iterable and notifications|length > 0 %}
             {% for notification in notifications %}
-                <tr class="{{ (notification.isRead == false) ? 'font-weight-bold' }}">
-                    <td></td>
+                <tr class="{{ (notification.isRead == false) ? 'font-weight-bold' }}" data-id="{{ notification.id }}">
+                    <td style="text-align: center;"><input type="checkbox" class="editor-active"></td>
                     <td>{{ notification.createdAt|date('Y/m/d') }}</td>
                     <td>{{ notification.title }}</td>
                 </tr>
