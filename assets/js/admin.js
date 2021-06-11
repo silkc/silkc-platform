@@ -28,13 +28,35 @@ class Admin {
     runDatatableHome = () => {
         let notificationsIds = [];
         let setInputHidden = function (ids = []) {
-            if (ids.length > 0)
-                $('.btn-read').prop('disabled', false);
-            else
-                $('.btn-read').prop('disabled', true);
-
+            $('.btn-read').prop('disabled', (ids.length > 0) ? false : true);
             $('#notifications-read').val(JSON.stringify(ids));
         };
+
+        /*$('body').on('click', '.btn-read', function (e) {
+            e.preventDefault();
+
+            let url = 'admin/read';
+            let ids = $('#notifications-read').val();
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json',
+                data: ids,
+                success: function (data, textStatus, jqXHR) {
+                    tableNotification.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+                        let node = this.node();
+                        if ($(node).find('input.editor-active').is(':checked')) {
+                            $(node).removeClass('font-weight-bold');
+                        }
+                        $(node).find('input.editor-active').prop('checked', false);
+                    });
+                },
+                error: function () {},
+                complete: function() {}
+            });
+        });*/
+
         let tableNotification = $('#datatable-subject').DataTable({
             searching: false, 
             info: false,
@@ -79,10 +101,6 @@ class Admin {
                     let tr = $(node);
                     let notificationId = tr.attr('data-id');
                     if (notificationsIds.indexOf(notificationId) == -1) {
-
-                        console.log('notificationsIds >> ', notificationsIds)
-                        console.log('notificationId >> ', notificationId)
-
                         notificationsIds.push(notificationId);
                     }
                     cpt++;
