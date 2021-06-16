@@ -1,58 +1,128 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'security/layout.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
-
-{% block stylesheets %}
-    {{ encore_entry_link_tags('login') }}
+{% block title %}Log in!
 {% endblock %}
 
+{% block stylesheets %}
+	{{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body_class %}signup
+{% endblock %}
 
 {% block body %}
+	<div class="container">
+		<div class="justify-content-end align-items-center row">
+			<div class="col-lg-6 offset-lg-6">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }} alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
 
-    <div class="container mt-5 mb-5">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
 
-        <div class="justify-content-center row">
+				<div class="login-form">
+					<fieldset class="user">
+						<div class="logo">
+							<img src="{{asset('build/images/logo_login.png')}}" alt="Logo"/>
+						</div>
 
-            <div class="col-12 col-lg-5">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }} alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+						<div class="ico">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+							{{ 'login.form.title.signup'|trans({}, 'trad') }}
+						</div>
 
-                            {{ message }}
+						<ul class="tabs-signup">
+							<li class="nav-item">
+								<a href="#form-user" class="nav-link">
+									<i class="fas fa-user"></i>
+									<span>{{ 'i_am_a_user'|trans({}, 'trad') }}</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#form-institution" class="nav-link">
+									<i class="fas fa-industry"></i>
+									<span>{{ 'i_am_an_institution'|trans({}, 'trad') }}</span>
+								</a>
+							</li>
+						</ul>
+
+
+						<div id="form-user">
+                        
                         </div>
-                    {% endfor %}
-                {% endfor %}
 
-                <div class="login-form">
-                    <h5 class="text-center py-4">
-                        {{ 'login.form.title.signup'|trans({}, 'trad') }}
-                    </h5>
+						<div id="form-institution">
+							{{ form_start(form, {attr: attr|default({})}) }}
+							<input type="hidden" name="is_personal" value="0"/>
 
-                    {{ form_start(form, {attr: attr|default({})}) }}
+							{% if app.user %}
+								<div>
+									{{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }},
+									<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
+									{{ 'login.form.or'|trans({}, 'trad') }}
+									<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans({}, 'trad') }}</a>
+								</div>
+							{% endif %}
 
-                        <fieldset>
-                            <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'login.form.signup_title'|trans({}, 'trad') }}</legend>
+							<div class="form-group placeholder">
+								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans({}, 'trad')} }) }}
+							</div>
 
-                            {% if app.user %}
-                                <div class="mb-3">
-                                    {{ 'form.disconnect_message'|trans({'%username%': app.user.username }, 'login') }}, <a href="{{ path('app_logout') }}">{{ 'form.disconnect_button'|trans({}, 'login') }}</a>
-                                    {{ 'form.or'|trans({}, 'login') }} <a href="{{ path('admin_home') }}">{{ 'form.admin_access_button'|trans({}, 'trad') }}</a>
-                                </div>
-                            {% endif %}
+							<div class="form-group input-user">
+								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans({}, 'trad')} }) }}
+							</div>
 
-                            {{ form(form) }}
-                        </fieldset>
-                    {{ form_end(form) }}
-                </div>
-            </div>
-        </div>
-    </div>
+							<div class="form-group input-user">
+								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans({}, 'trad')} }) }}
+							</div>
+
+							<div class="form-group input-user">
+								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans({}, 'trad')} }) }}
+							</div>
+
+							<div class="form-group input-user">
+								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans({}, 'trad')} }) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans({}, 'trad')} }) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans({}, 'trad')} }) }}
+							</div>
+
+							<div class="form-group">
+								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans({}, 'trad')} }) }}
+							</div>
+
+							<div id="user">
+								<div>
+									{{ form_widget(form.save, { 'label': 'login.form.button.save'|trans({}, 'trad') }) }}
+								</div>
+							</div>
+							{{ form_rest(form) }}
+						</div>
+
+						<div id="new-profile">
+							You have an account?
+							<a href="{{ path('app_login') }}">
+								Sign in
+							</a>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('common') }}
+	{{ encore_entry_script_tags('login') }}
 {% endblock %}
-

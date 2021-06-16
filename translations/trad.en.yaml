@@ -62,6 +62,8 @@ work:
 
 login:
     form:
+      disconnect_button: Sign out
+      admin_access_button: Admin access
         title:
             connect: Connect
             signup: Inscription
@@ -114,6 +116,8 @@ required_skills : Required skills
 acquired_skills : Acquired skills
 skills_you_can_acquire : Skills you can acquire
 no_item: No element
+esco: ESCO
+no_esco: NO ESCO
 
 the_following_skills_have_been_calculated_based: The following skills have been calculated based on your work experiences and training history
 see_more: See more
