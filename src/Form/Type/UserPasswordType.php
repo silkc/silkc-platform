@@ -20,22 +20,22 @@ class UserPasswordType extends AbstractType
     {
         $builder
             ->add('currentPassword', PasswordType::class, [
-                'label' => 'form.label.current_password',
-                'translation_domain' => 'login',
+                'label' => 'login.form.label.current_password',
+                'translation_domain' => 'trad',
                 'required'   => true,
             ])
             ->add('password', RepeatedType::class, [
                 'type'               => PasswordType::class,
-                'translation_domain' => 'login',
+                'translation_domain' => 'trad',
                 'required'           => (array_key_exists('require_password', $options) && $options['require_password'] === true) ? true : false,
-                'first_options'      => ['label' => 'form.label.password', "always_empty" => true],
-                'second_options'     => ['label' => 'form.label.confirm_password', 'always_empty' => true],
+                'first_options'      => ['label' => 'login.form.label.password', "always_empty" => true],
+                'second_options'     => ['label' => 'login.form.label.confirm_password', 'always_empty' => true],
                 'invalid_message'    => 'The passwords entered are not identical.',
             ]);
 
         $builder->add('save', SubmitType::class, [
-            'label' => 'form.button.submit',
-            'translation_domain' => 'login',
+            'label' => 'label.save',
+            'translation_domain' => 'trad',
         ]);
     }
 

@@ -40,58 +40,58 @@ class TrainingType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => ['autofocus' => true],
-                'translation_domain' => 'label',
-                'label' => 'name',
+                'translation_domain' => 'trad',
+                'label' => 'label.name',
             ])
             ->add('location', TextType::class, [
-                'translation_domain' => 'label',
-                'label' => 'location',
+                'translation_domain' => 'trad',
+                'label' => 'label.location',
                 'required' => false,
             ])
             ->add('duration', TextType::class, [
-                'translation_domain' => 'label',
-                'label' => 'duration',
+                'translation_domain' => 'trad',
+                'label' => 'label.duration',
                 'required' => false,
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['rows' => 8/*, 'class' => 'tinymce'*/],
-                'translation_domain' => 'label',
-                'label' => 'description',
+                'translation_domain' => 'trad',
+                'label' => 'label.description',
                 'required' => false,
             ])
             ->add('price', TextType::class, [
-                'translation_domain' => 'label',
-                'label' => 'price',
+                'translation_domain' => 'trad',
+                'label' => 'label.price',
                 'required' => false,
             ])
             ->add('url', TextType::class, [
-                'translation_domain' => 'label',
-                'label' => 'url',
+                'translation_domain' => 'trad',
+                'label' => 'label.url',
                 'required' => false,
             ])
             ->add('startAt', DateTimeType::class, [
-                'translation_domain' => 'label',
-                'label' => 'start_at',
+                'translation_domain' => 'trad',
+                'label' => 'label.start_at',
                 'required' => false,
             ])
             ->add('endAt', DateTimeType::class, [
-                'translation_domain' => 'label',
-                'label' => 'end_at',
+                'translation_domain' => 'trad',
+                'label' => 'label.end_at',
                 'required' => false,
             ])
             ->add('isOnline', CheckboxType::class, [
-                'translation_domain' => 'label',
-                'label' => 'online',
+                'translation_domain' => 'trad',
+                'label' => 'label.online',
                 'required' => false
             ])
             ->add('isOnlineMonitored', CheckboxType::class, [
-                'translation_domain' => 'label',
-                'label' => 'is_online_monitored',
+                'translation_domain' => 'trad',
+                'label' => 'label.is_online_monitored',
                 'required' => false
             ])
             ->add('isPresential', CheckboxType::class, [
-                'translation_domain' => 'label',
-                'label' => 'is_presential',
+                'translation_domain' => 'trad',
+                'label' => 'label.is_presential',
                 'required' => false
             ])
             ->add('occupation', EntityType::class, [
@@ -109,8 +109,8 @@ class TrainingType extends AbstractType
                 'required' => false,
             ])*/
             ->add('save', SubmitType::class, [
-                'translation_domain' => 'label',
-                'label' => 'create'
+                'translation_domain' => 'trad',
+                'label' => 'label.save'
             ])
             ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {});
 

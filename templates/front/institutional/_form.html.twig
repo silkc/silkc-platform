@@ -148,6 +148,6 @@
     </div>
 
     <p class="text-center mt-4">
-        {{ form_widget(form.save, {'label': (training is defined) ? 'edit_training' : 'create'}) }}
+        {{ form_widget(form.save, {'label': 'label.save'|trans({}, 'trad') }) }}
     </p>
 {{ form_end(form) }}

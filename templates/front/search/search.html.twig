@@ -1,5 +1,5 @@
 <form class="form-inline form-search" method="POST" action="{{ path('app_search_results') }}">
-	<label for="input-search" class="mr-2">Training opportunities to land your dream job as:</label>
+	<label for="input-search" class="mr-2">{{ 'training_opportunities_to_land_your_dream_job_as'|trans({}, 'trad')  }}:</label>
 
 	<div class="form-search-occupation"  
         style="display: {{ search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' ? 'none' : 'block' }}">
@@ -38,14 +38,14 @@
 	</div>
 
 	<select class="form-control ml-2" name="type_search">
-		<option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>Search by occupation</option>
-		<option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>Search by skill</option>
+		<option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>{{ 'home.search_by_occupation'|trans({}, 'trad') }}</option>
+		<option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>{{ 'home.search_by_skill'|trans({}, 'trad')  }}</option>
 	</select>
 
-	<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>Search</button>
+	<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>{{ 'label.search'|trans({}, 'trad') }}</button>
 
 	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
-		Advanced search
+		{{ 'label.advanced_search'|trans({}, 'trad') }}
 	</button>
 
 	<div class="collapse" id="advanced-search">

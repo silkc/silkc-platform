@@ -23,46 +23,46 @@ class UserType extends AbstractType
         if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
             $builder
                 ->add('username', TextType::class, [
-                    'label' => 'form.label.pseudo',
-                    'translation_domain' => 'login',
+                    'label' => 'login.form.label.pseudo',
+                    'translation_domain' => 'trad',
                     'required'   => true,
                 ])
                 ->add('firstname', TextType::class, [
-                    'label' => 'form.label.firstname',
-                    'translation_domain' => 'login',
+                    'label' => 'login.form.label.firstname',
+                    'translation_domain' => 'trad',
                     'required'   => false,
                 ])
                 ->add('lastname', TextType::class, [
-                    'label' => 'form.label.lastname',
-                    'translation_domain' => 'login',
+                    'label' => 'login.form.label.lastname',
+                    'translation_domain' => 'trad',
                     'required'   => false,
                 ])
                 ->add('address', TextType::class, [
-                    'label' => 'form.label.address',
-                    'translation_domain' => 'login',
+                    'label' => 'login.form.label.address',
+                    'translation_domain' => 'trad',
                     'required'   => false,
                 ])
                 ->add('dateOfBirth', DateType::class, [
-                    'label' => 'form.label.date_of_birth',
+                    'label' => 'login.form.label.date_of_birth',
                     'widget' => 'single_text',
-                    'translation_domain' => 'login',
+                    'translation_domain' => 'trad',
                     'required'   => false,
                 ]);
         } else {
             $builder
                 ->add('username', TextType::class, [
-                    'label' => 'form.label.institution_name',
-                    'translation_domain' => 'login',
+                    'label' => 'login.form.label.institution_name',
+                    'translation_domain' => 'trad',
                     'required'   => true,
                 ])
                 ->add('homepage', TextType::class, [
-                    'label'              => 'form.label.homepage',
-                    'translation_domain' => 'login',
+                    'label'              => 'login.form.label.homepage',
+                    'translation_domain' => 'trad',
                     'required'           => false,
                 ])
                 ->add('address', TextType::class, [
-                    'label'              => 'form.label.address',
-                    'translation_domain' => 'login',
+                    'label'              => 'login.form.label.address',
+                    'translation_domain' => 'trad',
                     'required'           => false,
                 ]);
         }
@@ -78,22 +78,23 @@ class UserType extends AbstractType
 
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'form.label.email',
-                'translation_domain' => 'login',
+                'label' => 'login.form.label.email',
+                'translation_domain' => 'trad',
             ]);
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
                 $builder->add('password', RepeatedType::class, [
                     'type'               => PasswordType::class,
-                    'translation_domain' => 'login',
+                    'translation_domain' => 'trad',
                     'required'           => (array_key_exists('require_password', $options) && $options['require_password'] === true) ? true : false,
-                    'first_options'      => ['label' => 'form.label.password', "always_empty" => true],
-                    'second_options'     => ['label' => 'form.label.confirm_password', 'always_empty' => true],
+                    'first_options'      => ['label' => 'login.form.label.password', "always_empty" => true],
+                    'second_options'     => ['label' => 'login.form.label.confirm_password', 'always_empty' => true],
                     'invalid_message'    => 'Les mots de passe saisis ne sont pas identiques.',
                 ]);
             }
             $builder->add('save', SubmitType::class, [
-                'label' => 'form.button.submit',
+                'translation_domain' => 'trad',
+                'label' => 'label.save'
             ]);
     }
 

@@ -1,0 +1,137 @@
+title_page:
+    results: Results
+    administration: Administration
+
+label:
+    name: Name
+    location: Location
+    duration: Duration
+    description: Description
+    price: Price
+    start_at: Start at
+    end_at: End at
+    training_info_url: Training info URL
+    url: URL
+    online: Online
+    is_online_monitored: Is online monitored
+    is_presential: Is presential
+    save: Save
+    create: Save
+    edit_training: Save
+    pseudo: Pseudo
+    close: Close
+    institution_name: Institution name
+    search: Search
+    advanced_search: Advanced search
+
+header:
+    my_institution: My institution    
+    my_account: My account    
+    full_search_page: Full search page    
+
+nav:
+    home: Home
+    personal_informations: Personal informations
+    institutional_informations: Institutional informations
+    work: Work
+    training: Training
+    change_password: Change password
+    skills: Skills
+
+notification:
+    label:
+        date: Date
+        subject: Subject
+    mark_selected_as_read: Mark selected as read
+
+work:
+    label:
+        name: Name
+        registered_on: Registered on
+        registered_by: Registered by
+        status: Status
+        action: Action
+        approved: Approved
+        pending: Pending
+        rejected: Rejected
+    action:
+        approve: Approve
+        see_details: See details
+        delete: Delete
+        reject: Reject
+
+login:
+    form:
+        title:
+            connect: Connect
+            signup: Inscription
+            you_do_not_have_an_account: You do not have an account?
+        label:
+            username: Username
+            firstname: Firstname
+            institution_name: Institution name
+            pseudo: Pseudo
+            lastname: Lastname
+            email: Email
+            email_or_username: Email or username
+            address: Address
+            homepage: Homepage
+            roles: Roles
+            year_of_birth: Year of birth
+            date_of_birth: Date of birth
+            password: 
+                current_password: Current password
+                new_password: New password
+                confirm_new_password: Confirm new password
+                first: Password
+                second: Confirm password
+        button:
+            save: Save
+            save_and_create: Save and create
+            
+        you_do_not_have_an_account: You do not have an account?
+        sign_up: Sign up
+        sign_in: Sign in
+        sign_out: Sign out
+   
+email:
+    validate_your_account: Validate your account
+    to_finalize_your_account_creation: To finalize your account creation on the SILKC platform, please click on the following validation link
+    this_link_is_valid_for_minutes: This link is valid for 60 minutes. If you do not use it within this period on the SILKC application, you can resend a new one.
+    if_you_receive_this_email: If you receive this email for no apparent reason, you can still report suspicious behavior to your support team.
+
+home:
+    people_have_found_a_trining_through_the_silkc_path: 5000 people have found a trining through the Silkc Path 
+    training_available: 800 training available
+    registered_jobs: 2000 registered jobs
+    let_improve: Let's improve your professional situation!
+    find_out_how_to_get_there: Find out how to get there!
+    search_by_occupation: Search by occupation
+    search_by_skill: Search by skill
+
+no_result_found : No result found
+required_skills : Required skills
+acquired_skills : Acquired skills
+skills_you_can_acquire : Skills you can acquire
+no_item: No element
+
+the_following_skills_have_been_calculated_based: The following skills have been calculated based on your work experiences and training history
+see_more: See more
+other_skills: Other skills
+previously_unselected: Previously unselected
+please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
+don_t_find_your_training: Don't find your training? Add it here!
+training_name: Training name
+please_indicate_your_current_job: Please indicate your current job. We will use it to guess your current skills.
+please_indicate_any_previous_jobs: Please indicate any previous jobs. We will use them to guess skills. Use the + button to add more.
+please_indicate_your_desired_jobs: Please indicate your desired jobs. We will use them to suggest the best training based on your location and current skillset.
+current_job: Current job
+previous_job: Previous job
+desired_job: Desired job
+more_info: More info
+match: match
+login_to_finetune: Login to finetune
+training_opportunities_to_land_your_dream_job_as: Training opportunities to land your dream job as
+i_am_an_institution: I am an institution
+i_am_a_user: I am a user
+training: Training

@@ -12,6 +12,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
 
 body { background-color: #f5f5f5; color: #292b2c; }
+body.login {
+    background: url('../images/login.jpg') no-repeat center/cover;
+}
+body.signup {
+    background: url('../images/regitster.jpg') no-repeat center/cover;
+}
+body > .container,
+body > .container > div {
+    height: 100%;
+}
 header { background-color: #2c4969; }
 
 #main-loader {
@@ -21,38 +31,46 @@ header { background-color: #2c4969; }
 .login-form {
     font-size: 1rem;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
+    border-radius: 7px;
     background-color: #fff;
-    padding: 0;
-    
+    max-width: 500px;
+    padding: 50px 75px;
+    box-sizing: border-box;
+    margin: 15px 0;
+    @media (max-width: 992px) {
+        margin: 15px auto;
+    }
+
     h2 {
         text-align: center;
         font-weight: bold;
         border-bottom: 1px solid #bfbfbf;
-        padding: 15px;
         margin: 0;
     }
     
-    legend {
+    .logo {
+        text-align: center;
+        margin: 0 0 30px;
+    }
+    
+    .ico {
         text-align: center;
         font-weight: bold;
-        //border-bottom: 1px solid #bfbfbf;
-        padding: 15px;
-        margin: 0;
-    }
-    
-    fieldset {   
-        > div {
-            padding: 15px;
-        }
+        margin: 0 0 30px;
+        font-size: 1.6rem;
     }
     
     #new-profile {
-        margin-top: 15px;
+        margin-top: 20px;
+        padding-top: 10px;
         font-size: 0.9rem;
         border-top: 1px solid #bfbfbf;
         color: #656565;
         text-align: center;
+
+        a {
+            color: #ff3d3d;
+        }
     }
     
     input[type='date'], 
@@ -76,22 +94,23 @@ header { background-color: #2c4969; }
     
     button {
         color: #fff;
-        background-color: #1198d1;
+        background-color: #ff3d3d;
         width: 100%;
         border: 0;
-        padding: 15px;
+        padding: 12px;
         margin-top: 15px;
         border-radius: 4px;
         transition: all 0.2s ease-in-out;
         cursor: pointer;
         border: 0;
         box-shadow: 0 0 0;
+        box-sizing: border-box;
     }
 
     .tabs-signup {
         display: flex;
         justify-content: center;
-        margin: 15px;
+        margin: 0;
 
         > li {
             flex: 1;
@@ -104,6 +123,10 @@ header { background-color: #2c4969; }
     }
 
     .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-        background-color: #1198d1;
+        background-color: #ff3d3d;
     }
+}
+
+body.signup .login-form {
+    max-width: 100%;
 }

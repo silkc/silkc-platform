@@ -4,7 +4,7 @@
 <fieldset>
 	{# Following job #}
 	<div class="info">
-		The following skills have been calculated based on your work experiences and training history
+        {{ 'the_following_skills_have_been_calculated_based'|trans({}, 'trad') }}
 	</div>
 
 	<div id="list-following_skills" class="list-skills accordion">
@@ -41,7 +41,7 @@
 			{% endfor %}
 		{% endif %}
         {% if associatedSkills|length > 10 %}
-            <a href="#" class="see-more">See more</a>
+            <a href="#" class="see-more">{{ 'see_more'|trans({}, 'trad') }}</a>
         {% endif %}
 	</div>
 </fieldset>
@@ -50,11 +50,11 @@
 {# Other skills #}
 <fieldset>
 	<div class="info">
-		Other skills
+        {{ 'other_skills'|trans({}, 'trad') }}
 	</div>
 
 	<div class="d-inline-flex align-items-end mb-4 add-skill">
-		<label for="other_skills-input">Other skills</label>
+		<label for="other_skills-input">{{ 'other_skills'|trans({}, 'trad') }}</label>
         {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'other_skills-input',
@@ -110,7 +110,7 @@
 {# Previously unselected #}
 <fieldset>
 	<div class="info">
-		Previously unselected
+        {{ 'previously_unselected'|trans({}, 'trad') }}
 	</div>
 
 	<div id="list-previously_unselected" class="list-skills">
