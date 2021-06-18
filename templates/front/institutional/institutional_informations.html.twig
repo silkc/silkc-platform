@@ -20,6 +20,12 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="form-group col-md-6">
+		{{ form_row(form.dateOfBirth) }}
+	</div>
+</div>
+
 {% if form.offsetExists('password') %}
 	<div class="row special">
 		{{ form_row(form.password) }}

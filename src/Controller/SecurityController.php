@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/signup/{type}", name="app_signup", defaults={"type": "user"})
+     * @Route("/signup/{type}", name="app_signup", defaults={"type": false})
      */
     public function signup(
         string $type,
@@ -55,93 +55,110 @@ class SecurityController extends AbstractController
         MailerInterface $mailer
     ): Response
     {
-        // On bloque l'inscription pour le moment :
-        //return $this->redirectToRoute('app_login');
-        $user = new User();
 
-        $form = $this->createForm(UserType::class, $user, ['require_password' => true, 'is_personal' => ($type === 'user')]);
+        if ($type) {
+            // On bloque l'inscription pour le moment :
+            //return $this->redirectToRoute('app_login');
+            $user = new User();
 
-        $form->handleRequest($request);
+            $form = $this->createForm(UserType::class, $user, ['require_password' => true, 'is_personal' => ($type === 'user')]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $isInstitution = !(bool) intval($request->request->get('is_personal'));
+            $form->handleRequest($request);
 
-            $roles = ($isInstitution) ? [User::ROLE_INSTITUTION] : [User::ROLE_USER];
-            $createdAt = new \DateTime('now');
-            $password = $user->getPassword();
-            $password = $passwordEncoder->encodePassword($user, $password);
-            $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user = $form->getData();
+            
+                $isInstitution = !(bool) intval($request->request->get('is_personal'));
 
-            $user->setTokenCreatedAt($createdAt);
-            $user->setCreatedAt($createdAt);
-            $user->setApiToken($apiToken);
-            $user->setRoles($roles);
-            $user->setPassword($password);
-            $errors = $validator->validate($user);
+                $roles = ($isInstitution) ? [User::ROLE_INSTITUTION] : [User::ROLE_USER];
+                $createdAt = new \DateTime('now');
+                $password = $user->getPassword();
+                $password = $passwordEncoder->encodePassword($user, $password);
+                $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
 
-            if (count($errors) > 0) {
-                foreach ($errors as $error) {
-                    var_dump($error->getMessage());
+                $user->setTokenCreatedAt($createdAt);
+                $user->setCreatedAt($createdAt);
+                $user->setApiToken($apiToken);
+                $user->setRoles($roles);
+                $user->setPassword($password);
+                $errors = $validator->validate($user);
+
+                if (count($errors) > 0) {
+                    foreach ($errors as $error) {
+                        var_dump($error->getMessage());
+                    }
+                    die('a');
                 }
-                die('a');
-            }
 
-            $entityManager = $this->getDoctrine()->getManager();
+                $entityManager = $this->getDoctrine()->getManager();
 
 
-            $existingEmailUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
-            $existingUsernameUser = $userRepository->findOneBy(['username' => $user->getUsername()]);
-            if ($existingUsernameUser || $existingEmailUser) {
-                $this->addFlash(
-                    'warning',
-                    ($existingEmailUser) ? "Cet adresse e-mail est déjà utilisée" : "Cet identifiant est déjà utilisé"
-                );
-                return $this->redirectToRoute('app_signup');
-            }
-            $code = random_int(100000, 999999);
-            $user->setCode($code);
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $link = 'https://silkc-platform.org/validate_account/' . $code;
-            $html = $this->render('emails/send_code.html.twig', [
-                'validation_link' => $link
-            ])->getContent();
-            $email = (new Email())
-                ->from('contact@silkc-platform.org')
-                ->to($user->getEmail())
-                ->subject('Accès application SILKC')
-                ->text('Bonjour, merci de valider votre compte en cliquant sur le lien suivant : ' . $code)
-                ->html($html);
-
-            try {
-                $result = $mailer->send($email);
-            } catch (\Throwable $exception) {}
-
-            $this->addFlash(
-                'info',
-                "A validation link has been sent to you by e-mail"
-            );
-
-            return $this->redirectToRoute('app_login');
-        } elseif ($form->isSubmitted()) {
-            $errors = $validator->validate($user);
-            if ($errors && count($errors) > 0) {
-                $errorsMessages = [];
-                foreach ($errors as $error) {
-                    $errorsMessages[] = $error->getMessage();
+                $existingEmailUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
+                $existingUsernameUser = $userRepository->findOneBy(['username' => $user->getUsername()]);
+                if ($existingUsernameUser || $existingEmailUser) {
+                    $this->addFlash(
+                        'warning',
+                        ($existingEmailUser) ? "Cet adresse e-mail est déjà utilisée" : "Cet identifiant est déjà utilisé"
+                    );
+                    return $this->redirectToRoute('app_signup');
                 }
+                $code = random_int(100000, 999999);
+                $user->setCode($code);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $link = 'https://silkc-platform.org/validate_account/' . $code;
+                $html = $this->render('emails/send_code.html.twig', [
+                    'validation_link' => $link
+                ])->getContent();
+                $email = (new Email())
+                    ->from('contact@silkc-platform.org')
+                    ->to($user->getEmail())
+                    ->subject('Accès application SILKC')
+                    ->text('Bonjour, merci de valider votre compte en cliquant sur le lien suivant : ' . $code)
+                    ->html($html);
+
+                try {
+                    $result = $mailer->send($email);
+                } catch (\Throwable $exception) {}
+
                 $this->addFlash(
-                    'warning',
-                    ($errorsMessages && count($errorsMessages) > 0) ? implode("\n", $errorsMessages) : 'An error occured'
+                    'info',
+                    "A validation link has been sent to you by e-mail"
                 );
-                return $this->redirectToRoute('app_signup');
+
+                return $this->redirectToRoute('app_login');
+            } elseif ($form->isSubmitted()) {
+                $errors = $validator->validate($user);
+                if ($errors && count($errors) > 0) {
+                    $errorsMessages = [];
+                    foreach ($errors as $error) {
+                        $errorsMessages[] = $error->getMessage();
+                    }
+                    $this->addFlash(
+                        'warning',
+                        ($errorsMessages && count($errorsMessages) > 0) ? implode("\n", $errorsMessages) : 'An error occured'
+                    );
+                    return $this->redirectToRoute('app_signup');
+                }
             }
         }
 
-        return $this->render('security/signup.html.twig', ['form' =>  $form->createView()]);
+
+        $view = 'security/signup.html.twig';
+        if ($type == 'user') {
+            $view = 'security/signup_user.html.twig';
+        }
+        if ($type == 'institution') {
+            $view = 'security/signup_institution.html.twig';
+        }
+
+        return $this->render($view, 
+        [
+            'form' =>  $type ? $form->createView() : false
+        ]
+    );
     }
 
     /**
@@ -168,5 +185,19 @@ class SecurityController extends AbstractController
         }
 
         return $this->redirectToRoute('app_login');
+    }
+
+    /**
+     * @Route("/forgot_password/", name="forgot_password")
+     */
+    public function forgot_password(Request $request)
+    {
+
+
+        return $this->render('security/forgot_password.html.twig', 
+        [
+            //'form' =>  $form->createView()
+        ]
+    );
     }
 }

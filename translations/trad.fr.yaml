@@ -1,3 +1,9 @@
+carousel:
+    text_1: Never<br/>Stop<br/>Learning
+    text_2: Never<br/>Stop<br/>Learning
+    text_3: Never<br/>Stop<br/>Learning
+    text_4: Never<br/>Stop<br/>Learning
+
 title_page:
     results: Results
     administration: Administration
@@ -32,6 +38,7 @@ header:
 nav:
     home: Home
     personal_informations: Personal informations
+    institutional_informations: Institutional informations
     work: Work
     training: Training
     change_password: Change password
@@ -61,21 +68,27 @@ work:
 
 login:
     form:
+        disconnect_button: Sign out
+        admin_access_button: Admin access
         title:
             connect: Connect
             signup: Inscription
             you_do_not_have_an_account: You do not have an account?
+            forgot_password: Forgot password
         label:
             username: Username
             firstname: Firstname
-            institionname: Instition name
+            institution_name: Institution name
             pseudo: Pseudo
             lastname: Lastname
             email: Email
             email_or_username: Email or username
             address: Address
             homepage: Homepage
+            roles: Roles
             year_of_birth: Year of birth
+            date_of_birth: Date of birth
+            send_password_reset_email: Send password reset email
             password: 
                 current_password: Current password
                 new_password: New password
@@ -111,6 +124,8 @@ required_skills : Required skills
 acquired_skills : Acquired skills
 skills_you_can_acquire : Skills you can acquire
 no_item: No element
+esco: ESCO
+no_esco: NO ESCO
 
 the_following_skills_have_been_calculated_based: The following skills have been calculated based on your work experiences and training history
 see_more: See more
@@ -131,3 +146,4 @@ login_to_finetune: Login to finetune
 training_opportunities_to_land_your_dream_job_as: Training opportunities to land your dream job as
 i_am_an_institution: I am an institution
 i_am_a_user: I am a user
+training: Training

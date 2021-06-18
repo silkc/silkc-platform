@@ -1,81 +1,92 @@
 {% extends 'security/layout.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
-
-{% block stylesheets %}
-    {{ encore_entry_link_tags('login') }}
+{% block title %}Log in!
 {% endblock %}
 
-{% block body_class %}login{% endblock %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body_class %}login
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="justify-content-end align-items-center row">
-            <div class="col-lg-6 offset-lg-6">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }} alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+	{% include 'security/carousel.html.twig' %}
 
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
+	<div class="container">
+		<div class="justify-content-end align-items-center row">
+			<div class="col-lg-6 offset-lg-6">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }} alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
 
-                <div class="login-form">
-                    <form method="post">
-                        <fieldset>
-                            <div class="logo">
-                                <img src="{{asset('build/images/logo_login.png')}}" alt="Logo" />
-                            </div>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
 
-                            <div class="ico"><i class="fa fa-lock" aria-hidden="true"></i> {{ 'login.form.title.connect'|trans({}, 'trad') }}</div>
+				<div class="login-form">
+					<form method="post">
+						<fieldset>
+							<div class="logo">
+								<img src="{{asset('build/images/logo_login.png')}}" alt="Logo"/>
+							</div>
 
-                            <div>
-                                {% if error %}
-                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                {% endif %}
+							<div class="ico">
+								<i class="fa fa-lock" aria-hidden="true"></i>
+								{{ 'login.form.title.connect'|trans({}, 'trad') }}</div>
 
-                                {% if app.user %}
-                                    <div class="mb-3">
-                                        {{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }}, <a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
-                                    </div>
-                                {% else %}
-                                    <div class="form-group">
-                                        <input type="username" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'login.form.label.email_or_username'|trans({}, 'trad') }}" required autofocus>
-                                    </div>
+							<div>
+								{% if error %}
+									<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+								{% endif %}
 
-                                    <div class="form-group">
-                                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'login.form.label.password.first'|trans({}, 'trad') }}" required>
-                                    </div>
+								{% if app.user %}
+									<div class="text-center">
+										<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
+									</div>
+								{% else %}
+									<div class="form-group">
+										<input type="username" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'login.form.label.email_or_username'|trans({}, 'trad') }}" required autofocus>
+									</div>
 
-                                    <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
-                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+									<div class="form-group">
+										<input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'login.form.label.password.first'|trans({}, 'trad') }}" required>
+									</div>
 
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'login.form.sign_in'|trans({}, 'trad') }}
-                                    </button>
-                                {% endif %}
-                            </div>
+									<input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
+									<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                            <div id="new-profile">
-                                {{ 'login.form.title.you_do_not_have_an_account'|trans({}, 'trad') }}
-                                <a href="{{ path('app_signup') }}">
-                                   {{ 'login.form.sign_up'|trans({}, 'trad') }}
-                                </a>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+									<button type="submit" class="btn btn-primary">
+										<i class="fas fa-sign-in-alt"></i>
+										{{ 'login.form.sign_in'|trans({}, 'trad') }}
+									</button>
+								{% endif %}
+							</div>
+
+							<div id="new-profile">
+								{{ 'login.form.title.you_do_not_have_an_account'|trans({}, 'trad') }}
+								<a href="{{ path('app_signup') }}">
+									{{ 'login.form.sign_up'|trans({}, 'trad') }}
+								</a>
+							</div>
+
+							<div class="text-center forgot-password">
+								<a href="{{ path('forgot_password') }}">Forgot password?</a>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
 
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('common') }}
-    {{ encore_entry_script_tags('login') }}
+	{{ encore_entry_script_tags('common') }}
+	{{ encore_entry_script_tags('login') }}
 {% endblock %}

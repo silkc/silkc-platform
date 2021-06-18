@@ -11,6 +11,8 @@
 {% endblock %}
 
 {% block body %}
+    {% include 'security/carousel.html.twig' %}
+
 	<div class="container">
 		<div class="justify-content-end align-items-center row">
 			<div class="col-lg-6 offset-lg-6">
@@ -27,9 +29,6 @@
 				{% endfor %}
 
 				<div class="login-form">
-					{{ form_start(form, {attr: attr|default({})}) }}
-					<input type="hidden" name="is_personal" value="1"/>
-
 					<fieldset class="user">
 						<div class="logo">
 							<img src="{{asset('build/images/logo_login.png')}}" alt="Logo"/>
@@ -37,65 +36,60 @@
 
 						<div class="ico">
 							<i class="fa fa-lock" aria-hidden="true"></i>
-							{{ 'login.form.title.signup'|trans({}, 'trad') }}</div>
+							{{ 'login.form.title.signup'|trans({}, 'trad') }}
+						</div>
 
-						<ul class="nav nav-pills mb-4 tabs-signup">
+						<ul class="tabs-signup active">
 							<li class="nav-item">
-								<span class="nav-link active">{{ 'i_am_a_user'|trans({}, 'trad') }}</span>
+								<a href="{{ path('app_signup', {type: 'user'}) }}" class="nav-link active">
+									<i class="fas fa-user"></i>
+									<span>{{ 'i_am_a_user'|trans({}, 'trad') }}</span>
+								</a>
 							</li>
 							<li class="nav-item">
-								<a href="{{ path('app_signup', {type: 'institution'}) }}" class="nav-link">{{ 'i_am_an_institution'|trans({}, 'trad') }}</a>
+								<a href="{{ path('app_signup', {type: 'institution'}) }}" class="nav-link">
+									<i class="fas fa-school"></i>
+									<span>{{ 'i_am_an_institution'|trans({}, 'trad') }}</span>
+								</a>
 							</li>
 						</ul>
 
+                        {% if app.user %}
+                            <div class="mb-3">
+                                {{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }},
+                                <a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
+                                {{ 'login.form.or'|trans({}, 'trad') }}
+                                <a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans({}, 'trad') }}</a>
+                            </div>
+                        {% endif %}
 
-						<div>
-							{% if app.user %}
-								<div class="mb-3">
-									{{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }},
-									<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'v') }}</a>
-									{{ 'login.form.or'|trans({}, 'trad') }}
-									<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans({}, 'v') }}</a>
-								</div>
-							{% endif %}
+						<div id="form-user">
+                        {{ form_start(form, {attr: attr|default({})}) }}
+							<input type="hidden" name="is_personal" value="0"/>
 
-							<div class="form-group placeholder">
+							<div class="form-group">
 								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans({}, 'trad')} }) }}
 							</div>
 
-							<div class="form-group input-user">
+							<div class="form-group">
 								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans({}, 'trad')} }) }}
 							</div>
 
-							<div class="form-group input-user">
+							<div class="form-group">
 								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans({}, 'trad')} }) }}
 							</div>
 
-							<div class="form-group input-user">
+							<div class="form-group">
 								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans({}, 'trad')} }) }}
 							</div>
 
-							<div class="form-group input-user">
+							<div class="form-group">
 								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans({}, 'trad')} }) }}
 							</div>
 
 							<div class="form-group">
 								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans({}, 'trad')} }) }}
 							</div>
-							{#
-														                            <div class="form-group">
-														                                {% for batch in form.roles|batch(1, 'No item') %}
-														                                    <div class="batchRow">
-														                                        {% for option in batch %}
-														                                            <div class="yourClassName">
-														                                                {{ form_widget(option) }}
-														                                                {{ form_label(option) }}
-														                                            </div>
-														                                        {% endfor %}
-														                                    </div>
-														                                {% endfor %}
-														                            </div>
-														                            #}
 
 							<div class="form-group">
 								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans({}, 'trad')} }) }}
@@ -105,14 +99,13 @@
 								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans({}, 'trad')} }) }}
 							</div>
 
-							<div id="user">
+							<div>
 								<div>
 									{{ form_widget(form.save, { 'label': 'login.form.button.save'|trans({}, 'trad') }) }}
 								</div>
 							</div>
-
 							{{ form_rest(form) }}
-						</div>
+                        </div>
 
 						<div id="new-profile">
 							You have an account?
@@ -121,7 +114,6 @@
 							</a>
 						</div>
 					</fieldset>
-					{{ form_end(form) }}
 				</div>
 			</div>
 		</div>
@@ -129,6 +121,5 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{ encore_entry_script_tags('common') }}
-	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('login') }}
 {% endblock %}

@@ -11,6 +11,9 @@
 {% endblock %}
 
 {% block body %}
+
+    {% include 'security/carousel.html.twig' %}
+
 	<div class="container">
 		<div class="justify-content-end align-items-center row">
 			<div class="col-lg-6 offset-lg-6">
@@ -39,76 +42,18 @@
 
 						<ul class="tabs-signup">
 							<li class="nav-item">
-								<a href="#form-user" class="nav-link">
+								<a href="{{ path('app_signup', {type: 'user'}) }}" class="nav-link">
 									<i class="fas fa-user"></i>
 									<span>{{ 'i_am_a_user'|trans({}, 'trad') }}</span>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="#form-institution" class="nav-link">
-									<i class="fas fa-industry"></i>
+								<a href="{{ path('app_signup', {type: 'institution'}) }}" class="nav-link">
+									<i class="fas fa-school"></i>
 									<span>{{ 'i_am_an_institution'|trans({}, 'trad') }}</span>
 								</a>
 							</li>
 						</ul>
-
-
-						<div id="form-user">
-                        
-                        </div>
-
-						<div id="form-institution">
-							{{ form_start(form, {attr: attr|default({})}) }}
-							<input type="hidden" name="is_personal" value="0"/>
-
-							{% if app.user %}
-								<div>
-									{{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }},
-									<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
-									{{ 'login.form.or'|trans({}, 'trad') }}
-									<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans({}, 'trad') }}</a>
-								</div>
-							{% endif %}
-
-							<div class="form-group placeholder">
-								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group input-user">
-								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group input-user">
-								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group input-user">
-								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group input-user">
-								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group">
-								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group">
-								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div class="form-group">
-								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans({}, 'trad')} }) }}
-							</div>
-
-							<div id="user">
-								<div>
-									{{ form_widget(form.save, { 'label': 'login.form.button.save'|trans({}, 'trad') }) }}
-								</div>
-							</div>
-							{{ form_rest(form) }}
-						</div>
 
 						<div id="new-profile">
 							You have an account?

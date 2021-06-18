@@ -1,3 +1,9 @@
+carousel:
+    text_1: Never<br/>Stop<br/>Learning
+    text_2: Never<br/>Stop<br/>Learning
+    text_3: Never<br/>Stop<br/>Learning
+    text_4: Never<br/>Stop<br/>Learning
+
 title_page:
     results: Results
     administration: Administration
@@ -62,12 +68,13 @@ work:
 
 login:
     form:
-      disconnect_button: Sign out
-      admin_access_button: Admin access
+        disconnect_button: Sign out
+        admin_access_button: Admin access
         title:
             connect: Connect
             signup: Inscription
             you_do_not_have_an_account: You do not have an account?
+            forgot_password: Forgot password
         label:
             username: Username
             firstname: Firstname
@@ -81,6 +88,7 @@ login:
             roles: Roles
             year_of_birth: Year of birth
             date_of_birth: Date of birth
+            send_password_reset_email: Send password reset email
             password: 
                 current_password: Current password
                 new_password: New password

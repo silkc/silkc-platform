@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\CallbackTransformer;
 
 class UserType extends AbstractType
 {
@@ -39,12 +41,6 @@ class UserType extends AbstractType
                 ])
                 ->add('address', TextType::class, [
                     'label' => 'login.form.label.address',
-                    'translation_domain' => 'trad',
-                    'required'   => false,
-                ])
-                ->add('dateOfBirth', DateType::class, [
-                    'label' => 'login.form.label.date_of_birth',
-                    'widget' => 'single_text',
                     'translation_domain' => 'trad',
                     'required'   => false,
                 ]);
@@ -80,6 +76,11 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'login.form.label.email',
                 'translation_domain' => 'trad',
+            ])
+            ->add('dateOfBirth', IntegerType::class, [
+                'label' => 'login.form.label.year_of_birth',
+                'translation_domain' => 'trad',
+                'required'   => false,
             ]);
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
@@ -96,6 +97,24 @@ class UserType extends AbstractType
                 'translation_domain' => 'trad',
                 'label' => 'label.save'
             ]);
+
+            $builder->get('dateOfBirth')->addModelTransformer(new CallbackTransformer(
+                    function ($datetimeToNumber) {
+                        if ($datetimeToNumber === null)
+                            return null;
+
+                        return $datetimeToNumber;
+                    },
+                    function ($numberToDatetime) {
+                        if ($numberToDatetime === null)
+                            return null;
+                        else if (is_int($numberToDatetime)) {
+                            return \DateTime::createFromFormat('Y', $numberToDatetime);
+                        }    
+                        
+                        return $numberToDatetime;
+                    }
+                ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
