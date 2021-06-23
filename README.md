@@ -31,6 +31,9 @@ composer install
     php bin/console doctrine:database:create
     php bin/console doctrine:migrations:migrate
 
+**Load fixtures data**
+php bin/console doctrine:fixtures:load --append
+
 **Install packages and generate assets**
 
     yarn install

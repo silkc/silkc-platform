@@ -19,7 +19,8 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        /*$createdAt = new \DateTime('now');
+        $createdAt = new \DateTime('now');
+        $code = random_int(100000, 999999);
 
         // USER
         $user = new User();
@@ -27,6 +28,8 @@ class AppFixtures extends Fixture
         $user->setLastname('Doe');
         $user->setUsername('user');
         $user->setEmail('user@silk-platform.org');
+        $user->setIsValidated(true);
+        $user->setCode($code);
         $password = $this->_passwordEncoder->encodePassword($user, 'user');
         $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
         $user->setTokenCreatedAt($createdAt);
@@ -39,6 +42,8 @@ class AppFixtures extends Fixture
         $institution = new User();
         $institution->setUsername('institution');
         $institution->setEmail('institution@silk-platform.org');
+        $institution->setIsValidated(true);
+        $institution->setCode($code);
         $password = $this->_passwordEncoder->encodePassword($institution, 'institution');
         $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
         $institution->setTokenCreatedAt($createdAt);
@@ -52,6 +57,8 @@ class AppFixtures extends Fixture
         $admin->setFirstname('Brad');
         $admin->setLastname('Doe');
         $admin->setUsername('admin');
+        $admin->setIsValidated(true);
+        $admin->setCode($code);
         $admin->setEmail('admin@silk-platform.org');
         $password = $this->_passwordEncoder->encodePassword($admin, 'admin');
         $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
@@ -64,10 +71,10 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $manager->persist($institution);
         $manager->persist($admin);
-        $manager->flush();*/
+        $manager->flush();
 
         // Bundle to manage file and directories
-        $finder = new Finder();
+        /*$finder = new Finder();
         $finder->in(__DIR__ . '/SQL');
         $finder->name('*.sql');
         $finder->files();
@@ -81,6 +88,6 @@ class AppFixtures extends Fixture
             $manager->getConnection()->exec($sql);  // Execute native SQL
 
             $manager->flush();
-        }
+        }*/
     }
 }

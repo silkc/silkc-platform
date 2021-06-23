@@ -190,14 +190,72 @@ class SecurityController extends AbstractController
     /**
      * @Route("/forgot_password/", name="forgot_password")
      */
-    public function forgot_password(Request $request)
+    public function forgot_password(Request $request, UserRepository $userRepository, MailerInterface $mailer)
     {
+        if ($request->getMethod() === Request::METHOD_POST) {
+            $email = $request->request->get('email');
+            $user = $userRepository->findOneBy(['email' => $email]);
+            if (!$user) {
+                dd('Error');
+            }
 
+            $code = random_int(100000, 999999);
+            $date = new \DateTime("now");
+            $user->setCode($code);
+            $user->setCodeCreatedAt($date);
 
-        return $this->render('security/forgot_password.html.twig', 
-        [
-            //'form' =>  $form->createView()
-        ]
-    );
+            $link = 'https://silkc-platform.org/new_password?id=' . $user->getId() . '&code=' . $code;
+            $html = $this->render('emails/forgot_password.html.twig', [
+                'validation_link' => $link
+            ])->getContent();
+            $email = (new Email())
+                ->from('contact@silkc-platform.org')
+                ->to($user->getEmail())
+                ->subject('Change password')
+                ->text('Hello, if you have requested to change your password, please click on the following link : ' . $link)
+                ->html($html);
+
+            try {
+                $result = $mailer->send($email);
+            } catch (\Throwable $exception) {}
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+                'info',
+                "A validation link has been sent to you by e-mail"
+            );
+        }
+
+        return $this->render('security/forgot_password.html.twig');
+    }
+
+    /**
+     * @Route("/new_password/", name="new_password")
+     */
+    public function new_password(Request $request, UserRepository $userRepository)
+    {
+        if (
+            $request->getMethod() === Request::METHOD_GET &&
+            $request->query->get('id') !== null &&
+            $request->query->get('code') !== null
+        ) {
+            $id = $request->query->get('id');
+            $code = $request->query->get('code');
+
+            $user = $userRepository->findOneBy(['id' => $id, 'code' => $code]);
+            if (!$user) {
+                dd('User not exists');
+            }
+            $lastHour = new \DateTime("now");
+            $lastHour->sub(new \DateInterval('PT1H0S'));
+            if ($user->getCodeCreatedAt() === null || $lastHour > $user->getCodeCreatedAt()) {
+                dd('Code expired');
+            }
+        }
+
+        return $this->render('security/new_password.html.twig');
     }
 }

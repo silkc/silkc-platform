@@ -101,7 +101,7 @@ class User implements UserInterface
     private $tokenCreatedAt;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
     private $roles = [];
 
@@ -118,7 +118,7 @@ class User implements UserInterface
     private $homepage;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var string A "Y-m-d H:i:s" formatted value
      */
     private $dateOfBirth;
@@ -142,6 +142,12 @@ class User implements UserInterface
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
     private $code;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var string A "Y-m-d H:i:s" formatted value
+     */
+    private $codeCreatedAt;
 
     private $currentOccupations;
     private $previousOccupations;
@@ -579,6 +585,16 @@ class User implements UserInterface
     {
         $this->code = $code;
 
+        return $this;
+    }
+
+    public function getCodeCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->codeCreatedAt;
+    }
+    public function setCodeCreatedAt(\DateTimeInterface $codeCreatedAt): self
+    {
+        $this->codeCreatedAt = $codeCreatedAt;
         return $this;
     }
 }
