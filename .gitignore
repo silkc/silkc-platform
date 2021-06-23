@@ -26,3 +26,6 @@ yarn-error.log
 .history
 .history/*
 
+composer.lock
+symfony.lock
+yarn.lock
