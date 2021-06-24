@@ -8,12 +8,15 @@ import autocomplete from 'autocompleter';
 import '../../scss/elements/header.scss';
 import '../../scss/institutional.scss';
 
+
 require('bootstrap');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
+
 require('bootstrap-select');
+import 'bootstrap-select/dist/css/bootstrap-select.min.css'
 
 class Institutional {
     instanceProperty = "Institutional";
