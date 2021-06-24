@@ -123,6 +123,14 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
   /* TAB TRAINING */
   #content-training {
+
+    .group-add-search {
+        margin: 0 10px;
+    .input-group-append button {
+        border: 1px solid #ced4da;
+    }
+    }
+
     label {
       white-space: nowrap;
       width: 150px;
