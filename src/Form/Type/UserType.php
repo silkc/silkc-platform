@@ -39,7 +39,7 @@ class UserType extends AbstractType
                     'translation_domain' => 'trad',
                     'required'   => false,
                 ])
-                ->add('address', TextType::class, [
+                ->add('address', HiddenType::class, [
                     'label' => 'login.form.label.address',
                     'translation_domain' => 'trad',
                     'required'   => false,
@@ -56,7 +56,7 @@ class UserType extends AbstractType
                     'translation_domain' => 'trad',
                     'required'           => false,
                 ])
-                ->add('address', TextType::class, [
+                ->add('address', HiddenType::class, [
                     'label'              => 'login.form.label.address',
                     'translation_domain' => 'trad',
                     'required'           => false,

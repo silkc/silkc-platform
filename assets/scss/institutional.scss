@@ -100,7 +100,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 form[name="training"] {
-    padding-top: 30px;
+  padding-top: 30px;
 
   .content-list-skill {
     > .skill {
@@ -155,16 +155,16 @@ form[name="training"] {
 }
 
 #list-trainings .form-check-input {
-    position: absolute;
-    left: 1.25rem;
+  position: absolute;
+  left: 1.25rem;
 }
 
 #all-associated {
-    display: none;
+  display: none;
 }
 
 .skills-associated {
-    color: #fff!important;
-    font-weight: 600;
-    margin-top: 15px;
+  color: #fff !important;
+  font-weight: 600;
+  margin-top: 15px;
 }

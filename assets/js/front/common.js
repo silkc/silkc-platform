@@ -39,7 +39,6 @@ class Common {
         }
     }
 
-
     init = function() {
         this.runConstraintValidation();
     }

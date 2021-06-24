@@ -84,6 +84,7 @@ login:
             email: Email
             email_or_username: Email or username
             address: Address
+            city: City
             homepage: Homepage
             roles: Roles
             year_of_birth: Year of birth

@@ -21,7 +21,10 @@
 </div>
 <div class="row">
 	<div class="form-group col-md-6">
-		{{ form_row(form.address) }}
+		{# {{ form_row(form.address) }} #}
+        <label>{{ 'login.form.label.city'|trans({}, 'trad') }}</label>
+		<div id="searchmap"></div>
+		<div id="map"></div>
 	</div>
 	<div class="form-group col-md-6">
 		{{ form_row(form.dateOfBirth) }}

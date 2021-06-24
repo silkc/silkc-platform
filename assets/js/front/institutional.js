@@ -529,6 +529,70 @@ class Institutional {
             }, 2000);
         }
     }
+        
+    /**
+     * Affichage carte
+     */
+     runMap = () => { 
+
+        let inputHidden = document.getElementById('user_address');
+        var map = null;
+
+        if (inputHidden) {
+            let coords = inputHidden.value;
+
+            if (coords) {
+                coords = JSON.parse(coords);
+                map = L.map('map').setView([coords.lat, coords.lng], 10);
+            } else {
+                map = L.map('map').setView([0, 0], 2);
+            }
+            
+            let geocoder = L.Control.Geocoder.nominatim();
+            
+            let control = L.Control.geocoder({
+                collapsed: false,
+                placeholder: 'Search here...',
+                position: 'topleft',
+                geocoder: geocoder
+            }).on('markgeocode', function(e) {
+                if (e.geocode && e.geocode.center) {
+                    let lat = e.geocode.center.lat;
+                    let lng = e.geocode.center.lng;
+                    let name = e.geocode.name;
+                    
+                    let newCoords = {
+                        "city": name,
+                        "lat": lat,
+                        "lng": lng
+                    };
+                    newCoords = JSON.stringify(newCoords);
+                    
+                    let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
+                    leafletControlGeocoderForm.value = name;
+                    inputHidden.value = newCoords;
+                }
+            }).addTo(map);
+            
+            // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+            // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                attribution: '',
+                minZoom: 1,
+                maxZoom: 20
+            }).addTo(map);
+            
+            document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+
+            if (coords) {
+                let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                marker.bindPopup(coords.city); // Bulle d'info
+
+                let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
+                leafletControlGeocoderForm.value = coords.city;
+            }
+        }
+    }
 
     init = function() {
         this.runAutocompletion();
@@ -538,6 +602,7 @@ class Institutional {
         this.getSkillsFromOccupation();
         this.removeSkillsToTraining();
         this.displayMessage();
+        this.runMap();
     }
 }
 
