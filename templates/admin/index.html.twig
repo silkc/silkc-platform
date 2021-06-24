@@ -20,16 +20,19 @@
 							<a class="nav-link {% if (tab is defined and (tab == 1 or tab == false)) or tab is not defined %}active{% endif %}" id="home-tab" data-toggle="tab" href="#content-home" role="tab"><i class="fas fa-home"></i> {{ 'nav.home'|trans({}, 'trad') }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% if tab is defined and tab == 2 %}active{% endif %}" id="personal_informations-tab" data-toggle="tab" href="#content-personal_informations" role="tab"><i class="fas fa-building"></i> {{ 'nav.personal_informations'|trans({}, 'trad') }}</a>
+							<a class="nav-link {% if tab is defined and tab == 2 %}active{% endif %}" id="tasks-tab" data-toggle="tab" href="#content-tasks" role="tab"><i class="fas fa-building"></i> {{ 'nav.tasks'|trans({}, 'trad') }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% if tab is defined and tab == 3 %}active{% endif %}" id="work-tab" data-toggle="tab" href="#content-work" role="tab"><i class="far fa-list-alt"></i> {{ 'nav.work'|trans({}, 'trad') }}</a>
+							<a class="nav-link {% if tab is defined and tab == 3 %}active{% endif %}" id="personal_informations-tab" data-toggle="tab" href="#content-personal_informations" role="tab"><i class="fas fa-building"></i> {{ 'nav.personal_informations'|trans({}, 'trad') }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% if tab is defined and tab == 4 %}active{% endif %}" id="training-tab" data-toggle="tab" href="#content-training" role="tab"><i class="fas fa-graduation-cap"></i> {{ 'nav.training'|trans({}, 'trad') }}</a>
+							<a class="nav-link {% if tab is defined and tab == 4 %}active{% endif %}" id="work-tab" data-toggle="tab" href="#content-work" role="tab"><i class="far fa-list-alt"></i> {{ 'nav.work'|trans({}, 'trad') }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {% if tab is defined and tab == 5 %}active{% endif %}" id="change_password-tab" data-toggle="tab" href="#content-change_password" role="tab"><i class="fas fa-key"></i> {{ 'nav.change_password'|trans({}, 'trad') }}</a>
+							<a class="nav-link {% if tab is defined and tab == 5 %}active{% endif %}" id="training-tab" data-toggle="tab" href="#content-training" role="tab"><i class="fas fa-graduation-cap"></i> {{ 'nav.training'|trans({}, 'trad') }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% if tab is defined and tab == 6 %}active{% endif %}" id="change_password-tab" data-toggle="tab" href="#content-change_password" role="tab"><i class="fas fa-key"></i> {{ 'nav.change_password'|trans({}, 'trad') }}</a>
 						</li>
 					</ul>
 
@@ -37,16 +40,19 @@
 						<div class="tab-pane fade {% if (tab is defined and (tab == 1 or tab == false)) or tab is not defined %}show active{% endif %}" id="content-home" role="tabpanel">
 							{% include 'admin/home.html.twig' %}
 						</div>
-						<div class="tab-pane fade {% if tab is defined and tab == 2 %}show active{% endif %}" id="content-personal_informations" role="tabpanel">
+						<div class="tab-pane fade {% if tab is defined and tab == 2 %}show active{% endif %}" id="content-tasks" role="tabpanel">
+							{% include 'admin/tasks.html.twig' %}
+						</div>
+						<div class="tab-pane fade {% if tab is defined and tab == 3 %}show active{% endif %}" id="content-personal_informations" role="tabpanel">
 							{% include 'admin/personal_informations.html.twig' %}
 						</div>
-						<div class="tab-pane fade {% if tab is defined and tab == 3 %}show active{% endif %}" id="content-work" role="tabpanel">
+						<div class="tab-pane fade {% if tab is defined and tab == 4 %}show active{% endif %}" id="content-work" role="tabpanel">
 							{% include 'admin/work.html.twig' %}
 						</div>
-						<div class="tab-pane fade {% if tab is defined and tab == 4 %}show active{% endif %}" id="content-training" role="tabpanel">
+						<div class="tab-pane fade {% if tab is defined and tab == 5 %}show active{% endif %}" id="content-training" role="tabpanel">
 							{% include 'admin/training.html.twig' %}
 						</div>
-						<div class="tab-pane fade {% if tab is defined and tab == 5 %}show active{% endif %}" id="content-change_password" role="tabpanel">
+						<div class="tab-pane fade {% if tab is defined and tab == 6 %}show active{% endif %}" id="content-change_password" role="tabpanel">
 							{% include 'admin/change_password.html.twig' %}
 						</div>
 					</div>
