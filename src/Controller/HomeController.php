@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Skill;
 use App\Entity\Training;
+use App\Entity\UserActivity;
 use App\Form\Type\UserType;
 use App\Entity\TrainingSkill;
 use App\Form\Type\TrainingType;
+use App\Repository\UserActivityRepository;
 use App\Repository\UserRepository;
 use App\Form\Type\UserPasswordType;
 use App\Repository\SkillRepository;
@@ -377,5 +379,37 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
             'training' => $training,
         ]);
+    }
+
+    /**
+     * @Route("/set_score", name="set_score")
+     */
+    public function set_score(Request $request, TrainingRepository $trainingRepository, UserActivityRepository $userActivityRepository)
+    {
+        $user = $this->getUser();
+        $training_id = $request->query->get('id');
+        $score = $request->query->get('score', null);
+
+        if ($request->getMethod() !== Request::METHOD_GET || !$training_id || !$score)
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        $training = $trainingRepository->findOneBy(['id' => intval($training_id)]);
+        if (!$training)
+            return new JsonResponse(['message' => 'Training unknown'], Response::HTTP_BAD_REQUEST);
+
+        $userActivity = $userActivityRepository->findOneBy(['user' => $user, 'training' => $training]);
+        if (!$userActivity) {
+            $userActivity = new UserActivity();
+            $userActivity->setTraining($training);
+            $userActivity->setUser($user);
+        }
+        $userActivity->setUpdatedAt(new \DateTime());
+        $userActivity->setScore(intval($score));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($userActivity);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }

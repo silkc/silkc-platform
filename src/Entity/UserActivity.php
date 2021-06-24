@@ -24,13 +24,13 @@ class UserActivity
      * @ORM\ManyToOne(targetEntity=Training::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Training;
+    private $training;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $User;
+    private $user;
 
     /**
      * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
@@ -70,24 +70,24 @@ class UserActivity
 
     public function getTraining(): ?Training
     {
-        return $this->Training;
+        return $this->training;
     }
 
-    public function setTraining(?Training $Training): self
+    public function setTraining(?Training $training): self
     {
-        $this->Training = $Training;
+        $this->training = $training;
 
         return $this;
     }
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?User $User): self
+    public function setUser(?User $user): self
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }

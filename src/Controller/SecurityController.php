@@ -235,7 +235,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/new_password/", name="new_password")
      */
-    public function new_password(Request $request, UserRepository $userRepository)
+    public function new_password(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
     {
         if (
             $request->getMethod() === Request::METHOD_GET &&
@@ -254,6 +254,40 @@ class SecurityController extends AbstractController
             if ($user->getCodeCreatedAt() === null || $lastHour > $user->getCodeCreatedAt()) {
                 dd('Code expired');
             }
+        }
+        else if ($request->getMethod() === Request::METHOD_POST) {
+            $id = $request->query->get('id');
+            $code = $request->query->get('code');
+            $user = $userRepository->findOneBy(['id' => $id, 'code' => $code]);
+            if (!$user) {
+                dd('User not exists');
+            }
+
+            $password = $request->request->get('password');
+            $confirm = $request->request->get('password');
+            if ($password !== $confirm) {
+                dd('Non-identical passwords');
+            }
+
+            $createdAt = new \DateTime('now');
+            $password = $passwordEncoder->encodePassword($user, $password);
+            $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
+
+            $user->setTokenCreatedAt($createdAt);
+            $user->setCreatedAt($createdAt);
+            $user->setPassword($password);
+            $user->setApiToken($apiToken);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash(
+                'info',
+                "Your password is changed."
+            );
+
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/new_password.html.twig');
