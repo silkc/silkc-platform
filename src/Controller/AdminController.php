@@ -9,6 +9,7 @@ use App\Form\Type\UserPasswordType;
 use App\Form\Type\UserType;
 use App\Repository\NotificationRepository;
 use App\Repository\SkillRepository;
+use App\Repository\OccupationRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,7 @@ class AdminController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         SkillRepository $skillRepository,
         UserRepository $userRepository,
+        OccupationRepository $occupationRepository,
         NotificationRepository $notificationRepository,
         TrainingRepository $trainingRepository
     ): Response
@@ -89,6 +91,8 @@ class AdminController extends AbstractController
                 'form' => $form->createView(),
                 'notifications' => $notificationRepository->findBy(['isRead' => false]),
                 'to_validated_trainings' => $trainingRepository->findBy(['isValidated' => false]),
+                'trainings' => $trainingRepository->findAll(),
+                'occupations' => $occupationRepository->findAll(),
                 'password_form' => $passwordForm->createView(),
                 //'related_skills' => $skillRepository->getByOccupationAndTraining($user)
             ]
