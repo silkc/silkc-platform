@@ -19,10 +19,12 @@
                 <div class="dropdown-menu dropdown-menu-right">
 
                     <a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-search"></i><span>{{ 'header.full_search_page'|trans({}, 'trad') }}</span></a>
-                    {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
-                        <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_institution'|trans({}, 'trad') }}</span></a>
+                    {% if app.user is defined and app.user is not null and is_granted('ROLE_ADMIN') %}
+                        <a class="dropdown-item" href="{{ path('admin_home') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans({}, 'trad') }}</span></a>
+                    {% elseif app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                        <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans({}, 'trad') }}</span></a>
                     {% else %}
-                        <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_institution'|trans({}, 'trad') }}</span></a>
+                        <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans({}, 'trad') }}</span></a>
                     {% endif %}
 
                     <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i><span>{{ 'login.form.sign_out'|trans({}, 'trad') }}</span></a>

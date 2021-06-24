@@ -12,6 +12,7 @@ require('bootstrap');
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
+require('bootstrap-select');
 
 class Main {
     instanceProperty = "Main";
@@ -179,6 +180,16 @@ class Main {
     init = function() {
         this.runAutocompletion();
         this.tabsSignup();
+
+        $('select.selectpicker').selectpicker({
+            liveSearch: true,
+            noneSelectedText: "No choice selected",
+            noneResultsText: "No result",
+            showContent: true,
+            actionsBox: true,
+            selectAllText: "Select all",
+            deselectAllText: "Unselect all",
+        });
     }
 }
 

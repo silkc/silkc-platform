@@ -13,6 +13,7 @@ require('bootstrap');
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
+require('bootstrap-select');
 
 class Institutional {
     instanceProperty = "Institutional";

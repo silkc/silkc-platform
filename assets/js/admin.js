@@ -15,6 +15,7 @@ import '../scss/admin.scss';
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
+require('bootstrap-select');
 
 class Admin {
     instanceProperty = "Admin";
