@@ -1,0 +1,20 @@
+<table id="datatable-work" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>{{ 'work.label'|trans({}, 'trad') }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if occupations is defined and occupations is iterable and occupations|length > 0 %}
+            {% for occupation in occupations %}
+                <tr>
+                    <td>{{ occupation.preferredLabel }}</td>
+                    <td>
+                        <button class="btn btn-info" data-id="{{ occupation.id }}"><i class="fas fa-search-plus"></i></button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>

@@ -43,6 +43,7 @@ nav:
     training: Training
     change_password: Change password
     skills: Skills
+    tasks: Tasks
 
 notification:
     label:
@@ -50,7 +51,7 @@ notification:
         subject: Subject
     mark_selected_as_read: Mark selected as read
 
-work:
+training:
     label:
         name: Name
         registered_on: Registered on
@@ -65,6 +66,10 @@ work:
         see_details: See details
         delete: Delete
         reject: Reject
+
+work:
+    label: label
+
 
 login:
     form:
@@ -84,6 +89,7 @@ login:
             email: Email
             email_or_username: Email or username
             address: Address
+            city: City
             homepage: Homepage
             roles: Roles
             year_of_birth: Year of birth
@@ -107,8 +113,10 @@ login:
 email:
     validate_your_account: Validate your account
     to_finalize_your_account_creation: To finalize your account creation on the SILKC platform, please click on the following validation link
+    to_change_password: To change your password on the SILKC platform, please click on the following validation link
     this_link_is_valid_for_minutes: This link is valid for 60 minutes. If you do not use it within this period on the SILKC application, you can resend a new one.
     if_you_receive_this_email: If you receive this email for no apparent reason, you can still report suspicious behavior to your support team.
+    change_password: Change password
 
 home:
     people_have_found_a_trining_through_the_silkc_path: 5000 people have found a trining through the Silkc Path 

@@ -16,6 +16,12 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 /* =============================================================================
     =   Account
 ============================================================================= */
+.modal-content-work {
+  h1 {
+    font-size: 1rem;
+  }
+}
+
 #admin {
   margin-top: 60px;
 
@@ -33,9 +39,9 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
   /* TAB Home */
   #content-home {
-      .btn-read {
-          margin-bottom: 15px;
-      }
+    .btn-read {
+      margin-bottom: 15px;
+    }
   }
 }
 

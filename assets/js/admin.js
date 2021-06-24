@@ -243,11 +243,65 @@ class Admin {
         });
     }
 
+    getDetails = () => {
+
+        $('body').on('click', '#content-work .btn-info', function() {
+
+            let $modal = $('#common-modal');
+            let id = $(this).attr('data-id');
+            let url = '/apip/occupations/' + id;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {
+                    if (data && $modal) {
+                        $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
+                        $(`<p>${data.description ? data.description : ''}</p>`).appendTo($modal.find('.modal-body'));
+
+                        let url_skills = '/api/skills_by_occupation/' + id;
+                        $.ajax({
+                            type: "GET",
+                            url: url_skills,
+                            async: true,
+                            success: function (dataSkills, textStatus, jqXHR) {
+
+                                let htmlEssential = '';
+                                let htmlOptional = '';
+
+                                if (dataSkills && $modal) {
+                                    for (let k = 0; k < dataSkills.length; k++) { 
+                                        if (dataSkills[k].relationType == 'essential') {
+                                            htmlEssential += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
+                                        }
+                                        if (dataSkills[k].relationType == 'optional') {
+                                            htmlOptional += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
+                                        }
+
+                                        if (k == dataSkills.length - 1) {
+                                            $(`<h1>Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
+                                            $(`<h1>Optional skills</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
+        
+                                            $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
+                                            $('#common-modal').modal('show');
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    }
+
     init = function() {
         this.runDatatableHome();
         this.runDatatableWork();
         this.seeDetailWork();
         this.runMap();
+        this.getDetails();
 
         $('[data-toggle="tooltip"]').tooltip();
     }

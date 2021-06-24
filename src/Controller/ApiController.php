@@ -2,21 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\UserOccupation;
 use App\Entity\UserSkill;
-use App\Repository\OccupationRepository;
+use App\Entity\UserOccupation;
+use App\Entity\OccupationSkill;
+use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
+use App\Repository\OccupationRepository;
+use App\Repository\OccupationSkillRepository;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use App\Repository\UserOccupationRepository;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/api", name="api_")
@@ -230,6 +232,20 @@ class ApiController extends AbstractController
             $item->expiresAfter(15);
             return $skillRepository->findAll();
         });
+        return $this->json($skills, 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/skills_by_occupation/{occupation_id}", name="skills_by_occupation", methods={"GET"})
+     */
+    public function skills_by_occupation($occupation_id, OccupationSkillRepository $occupationSkillRepository, SkillRepository $skillRepository, OccupationRepository $occupationRepository)
+    {
+        $skills = [];
+        $occupation = $occupationSkillRepository->find($occupation_id);
+        if ($occupation) {
+            $skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $occupation]));
+        }
+
         return $this->json($skills, 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }

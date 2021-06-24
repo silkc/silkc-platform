@@ -51,7 +51,7 @@ notification:
         subject: Subject
     mark_selected_as_read: Mark selected as read
 
-work:
+content_training:
     label:
         name: Name
         registered_on: Registered on
@@ -66,6 +66,10 @@ work:
         see_details: See details
         delete: Delete
         reject: Reject
+
+work:
+    label: label
+
 
 login:
     form:
