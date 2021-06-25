@@ -418,14 +418,14 @@ class Admin {
 									<div class="mb-3">
                                         <span class="required-skills d-block mb-3 title">Required_skills</span>
                                         <ul class="list-group">
-                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : '<li>-</li>'}
+                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : ''}
                                         </ul>
 									</div>
 
 									<div class="mb-3">
                                     <span class="required-skills d-block mb-3 title">Required_skills</span>
                                         <ul class="list-group">
-                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : '<li>-</li>'}
+                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
                                         </ul>
 									</div>
 								</div>
