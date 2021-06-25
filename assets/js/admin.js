@@ -156,6 +156,20 @@ class Admin {
         });
     }
 
+    runDatatableSkill = () => {
+        let table = $('#datatable-skill').DataTable({
+            searching: true,
+            info: false,
+            lengthChange: false,
+            columnDefs: [
+                { targets: [2], orderable: false},
+                { width: '20px', targets: 2 }
+            ],
+            fixedColumns: true,
+            order: [[ 1, 'asc' ]]
+        });
+    }
+
     /**
      * Affichage detail de la formation dans une modal
      */
@@ -299,12 +313,34 @@ class Admin {
                 }
             });
         });
+
+        $('body').on('click', '#content-skill .btn-info', function() {
+
+            let $modal = $('#common-modal');
+            let id = $(this).attr('data-id');
+            let url = '/apip/skills/' + id;
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {
+                    if (data) {
+                        $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
+                        $(`<p>${data.description ? data.description : ''}</p>`).appendTo($modal.find('.modal-body'));
+                        $(`<p><strong>URI :</strong> <a href="${data.conceptUri ? data.conceptUri : '#'}">${data.conceptUri ? data.conceptUri : 'NC'}</a></p>`).appendTo($modal.find('.modal-body'));
+                        $(`<p><strong>Skill type :</strong> <em>${data.skillType ? data.skillType : 'NC'}</em></p>`).appendTo($modal.find('.modal-body'));
+                        $('#common-modal').modal('show');
+                    }
+                }
+            });
+        });
     }
 
     init = function() {
         this.runDatatableHome();
         this.runDatatableTask();
         this.runDatatableWork();
+        this.runDatatableSkill();
         this.seeDetailWork();
         this.runMap();
         this.getDetails();
