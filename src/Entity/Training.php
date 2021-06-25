@@ -58,6 +58,12 @@ class Training
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=true)
+     */
+    private $creator;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -243,6 +249,18 @@ class Training
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
+
+        return $this;
     }
 
     public function getUser(): ?User

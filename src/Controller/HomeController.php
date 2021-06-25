@@ -279,13 +279,14 @@ class HomeController extends AbstractController
                     }
                 }
             }
-
             foreach ($oldTrainingSkills as $trainingSkill) {
                 if (!$newTrainingSkills->contains($trainingSkill))
                     $training->removeTrainingSkill($trainingSkill);
             }
 
-            $training->setUser($user);
+            if ($training->getUser() === null)
+                $training->setUser($user);
+            $training->setCreator($user);
             // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
             $training->setIsValidated($this->isGranted(User::ROLE_INSTITUTION));
             $em->persist($training);
