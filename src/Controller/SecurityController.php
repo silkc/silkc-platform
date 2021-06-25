@@ -217,10 +217,7 @@ class SecurityController extends AbstractController
 
             try {
                 $result = $mailer->send($email);
-                dd($result);
-            } catch (\Throwable $exception) {
-                dd($exception);
-            }
+            } catch (\Throwable $exception) {}
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
