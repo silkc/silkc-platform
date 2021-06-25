@@ -323,7 +323,7 @@ class Admin {
                 type: "GET",
                 url: url,
                 async: true,
-                success: function (data, textStatus, jqXHR) {
+                success: function (data, textStatus, jqXHR) { 
                     if (data) {
                         $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
                         $(`<p>${data.description ? data.description : ''}</p>`).appendTo($modal.find('.modal-body'));
