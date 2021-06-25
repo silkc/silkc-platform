@@ -230,7 +230,7 @@ class HomeController extends AbstractController
         $user = $this->getUser();
         $training = new Training();
 
-        $form = $this->createForm(TrainingType::class, $training);
+        $form = $this->createForm(TrainingType::class, $training, ['is_user' => !$this->isGranted(User::ROLE_INSTITUTION)]);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {

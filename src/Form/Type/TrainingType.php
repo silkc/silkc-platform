@@ -4,7 +4,9 @@ namespace App\Form\Type;
 
 use App\Entity\Occupation;
 use App\Entity\Training;
+use App\Entity\User;
 use App\Repository\OccupationRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormEvent;
@@ -23,16 +25,19 @@ use App\Form\DataTransformer\SkillsToJsonTransformer;
 class TrainingType extends AbstractType
 {
     private $transformer;
+    private $occupationRepository;
+    private $userRepository;
 
-    public function __construct(OccupationRepository $occupationRepository, SkillsToJsonTransformer $transformer)
+    public function __construct(OccupationRepository $occupationRepository, UserRepository $userRepository, SkillsToJsonTransformer $transformer)
     {
         $this->transformer = $transformer;
         $this->occupationRepository = $occupationRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([ 'data_class' => Training::class ]);
+        $resolver->setDefaults([ 'data_class' => Training::class, 'is_user' => false, ]);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -104,11 +109,26 @@ class TrainingType extends AbstractType
                 'required'   => false,
                 'by_reference' => true,
                 'placeholder' => '',
-            ])
+            ]);
+
+            if (is_array($options) && array_key_exists('is_user', $options) && $options['is_user'] === true) {
+                $builder->add('user', EntityType::class, [
+                    'attr'         => ["class" => "selectpicker"],
+                    'class'        => User::class,
+                    'choices'      => $this->userRepository->findByRole(User::ROLE_INSTITUTION),
+                    'choice_label' => 'username',
+                    'multiple'     => false,
+                    'expanded'     => false,
+                    'required'     => false,
+                    'by_reference' => true,
+                    'placeholder'  => '',
+                    'label'        => 'label.institution_name'
+                ]);
+            }
             /*->add('trainingSkills', HiddenType::class, [
                 'required' => false,
             ])*/
-            ->add('save', SubmitType::class, [
+            $builder->add('save', SubmitType::class, [
                 'translation_domain' => 'trad',
                 'label' => 'label.save'
             ])
