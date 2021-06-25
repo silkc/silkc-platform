@@ -11,7 +11,7 @@ import '../scss/elements/header.scss';
 import '../scss/admin.scss';
 
 
-//require('popper');
+
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
@@ -130,11 +130,8 @@ class Admin {
         });
     }
 
-    /**
-     * Affichage des messages de mises à jour
-     */
-     runDatatableWork = () => {
-        let table = $('#datatable-work').DataTable({
+     runDatatableTask = () => {
+        let table = $('#datatable-task').DataTable({
             searching: false, 
             info: false,
             lengthChange: false,
@@ -143,12 +140,19 @@ class Admin {
             ],
             order: [[ 1, 'asc' ]]
         });
+    }
 
-        $('.selectAll').on('click', function(e) {
-            if ($(this).is(':checked'))
-                table.rows().select(); 
-            else
-                table.rows( ).deselect();
+     runDatatableWork = () => {
+        let table = $('#datatable-work').DataTable({
+            searching: true, 
+            info: false,
+            lengthChange: false,
+            columnDefs: [
+                { targets: [2], orderable: false},
+                { width: '20px', targets: 2 }
+            ],
+            fixedColumns: true,
+            order: [[ 1, 'asc' ]]
         });
     }
 
@@ -260,7 +264,7 @@ class Admin {
 
                     if (dataOccupation) {
                         $modal.find('.modal-title').html(dataOccupation.preferredLabel ? dataOccupation.preferredLabel : '');
-                        $(`<p>${dataOccupation.description ? dataOccupation.description : ''}</p>`).appendTo($modal.find('.modal-body'));
+                        $(`<p>${dataOccupation.description ? dataOccupation.description : ''}</p>`).appendTo($modal.find('.modal-body'));  
                     }
 
                     let htmlEssential = '';
@@ -268,12 +272,15 @@ class Admin {
 
                     if (dataSkills && dataSkills.length > 0 && $modal) {
                         for (let k = 0; k < dataSkills.length; k++) { 
-                            if (dataSkills[k].relationType == 'essential') {
-                                htmlEssential += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
-                            }
-                            if (dataSkills[k].relationType == 'optional') {
-                                htmlOptional += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
-                            }
+                            let li = `<li>
+                                        <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="${dataSkills[k].skill.preferredLabel}" data-content="${dataSkills[k].skill.description}">
+                                            ${dataSkills[k].skill.preferredLabel}
+                                        </span>
+                                    </li>`;
+                            if (dataSkills[k].relationType == 'essential')
+                                htmlEssential += li;
+                            if (dataSkills[k].relationType == 'optional')
+                                htmlOptional += li;
 
                             if (k == dataSkills.length - 1) {
                                 $(`<h1>Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
@@ -281,6 +288,8 @@ class Admin {
 
                                 $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
                                 $('#common-modal').modal('show');
+
+                                $('#common-modal .modal-content-work [data-toggle="popover"]').popover();
                             }
                         }
                     } else {
@@ -294,6 +303,7 @@ class Admin {
 
     init = function() {
         this.runDatatableHome();
+        this.runDatatableTask();
         this.runDatatableWork();
         this.seeDetailWork();
         this.runMap();

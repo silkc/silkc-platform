@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>{{ 'work.label'|trans({}, 'trad') }}</th>
+            <th>{{ 'work.description'|trans({}, 'trad') }}</th>
             <th></th>
         </tr>
     </thead>
@@ -10,6 +11,7 @@
             {% for occupation in occupations %}
                 <tr>
                     <td>{{ occupation.preferredLabel }}</td>
+                    <td>{{ occupation.description }}</td>
                     <td>
                         <button class="btn btn-info" data-id="{{ occupation.id }}"><i class="fas fa-search-plus"></i></button>
                     </td>

@@ -20,6 +20,15 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   h1 {
     font-size: 1rem;
   }
+
+  .link-description {
+    color: #18bc9c;
+    cursor: pointer;
+
+    &:hover {
+        color: #0f7864;
+    }
+  }
 }
 
 #admin {

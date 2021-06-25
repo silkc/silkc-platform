@@ -69,6 +69,18 @@ content_training:
 
 work:
     label: label
+    description: Description
+
+task:
+    label:
+        name: Name
+        registered_on: Registered on
+        registered_by: Registered by
+        status: Status
+        action: Action
+        approved: Approved
+        pending: Pending
+        rejected: Rejected
 
 
 login:
