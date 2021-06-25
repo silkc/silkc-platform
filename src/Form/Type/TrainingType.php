@@ -122,7 +122,8 @@ class TrainingType extends AbstractType
                     'required'     => false,
                     'by_reference' => true,
                     'placeholder'  => '',
-                    'label'        => 'label.institution_name'
+                    'label'        => 'label.institution_name',
+                    'translation_domain' => 'trad'
                 ]);
             }
             /*->add('trainingSkills', HiddenType::class, [

@@ -9,6 +9,7 @@ title_page:
     administration: Administration
 
 label:
+    label: Label
     name: Name
     location: Location
     duration: Duration
@@ -81,6 +82,11 @@ task:
         approved: Approved
         pending: Pending
         rejected: Rejected
+    action:
+        approve: Approve
+        see_details: See details
+        delete: Delete
+        reject: Reject
 
 
 login:

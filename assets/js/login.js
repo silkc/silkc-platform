@@ -37,14 +37,9 @@ class Login {
             idxSlogans++;
             if (idxImg == imagesLength) idxImg = 0;
             if (idxSlogans == slogansLength) idxSlogans = 0;
-            images.fadeOut(0);
-            slogans.fadeOut(0, function() {
-                //setTimeout(function () {
-                    images.eq(idxImg).fadeIn(1000);
-                    slogans.eq(idxSlogans).fadeIn(1000);
-                //}, 500);
-            });
-        }, 8000);
+            images.fadeOut(500).delay(500).eq(idxImg).fadeIn(1000);
+            slogans.fadeOut(500).delay(500).eq(idxSlogans).fadeIn(1000);
+        }, 10000);
 
     }
 
