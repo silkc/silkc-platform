@@ -11,7 +11,7 @@
             {% for occupation in occupations %}
                 <tr>
                     <td>{{ occupation.preferredLabel }}</td>
-                    <td>{{ occupation.description }}</td>
+                    <td>{{ occupation.description|u.truncate(100, '...', false) }}</td>
                     <td>
                         <button class="btn btn-info" data-id="{{ occupation.id }}"><i class="fas fa-search-plus"></i></button>
                     </td>

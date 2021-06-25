@@ -9,8 +9,8 @@
         </tr>
     </thead>
     <tbody>
-        {% if to_validated_trainings is defined and to_validated_trainings is iterable and to_validated_trainings|length > 0 %}
-            {% for training in to_validated_trainings %}
+        {% if trainings is defined and trainings is iterable and trainings|length > 0 %}
+            {% for training in trainings %}
                 <tr>
                     <td>{{ training.name }}</td>
                     <td>{{ training.createdAt|date('Y/m/d') }}</td>
@@ -28,8 +28,6 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="" class="btn btn-success mt-1 mb-1">{{ 'content_training.action.approve'|trans({}, 'trad') }}</a>
-                        <a href="" class="btn btn-success mt-1 mb-1">{{ 'content_training.action.reject'|trans({}, 'trad') }}</a>
                         <a href="#" class="btn btn-primary mt-1 mb-1 see-detail" data-name="{{ training.name }}" data-description="{{ training.description }}">{{ 'content_training.action.see_details'|trans({}, 'trad') }}</a>
                         <a href="" class="btn btn-danger mt-1 mb-1">{{ 'content_training.action.delete'|trans({}, 'trad') }}</a>
                     </td>
