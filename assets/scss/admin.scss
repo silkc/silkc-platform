@@ -26,17 +26,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     cursor: pointer;
 
     &:hover {
-        color: #0f7864;
+      color: #0f7864;
     }
   }
 }
 
 #common-modal {
-    .detail-training {
-        span.title {
-            font-weight: 600;
-        }
+  .detail-training {
+    span.title {
+      font-weight: 600;
     }
+  }
 }
 
 #admin {

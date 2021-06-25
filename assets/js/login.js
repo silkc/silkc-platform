@@ -37,12 +37,12 @@ class Login {
             idxSlogans++;
             if (idxImg == imagesLength) idxImg = 0;
             if (idxSlogans == slogansLength) idxSlogans = 0;
-            images.fadeOut(500);
-            slogans.fadeOut(500, function() {
-                setTimeout(function () {
+            images.fadeOut(0);
+            slogans.fadeOut(0, function() {
+                //setTimeout(function () {
                     images.eq(idxImg).fadeIn(1000);
                     slogans.eq(idxSlogans).fadeIn(1000);
-                }, 500);
+                //}, 500);
             });
         }, 8000);
 
@@ -102,31 +102,15 @@ class Login {
             document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
             
 
-
-
-
-
             let $buttonSearch = $('button.leaflet-control-geocoder-icon');
             let $inputSearch = $('.leaflet-control-geocoder.leaflet-bar input');
             let timeout = false;
             $inputSearch.on('keyup', function() {
                 if (timeout) clearTimeout(timeout);
                 timeout = setTimeout(function() {
-
-
-                    console.log('$buttonSearch', $buttonSearch)
                     $buttonSearch.trigger('click');
-
-
-
-                    /*let e = $.Event( "keypress", { which: 13 } );
-                    $inputSearch.trigger(e);*/
-
                 }, 1000);
             });
-
-
-
 
 
 
