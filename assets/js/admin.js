@@ -249,47 +249,43 @@ class Admin {
 
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
-            let url = '/apip/occupations/' + id;
-
+            let url = '/api/skills_by_occupation/' + id;
             $.ajax({
                 type: "GET",
                 url: url,
                 async: true,
                 success: function (data, textStatus, jqXHR) {
-                    if (data && $modal) {
-                        $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
-                        $(`<p>${data.description ? data.description : ''}</p>`).appendTo($modal.find('.modal-body'));
+                    let dataOccupation =  data && data.occupation != undefined ? data.occupation : false;
+                    let dataSkills =  data && data.skills != undefined && data.skills.length > 0 ? data.skills : [];
 
-                        let url_skills = '/api/skills_by_occupation/' + id;
-                        $.ajax({
-                            type: "GET",
-                            url: url_skills,
-                            async: true,
-                            success: function (dataSkills, textStatus, jqXHR) {
+                    if (dataOccupation) {
+                        $modal.find('.modal-title').html(dataOccupation.preferredLabel ? dataOccupation.preferredLabel : '');
+                        $(`<p>${dataOccupation.description ? dataOccupation.description : ''}</p>`).appendTo($modal.find('.modal-body'));
+                    }
 
-                                let htmlEssential = '';
-                                let htmlOptional = '';
+                    let htmlEssential = '';
+                    let htmlOptional = '';
 
-                                if (dataSkills && $modal) {
-                                    for (let k = 0; k < dataSkills.length; k++) { 
-                                        if (dataSkills[k].relationType == 'essential') {
-                                            htmlEssential += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
-                                        }
-                                        if (dataSkills[k].relationType == 'optional') {
-                                            htmlOptional += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
-                                        }
-
-                                        if (k == dataSkills.length - 1) {
-                                            $(`<h1>Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
-                                            $(`<h1>Optional skills</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
-        
-                                            $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
-                                            $('#common-modal').modal('show');
-                                        }
-                                    }
-                                }
+                    if (dataSkills && dataSkills.length > 0 && $modal) {
+                        for (let k = 0; k < dataSkills.length; k++) { 
+                            if (dataSkills[k].relationType == 'essential') {
+                                htmlEssential += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
                             }
-                        });
+                            if (dataSkills[k].relationType == 'optional') {
+                                htmlOptional += `<li>${dataSkills[k].skill.preferredLabel}</li>`;
+                            }
+
+                            if (k == dataSkills.length - 1) {
+                                $(`<h1>Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
+                                $(`<h1>Optional skills</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
+
+                                $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
+                                $('#common-modal').modal('show');
+                            }
+                        }
+                    } else {
+                        $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
+                        $('#common-modal').modal('show');
                     }
                 }
             });

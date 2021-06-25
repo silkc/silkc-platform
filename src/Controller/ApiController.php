@@ -240,12 +240,18 @@ class ApiController extends AbstractController
      */
     public function skills_by_occupation($occupation_id, OccupationSkillRepository $occupationSkillRepository, SkillRepository $skillRepository, OccupationRepository $occupationRepository)
     {
+        $occupation = [];
         $skills = [];
-        $occupation = $occupationSkillRepository->find($occupation_id);
-        if ($occupation) {
-            $skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $occupation]));
-        }
 
-        return $this->json($skills, 200, ['Access-Control-Allow-Origin' => '*']);
+        $occupation = $occupationRepository->find($occupation_id);
+        if ($occupation)
+            $skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $occupation]));
+
+        $results = [
+            'occupation' => $occupation,
+            'skills' => $skills
+        ];
+
+        return $this->json($results, 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }
