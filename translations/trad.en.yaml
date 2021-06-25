@@ -44,7 +44,7 @@ nav:
     training: Training
     change_password: Change password
     skills: Skills
-    tasks: Tasks
+    tasks: Pending tasks
 
 notification:
     label:
