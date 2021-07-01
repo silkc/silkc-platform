@@ -440,6 +440,39 @@ class Admin {
                 }
             });
         });
+
+        
+        $('body').on('click', '#content-skill .btn-related-trainings', function() {
+
+            let $modal = $('#common-modal');
+            let id = $(this).attr('data-id');
+            let url = '/get_skill_related_trainings/' + id;
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) { 
+                    if (data) {
+                        $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
+
+                        let dataTrainings = data.trainings && data.trainings.length ? data.trainings : false;
+                        if (dataTrainings) {
+                            let trainingsHTML = '<ul>'
+                            for (let k in dataTrainings) {
+                                trainingsHTML += `<li>${data.name ? data.name : ''}</li>`;
+                                
+                                if (k == dataTrainings.length - 1) {
+                                    trainingsHTML += '</ul>'
+                                    $('#common-modal').modal('show');
+                                }
+                            }
+                        } else {
+                            $('#common-modal').modal('show');
+                        }
+                    }
+                }
+            });
+        });
     }
 
     init = function() {

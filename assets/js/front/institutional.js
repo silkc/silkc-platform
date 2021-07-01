@@ -67,6 +67,8 @@ class Institutional {
             let skillId = skillIdInput.val();
             let ul = type == "required" ? $('#skills-required') : $('#skills-not-occupations-acquired');
             
+            if (!skillName) return false;
+
             status = _this.addSkillToHiddenField(type, skillId);
             if (status === false) {
                 skillNameInput.val('');
@@ -505,7 +507,7 @@ class Institutional {
                         $.ajax({
                             type: "GET",
                             url: url,
-                            async: false,
+                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (url.includes("skills"))
                                     datas.skills = JSON.stringify(data);
