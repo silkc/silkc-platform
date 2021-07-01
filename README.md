@@ -2,9 +2,12 @@ Requirements
 ============
 
  - Apache ^2.4.25
- - Debian 9.13
+ - Linux Debian/Ubuntu
  - PHP ^7.4.14
  - MariaDB ^10.1.48
+ - composer
+ - yarn
+
 # Installation Silk
 **Fetch git repository**
 
@@ -17,7 +20,8 @@ Requirements
 **Create and edit file .env.local**
 
     APP_ENV=production
-    DATABASE_URL=mysql://[USER_NAME]:[PASSWORD]@[MYSQL_SERVER_IP]:3306/[DABASE_NAME]?serverVersion=5.7
+    DATABASE_URL=mysql://[USER_NAME]:[PASSWORD]@[MYSQL_SERVER_IP]:3306/[DATABASE_NAME]?serverVersion=5.7
+
 **Run composer**
 composer install
 
@@ -29,6 +33,7 @@ composer install
 **Create and migrate database**
 
     php bin/console doctrine:database:create
+    mysql -u [USER_NAME] -p[PASSWORD] [DATABASE_NAME] < silk.sql
     php bin/console doctrine:migrations:migrate
 
 **Load fixtures data**
