@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Skill;
 use App\Entity\Training;
+use App\Entity\Occupation;
 use App\Form\Type\UserPasswordType;
 use App\Form\Type\UserType;
 use App\Repository\NotificationRepository;
@@ -141,6 +142,28 @@ class AdminController extends AbstractController
             [
                 'result' => true,
                 'skill' => $skill,
+                'trainings' => $trainings
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/get_occupation_related_trainings/{id}", name="get_occupation_related_trainings")
+     */
+    public function get_occupation_related_trainings(
+        Occupation $occupation,
+        Request $request,
+        TrainingRepository $trainingRepository
+    )
+    {
+        $trainings = $trainingRepository->findBy(['occupation' => $occupation]);
+
+        return $this->json(
+            [
+                'result' => true,
+                'occupation' => $occupation,
                 'trainings' => $trainings
             ],
             200,

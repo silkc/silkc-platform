@@ -14,6 +14,9 @@
                     <td>{{ occupation.description|u.truncate(100, '...', false) }}</td>
                     <td>
                         <button class="btn btn-info" data-id="{{ occupation.id }}"><i class="fas fa-search-plus"></i></button>
+                        <button class="btn btn-info" data-id="{{ occupation.id }}">
+                            {{ 'button.see_related_trainings'|trans({}, 'trad') }}
+                        </button>
                     </td>
                 </tr>
             {% endfor %}
