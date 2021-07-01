@@ -13,6 +13,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "./abstracts/variables";
 @import "./abstracts/mixins";
 
+body {
+  padding-bottom: 50px;
+}
+
 /* =============================================================================
     =   Account
 ============================================================================= */

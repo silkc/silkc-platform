@@ -30,7 +30,8 @@ label:
     institution_name: Institution name
     search: Search
     advanced_search: Advanced search
-
+button:
+    see_related_trainings: See related trainings
 header:
     my_institution: My institution    
     my_account: My account    

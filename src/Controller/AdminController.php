@@ -11,6 +11,7 @@ use App\Repository\NotificationRepository;
 use App\Repository\SkillRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\TrainingRepository;
+use App\Repository\TrainingSkillRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -115,5 +116,35 @@ class AdminController extends AbstractController
     ): Response
     {
         
+    }
+
+    /**
+     * @Route("/get_skill_related_trainings/{id}", name="get_skill_related_trainings")
+     */
+    public function get_skill_related_trainings(
+        Skill $skill,
+        Request $request,
+        TrainingSkillRepository $trainingSkillRepository,
+        TrainingRepository $trainingRepository
+    )
+    {
+        $trainingSkills = $trainingSkillRepository->findBy(['skill' => $skill, 'isToAcquire' => true]);
+
+        $trainings = new ArrayCollection();
+        if ($trainingSkills) {
+            foreach ($trainingSkills as $trainingSkill) {
+                $trainings->add($trainingSkill->getTraining());
+            }
+        }
+
+        return $this->json(
+            [
+                'result' => true,
+                'skill' => $skill,
+                'trainings' => $trainings
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
     }
 }
