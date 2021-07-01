@@ -13,8 +13,8 @@
                     <td>{{ occupation.preferredLabel }}</td>
                     <td>{{ occupation.description|u.truncate(100, '...', false) }}</td>
                     <td>
-                        <button class="btn btn-info" data-id="{{ occupation.id }}"><i class="fas fa-search-plus"></i></button>
-                        <button class="btn btn-info" data-id="{{ occupation.id }}">
+                        <button class="btn btn-info get-info" data-id="{{ occupation.id }}"><i class="fas fa-search-plus"></i></button>
+                        <button class="btn btn-info btn-related-trainings-work" data-id="{{ occupation.id }}">
                             {{ 'button.see_related_trainings'|trans({}, 'trad') }}
                         </button>
                     </td>
