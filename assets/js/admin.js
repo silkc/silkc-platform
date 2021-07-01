@@ -314,7 +314,7 @@ class Admin {
             });
         });
 
-        $('body').on('click', '#content-skill .btn-info', function() {
+        $('body').on('click', '#content-skill .get-info', function() {
 
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
@@ -442,31 +442,78 @@ class Admin {
         });
 
         
-        $('body').on('click', '#content-skill .btn-related-trainings', function() {
+        $('body').on('click', '#content-skill .btn-related-trainings-work', function() {
 
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
-            let url = '/get_skill_related_trainings/' + id;
+            let url = '/admin/get_skill_related_trainings/' + id;
             $.ajax({
                 type: "GET",
                 url: url,
                 async: true,
                 success: function (data, textStatus, jqXHR) { 
                     if (data) {
-                        $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
+
+                        console.log('data  >> ', data)
+
+                        let skill = data.skill ? data.skill : false;
+                        $modal.find('.modal-title').html(skill && skill.preferredLabel ? skill.preferredLabel : '');
 
                         let dataTrainings = data.trainings && data.trainings.length ? data.trainings : false;
                         if (dataTrainings) {
                             let trainingsHTML = '<ul>'
                             for (let k in dataTrainings) {
-                                trainingsHTML += `<li>${data.name ? data.name : ''}</li>`;
+                                console.log('dataTrainings[k]  >> ', dataTrainings[k])
+                                trainingsHTML += `<li>${dataTrainings[k].name ? dataTrainings[k].name : ''}</li>`;
                                 
                                 if (k == dataTrainings.length - 1) {
                                     trainingsHTML += '</ul>'
+                                    $(trainingsHTML).appendTo($modal.find('.modal-body'));
                                     $('#common-modal').modal('show');
                                 }
                             }
                         } else {
+                            $('No trainings').appendTo($modal.find('.modal-body'));
+                            $('#common-modal').modal('show');
+                        }
+                    }
+                }
+            });
+        });
+
+        
+        $('body').on('click', '#content-skill .btn-related-trainings', function() {
+
+            let $modal = $('#common-modal');
+            let id = $(this).attr('data-id');
+            let url = '/admin/get_skill_related_trainings/' + id;
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) { 
+                    if (data) {
+
+                        console.log('data  >> ', data)
+
+                        let skill = data.skill ? data.skill : false;
+                        $modal.find('.modal-title').html(skill && skill.preferredLabel ? skill.preferredLabel : '');
+
+                        let dataTrainings = data.trainings && data.trainings.length ? data.trainings : false;
+                        if (dataTrainings) {
+                            let trainingsHTML = '<ul>'
+                            for (let k in dataTrainings) {
+                                console.log('dataTrainings[k]  >> ', dataTrainings[k])
+                                trainingsHTML += `<li>${dataTrainings[k].name ? dataTrainings[k].name : ''}</li>`;
+                                
+                                if (k == dataTrainings.length - 1) {
+                                    trainingsHTML += '</ul>'
+                                    $(trainingsHTML).appendTo($modal.find('.modal-body'));
+                                    $('#common-modal').modal('show');
+                                }
+                            }
+                        } else {
+                            $('No trainings').appendTo($modal.find('.modal-body'));
                             $('#common-modal').modal('show');
                         }
                     }
