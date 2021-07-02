@@ -137,11 +137,6 @@ class Account {
                 $('#common-modal').modal('show');
             }
         });
-
-        $('#common-modal').on('hidden.bs.modal', function (e) {
-            $(this).find('.modal-title').children().remove();
-            $(this).find('.modal-body').children().remove();
-        });
     }
 
     
@@ -961,6 +956,16 @@ class Account {
         this.displayInfosSkill();
         this.displayMessage();
         this.runMap();
+
+        $('#common-modal').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+        });
+
+        $('#common-modal-2').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+        });
     }
 }
 

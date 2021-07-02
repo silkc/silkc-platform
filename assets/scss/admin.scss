@@ -35,6 +35,15 @@ body {
   }
 }
 
+.lk-open-training {
+    color: #18bc9c;
+    cursor: pointer;
+
+    &:hover {
+      color: #0f7864;
+    }
+  }
+
 #common-modal {
   .detail-training {
     span.title {

@@ -37,8 +37,8 @@ class Login {
             idxSlogans++;
             if (idxImg == imagesLength) idxImg = 0;
             if (idxSlogans == slogansLength) idxSlogans = 0;
-            images.fadeOut(500).delay(500).eq(idxImg).fadeIn(1000);
-            slogans.fadeOut(500).delay(500).eq(idxSlogans).fadeIn(1000);
+            images.hide().eq(idxImg).show();
+            slogans.hide().eq(idxSlogans).show();
         }, 10000);
 
     }

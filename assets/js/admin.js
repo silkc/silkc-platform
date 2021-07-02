@@ -188,11 +188,6 @@ class Admin {
                 $('#common-modal').modal('show');
             }
         });
-
-        $('#common-modal').on('hidden.bs.modal', function (e) {
-            $(this).find('.modal-title').children().remove();
-            $(this).find('.modal-body').children().remove();
-        });
     }
 
     /**
@@ -565,7 +560,7 @@ class Admin {
                         if (dataTrainings && dataTrainings.length > 0) {
                             let trainingsHTML = '<ul>'
                             for (let k in dataTrainings) {
-                                trainingsHTML += `<li>${dataTrainings[k].name ? dataTrainings[k].name : ''}</li>`;
+                                trainingsHTML += `<li><span class="lk-open-training" data-id="${dataTrainings[k].id ? dataTrainings[k].id : ''}">${dataTrainings[k].name ? dataTrainings[k].name : ''}</span></li>`;
                                 
                                 if (k == dataTrainings.length - 1) {
                                     trainingsHTML += '</ul>'
@@ -600,7 +595,7 @@ class Admin {
                         if (dataTrainings && dataTrainings.length > 0) {
                             let trainingsHTML = '<ul>'
                             for (let k in dataTrainings) {
-                                trainingsHTML += `<li>${dataTrainings[k].name ? dataTrainings[k].name : ''}</li>`;
+                                trainingsHTML += `<li><span class="lk-open-training" data-id="${dataTrainings[k].id ? dataTrainings[k].id : ''}">${dataTrainings[k].name ? dataTrainings[k].name : ''}</span></li>`;
                                 
                                 if (k == dataTrainings.length - 1) {
                                     trainingsHTML += '</ul>'
@@ -616,6 +611,122 @@ class Admin {
                 }
             });
         });
+
+        $('body').on('click', '.lk-open-training', function() {
+            let $modal = $('#common-modal-2');
+            let id = $(this).attr('data-id');
+            let url = '/apip/trainings/' + id;
+
+
+            console.log('url >> ', url)
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {
+
+
+                    console.log('data >>> ', data)
+
+                    if (data) {
+
+                        let requireSkillsHTML = '';
+                        let acquireSkillsHTML = '';
+
+                        if (data.trainingSkills && data.trainingSkills.length > 0 ) {
+                            for (let k in data.trainingSkills) {
+                                let skill = data.trainingSkills[k].skill;
+                                if (data.trainingSkills[k].isRequired) {
+                                    requireSkillsHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                        </li>`;
+                                }
+                                if (data.trainingSkills[k].isToAcquire) {
+                                    acquireSkillsHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                        </li>`;
+                                }
+                            }
+                        }
+
+                        let modalBodyHTML = `<div class="row">
+								<div class="col-md-12 detail-training">
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Name</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.name ? data.name : ''}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Location</span>
+										</div>
+										<div class="col-lg-8">
+											<div>${data.location ? data.location : ''}</div>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Duration</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.duration ? data.duration : ''}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Description</span>
+										</div>
+										<div class="col-lg-8">
+											<p class="text-justify m-0">
+                                                ${data.description ? data.description : '-'}
+											</p>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Price</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.price ? data.price : ''}</span>
+										</div>
+									</div>
+									<div class="mb-3">
+                                        <span class="required-skills d-block mb-3 title">Required_skills</span>
+                                        <ul class="list-group">
+                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : ''}
+                                        </ul>
+									</div>
+
+									<div class="mb-3">
+                                    <span class="required-skills d-block mb-3 title">Required_skills</span>
+                                        <ul class="list-group">
+                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
+                                        </ul>
+									</div>
+								</div>
+							</div>`;
+
+
+                        $modal.find('.modal-title').html(data.name ? data.name : '');
+                        $(modalBodyHTML).appendTo($modal.find('.modal-body'));
+                        $modal.find('.modal-dialog').addClass('modal-lg');
+
+                        console.log('$modal >> ', $modal)
+
+                        $modal.modal('show');
+                    }
+                }
+            });
+        })
     }
 
     init = function() {
@@ -628,6 +739,16 @@ class Admin {
         this.getDetails();
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        $('#common-modal').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+        });
+
+        $('#common-modal-2').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+        });
     }
 }
 
