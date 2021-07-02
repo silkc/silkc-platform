@@ -17,12 +17,12 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     =   HEADER
 ============================================================================= */
 #main-header {
-    background-color: $color_1; 
+    background-color: #fff; 
     position: relative;
     z-index: 1;
     
     a {
-        color: #fff;
+        color: #333366;
     }
     
     > div {

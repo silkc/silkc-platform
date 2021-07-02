@@ -139,13 +139,13 @@ email:
     change_password: Change password
 
 home:
-    people_have_found_a_trining_through_the_silkc_path: 5000 people have found a trining through the Silkc Path 
-    training_available: 800 training available
-    registered_jobs: 2000 registered jobs
-    let_improve: Let's improve your professional situation!
+    let_improve: <span>Let's improve</span><span>your professional situation!</span>
     find_out_how_to_get_there: Find out how to get there!
     search_by_occupation: Search by occupation
     search_by_skill: Search by skill
+    training_available: training available
+    people_have_found_a_trining_through_the_silkc_path: people have found a trining through the Silkc Path
+    registered_job: registered job
 
 no_result_found : No result found
 required_skills : Required skills

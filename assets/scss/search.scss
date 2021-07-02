@@ -1,4 +1,4 @@
-$web-font-path: 'data:text/css;base64,';
+$web-font-path: "data:text/css;base64,";
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 @import "~bootswatch/dist/flatly/variables";
@@ -17,45 +17,139 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     =   Search
 ============================================================================= */
 #search {
-    .info {
-        font-size: 1.4rem;
-        font-weight: 200;
-        margin-top: 60px;
+  background: url("../images/banner_search.jpg") no-repeat center / cover;
+  padding-bottom: 75px;
+
+  .intro {
+    margin: 0;
+    padding: 75px 0 120px;
+
+    > span {
+      display: block;
+      font-weight: 600;
+      color: #fff;
+
+      &:first-child {
+        font-size: 1.6rem;
+      }
+
+      &:last-child {
+        font-size: 2.4rem;
+      }
+    }
+  }
+
+  .search {
+    .title-search {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+  }
+
+  button {
+    width: 100%;
+    background-color: #cc3333;
+    color: #fff;
+    opacity: 1;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .input-group {
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+
+    input[type="text"] {
+      order: 1;
+      border: 0;
+
+      &:hover,
+      &:focus {
+        box-shadow: 0 0 0;
+      }
+
+      &:disabled {
+        background-color: #fff;
+      }
     }
 
-    .search {
-        
-        .title-search {
-            font-weight: 300;
-            color: #1e2b37;
-            text-align: center;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
+    .input-group-append {
+      order: 0;
 
-        > p {
-            font-size: 1.2rem;
-            font-weight: 200;
-            margin-top: 60px;
-            margin-bottom: 30px;
-            @include media-breakpoint-up('md') {
-                margin-bottom: 60px;
-            }
-        }
+      &:after {
+        content: "";
+        border-right: 1px solid #ced4da;
+        display: block;
+        height: 70%;
+        display: block;
+        position: relative;
+        top: 15%;
+      }
     }
 
-    form {
-        padding: 30px 15px 30px;
-        box-sizing: border-box;
-        @include media-breakpoint-up('lg') {
-            padding: 60px 30px 30px;
-        }
+    .input-group-text {
+      background: #fff;
+      border: 0;
+      border-radius: 0;
     }
 
-    .col-left {
-        border-right: 0;
-        @include media-breakpoint-up('md') {
-            border-right: 1px solid #ddd;
-        }
+    .loader-search {
+      padding: 0;
+      right: 0;
     }
+  }
+}
+
+#search-info {
+  .content {
+    margin: 60px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+      width: 100%;
+      text-align: center;
+    }
+
+    &.center {
+      &:after,
+      &:before {
+        content: "";
+        display: inline-block;
+        height: 100px;
+        width: 0;
+        position: relative;
+        border-right: 1px solid #333366;
+      }
+    }
+  }
+
+  p {
+    text-align: center;
+    color: #333366;
+    font-weight: 600;
+    margin-bottom: 7px;
+    line-height: 1.1;
+    padding: 0 30px;
+    box-sizing: border-box;
+
+    &:first-child {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    &:nth-child(2) {
+      font-size: 4rem;
+    }
+
+    &:last-child {
+      font-size: 1.2rem;
+    }
+  }
 }

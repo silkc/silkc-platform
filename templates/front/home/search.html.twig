@@ -10,26 +10,27 @@
 
 {% block body %}
 	<div id="search">
-		<div class="container">
-			<div class="info">
-				<p class="text-center">
-                    {{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans({}, 'trad') }}<br />
-                    {{ 'home.training_available'|trans({}, 'trad') }}<br />
-                    {{ 'home.registered_jobs'|trans({}, 'trad') }}
-				</p>
-			</div>
+		<div
+			class="container">
+			{#<div class="info">
+																<p class="text-center">
+												                    {{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans({}, 'trad') }}<br />
+												                    {{ 'home.training_available'|trans({}, 'trad') }}<br />
+												                    {{ 'home.registered_jobs'|trans({}, 'trad') }}
+																</p>
+															</div>#}
 
 			<div class="search">
-				<p class="text-center">
-                    {{ 'home.let_improve'|trans({}, 'trad') }}
+				<p class="intro">
+					{{ 'home.let_improve'|trans({}, 'trad')|raw }}
 				</p>
 
 				<div class="row">
-					<div class="col-md-6 col-left">
+					<div class="col-md-5">
 						<form method="POST" action="{{ path('app_search_results') }}">
-                            <input type="hidden" name="type_search" value="occupation" />
+							<input type="hidden" name="type_search" value="occupation"/>
 							<div class="mb-3">
-								<p class="title-search"><i class="far fa-list-alt"></i> {{ 'home.search_by_occupation'|trans({}, 'trad') }}</p>
+								<p class="title-search">{{ 'home.search_by_occupation'|trans({}, 'trad') }}</p>
 								{% include 'front/elements/input_search.html.twig'
 									with {
 										'url': '/apip/occupations',
@@ -43,16 +44,16 @@
 							</div>
 
 							<div class="text-center">
-								<button type="submit" class="btn btn-primary disabled-search" disabled >{{ 'home.find_out_how_to_get_there'|trans({}, 'trad') }}</button>
+								<button type="submit" class="btn btn-primary disabled-search" disabled>{{ 'home.find_out_how_to_get_there'|trans({}, 'trad') }}</button>
 							</div>
 						</form>
 					</div>
 
-					<div class="col-md-6">
+					<div class="col-md-5 offset-md-2">
 						<form method="POST" action="{{ path('app_search_results') }}">
-                            <input type="hidden" name="type_search" value="skill" />
+							<input type="hidden" name="type_search" value="skill"/>
 							<div class="mb-3">
-								<p class="title-search"><i class="fas fa-list"></i> {{ 'home.search_by_skill'|trans({}, 'trad') }}</p>
+								<p class="title-search">{{ 'home.search_by_skill'|trans({}, 'trad') }}</p>
 								{% include 'front/elements/input_search.html.twig'
 									with {
 										'url': '/apip/skills',
@@ -66,14 +67,58 @@
 							</div>
 
 							<div class="text-center">
-								<button type="submit" class="btn btn-primary disabled-search" disabled >{{ 'home.find_out_how_to_get_there'|trans({}, 'trad') }}</button>
+								<button type="submit" class="btn btn-primary disabled-search" disabled>{{ 'home.find_out_how_to_get_there'|trans({}, 'trad') }}</button>
 							</div>
 						</form>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div id="search-info">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="content">
+						<div>
+							<p>
+								<i class="fas fa-graduation-cap"></i>
+							</p>
+							<p>800</p>
+							<p>{{ 'home.training_available'|trans({}, 'trad') }}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="content center">
+						<div>
+							<p>
+								<i class="fas fa-search"></i>
+							</p>
+							<p>5000</p>
+							<p>{{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans({}, 'trad') }}</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="content">
+						<div>
+							<p>
+								<i class="fas fa-briefcase"></i>
+							</p>
+							<p>2000</p>
+							<p>{{ 'home.registered_job'|trans({}, 'trad') }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div>
+        <img src="{{asset('build/images/banner_bottom_search.jpg')}}" alt="" /> 
+    </div>
 {% endblock %}
 
 {% block javascripts %}
