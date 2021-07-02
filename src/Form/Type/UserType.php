@@ -102,6 +102,8 @@ class UserType extends AbstractType
                     function ($datetimeToNumber) {
                         if ($datetimeToNumber === null)
                             return null;
+                        else if ($datetimeToNumber instanceof \DateTime)
+                            return intval($datetimeToNumber->format('Y'));
 
                         return $datetimeToNumber;
                     },
