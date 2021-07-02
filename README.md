@@ -23,7 +23,8 @@ Requirements
     DATABASE_URL=mysql://[USER_NAME]:[PASSWORD]@[MYSQL_SERVER_IP]:3306/[DATABASE_NAME]?serverVersion=5.7
 
 **Run composer**
-composer install
+
+    composer install
 
 **Set folder rights**
 
@@ -33,11 +34,19 @@ composer install
 **Create and migrate database**
 
     php bin/console doctrine:database:create
+    php bin/console doctrine:schema:update --force
     mysql -u [USER_NAME] -p[PASSWORD] [DATABASE_NAME] < silk.sql
-    php bin/console doctrine:migrations:migrate
 
 **Load fixtures data**
-php bin/console doctrine:fixtures:load --append
+
+Loading fixtures will create 3 user accounts:
+- Admin role: admin/admin
+- Final user role: user/user
+- Institution role: institution/institution
+
+These accounts *must* be secured later on by changing their password or removing them. The admin account must not be removed.
+
+    php bin/console doctrine:fixtures:load --append
 
 **Install packages and generate assets**
 
