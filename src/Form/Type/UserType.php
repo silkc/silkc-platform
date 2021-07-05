@@ -72,15 +72,23 @@ class UserType extends AbstractType
             ]);
         */
 
+        for ($i = 1900; $i <= 2021; $i++) {
+            $dateChoices[$i] = $i;
+        }
+
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'login.form.label.email',
                 'translation_domain' => 'trad',
             ])
-            ->add('dateOfBirth', IntegerType::class, [
+            ->add('dateOfBirth', ChoiceType::class, [
+                'choices' => $dateChoices,
                 'label' => 'login.form.label.year_of_birth',
                 'translation_domain' => 'trad',
                 'required'   => false,
+                'multiple' => false,
+                'expanded' => false,
+                'empty_data' => 'login.form.label.year_of_birth'
             ]);
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {

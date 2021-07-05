@@ -67,7 +67,6 @@ class SecurityController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-            
                 $isInstitution = !(bool) intval($request->request->get('is_personal'));
 
                 $roles = ($isInstitution) ? [User::ROLE_INSTITUTION] : [User::ROLE_USER];
@@ -154,11 +153,11 @@ class SecurityController extends AbstractController
             $view = 'security/signup_institution.html.twig';
         }
 
-        return $this->render($view, 
-        [
-            'form' =>  $type ? $form->createView() : false
-        ]
-    );
+        return $this->render($view,
+                             [
+                                 'form' =>  $type ? $form->createView() : false
+                             ]
+        );
     }
 
     /**
@@ -196,7 +195,12 @@ class SecurityController extends AbstractController
             $email = $request->request->get('email');
             $user = $userRepository->findOneBy(['email' => $email]);
             if (!$user) {
-                dd('Error');
+                $this->addFlash(
+                    'info',
+                    "Unknown email."
+                );
+
+                return $this->redirectToRoute('app_login');
             }
 
             $code = random_int(100000, 999999);
@@ -247,12 +251,22 @@ class SecurityController extends AbstractController
 
             $user = $userRepository->findOneBy(['id' => $id, 'code' => $code]);
             if (!$user) {
-                dd('User not exists');
+                $this->addFlash(
+                    'info',
+                    "Unknown user."
+                );
+
+                return $this->redirectToRoute('app_login');
             }
             $lastHour = new \DateTime("now");
             $lastHour->sub(new \DateInterval('PT1H0S'));
             if ($user->getCodeCreatedAt() === null || $lastHour > $user->getCodeCreatedAt()) {
-                dd('Code expired');
+                $this->addFlash(
+                    'info',
+                    "Code expired."
+                );
+
+                return $this->redirectToRoute('app_login');
             }
         }
         else if ($request->getMethod() === Request::METHOD_POST) {
@@ -260,13 +274,23 @@ class SecurityController extends AbstractController
             $code = $request->query->get('code');
             $user = $userRepository->findOneBy(['id' => $id, 'code' => $code]);
             if (!$user) {
-                dd('User not exists');
+                $this->addFlash(
+                    'info',
+                    "Unknown user."
+                );
+
+                return $this->redirectToRoute('app_login');
             }
 
             $password = $request->request->get('password');
             $confirm = $request->request->get('password');
             if ($password !== $confirm) {
-                dd('Non-identical passwords');
+                $this->addFlash(
+                    'info',
+                    "Non-identical passwords."
+                );
+
+                return $this->redirectToRoute('app_login');
             }
 
             $createdAt = new \DateTime('now');

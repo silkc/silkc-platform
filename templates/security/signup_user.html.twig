@@ -67,7 +67,7 @@
 
 						<div id="form-user">
 							{{ form_start(form, {attr: attr|default({})}) }}
-							<input type="hidden" name="is_personal" value="0"/>
+							<input type="hidden" name="is_personal" value="1"/>
 
 							<div class="form-group">
 								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans({}, 'trad')} }) }}
