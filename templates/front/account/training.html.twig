@@ -2,11 +2,11 @@
 
 <fieldset>
 	<div class="info">
-        {{ 'please_indicate_any_professional_training'|trans({}, 'trad') }}
+        {{ 'please_indicate_any_professional_training'|trans }}
 	</div>
 
 	<div class="d-inline-flex align-items-end add-training">
-		<label for="training-input">{{ 'training_name'|trans({}, 'trad') }}</label>
+		<label for="training-input">{{ 'training_name'|trans }}</label>
         {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'training-input',
@@ -17,7 +17,7 @@
                 'name': 'training'
             }
         %}
-        <a href="{{ path('app_training_create') }}" >{{ 'don_t_find_your_training'|trans({}, 'trad') }}</a>
+        <a href="{{ path('app_training_create') }}" >{{ 'don_t_find_your_training'|trans }}</a>
 	</div>
 	<div class="list-trainings">
 		<ul class="list-group">
@@ -49,5 +49,5 @@
 <input type="hidden" name="trainings" id="trainings" value="{{ trainingsInput|json_encode() }}" />
 
 <div class="form-group button-group text-right">
-	<button type="submit" class="btn btn-primary">{{ 'label.save'|trans({}, 'trad') }}</button>
+	<button type="submit" class="btn btn-primary">{{ 'label.save'|trans }}</button>
 </div>

@@ -1,8 +1,8 @@
 <table id="datatable-skill" class="table table-striped table-bordered" style="width:100%">
 	<thead>
 	<tr>
-		<th>{{ 'label.label'|trans({}, 'trad') }}</th>
-		<th>{{ 'label.description'|trans({}, 'trad') }}</th>
+		<th>{{ 'label.label'|trans }}</th>
+		<th>{{ 'label.description'|trans }}</th>
 		<th></th>
 	</tr>
 	</thead>
@@ -14,7 +14,7 @@
 				<td>{{ skill.description|u.truncate(100, '...', false) }}</td>
 				<td>
 					<button class="btn btn-info get-info" data-id="{{ skill.id }}"><i class="fas fa-search-plus"></i></button>
-					<button class="btn btn-info btn-related-trainings" data-id="{{ skill.id }}"><i class="fas fa-link"></i> {{ 'button.see_related_trainings'|trans({}, 'trad') }}</button>
+					<button class="btn btn-info btn-related-trainings" data-id="{{ skill.id }}"><i class="fas fa-link"></i> {{ 'button.see_related_trainings'|trans }}</button>
 				</td>
 			</tr>
 		{% endfor %}

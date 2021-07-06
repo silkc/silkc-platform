@@ -37,7 +37,7 @@
 
 							<div class="ico">
 								<i class="fa fa-lock" aria-hidden="true"></i>
-								{{ 'login.form.title.connect'|trans({}, 'trad') }}</div>
+								{{ 'login.form.title.connect'|trans }}</div>
 
 							<div>
 								{% if error %}
@@ -46,15 +46,15 @@
 
 								{% if app.user %}
 									<div class="text-center">
-										<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
+										<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans }}</a>
 									</div>
 								{% else %}
 									<div class="form-group">
-										<input type="username" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'login.form.label.email_or_username'|trans({}, 'trad') }}" required autofocus>
+										<input type="username" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'login.form.label.email_or_username'|trans }}" required autofocus>
 									</div>
 
 									<div class="form-group">
-										<input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'login.form.label.password.first'|trans({}, 'trad') }}" required>
+										<input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'login.form.label.password.first'|trans }}" required>
 									</div>
 
 									<input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
@@ -62,15 +62,15 @@
 
 									<button type="submit" class="btn btn-primary">
 										<i class="fas fa-sign-in-alt"></i>
-										{{ 'login.form.sign_in'|trans({}, 'trad') }}
+										{{ 'login.form.sign_in'|trans }}
 									</button>
 								{% endif %}
 							</div>
 
 							<div id="new-profile">
-								{{ 'login.form.title.you_do_not_have_an_account'|trans({}, 'trad') }}
+								{{ 'login.form.title.you_do_not_have_an_account'|trans }}
 								<a href="{{ path('app_signup') }}">
-									{{ 'login.form.sign_up'|trans({}, 'trad') }}
+									{{ 'login.form.sign_up'|trans }}
 								</a>
 							</div>
 

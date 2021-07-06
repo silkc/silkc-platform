@@ -117,7 +117,7 @@ class TrainingRepository extends ServiceEntityRepository
             ORDER BY score DESC
             ", $rsm);
         $query->setParameter('occupationId', $occupation->getId());
-        $query->setParameter('userId', $user->getId());
+        $query->setParameter('userId', ($user) ? $user->getId() : NULL);
         $query->setParameter('essentialRelationType', OccupationSkill::RELATION_TYPE_ESSENTIAL);
         $query->setParameter('optionalRelationType', OccupationSkill::RELATION_TYPE_OPTIONAL);
         $query->setParameter('knowledgeSkillType', OccupationSkill::SKILL_TYPE_KNOWLEDGE);

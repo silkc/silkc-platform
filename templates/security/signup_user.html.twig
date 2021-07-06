@@ -38,20 +38,20 @@
 
 						<div class="ico">
 							<i class="fa fa-lock" aria-hidden="true"></i>
-							{{ 'login.form.title.signup'|trans({}, 'trad') }}
+							{{ 'login.form.title.signup'|trans }}
 						</div>
 
 						<ul class="tabs-signup active">
 							<li class="nav-item">
 								<a href="{{ path('app_signup', {type: 'user'}) }}" class="nav-link active">
 									<i class="fas fa-user"></i>
-									<span>{{ 'i_am_a_user'|trans({}, 'trad') }}</span>
+									<span>{{ 'i_am_a_user'|trans }}</span>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="{{ path('app_signup', {type: 'institution'}) }}" class="nav-link">
 									<i class="fas fa-school"></i>
-									<span>{{ 'i_am_an_institution'|trans({}, 'trad') }}</span>
+									<span>{{ 'i_am_an_institution'|trans }}</span>
 								</a>
 							</li>
 						</ul>
@@ -59,9 +59,9 @@
 						{% if app.user %}
 							<div class="mb-3">
 								{{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }},
-								<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans({}, 'trad') }}</a>
-								{{ 'login.form.or'|trans({}, 'trad') }}
-								<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans({}, 'trad') }}</a>
+								<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans }}</a>
+								{{ 'login.form.or'|trans }}
+								<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans }}</a>
 							</div>
 						{% endif %}
 
@@ -70,42 +70,42 @@
 							<input type="hidden" name="is_personal" value="1"/>
 
 							<div class="form-group">
-								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans} }) }}
 							</div>
 
 							<div class="form-group">
 								<div id="searchmap"></div>
 								<div id="map"></div>
-								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans({}, 'trad')} }) }}
+								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans} }) }}
 							</div>
 
 							<div>
 								<div>
-									{{ form_widget(form.save, { 'label': 'login.form.button.save'|trans({}, 'trad') }) }}
+									{{ form_widget(form.save, { 'label': 'login.form.button.save'|trans }) }}
 								</div>
 							</div>
 							{{ form_rest(form) }}

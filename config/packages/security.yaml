@@ -35,6 +35,11 @@ security:
                 target: app_login
 
     access_control:
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/signin, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/forgot_password, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/admin/get_, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/admin, roles: [ ROLE_ADMIN, ROLE_SUPER_ADMIN ], requires_channel: '%router.request_context.scheme%' }
@@ -45,7 +50,7 @@ security:
         - { path: ^/api/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api/validate_account, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/account$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/institution$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
 

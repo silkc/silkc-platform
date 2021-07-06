@@ -1,11 +1,11 @@
 <table id="datatable-task" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-            <th>{{ 'task.label.name'|trans({}, 'trad') }}</th>
-            <th>{{ 'task.label.registered_on'|trans({}, 'trad') }}</th>
-            <th>{{ 'task.label.registered_by'|trans({}, 'trad') }}</th>
-            <th>{{ 'task.label.status'|trans({}, 'trad') }}</th>
-            <th>{{ 'task.label.action'|trans({}, 'trad') }}</th>
+            <th>{{ 'task.label.name'|trans }}</th>
+            <th>{{ 'task.label.registered_on'|trans }}</th>
+            <th>{{ 'task.label.registered_by'|trans }}</th>
+            <th>{{ 'task.label.status'|trans }}</th>
+            <th>{{ 'task.label.action'|trans }}</th>
         </tr>
     </thead>
     <tbody>
@@ -20,18 +20,18 @@
                     </td>
                     <td>
                         {% if (training.isValidated == true) %}
-                            <span class="text-success">{{ 'task.label.approved'|trans({}, 'trad') }}</span>
+                            <span class="text-success">{{ 'task.label.approved'|trans }}</span>
                         {% elseif (training.isRejected == true)%}
-                            <span class="text-warning">{{ 'task.label.rejected'|trans({}, 'trad') }}</span>
+                            <span class="text-warning">{{ 'task.label.rejected'|trans }}</span>
                         {% else %}
-                            {{ 'task.label.pending'|trans({}, 'trad') }}
+                            {{ 'task.label.pending'|trans }}
                         {% endif %}
                     </td>
                     <td>
-                        <a href="" class="btn btn-success mt-1 mb-1">{{ 'task.action.approve'|trans({}, 'trad') }}</a>
-                        <a href="" class="btn btn-success mt-1 mb-1">{{ 'task.action.reject'|trans({}, 'trad') }}</a>
-                        <a href="#" class="btn btn-primary mt-1 mb-1 see-detail" data-id="{{ training.id }}">{{ 'task.action.see_details'|trans({}, 'trad') }}</a>
-                        <a href="" class="btn btn-danger mt-1 mb-1">{{ 'task.action.delete'|trans({}, 'trad') }}</a>
+                        <a href="" class="btn btn-success mt-1 mb-1">{{ 'task.action.approve'|trans }}</a>
+                        <a href="" class="btn btn-success mt-1 mb-1">{{ 'task.action.reject'|trans }}</a>
+                        <a href="#" class="btn btn-primary mt-1 mb-1 see-detail" data-id="{{ training.id }}">{{ 'task.action.see_details'|trans }}</a>
+                        <a href="" class="btn btn-danger mt-1 mb-1">{{ 'task.action.delete'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}

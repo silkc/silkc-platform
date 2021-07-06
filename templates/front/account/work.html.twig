@@ -5,11 +5,11 @@
 <fieldset>
 	{# Current job #}
 	<div class="info">
-        {{ 'please_indicate_your_current_job'|trans({}, 'trad') }}
+        {{ 'please_indicate_your_current_job'|trans }}
 	</div>
 
 	<div class="d-inline-flex align-items-end add-job add-current-job">
-		<label for="current_job-input">{{ 'current_job'|trans({}, 'trad') }}</label>
+		<label for="current_job-input">{{ 'current_job'|trans }}</label>
         {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'current_job-input',
@@ -61,11 +61,11 @@
 <fieldset>
 	{# Previous job #}
 	<div class="info">
-        {{ 'please_indicate_any_previous_jobs'|trans({}, 'trad') }}
+        {{ 'please_indicate_any_previous_jobs'|trans }}
 	</div>
 
 	<div class="d-inline-flex align-items-end add-job add-previous-job">
-		<label for="previous_job-input">{{ 'previous_job'|trans({}, 'trad') }}</label>
+		<label for="previous_job-input">{{ 'previous_job'|trans }}</label>
         {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'previous_job-input',
@@ -116,11 +116,11 @@
 <fieldset>
 	{# Desired job #}
 	<div class="info">
-        {{ 'please_indicate_your_desired_jobs'|trans({}, 'trad') }}
+        {{ 'please_indicate_your_desired_jobs'|trans }}
 	</div>
 
 	<div class="d-inline-flex align-items-end add-job add-desired-job">
-		<label for="previous_job-input">{{ 'desired_job'|trans({}, 'trad') }}</label>
+		<label for="previous_job-input">{{ 'desired_job'|trans }}</label>
         {% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'desired_job-input',
@@ -175,5 +175,5 @@
 <input type="hidden" name="jobs" id="jobs" value='{"currentOccupations": {{ currentOccupations|json_encode() }},"previousOccupations":{{ previousOccupations|json_encode() }},"desiredOccupations":{{ desiredOccupations|json_encode() }}}'/>
 
 <div class="form-group button-group text-right">
-	<button type="submit" class="btn btn-primary">{{ 'label.save'|trans({}, 'trad') }}</button>
+	<button type="submit" class="btn btn-primary">{{ 'label.save'|trans }}</button>
 </div>

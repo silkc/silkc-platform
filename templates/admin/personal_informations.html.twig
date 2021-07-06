@@ -22,7 +22,7 @@
 <div class="row">
 	<div class="form-group col-md-6">
 		{# {{ form_row(form.address) }} #}
-        <label>{{ 'login.form.label.city'|trans({}, 'trad') }}</label>
+        <label>{{ 'login.form.label.city'|trans }}</label>
 		<div id="searchmap"></div>
 		<div id="map"></div>
 	</div>
@@ -38,7 +38,7 @@
 {% endif %}
 
 <div class="form-group button-group text-right">
-	{{ form_widget(form.save, {'label': 'label.save'|trans({}, 'trad') }) }}
+	{{ form_widget(form.save, {'label': 'label.save'|trans }) }}
 </div>
 
 {{ form_end(form) }}

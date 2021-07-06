@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -52,7 +53,8 @@ class SecurityController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         Request $request,
         UserRepository $userRepository,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        TranslatorInterface $translator
     ): Response
     {
 
@@ -97,7 +99,7 @@ class SecurityController extends AbstractController
                 if ($existingUsernameUser || $existingEmailUser) {
                     $this->addFlash(
                         'warning',
-                        ($existingEmailUser) ? "Cet adresse e-mail est déjà utilisée" : "Cet identifiant est déjà utilisé"
+                        ($existingEmailUser) ? $translator->trans("flash.email_already_exists") : $translator->trans("flash.username_already_exists")
                     );
                     return $this->redirectToRoute('app_signup');
                 }
@@ -114,8 +116,8 @@ class SecurityController extends AbstractController
                 $email = (new Email())
                     ->from('contact@silkc-platform.org')
                     ->to($user->getEmail())
-                    ->subject('Accès application SILKC')
-                    ->text('Bonjour, merci de valider votre compte en cliquant sur le lien suivant : ' . $code)
+                    ->subject($translator->trans('email.validate_your_account'))
+                    ->text($translator->trans('email.to_change_password') . $code)
                     ->html($html);
 
                 try {
@@ -124,7 +126,7 @@ class SecurityController extends AbstractController
 
                 $this->addFlash(
                     'info',
-                    "A validation link has been sent to you by e-mail"
+                    $translator->trans("flash.validation_link_has_been_sent")
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -137,7 +139,7 @@ class SecurityController extends AbstractController
                     }
                     $this->addFlash(
                         'warning',
-                        ($errorsMessages && count($errorsMessages) > 0) ? implode("\n", $errorsMessages) : 'An error occured'
+                        ($errorsMessages && count($errorsMessages) > 0) ? implode("\n", $errorsMessages) : $translator->trans('flash.an_error_occured')
                     );
                     return $this->redirectToRoute('app_signup');
                 }
@@ -163,7 +165,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/validate_account/{code}", name="validate_account", methods={"GET"})
      */
-    public function validate_account($code, Request $request, UserRepository $userRepository)
+    public function validate_account($code, Request $request, UserRepository $userRepository, TranslatorInterface $translator)
     {
         $user = $userRepository->findOneBy(['code' => $code]);
         if ($user) {
@@ -174,12 +176,12 @@ class SecurityController extends AbstractController
 
             $this->addFlash(
                 'info',
-                "Votre compte est maintenant validé, merci."
+                $translator->trans("flash.your_account_is_validated")
             );
         } else {
             $this->addFlash(
                 'warning',
-                "Le code de validation est invalide."
+                $translator->trans("flash.invalid_code")
             );
         }
 
@@ -189,7 +191,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/forgot_password/", name="forgot_password")
      */
-    public function forgot_password(Request $request, UserRepository $userRepository, MailerInterface $mailer)
+    public function forgot_password(Request $request, UserRepository $userRepository, MailerInterface $mailer, TranslatorInterface $translator)
     {
         if ($request->getMethod() === Request::METHOD_POST) {
             $email = $request->request->get('email');
@@ -197,7 +199,7 @@ class SecurityController extends AbstractController
             if (!$user) {
                 $this->addFlash(
                     'info',
-                    "Unknown email."
+                    $translator->trans("flash.unknown_email")
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -215,8 +217,8 @@ class SecurityController extends AbstractController
             $email = (new Email())
                 ->from('contact@silkc-platform.org')
                 ->to($user->getEmail())
-                ->subject('Change password')
-                ->text('Hello, if you have requested to change your password, please click on the following link : ' . $link)
+                ->subject($translator->trans('email.change_password'))
+                ->text($translator->trans('email.change_password_content') . $link)
                 ->html($html);
 
             try {
@@ -229,7 +231,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash(
                 'info',
-                "A validation link has been sent to you by e-mail"
+                $translator->trans("flash.validation_link_has_been_sent")
             );
         }
 
@@ -239,7 +241,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/new_password/", name="new_password")
      */
-    public function new_password(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
+    public function new_password(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, TranslatorInterface $translator)
     {
         if (
             $request->getMethod() === Request::METHOD_GET &&
@@ -253,7 +255,7 @@ class SecurityController extends AbstractController
             if (!$user) {
                 $this->addFlash(
                     'info',
-                    "Unknown user."
+                    $translator->trans("flash.unknown_user")
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -263,7 +265,7 @@ class SecurityController extends AbstractController
             if ($user->getCodeCreatedAt() === null || $lastHour > $user->getCodeCreatedAt()) {
                 $this->addFlash(
                     'info',
-                    "Code expired."
+                    $translator->trans("flash.expired_code")
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -276,7 +278,7 @@ class SecurityController extends AbstractController
             if (!$user) {
                 $this->addFlash(
                     'info',
-                    "Unknown user."
+                    $translator->trans("flash.unknown_user")
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -287,7 +289,7 @@ class SecurityController extends AbstractController
             if ($password !== $confirm) {
                 $this->addFlash(
                     'info',
-                    "Non-identical passwords."
+                    $translator->trans("flash.non_identical_password")
                 );
 
                 return $this->redirectToRoute('app_login');
@@ -308,7 +310,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash(
                 'info',
-                "Your password is changed."
+                $translator->trans("flash.your_password_is_changed")
             );
 
             return $this->redirectToRoute('app_login');
