@@ -46,6 +46,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
       color: #fff;
       text-transform: uppercase;
       font-weight: 400;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+
+      &:after {
+        content: "";
+        display: block;
+        border-top: 2px solid #fff;
+        flex: 1;
+        margin-left: 20px;
+      }
     }
   }
 
