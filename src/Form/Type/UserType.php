@@ -88,7 +88,7 @@ class UserType extends AbstractType
                 'required'   => false,
                 'multiple' => false,
                 'expanded' => false,
-                'empty_data' => 'login.form.label.year_of_birth'
+                'placeholder' => array_key_exists('is_personal', $options) && $options['is_personal'] === true ? 'login.form.label.year_of_birth' : 'login.form.label.year_of_creation'
             ]);
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {

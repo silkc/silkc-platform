@@ -113,6 +113,7 @@ login:
             homepage: Homepage
             roles: Roles
             year_of_birth: Year of birth
+            year_of_creation: Year of creation
             date_of_birth: Date of birth
             send_password_reset_email: Send password reset email
             password: 
