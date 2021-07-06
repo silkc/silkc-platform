@@ -33,6 +33,7 @@ label:
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learn
+    suspend: Suspend
 header:
     my_institution: My institution    
     my_account: My account    
@@ -40,13 +41,14 @@ header:
 
 nav:
     home: Home
-    personal_informations: Personal informations
+    personal_informations: My account
     institutional_informations: Institutional informations
     work: Work
     training: Training
-    change_password: Change password
+    change_password: Password
     skills: Skills
     tasks: Tasks
+    users: Users
 
 notification:
     label:
@@ -74,6 +76,13 @@ work:
     label: label
     description: Description
 
+user:
+    id: ID
+    firstname: Firstname
+    lastname: Lastname
+    username: Username
+    suspended: Suspendu ?
+    suspect: Suspect ?
 task:
     label:
         name: Name

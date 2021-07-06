@@ -37,6 +37,9 @@
 						<li class="nav-item">
 							<a class="nav-link {% if tab is defined and tab == 7 %}active{% endif %}" id="change_password-tab" data-toggle="tab" href="#content-change_password" role="tab"><i class="fas fa-key"></i> {{ 'nav.change_password'|trans({}, 'trad') }}</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link {% if tab is defined and tab == 8 %}active{% endif %}" id="user-tab" data-toggle="tab" href="#content-user" role="tab"><i class="fas fa-users"></i> {{ 'nav.users'|trans({}, 'trad') }}</a>
+						</li>
 					</ul>
 
 					<div class="tab-content" id="account-tab-content">
@@ -60,6 +63,9 @@
 						</div>
 						<div class="tab-pane fade {% if tab is defined and tab == 7 %}show active{% endif %}" id="content-change_password" role="tabpanel">
 							{% include 'admin/change_password.html.twig' %}
+						</div>
+						<div class="tab-pane fade {% if tab is defined and tab == 8 %}show active{% endif %}" id="content-user" role="tabpanel">
+							{% include 'admin/users.html.twig' %}
 						</div>
 					</div>
 				</section>

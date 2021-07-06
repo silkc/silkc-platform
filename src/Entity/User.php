@@ -139,6 +139,16 @@ class User implements UserInterface
     private $isValidated = 0;
 
     /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     */
+    private $isSuspended = 0;
+
+    /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     */
+    private $isSuspected = 0;
+
+    /**
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
     private $code;
@@ -572,6 +582,30 @@ class User implements UserInterface
     public function setIsValidated(bool $isValidated): self
     {
         $this->isValidated = $isValidated;
+
+        return $this;
+    }
+
+    public function getIsSuspended(): ?bool
+    {
+        return $this->isSuspended;
+    }
+
+    public function setIsSuspended(bool $isSuspended): self
+    {
+        $this->isSuspended = $isSuspended;
+
+        return $this;
+    }
+
+    public function getIsSuspected(): ?bool
+    {
+        return $this->isSuspected;
+    }
+
+    public function setIsSuspected(bool $isSuspected): self
+    {
+        $this->isSuspected = $isSuspected;
 
         return $this;
     }

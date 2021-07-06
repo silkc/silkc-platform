@@ -72,7 +72,8 @@ class AdminController extends AbstractController
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
                 $errors = $validator->validate($user);
-                dd($errors);
+                $errorsString = (string) $errors;
+                return new Response($errorsString);
             }
 
             //$data = $request->request->all('user_password');
@@ -97,6 +98,7 @@ class AdminController extends AbstractController
                 'skills' => $skillRepository->findAll(),
                 'occupations' => $occupationRepository->findAll(),
                 'password_form' => $passwordForm->createView(),
+                'users' => $userRepository->findByRole('ROLE_USER'),
                 //'related_skills' => $skillRepository->getByOccupationAndTraining($user)
             ]
         );

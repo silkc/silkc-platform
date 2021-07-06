@@ -35,6 +35,7 @@ security:
                 target: app_login
 
     access_control:
+        - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/admin/get_, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/admin, roles: [ ROLE_ADMIN, ROLE_SUPER_ADMIN ], requires_channel: '%router.request_context.scheme%' }
         - { path: ^/api/forgot_password$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
