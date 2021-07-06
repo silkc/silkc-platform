@@ -195,7 +195,7 @@ class Admin {
      */
      runMap = () => { 
 
-        $('#admin #personal_informations-tab[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        let initMap = function () {
             let inputHidden = document.getElementById('user_address');
             var map = null;
 
@@ -253,7 +253,13 @@ class Admin {
                     leafletControlGeocoderForm.value = coords.city;
                 }
             }
+        }
+
+        $('#admin #personal_informations-tab[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            initMap();
         });
+
+        initMap();
     }
 
     getDetails = () => {

@@ -55,8 +55,11 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
+        $tab = 1;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $tab = 3;
+
             $em = $this->getDoctrine()->getManager();
 
             $errors = $validator->validate($user);
@@ -68,13 +71,15 @@ class AdminController extends AbstractController
 
             $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
 
-            return $this->redirectToRoute('admin_home');
+            //return $this->redirectToRoute('admin_home');
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
                 $errors = $validator->validate($user);
                 $errorsString = (string) $errors;
                 return new Response($errorsString);
             }
+
+            $tab = 7;
 
             //$data = $request->request->all('user_password');
             //$result = $passwordEncoder->isPasswordValid($user, 'test');
@@ -99,6 +104,7 @@ class AdminController extends AbstractController
                 'occupations' => $occupationRepository->findAll(),
                 'password_form' => $passwordForm->createView(),
                 'users' => $userRepository->findByRole('ROLE_USER'),
+                'tab' => $tab
                 //'related_skills' => $skillRepository->getByOccupationAndTraining($user)
             ]
         );

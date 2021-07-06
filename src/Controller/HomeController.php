@@ -109,6 +109,8 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
 
+        $tab = 1;
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -131,6 +133,8 @@ class HomeController extends AbstractController
                 dd($errors);
             }
 
+            $tab = 5;
+
             //$data = $request->request->all('user_password');
             //$result = $passwordEncoder->isPasswordValid($user, 'test');
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
@@ -148,7 +152,8 @@ class HomeController extends AbstractController
                 'user' => $user,
                 'form' => $form->createView(),
                 'password_form' => $passwordForm->createView(),
-                'related_skills' => $skillRepository->getByOccupationAndTraining($user)
+                'related_skills' => $skillRepository->getByOccupationAndTraining($user),
+                'tab' => $tab
             ]
         );
     }
@@ -175,6 +180,8 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
 
+        $tab = 1;
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -197,6 +204,8 @@ class HomeController extends AbstractController
                 dd($errors);
             }
 
+            $tab = 3;
+
             //$data = $request->request->all('user_password');
             //$result = $passwordEncoder->isPasswordValid($user, 'test');
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
@@ -208,7 +217,7 @@ class HomeController extends AbstractController
             $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
         }
 
-        $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : false;
+        $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : $tab ? $tab : false;
         setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
         $trainings = $trainingRepository->findBy(['user' => $user]);
