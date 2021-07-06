@@ -139,6 +139,7 @@ login:
         sign_up: Sign up
         sign_in: Sign in
         sign_out: Sign out
+        not_identical_password: Les mots de passe saisis ne sont pas identiques.
    
 email:
     validate_your_account: Validate your account
