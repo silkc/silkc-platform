@@ -116,7 +116,6 @@ class HomeController extends AbstractController
 
             $errors = $validator->validate($user);
             if (count($errors) > 0) {
-                die('error');
                 return new Response((string)$errors, 400);
             }
 
@@ -298,6 +297,10 @@ class HomeController extends AbstractController
             $training->setCreator($user);
             // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
             $training->setIsValidated($this->isGranted(User::ROLE_INSTITUTION));
+            // S'il s'agit d'une création par un utilisateur, on lui associe la formation
+            if (!$this->isGranted(User::ROLE_INSTITUTION))
+                $user->addTraining($training);
+
             $em->persist($training);
             $em->flush();
 

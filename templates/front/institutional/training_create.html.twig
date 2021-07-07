@@ -11,7 +11,13 @@
 
         <nav aria-label="breadcrumb" class="mt-4">
             <ol class="breadcrumb create_training">
-                <li class="breadcrumb-item"><a href="{{ path('app_institution')}}">{{ 'training'|trans }}</a></li>
+                <li class="breadcrumb-item">
+                    {% if is_granted('ROLE_INSTITUTION') %}
+                        <a href="{{ path('app_institution')}}">{{ 'training'|trans }}</a>
+                    {% else %}
+                        <a href="{{ path('app_account')}}">{{ 'training'|trans }}</a>
+                    {% endif %}
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">{{ attribute(training, 'name') is defined ? training.name : '' }}</li>
             </ol>
         </nav>

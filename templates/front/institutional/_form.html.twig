@@ -95,17 +95,6 @@
             <p class="title mb-0">{{ 'acquired_skills'|trans  }}</p>
             <div class="p-4 content-skills">
                 <div class="mb-3 add-skill" data-type="acquired">
-                    {% include 'front/elements/input_add_search.html.twig'
-                        with {
-                            'id': 'skill-name-acquired',
-                            'url': '/apip/skills',
-                            'autocomplete': true,
-                            'formats': 'json',
-                            'pagination': 'false',
-                            'name': 'skill-name-acquired',
-                            'placeholder': "Add skill"
-                        }
-                    %}
                     <div class="content-list-skill">
                         <div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-secondary">
                             <div class="pl-2 pr-2 pb-2">{{ 'esco'|trans }}</div>
@@ -116,6 +105,17 @@
                                 <a href="#" class="skills-associated" id="all-associated">All associated</a>
                             </div>
                         </div>
+                        {% include 'front/elements/input_add_search.html.twig'
+                            with {
+                            'id': 'skill-name-acquired',
+                            'url': '/apip/skills',
+                            'autocomplete': true,
+                            'formats': 'json',
+                            'pagination': 'false',
+                            'name': 'skill-name-acquired',
+                            'placeholder': "Add skill"
+                        }
+                        %}
                         <div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-light">
                             <div class="pl-2 pr-2 pb-2">{{ 'no_esco'|trans }}</div>
                             <div class="not-occupation">

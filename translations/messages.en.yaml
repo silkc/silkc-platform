@@ -22,7 +22,7 @@ label:
     url: URL
     online: Online
     is_online_monitored: Is online monitored
-    is_presential: Is presential
+    is_presential: Is face to face
     save: Save
     create: Save
     edit_training: Save
@@ -175,8 +175,8 @@ required_skills : Required skills
 acquired_skills : Acquired skills
 skills_you_can_acquire : Skills you can acquire
 no_item: No element
-esco: ESCO
-no_esco: NO ESCO
+esco: In ESCO for this occupation
+no_esco: Not in ESCO for this occupation
 
 the_following_skills_have_been_calculated_based: The following skills have been calculated based on your work experiences and training history
 see_more: See more
