@@ -163,7 +163,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/validate_account/{code}", name="validate_account", methods={"GET"})
+     * @Route("/validate_account/{code}", name="app_validate_account", methods={"GET"})
      */
     public function validate_account($code, Request $request, UserRepository $userRepository, TranslatorInterface $translator)
     {
@@ -189,7 +189,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/forgot_password/", name="forgot_password")
+     * @Route("/forgot_password/", name="app_forgot_password")
      */
     public function forgot_password(Request $request, UserRepository $userRepository, MailerInterface $mailer, TranslatorInterface $translator)
     {
@@ -202,7 +202,7 @@ class SecurityController extends AbstractController
                     $translator->trans("flash.unknown_email")
                 );
 
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_forgot_password');
             }
 
             $code = random_int(100000, 999999);
@@ -239,7 +239,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/new_password/", name="new_password")
+     * @Route("/new_password/", name="app_new_password")
      */
     public function new_password(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, TranslatorInterface $translator)
     {

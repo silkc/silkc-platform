@@ -6,34 +6,44 @@
             </a>
         </div>
 
-        {% if app.user is defined and is_granted('ROLE_USER') %}
         <div class="d-flex justify-content-end">
-            <div class="dropdown mr-2">
-                <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
-                        {{ app.user.username }}
-                    {% elseif app.user is defined and app.user is not null %}
-                        {{ app.user.firstname }} {{ app.user.lastname }}
-                    {% endif %}
-                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
+            {% if app.user is defined and is_granted('ROLE_USER') %}
+                <div class="dropdown mr-2">
+                    <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                            {{ app.user.username }}
+                        {% elseif app.user is defined and app.user is not null %}
+                            {{ app.user.firstname }} {{ app.user.lastname }}
+                        {% endif %}
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
 
-                    <a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-search"></i><span>{{ 'header.full_search_page'|trans }}</span></a>
-                    {% if app.user is defined and app.user is not null and is_granted('ROLE_ADMIN') %}
-                        <a class="dropdown-item" href="{{ path('admin_home') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
-                    {% elseif app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
-                        <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
-                    {% else %}
-                        <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
-                    {% endif %}
+                        <a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-search"></i><span>{{ 'header.full_search_page'|trans }}</span></a>
+                        {% if app.user is defined and app.user is not null and is_granted('ROLE_ADMIN') %}
+                            <a class="dropdown-item" href="{{ path('admin_home') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
+                        {% elseif app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                            <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
+                        {% endif %}
 
-                    <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i><span>{{ 'login.form.sign_out'|trans }}</span></a>
+                        <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i><span>{{ 'login.form.sign_out'|trans }}</span></a>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="dropdown mr-2">
+                    <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-user"></i>
+                        {{ 'login.form.log_in'|trans }}
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt"></i> <span>{{ 'login.form.sign_in'|trans }}</span></a>
+                        <a class="dropdown-item" href="{{ path('app_signup') }}"><i class="far fa-user-circle"></i> <span>{{ 'login.form.sign_up'|trans }}</span></a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
-        {% else %}
-
-        {% endif %}
     </div>
 </header>

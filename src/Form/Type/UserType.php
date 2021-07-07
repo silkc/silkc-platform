@@ -62,6 +62,17 @@ class UserType extends AbstractType
                     'required'           => false,
                 ]);
         }
+
+        if (array_key_exists('by_admin', $options) && $options['by_admin'] === true) {
+            $builder
+                ->add('roles', ChoiceType::class, [
+                    'label' => 'label.roles',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'required'   => true,
+                    'choices' => User::getRolesList(),
+                ]);
+        }
         /*
             $builder->add('roles', ChoiceType::class, [
                 'label'    => 'label.roles',
@@ -133,6 +144,7 @@ class UserType extends AbstractType
             'data_class' => User::class,
             'require_password' => false,
             'is_personal' => false,
+            'by_admin' => false,
             'csrf_protection' => false, // Possibilité de créer un compte en API
         ]);
     }

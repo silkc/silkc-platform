@@ -103,9 +103,42 @@ class AdminController extends AbstractController
                 'skills' => $skillRepository->findAll(),
                 'occupations' => $occupationRepository->findAll(),
                 'password_form' => $passwordForm->createView(),
-                'users' => $userRepository->findByRole('ROLE_USER'),
+                //'users' => $userRepository->findByRole('ROLE_USER'),
+                'users' => $userRepository->findAll(),
                 'tab' => $tab
                 //'related_skills' => $skillRepository->getByOccupationAndTraining($user)
+            ]
+        );
+    }
+
+    /**
+     * @Route("/edit_user/{id}", name="edit_user", methods={"GET", "POST"})
+     */
+    public function edit_user(User $user, Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    {
+        $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0)
+                return new Response((string) $errors, 400);
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+        }
+
+        return $this->render(
+            'admin/edit_user.html.twig',
+            [
+                'user' => $user,
+                'form' => $form->createView()
             ]
         );
     }
@@ -174,6 +207,74 @@ class AdminController extends AbstractController
                 'occupation' => $occupation,
                 'trainings' => $trainings
             ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/suspend_user/{id}", name="suspend_user", methods="POST")
+     */
+    public function suspend_user(User $user)
+    {
+        $user->setIsSuspended(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/unsuspend_user/{id}", name="unsuspend_user", methods="POST")
+     */
+    public function unsuspend_user(User $user)
+    {
+        $user->setIsSuspended(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/suspect_user/{id}", name="suspect_user", methods="POST")
+     */
+    public function suspect_user(User $user)
+    {
+        $user->setIsSuspected(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/raise_suspicion/{id}", name="raise_suspicion", methods="POST")
+     */
+    public function raise_suspicion(User $user)
+    {
+        $user->setIsSuspected(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
             200,
             ['Access-Control-Allow-Origin' => '*']
         );

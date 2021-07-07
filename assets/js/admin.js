@@ -1,5 +1,6 @@
 import $ from 'jquery';
 require('bootstrap');
+const bootbox = require('bootbox/bootbox');
 
 import 'datatables.net';
 import 'datatables.net-select-dt';
@@ -526,6 +527,116 @@ class Admin {
         })
     }
 
+    /**
+     * Actions sur les utilisateurs
+     */
+    runUsersActions = () => {
+        // SUSPEND
+        $('body').on('click', 'button.suspend_user', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/suspend_user/' + id;
+            bootbox.confirm({message : 'Are you sure you want to suspend this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                if (result == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        async: true,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.result != undefined && data.result == true) {
+                                let $td = $button.closest('tr').find('td:eq(5)');
+                                if ($td && $td.length > 0)
+                                    $td.html('<span class="text-warning">yes</span>');
+                                $button.removeClass('btn-warning').addClass('btn-success');
+                                $button.removeClass('suspend_user').addClass('unsuspend_user').attr('data-original-title', 'Unsuspend');
+                            } else {
+                                bootbox.alert('An error occured');
+                            }
+                        }
+                    });
+                }
+            }});
+        });
+        // UNSUSPEND
+        $('body').on('click', 'button.unsuspend_user', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/unsuspend_user/' + id;
+            bootbox.confirm({message : 'Are you sure you want to unsuspend this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    let $td = $button.closest('tr').find('td:eq(5)');
+                                    if ($td && $td.length > 0)
+                                        $td.html('<span class="text-success">no</span>');
+                                    $button.removeClass('btn-success').addClass('btn-warning');
+                                    $button.removeClass('unsuspend_user').addClass('suspend_user').attr('data-original-title', 'Suspend');
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+        // SUSPECT
+        $('body').on('click', 'button.suspect_user', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/suspect_user/' + id;
+            bootbox.confirm({message : 'Are you sure you want to mark this user as "suspect"', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    let $td = $button.closest('tr').find('td:eq(6)');
+                                    if ($td && $td.length > 0)
+                                        $td.html('<span class="text-warning">yes</span>');
+                                    $button.removeClass('btn-warning').addClass('btn-success');
+                                    $button.removeClass('suspect_user').addClass('raise_suspicion').attr('data-original-title', 'Raise suspicion');
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+        // RAISE SUSPICION
+        $('body').on('click', 'button.raise_suspicion', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/raise_suspicion/' + id;
+            bootbox.confirm({message : 'Are you sure you want to raise suspicion for this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    let $td = $button.closest('tr').find('td:eq(6)');
+                                    if ($td && $td.length > 0)
+                                        $td.html('<span class="text-success">no</span>');
+                                    $button.removeClass('btn-success').addClass('btn-warning');
+                                    $button.removeClass('raise_suspicion').addClass('suspect_user').attr('data-original-title', 'Mark user as "suspect"');
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+    }
+
     init = function() {
         this.runDatatableHome();
         this.runDatatableTask();
@@ -534,6 +645,7 @@ class Admin {
         this.seeDetailWork();
         this.runMap();
         this.getDetails();
+        this.runUsersActions();
 
         $('[data-toggle="tooltip"]').tooltip();
 

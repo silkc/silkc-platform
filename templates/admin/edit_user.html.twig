@@ -1,0 +1,88 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Admin
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_link_tags('admin') }}
+
+    <style>
+        legend.col-form-label {
+            margin-bottom: 8px !important;
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(form, {attr: attr|default({})}) }}
+
+                <div class="form-block">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            {{ form_row(form.firstname) }}
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            {{ form_row(form.lastname) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        {{ form_row(form.username) }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form_row(form.email) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        {{ form_row(form.roles) }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form_row(form.dateOfBirth) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        {# {{ form_row(form.address) }} #}
+                        <label>{{ 'login.form.label.city'|trans }}</label>
+                        <div id="searchmap"></div>
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                {% if form.offsetExists('password') %}
+                    <div class="row special">
+                        {{ form_row(form.password) }}
+                    </div>
+                {% endif %}
+
+                <div class="form-group button-group text-right">
+                    {{ form_widget(form.save, {'label': 'label.save'|trans }) }}
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    {% include 'admin/elements/modal.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    {{ encore_entry_script_tags('main') }}
+    {{ encore_entry_script_tags('admin') }}
+    {{ encore_entry_script_tags('common') }}
+{% endblock %}

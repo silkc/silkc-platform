@@ -14,6 +14,7 @@ label:
     location: Location
     duration: Duration
     description: Description
+    roles: Roles
     price: Price
     start_at: Start at
     end_at: End at
@@ -34,6 +35,10 @@ button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learn
     suspend: Suspend
+    unsuspend: Unsuspend
+    suspect: Mark user as "suspect"
+    raise_suspicion: Raise suspicion
+    edit: Edit
 header:
     my_institution: My institution    
     my_account: My account    
@@ -81,8 +86,13 @@ user:
     firstname: Firstname
     lastname: Lastname
     username: Username
-    suspended: Suspendu ?
-    suspect: Suspect ?
+    is_suspended: Suspendu ?
+    is_suspected: Suspect ?
+    role_user: user
+    role_institution: institution
+    role_admin: admin
+    role: Profil
+    create_user: Create user
 task:
     label:
         name: Name
@@ -104,6 +114,7 @@ login:
     form:
         disconnect_button: Sign out
         admin_access_button: Admin access
+        log_in: Log in
         title:
             connect: Connect
             signup: Inscription
@@ -186,6 +197,8 @@ training_opportunities_to_land_your_dream_job_as: Training opportunities to land
 i_am_an_institution: I am an institution
 i_am_a_user: I am a user
 training: Training
+yes: yes
+no: no
 
 flash:
     your_account_is_validated: Votre compte est maintenant validé, merci.

@@ -1,8 +1,20 @@
+<p class="text-right">
+    <a href="#" class="btn btn-success">
+        <i class="fas fa-user-plus"></i>
+        {{ 'user.create_user'|trans }}
+    </a>
+</p>
+
 <table id="datatable-user" class="table table-striped table-bordered" style="width:100%">
     <thead>
     <tr>
-        <th>{{ 'user.label'|trans }}</th>
-        <th>{{ 'user.description'|trans }}</th>
+        <th>{{ 'id'|trans }}</th>
+        <th>{{ 'user.firstname'|trans }}</th>
+        <th>{{ 'user.lastname'|trans }}</th>
+        <th>{{ 'user.username'|trans }}</th>
+        <th>{{ 'user.role'|trans }}</th>
+        <th>{{ 'user.is_suspended'|trans }}</th>
+        <th>{{ 'user.is_suspected'|trans }}</th>
         <th></th>
     </tr>
     </thead>
@@ -10,14 +22,57 @@
     {% if users is defined and users is iterable and users|length > 0 %}
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username  }}</td>
+                <td class="text-center">{{ user.id }}</td>
                 <td>{{ user.firstname  }}</td>
                 <td>{{ user.lastname  }}</td>
+                <td>{{ user.username  }}</td>
+                <td class="text-center">
+                    <span class="badge badge-info">
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            {{ 'user.role_admin'|trans }}
+                        {% elseif 'ROLE_INSTITUTION' in user.roles %}
+                            {{ 'user.role_institution'|trans }}
+                        {% elseif 'ROLE_USER' in user.roles %}
+                            {{ 'user.role_user'|trans }}
+                        {% endif %}
+                    </span>
+                </td>
+                <td class="text-center">
+                    {% if user.isSuspended == true %}
+                        <span class="text-warning">{{ 'yes'|trans }}</span>
+                    {% else %}
+                        <span class="text-success">{{ 'no'|trans }}</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if user.isSuspected == true %}
+                        <span class="text-warning">{{ 'yes'|trans }}</span>
+                    {% else %}
+                        <span class="text-success">{{ 'no'|trans }}</span>
+                    {% endif %}
+                </td>
                 <td>
-                    <button class="btn btn-info" data-id="{{ user.id }}">
-                        <i class="fas fa-ban"></i> {{ 'button.suspend'|trans }}
-                    </button>
+                    <a href="{{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-sm btn-info" data-id="{{ user.id }}" data-toggle="tooltip" title="{{ 'button.edit'|trans }}">
+                        <i class="fas fa-user-edit"></i>
+                    </a>
+                    {% if user.isSuspended == false %}
+                        <button class="btn btn-sm btn-warning suspend_user" data-id="{{ user.id }}" data-toggle="tooltip" title="{{ 'button.suspend'|trans }}">
+                            <i class="fas fa-ban"></i>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-sm btn-success unsuspend_user" data-id="{{ user.id }}" data-toggle="tooltip" title="{{ 'button.unsuspend'|trans }}">
+                            <i class="fas fa-ban"></i>
+                        </button>
+                    {% endif %}
+                    {% if user.isSuspected == false %}
+                        <button class="btn btn-sm btn-warning suspect_user" data-id="{{ user.id }}" data-toggle="tooltip" title="{{ 'button.suspect'|trans }}">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-sm btn-success raise_suspicion" data-id="{{ user.id }}" data-toggle="tooltip" title="{{ 'button.raise_suspicion'|trans }}">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </button>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
