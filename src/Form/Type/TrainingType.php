@@ -78,11 +78,13 @@ class TrainingType extends AbstractType
                 'translation_domain' => 'messages',
                 'label' => 'label.start_at',
                 'required' => false,
+                'widget' => 'single_text',
             ])
             ->add('endAt', DateTimeType::class, [
                 'translation_domain' => 'messages',
                 'label' => 'label.end_at',
                 'required' => false,
+                'widget' => 'single_text',
             ])
             ->add('isOnline', CheckboxType::class, [
                 'translation_domain' => 'messages',

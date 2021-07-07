@@ -14,6 +14,7 @@ label:
     location: Location
     duration: Duration
     description: Description
+    roles: Roles
     price: Price
     start_at: Start at
     end_at: End at
@@ -33,20 +34,27 @@ label:
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learn
+    suspend: Suspend
+    unsuspend: Unsuspend
+    suspect: Mark user as "suspect"
+    raise_suspicion: Raise suspicion
+    edit: Edit
 header:
     my_institution: My institution    
     my_account: My account    
     full_search_page: Full search page    
+    intro: Skills Integration in a Learning, Knowledge and Career PATHway    
 
 nav:
     home: Home
-    personal_informations: Personal informations
+    personal_informations: My account
     institutional_informations: Institutional informations
     work: Work
     training: Training
-    change_password: Change password
+    change_password: Password
     skills: Skills
     tasks: Tasks
+    users: Users
 
 notification:
     label:
@@ -74,6 +82,19 @@ work:
     label: label
     description: Description
 
+user:
+    id: ID
+    firstname: Firstname
+    lastname: Lastname
+    username: Username
+    is_suspended: Suspendu ?
+    is_suspected: Suspect ?
+    role_user: user
+    role_institution: institution
+    role_admin: admin
+    role: Profil
+    create_user: Create user
+    edit_user_breadcrumb: Edit %username%
 task:
     label:
         name: Name
@@ -93,8 +114,10 @@ task:
 
 login:
     form:
+        not_identical_password: Les mots de passe saisis ne sont pas identiques.
         disconnect_button: Sign out
         admin_access_button: Admin access
+        log_in: Log in
         title:
             connect: Connect
             signup: Inscription
@@ -138,14 +161,14 @@ email:
     this_link_is_valid_for_minutes: This link is valid for 60 minutes. If you do not use it within this period on the SILKC application, you can resend a new one.
     if_you_receive_this_email: If you receive this email for no apparent reason, you can still report suspicious behavior to your support team.
     change_password: Change password
-
+    change_password_content: "Hello, if you have requested to change your password, please click on the following link :"
 home:
     let_improve: <span>Let's improve</span><span>your professional situation!</span>
     find_out_how_to_get_there: Find out how to get there!
     search_by_occupation: Search by occupation
     search_by_skill: Search by skill
     training_available: training available
-    people_have_found_a_trining_through_the_silkc_path: people have found a trining through the Silkc Path
+    people_have_found_a_trining_through_the_silkc_path: people have found a training through the Silkc Path
     registered_job: registered job
 
 no_result_found : No result found
@@ -176,3 +199,19 @@ training_opportunities_to_land_your_dream_job_as: Training opportunities to land
 i_am_an_institution: I am an institution
 i_am_a_user: I am a user
 training: Training
+yes: yes
+no: no
+
+flash:
+    your_account_is_validated: Votre compte est maintenant validé, merci.
+    invalid_code: Le code de validation est invalide.
+    expired_code: Code expired.
+    unknown_email: Unknown email.
+    unknown_user: Unknown user.
+    validation_link_has_been_sent: A validation link has been sent to you by e-mail
+    an_error_occured: An error occured
+    email_already_exists: Cet adresse e-mail est déjà utilisée
+    username_already_exists: Cet identifiant est déjà utilisé
+    your_password_is_changed: Your password is changed.
+    non_identical_password: Non-identical passwords.
+
