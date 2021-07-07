@@ -113,9 +113,66 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/create_user", name="create_user", methods={"GET", "POST"})
+     */
+    public function create_user(
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder
+    )
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true, 'enable_password' => true]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0)
+                return new Response((string) $errors, 400);
+
+            $createdAt = new \DateTime('now');
+            $password = $user->getPassword();
+            $password = $passwordEncoder->encodePassword($user, $password);
+            $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
+
+            $user->setTokenCreatedAt($createdAt);
+            $user->setCreatedAt($createdAt);
+            $user->setApiToken($apiToken);
+            $user->setPassword($password);
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            return $this->redirectToRoute('admin_edit_user', ['id' => $user->getId()]);
+        }
+
+        setcookie('tab_admin_silkc', 8, time() + 86400, "/");
+
+        return $this->render(
+            'admin/edit_user.html.twig',
+            [
+                'user' => $user,
+                'form' => $form->createView()
+            ]
+        );
+    }
+
+    /**
      * @Route("/edit_user/{id}", name="edit_user", methods={"GET", "POST"})
      */
-    public function edit_user(User $user, Request $request, ValidatorInterface $validator, TranslatorInterface $translator)
+    public function edit_user(
+        User $user,
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder
+    )
     {
         $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true]);
 

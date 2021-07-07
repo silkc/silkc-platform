@@ -107,8 +107,19 @@ class UserType extends AbstractType
                     'type'               => PasswordType::class,
                     'translation_domain' => 'messages',
                     'required'           => (array_key_exists('require_password', $options) && $options['require_password'] === true) ? true : false,
-                    'first_options'      => ['label' => 'login.form.label.password', "always_empty" => true],
-                    'second_options'     => ['label' => 'login.form.label.confirm_password', 'always_empty' => true],
+                    'first_options'      => ['label' => 'login.form.label.password.first', "always_empty" => true],
+                    'second_options'     => ['label' => 'login.form.label.password.second', 'always_empty' => true],
+                    'invalid_message'    => 'login.form.not_identical_password',
+                ]);
+            }
+            if (array_key_exists('enable_password', $options) && $options['enable_password'] === true) {
+                $builder->add('password', RepeatedType::class, [
+                    'type'               => PasswordType::class,
+                    'translation_domain' => 'messages',
+                    'required'           => false,
+                    'options'            => ['translation_domain' => 'messages'],
+                    'first_options'      => ['translation_domain' => 'messages', 'label' => 'login.form.label.password.first', "always_empty" => true],
+                    'second_options'     => ['translation_domain' => 'messages', 'label' => 'login.form.label.password.second', 'always_empty' => true],
                     'invalid_message'    => 'login.form.not_identical_password',
                 ]);
             }
@@ -142,6 +153,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'enable_password' => false,
             'require_password' => false,
             'is_personal' => false,
             'by_admin' => false,

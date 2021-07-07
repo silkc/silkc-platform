@@ -20,11 +20,10 @@
 
 {% block content %}
     <div class="container">
-
         <nav aria-label="breadcrumb" class="mt-4">
             <ol class="breadcrumb create_training">
                 <li class="breadcrumb-item"><a href="{{ path('admin_home')}}">{{ 'nav.users'|trans }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ attribute(user, 'username') is defined ? user.username : '' }} </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ 'user.edit_user_breadcrumb'|trans({'%username%': (user.username is not empty) ? user.username : user.firstname ~ ' ' ~ user.lastname}) }} </li>
             </ol>
         </nav>
 
@@ -62,18 +61,19 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
+                        {% if form.offsetExists('password') %}
+                            <div class="row special">
+                                {{ form_row(form.password) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-6">
                         {# {{ form_row(form.address) }} #}
                         <label>{{ 'login.form.label.city'|trans }}</label>
                         <div id="searchmap"></div>
                         <div id="map"></div>
                     </div>
                 </div>
-
-                {% if form.offsetExists('password') %}
-                    <div class="row special">
-                        {{ form_row(form.password) }}
-                    </div>
-                {% endif %}
 
                 <div class="form-group button-group text-right">
                     {{ form_widget(form.save, {'label': 'label.save'|trans }) }}

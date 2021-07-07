@@ -85,10 +85,7 @@ class SecurityController extends AbstractController
                 $errors = $validator->validate($user);
 
                 if (count($errors) > 0) {
-                    foreach ($errors as $error) {
-                        var_dump($error->getMessage());
-                    }
-                    die('a');
+                    return new Response((string) $errors, 400);
                 }
 
                 $entityManager = $this->getDoctrine()->getManager();

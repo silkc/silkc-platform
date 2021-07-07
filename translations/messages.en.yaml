@@ -93,6 +93,7 @@ user:
     role_admin: admin
     role: Profil
     create_user: Create user
+    edit_user_breadcrumb: Edit %username%
 task:
     label:
         name: Name
@@ -112,6 +113,7 @@ task:
 
 login:
     form:
+        not_identical_password: Les mots de passe saisis ne sont pas identiques.
         disconnect_button: Sign out
         admin_access_button: Admin access
         log_in: Log in
@@ -150,7 +152,6 @@ login:
         sign_up: Sign up
         sign_in: Sign in
         sign_out: Sign out
-        not_identical_password: Les mots de passe saisis ne sont pas identiques.
    
 email:
     validate_your_account: Validate your account
@@ -166,7 +167,7 @@ home:
     search_by_occupation: Search by occupation
     search_by_skill: Search by skill
     training_available: training available
-    people_have_found_a_trining_through_the_silkc_path: people have found a trining through the Silkc Path
+    people_have_found_a_trining_through_the_silkc_path: people have found a training through the Silkc Path
     registered_job: registered job
 
 no_result_found : No result found
