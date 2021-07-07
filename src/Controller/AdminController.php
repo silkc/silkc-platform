@@ -55,8 +55,9 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
-        $tab = 1;
-
+        $tab = (array_key_exists('tab_admin_silkc', $_COOKIE)) ? $_COOKIE['tab_admin_silkc'] : 1;
+        setcookie('tab_admin_silkc', "", time() - 3600, "/");
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $tab = 3;
 
@@ -133,6 +134,8 @@ class AdminController extends AbstractController
 
             $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
         }
+
+        setcookie('tab_admin_silkc', 8, time() + 86400, "/");
 
         return $this->render(
             'admin/edit_user.html.twig',

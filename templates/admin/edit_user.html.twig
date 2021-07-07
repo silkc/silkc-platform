@@ -20,6 +20,15 @@
 
 {% block content %}
     <div class="container">
+
+        <nav aria-label="breadcrumb" class="mt-4">
+            <ol class="breadcrumb create_training">
+                <li class="breadcrumb-item"><a href="{{ path('admin_home')}}">{{ 'nav.users'|trans }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ attribute(user, 'username') is defined ? user.username : '' }} </li>
+            </ol>
+        </nav>
+
+
         <div class="row">
             <div class="col-md-12">
                 {{ form_start(form, {attr: attr|default({})}) }}
