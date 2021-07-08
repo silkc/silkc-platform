@@ -168,8 +168,8 @@ home:
     search_by_occupation: Search by occupation
     search_by_skill: Search by skill
     training_available: training available
-    people_have_found_a_trining_through_the_silkc_path: people have found a training through the Silkc Path
-    registered_job: registered job
+    people_have_found_a_trining_through_the_silkc_path: people have found a tr(a)ining through SILKC platform
+    registered_job: registered jobs
 
 no_result_found : No result found
 required_skills : Required skills

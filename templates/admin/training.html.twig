@@ -15,7 +15,7 @@
                     <td>{{ training.name }}</td>
                     <td>{{ training.createdAt|date('Y/m/d') }}</td>
                     <td>
-                        {{ training.user.firstname ~ ' ' ~ training.user.lastname }}
+                        {{ (training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles) ? training.user.username : training.user.firstname ~ ' ' ~ training.user.lastname }}
                         <i class="fas fa-info-circle" data-toggle="tooltip" title="{{ training.user.email }}"></i>
                     </td>
                     <td>
