@@ -31,7 +31,13 @@
 											<span class="title">{{ 'label.institution_name'|trans  }}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '-' }}</span>
+											<span>
+												{% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
+													{{ training.user.username|capitalize }}
+												{% else %}
+													{{ training.user.firstname ~ ' ' ~ training.user.lastname }}
+												{% endif %}
+											</span>
 										</div>
 									</div>
 
