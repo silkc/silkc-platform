@@ -22,7 +22,8 @@
     <div class="container">
         <nav aria-label="breadcrumb" class="mt-4">
             <ol class="breadcrumb create_training">
-                <li class="breadcrumb-item"><a href="{{ path('admin_home')}}">{{ 'nav.users'|trans }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('admin_home', {tab: 'home'})}}">{{ 'nav.home'|trans }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('admin_home', {tab: 'user'})}}">{{ 'nav.users'|trans }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ 'user.edit_user_breadcrumb'|trans({'%username%': (user.username is not empty) ? user.username : user.firstname ~ ' ' ~ user.lastname}) }} </li>
             </ol>
         </nav>

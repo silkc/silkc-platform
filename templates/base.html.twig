@@ -12,6 +12,7 @@
         
 		</head>
 		<body data-token="{{ user is defined and attribute(user, 'apiToken') is defined ? user.apiToken : false }}" class="{% block body_class %}{% endblock %}">
+			{% block carousel %}{% endblock %}
 			{% block header %}{% endblock %}
 			{% block body %}{% endblock %}
 			{% block javascripts %}{% endblock %}

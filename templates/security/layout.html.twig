@@ -6,12 +6,16 @@
 
 {% block title %}Administration{% endblock %}
 
+{% block carousel %}
+{% include 'security/carousel.html.twig' %}
+{% endblock %}
+
 {% block body %}
-<div class="wrapper d-flex align-items-stretch">
+<div class="wrapper d-flex align-items-stretch" style="height: 100%;">
 
     <!-- Page Content  -->
     <div class="container-fluid px-0">
-        <div id="content">
+        <div id="content" style="height: 100%;">
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }} alert-dismissible">

@@ -31,9 +31,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/{tab}", name="home")
      */
     public function index(
+        $tab = 'home',
         Request $request,
         ValidatorInterface $validator,
         TranslatorInterface $translator,
@@ -55,11 +56,9 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
-        $tab = (array_key_exists('tab_admin_silkc', $_COOKIE)) ? $_COOKIE['tab_admin_silkc'] : 1;
-        setcookie('tab_admin_silkc', "", time() - 3600, "/");
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $tab = 3;
+            $tab = 'personal_informations';
 
             $em = $this->getDoctrine()->getManager();
 
@@ -80,7 +79,7 @@ class AdminController extends AbstractController
                 return new Response($errorsString);
             }
 
-            $tab = 7;
+            $tab = 'change_password';
 
             //$data = $request->request->all('user_password');
             //$result = $passwordEncoder->isPasswordValid($user, 'test');
@@ -152,8 +151,6 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_edit_user', ['id' => $user->getId()]);
         }
 
-        setcookie('tab_admin_silkc', 8, time() + 86400, "/");
-
         return $this->render(
             'admin/edit_user.html.twig',
             [
@@ -191,8 +188,6 @@ class AdminController extends AbstractController
 
             $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
         }
-
-        setcookie('tab_admin_silkc', 8, time() + 86400, "/");
 
         return $this->render(
             'admin/edit_user.html.twig',
