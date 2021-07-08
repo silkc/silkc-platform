@@ -94,7 +94,7 @@ class UserType extends AbstractType
             ])
             ->add('dateOfBirth', ChoiceType::class, [
                 'choices' => $dateChoices,
-                'label' => 'login.form.label.year_of_birth',
+                'label' => array_key_exists('is_personal', $options) && $options['is_personal'] === true ? 'login.form.label.year_of_birth' : 'login.form.label.year_of_creation',
                 'translation_domain' => 'messages',
                 'required'   => false,
                 'multiple' => false,
