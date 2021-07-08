@@ -87,9 +87,10 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/account", name="account")
+     * @Route("/account/{tab}", name="account")
      */
     public function account(
+        $tab = 'personal_informations',
         Request $request,
         ValidatorInterface $validator,
         TranslatorInterface $translator,
@@ -108,8 +109,6 @@ class HomeController extends AbstractController
 
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
-
-        $tab = 1;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -132,7 +131,7 @@ class HomeController extends AbstractController
                 dd($errors);
             }
 
-            $tab = 5;
+            $tab = 'change_password';
 
             //$data = $request->request->all('user_password');
             //$result = $passwordEncoder->isPasswordValid($user, 'test');
@@ -158,9 +157,10 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/institution", name="institution")
+     * @Route("/institution/{tab}", name="institution")
      */
     public function institution(
+        $tab = 'personal_informations',
         Request $request,
         TrainingRepository $trainingRepository,
         ValidatorInterface $validator,
@@ -178,8 +178,6 @@ class HomeController extends AbstractController
 
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
-
-        $tab = 1;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -203,7 +201,7 @@ class HomeController extends AbstractController
                 dd($errors);
             }
 
-            $tab = 3;
+            $tab = 'change_password';
 
             //$data = $request->request->all('user_password');
             //$result = $passwordEncoder->isPasswordValid($user, 'test');

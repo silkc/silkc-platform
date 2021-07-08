@@ -164,3 +164,9 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
   }
 }
+
+.img-bottom {
+    img {
+        max-width: 100%;
+    }
+}
