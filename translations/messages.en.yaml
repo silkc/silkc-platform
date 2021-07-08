@@ -43,7 +43,7 @@ header:
     my_institution: My institution    
     my_account: My account    
     full_search_page: Full search page    
-    intro: Skills Integration in a Learning, Knowledge and Career PATHway    
+    intro: Skills Integration in a Learning Knowledge and Career PATHway
 
 nav:
     home: Home
@@ -168,7 +168,7 @@ home:
     search_by_occupation: Search by occupation
     search_by_skill: Search by skill
     training_available: training available
-    people_have_found_a_trining_through_the_silkc_path: people have found a tr(a)ining through SILKC platform
+    people_have_found_a_trining_through_the_silkc_path: people have found a training through SILKC platform
     registered_job: registered jobs
 
 no_result_found : No result found
