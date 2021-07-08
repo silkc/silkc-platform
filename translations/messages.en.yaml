@@ -201,6 +201,7 @@ i_am_a_user: I am a user
 training: Training
 yes: yes
 no: no
+list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
 
 flash:
     your_account_is_validated: Votre compte est maintenant validé, merci.

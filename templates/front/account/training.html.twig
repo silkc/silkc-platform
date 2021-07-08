@@ -19,7 +19,12 @@
         %}
         <a href="{{ path('app_training_create') }}" >{{ 'don_t_find_your_training'|trans }}</a>
 	</div>
+
 	<div class="list-trainings">
+		<div class="info">
+			{{ 'list_of_professional_training_you_have_previously_followed'|trans }}
+		</div>
+
 		<ul class="list-group">
 			{% if user.trainings is defined %}
 				{% for k, training in user.trainings %}
@@ -30,10 +35,10 @@
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
 							<a href="" class="link mr-2" title="Skills linked to this training">
-								<i class="fas fa-link text-primary"></i>
+								<i class="fas fa-search text-primary"></i>
 							</a>
 							<a href="" class="text-danger item rmv mr-2" title="Remove this training" data-name="{{ training.name }}" data-id="{{ training.id }}" data-url="url de suppression">
-								<i class="fas fa-trash-alt text-danger"></i>
+								<i class="fas fa-unlink text-danger"></i>
 							</a>
 							<a href="" class="text-success feedback" title="Provide feedback">
 								<i class="fas fa-plus text-primary"></i>
@@ -42,6 +47,7 @@
 					</li>
 				{% endfor %}
 			{% endif %}
+			<span class="no_training_result" style="{{ (user.trainings is defined and user.trainings|length > 0) ? 'display: none;' }}">{{ 'no_result_found'|trans }}</span>
 		</ul>
 	</div>
 </fieldset>
