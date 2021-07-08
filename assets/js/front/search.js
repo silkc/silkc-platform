@@ -19,7 +19,34 @@ class Search {
         return this.instanceProperty;
     }
 
+
+    initSelectTypeSearch = () => {
+        let checkbox = $('.checkbox-search input[name="search-by"]');
+        let blcSearch = $('.blc-search-by');
+        checkbox.on('change', function () {
+            let typeSearch = this.value;
+            if (typeSearch) {
+                blcSearch.hide();
+                $(typeSearch).show();
+            }
+        });
+
+        window.addEventListener('resize', function () {
+            let widthWindow = $(window).outerWidth();
+            if(widthWindow > 767) {
+                blcSearch.show();
+                $('.checkbox-search input[name="search-by"][value="#blc-search-by-occupation"]').prop('checked', true);
+            }
+            if(widthWindow < 768) {
+                $('#blc-search-by-occupation').show();
+                $('#blc-search-by-skill').hide();
+                $('.checkbox-search input[name="search-by"][value="#blc-search-by-occupation"]').prop('checked', true);
+            }
+        });
+    }
+
     init = function() {
+        this.initSelectTypeSearch();
     }
 }
 

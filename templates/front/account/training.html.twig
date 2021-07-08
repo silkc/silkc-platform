@@ -47,7 +47,7 @@
 					</li>
 				{% endfor %}
 			{% endif %}
-			<span class="no_training_result" style="{{ (user.trainings is defined and user.trainings|length > 0) ? 'display: none;' }}">{{ 'no_result_found'|trans }}</span>
+			<li class="no_training_result" style="{{ (user.trainings is defined and user.trainings|length > 0) ? 'display: none;' }}">{{ 'no_result_found'|trans }}</li>
 		</ul>
 	</div>
 </fieldset>

@@ -170,3 +170,18 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         max-width: 100%;
     }
 }
+
+.checkbox-search {
+    display: none;
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    #blc-search-by-skill {
+        display: none;
+    }
+
+    .checkbox-search {
+        display: block;
+    }
+}

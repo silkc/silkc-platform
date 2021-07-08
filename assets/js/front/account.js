@@ -56,10 +56,10 @@ class Account {
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
                 <a href="" class="link mr-2" title="Skills linked to this training">
-                    <i class="fas fa-link text-primary"></i>
+                    <i class="fas fa-search text-primary"></i>
                 </a>
                 <a href="" class="text-danger item rmv mr-2" title="Remove this training" data-name="${training.name}" data-id="${training.id}" >
-                    <i class="fas fa-trash-alt text-danger"></i>
+                    <i class="fas fa-unlink text-danger"></i>
                 </a>
                 <a href="" class="text-success feedback" title="Provide feedback">
                     <i class="fas fa-plus text-primary"></i>
@@ -453,6 +453,11 @@ class Account {
                 if (ul) {
                     let li = _this.tplTraining(training);
                     $(ul).append(li);
+
+                    if (ul.find('li.list-group-item').length == 0)
+                        $('.no_training_result').show();
+                    else
+                        $('.no_training_result').hide();
                 }
             }
         });
@@ -471,6 +476,7 @@ class Account {
             let inputTrainings = $('body').find('#trainings[type="hidden"]');
             let id = $(this).attr('data-id');
             let li = $(this).closest('li');
+            let ul = $('body').find('#content-training .list-trainings .list-group');
             
             if (inputTrainings && inputTrainings.val()) {
                 let trainingsList = JSON.parse(inputTrainings.val());
@@ -484,6 +490,10 @@ class Account {
 
                 if (li) {
                     li.remove();
+                    if (ul.find('li.list-group-item').length == 0)
+                        $('.no_training_result').show();
+                    else
+                        $('.no_training_result').hide();
                 }
             }
         });
