@@ -58,10 +58,16 @@
 
                         {% if app.user %}
                             <div class="mb-3">
-                                {{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }, 'trad') }},
+                                {{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }) }}
                                 <a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans }}</a>
                                 {{ 'login.form.or'|trans }}
-                                <a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans }}</a>
+								{% if is_granted('ROLE_ADMIN') %}
+									<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans }}</a>
+								{% elseif is_granted('ROLE_INSTITUTION') %}
+									<a href="{{ path('app_institution') }}">{{ 'login.form.institution_access_button'|trans }}</a>
+								{% elseif is_granted('ROLE_USER') %}
+									<a href="{{ path('app_home') }}">{{ 'login.form.user_access_button'|trans }}</a>
+								{% endif %}
                             </div>
                         {% endif %}
 

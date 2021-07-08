@@ -2,7 +2,7 @@
 	<div id="accordion">
 		{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
 			{% for training in trainings %}
-				<div class="card" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
+				<div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
 					<div class="card-header" id="heading{{ loop.index0 }}">
 						<h5 class="d-flex justify-content-between align-items-center">
 							<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">

@@ -114,9 +114,13 @@ task:
 
 login:
     form:
-        not_identical_password: Les mots de passe saisis ne sont pas identiques.
+        or: or
+        disconnect_message: "%username%, you are already connected, "
+        not_identical_password: The passwords entered are not identical.
         disconnect_button: Sign out
         admin_access_button: Admin access
+        user_access_button: User access
+        institution_access_button: Institution access
         log_in: Log in
         title:
             connect: Connect
