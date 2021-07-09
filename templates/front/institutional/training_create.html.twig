@@ -8,18 +8,21 @@
 {% block content %}
     {% autoescape false %}
     <div class="container">
-
         <nav aria-label="breadcrumb" class="mt-4">
             <ol class="breadcrumb create_training">
                 <li class="breadcrumb-item">
-                    {% if is_granted('ROLE_INSTITUTION') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('admin_home', {tab: 'home'})}}">{{ 'nav.home'|trans }}</a>
+                    {% elseif is_granted('ROLE_INSTITUTION') %}
                         <a href="{{ path('app_institution', {tab: 'personal_informations'})}}">{{ 'nav.home'|trans }}</a>
                     {% else %}
                         <a href="{{ path('app_account', {tab: 'personal_informations'} )}}">{{ 'nav.home'|trans }}</a>
                     {% endif %}
                 </li>
                 <li class="breadcrumb-item">
-                    {% if is_granted('ROLE_INSTITUTION') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('admin_home', {tab: 'training'})}}">{{ 'training'|trans }}</a>
+                    {% elseif is_granted('ROLE_INSTITUTION') %}
                         <a href="{{ path('app_institution', {tab: 'training'})}}">{{ 'training'|trans }}</a>
                     {% else %}
                         <a href="{{ path('app_account', {tab: 'training'} )}}">{{ 'training'|trans }}</a>

@@ -434,7 +434,12 @@ class Admin {
                                         </ul>
 									</div>
 								</div>
-							</div>`;
+							</div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <a href="/training/edit/${id}" class="btn btn-primary">Edit</a>
+                                </div>
+                            </div>`;
 
 
                         $modal.find('.modal-title').html(data.name ? data.name : '');
