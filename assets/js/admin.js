@@ -153,7 +153,7 @@ class Admin {
                 { width: '20px', targets: 2 }
             ],
             fixedColumns: true,
-            order: [[ 1, 'asc' ]]
+            order: [[ 0, 'asc' ]]
         });
     }
 
@@ -167,7 +167,7 @@ class Admin {
                 { width: '20px', targets: 2 }
             ],
             fixedColumns: true,
-            order: [[ 1, 'asc' ]]
+            order: [[ 0, 'asc' ]]
         });
     }
 
@@ -355,13 +355,17 @@ class Admin {
                             for (let k in data.trainingSkills) {
                                 let skill = data.trainingSkills[k].skill;
                                 if (data.trainingSkills[k].isRequired) {
-                                    requireSkillsHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                                            ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                    requireSkillsHTML += `<li>
+                                                            <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="" data-content="${skill.description ? skill.description : ''}" data-original-title="${skill.preferredLabel ? skill.preferredLabel : ''}">
+                                                                ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                            </span>
                                                         </li>`;
                                 }
                                 if (data.trainingSkills[k].isToAcquire) {
-                                    acquireSkillsHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                                            ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                    acquireSkillsHTML += `<li>
+                                                            <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="" data-content="${skill.description ? skill.description : ''}" data-original-title="${skill.preferredLabel ? skill.preferredLabel : ''}">
+                                                                ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                            </span>
                                                         </li>`;
                                 }
                             }
@@ -418,14 +422,14 @@ class Admin {
 									</div>
 									<div class="mb-3">
                                         <span class="required-skills d-block mb-3 title">Required skills</span>
-                                        <ul class="list-group">
+                                        <ul>
                                             ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : ''}
                                         </ul>
 									</div>
 
 									<div class="mb-3">
                                     <span class="required-skills d-block mb-3 title">Acquired skills</span>
-                                        <ul class="list-group">
+                                        <ul>
                                             ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
                                         </ul>
 									</div>
@@ -436,6 +440,9 @@ class Admin {
                         $modal.find('.modal-title').html(data.name ? data.name : '');
                         $(modalBodyHTML).appendTo($modal.find('.modal-body'));
                         $modal.find('.modal-dialog').addClass('modal-lg');
+
+                        $modal.find('[data-toggle="popover"]').popover();
+
                         $modal.modal('show');
                     }
                 }

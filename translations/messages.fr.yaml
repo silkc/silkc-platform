@@ -22,11 +22,11 @@ label:
     url: URL
     online: Online
     is_online_monitored: Is online monitored
-    is_presential: Is presential
+    is_presential: Is face to face
     save: Save
     create: Save
     edit_training: Save
-    pseudo: Pseudo
+    pseudo: Username
     close: Close
     institution_name: Institution name
     search: Search
@@ -43,7 +43,7 @@ header:
     my_institution: My institution    
     my_account: My account    
     full_search_page: Full search page    
-    intro: Skills Integration in a Learning, Knowledge and Career PATHway    
+    intro: Skills Integration in a Learning Knowledge and Career PATHway
 
 nav:
     home: Home
@@ -114,9 +114,13 @@ task:
 
 login:
     form:
-        not_identical_password: Les mots de passe saisis ne sont pas identiques.
+        or: or
+        disconnect_message: "%username%, you are already connected, "
+        not_identical_password: The passwords entered are not identical.
         disconnect_button: Sign out
         admin_access_button: Admin access
+        user_access_button: User access
+        institution_access_button: Institution access
         log_in: Log in
         title:
             connect: Connect
@@ -127,7 +131,7 @@ login:
             username: Username
             firstname: Firstname
             institution_name: Institution name
-            pseudo: Pseudo
+            pseudo: Username
             lastname: Lastname
             email: Email
             email_or_username: Email or username
@@ -168,16 +172,16 @@ home:
     search_by_occupation: Search by occupation
     search_by_skill: Search by skill
     training_available: training available
-    people_have_found_a_trining_through_the_silkc_path: people have found a training through the Silkc Path
-    registered_job: registered job
+    people_have_found_a_trining_through_the_silkc_path: people have found a training through SILKC platform
+    registered_job: registered jobs
 
 no_result_found : No result found
 required_skills : Required skills
 acquired_skills : Acquired skills
 skills_you_can_acquire : Skills you can acquire
 no_item: No element
-esco: ESCO
-no_esco: NO ESCO
+esco: In ESCO for this occupation
+no_esco: Not in ESCO for this occupation
 
 the_following_skills_have_been_calculated_based: The following skills have been calculated based on your work experiences and training history
 see_more: See more
@@ -201,17 +205,18 @@ i_am_a_user: I am a user
 training: Training
 yes: yes
 no: no
+list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
 
 flash:
-    your_account_is_validated: Votre compte est maintenant validé, merci.
-    invalid_code: Le code de validation est invalide.
+    your_account_is_validated: Your account is now validated, thank you.
+    invalid_code: The validation code is invalid.
     expired_code: Code expired.
     unknown_email: Unknown email.
     unknown_user: Unknown user.
     validation_link_has_been_sent: A validation link has been sent to you by e-mail
     an_error_occured: An error occured
-    email_already_exists: Cet adresse e-mail est déjà utilisée
-    username_already_exists: Cet identifiant est déjà utilisé
+    email_already_exists: This email address is already in use
+    username_already_exists: This username is already in use
     your_password_is_changed: Your password is changed.
     non_identical_password: Non-identical passwords.
 

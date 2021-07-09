@@ -952,6 +952,35 @@ class Account {
         }
     }
 
+    /**
+     * Affichage feedback
+     */
+     displayFeedback = () => { 
+
+        $('body').on('click', '#content-training .feedback', function(e) {
+            e.preventDefault();
+
+            let $modal = $('#common-modal');
+            let id = $(this).attr('data-id');
+            let name = $(this).attr('data-name');
+            //let url = '/api/skills_by_occupation/' + id;
+            /*$.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {*/
+
+                    $modal.find('.modal-title').html(name ? name : '');
+
+
+                    $(`NOTE + DESCRIPTION`).appendTo($modal.find('.modal-body'));
+
+                    $('#common-modal').modal('show');
+                /*}
+            });*/
+        });
+    }
+
     init = function() {
         this.runDetail();
         this.runAutocompletion();
@@ -965,6 +994,7 @@ class Account {
         this.displaySkills();
         this.displayInfosSkill();
         this.displayMessage();
+        this.displayFeedback();
         this.runMap();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {

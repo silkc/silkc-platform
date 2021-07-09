@@ -26,7 +26,7 @@ label:
     save: Save
     create: Save
     edit_training: Save
-    pseudo: Pseudo
+    pseudo: Username
     close: Close
     institution_name: Institution name
     search: Search
@@ -131,7 +131,7 @@ login:
             username: Username
             firstname: Firstname
             institution_name: Institution name
-            pseudo: Pseudo
+            pseudo: Username
             lastname: Lastname
             email: Email
             email_or_username: Email or username

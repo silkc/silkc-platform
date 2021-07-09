@@ -41,58 +41,58 @@
 										</div>
 
 										<div class="form-group">
-											<label for="location_{{ k }}">{{ 'location.location'|trans }}</label>
+											<label for="location_{{ k }}">{{ 'label.location'|trans }}</label>
 											<input type="text" class="form-control" disabled id="location_{{ k }}" name="location" value="{{ attribute(training, 'location') is defined ? training.location : '' }}">
 										</div>
 
 										<div class="form-group">
-											<label for="duration_{{ k }}">{{ 'location.duration'|trans }}</label>
+											<label for="duration_{{ k }}">{{ 'label.duration'|trans }}</label>
 											<input type="text" class="form-control" disabled id="duration_{{ k }}" name="duration" value="{{ attribute(training, 'duration') is defined ? training.duration : '' }}">
 										</div>
 
 										<div class="form-group">
-											<label for="description_{{ k }}">{{ 'location.description'|trans }}</label>
+											<label for="description_{{ k }}">{{ 'label.description'|trans }}</label>
 											<textarea class="form-control" disabled id="description_{{ k }}" name="description">{{ attribute(training, 'description') is defined  ? training.description : '' }}</textarea>
 										</div>
 
 										<div class="form-group">
-											<label for="price_{{ k }}">{{ 'location.price'|trans }}</label>
+											<label for="price_{{ k }}">{{ 'label.price'|trans }}</label>
 											<input type="text" class="form-control" disabled id="price_{{ k }}" name="price" value="{{ attribute(training, 'price') is defined ? training.price : '' }}">
 										</div>
 
 										<div class="form-group">
-											<label for="start-date_{{ k }}">{{ 'location.start_at'|trans }}</label>
+											<label for="start-date_{{ k }}">{{ 'label.start_at'|trans }}</label>
 											<input type="date" class="form-control" disabled id="start-date_{{ k }}" name="start_at" value="{{ attribute(training, 'start_at') is defined ? training.start_at : '' }}">
 										</div>
 
 										<div class="form-group">
-											<label for="end-date_{{ k }}">{{ 'location.end_at'|trans }}</label>
+											<label for="end-date_{{ k }}">{{ 'label.end_at'|trans }}</label>
 											<input type="date" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ attribute(training, 'end_at') is defined ? training.end_at : '' }}">
 										</div>
 
 										<div class="form-group">
-											<label for="training-info-url_{{ k }}">{{ 'location.training_info_url'|trans }}</label>
+											<label for="training-info-url_{{ k }}">{{ 'label.training_info_url'|trans }}</label>
 											<input type="url" class="form-control" disabled id="training-info-url_{{ k }}" name="url" value="{{ attribute(training, 'url') is defined ? training.url : '' }}">
 										</div>
 
 										<div class="form-group">
 											<div class="form-check">
 												<input type="checkbox" id="training_isOnline_{{ k }}" name="training-online_{{ k }}" class="form-check-input" value="1" disabled {{ attribute(training, 'isOnline') is defined and training.isOnline == 1 ? 'checked="checked"' : '' }}>
-												<label class="form-check-label" for="training_isOnline_{{ k }}">{{ 'location.online'|trans }}</label>
+												<label class="form-check-label" for="training_isOnline_{{ k }}">{{ 'label.online'|trans }}</label>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<div class="form-check">
 												<input type="checkbox" id="training_isOnline_monitored_{{ k }}" name="training-online_monitored_{{ k }}" class="form-check-input" value="1" disabled {{ attribute(training, 'isOnlineMonitored') is defined and training.isOnlineMonitored == 1 ? 'checked="checked"' : '' }}>
-												<label class="form-check-label" for="training_isOnline_monitored_{{ k }}">{{ 'location.is_online_monitored'|trans }}</label>
+												<label class="form-check-label" for="training_isOnline_monitored_{{ k }}">{{ 'label.is_online_monitored'|trans }}</label>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<div class="form-check">
 												<input type="checkbox" id="training_presential_{{ k }}" name="training-presential_{{ k }}" class="form-check-input" value="1" disabled {{ attribute(training, 'isPresential') is defined and training.isPresential == 1 ? 'checked="checked"' : '' }}>
-												<label class="form-check-label" for="training_presential_{{ k }}">{{ 'location.is_presential'|trans }}</label>
+												<label class="form-check-label" for="training_presential_{{ k }}">{{ 'label.is_presential'|trans }}</label>
 											</div>
 										</div>
 									</div>
