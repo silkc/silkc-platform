@@ -268,6 +268,60 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/delete_training/{id}", name="delete_training", methods="POST")
+     */
+    public function delete_training(Training $training)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($training);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/approve_training/{id}", name="approve_training", methods="POST")
+     */
+    public function approve_training(Training $training)
+    {
+        $training->setIsRejected(false);
+        $training->setIsValidated(true);
+        $training->setValidatedAt(new \DateTime());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($training);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/reject_training/{id}", name="reject_training", methods="POST")
+     */
+    public function reject_training(Training $training)
+    {
+        $training->setIsValidated(false);
+        $training->setIsRejected(true);
+        $training->setRejectedAt(new \DateTime());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($training);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
      * @Route("/suspend_user/{id}", name="suspend_user", methods="POST")
      */
     public function suspend_user(User $user)
