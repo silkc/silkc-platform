@@ -46,6 +46,7 @@ header:
     intro: Skills Integration in a Learning Knowledge and Career PATHway
 
 nav:
+    dashboard: Dashboard
     home: Home
     personal_informations: My account
     institutional_informations: Institutional informations
