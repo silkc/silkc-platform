@@ -15,7 +15,7 @@
         <th>{{ 'user.role'|trans }}</th>
         <th>{{ 'user.is_suspended'|trans }}</th>
         <th>{{ 'user.is_suspected'|trans }}</th>
-        <th></th>
+        <th style="width: 90px;"></th>
     </tr>
     </thead>
     <tbody>
@@ -51,7 +51,7 @@
                         <span class="text-success">{{ 'no'|trans }}</span>
                     {% endif %}
                 </td>
-                <td>
+                <td style="width: 90px;">
                     <a href="{{ path('admin_edit_user', {'id': user.id}) }}" class="btn btn-sm btn-info" data-id="{{ user.id }}" data-toggle="tooltip" title="{{ 'button.edit'|trans }}">
                         <i class="fas fa-user-edit"></i>
                     </a>

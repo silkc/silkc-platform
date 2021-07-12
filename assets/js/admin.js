@@ -137,9 +137,33 @@ class Admin {
             info: false,
             lengthChange: false,
             columnDefs: [
-                { targets: [4], orderable: false}
+                {targets: [4], orderable: false},
             ],
             order: [[ 1, 'asc' ]]
+        });
+    }
+
+     runDatatableInstitution = () => {
+        let table = $('#datatable-institution').DataTable({
+            searching: false, 
+            info: false,
+            lengthChange: false,
+            columnDefs: [
+                {targets: [3], orderable: false},
+            ],
+            order: [[ 1, 'asc' ]]
+        });
+    }
+
+     runDatatableUsers = () => {
+        let table = $('#datatable-user').DataTable({
+            searching: false, 
+            info: false,
+            lengthChange: false,
+            columnDefs: [
+                {targets: [7], orderable: false},
+            ],
+            order: [[ 1, 'desc' ]]
         });
     }
 
@@ -540,6 +564,90 @@ class Admin {
     }
 
     /**
+     * Actions sur les trainings
+     */
+     runTrainingsActions = () => {
+        // APPROVE
+        $('body').on('click', 'button.approve_training', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/approve_training/' + id;
+            bootbox.confirm({message : 'Are you sure you want to approve this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                if (result == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        async: true,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.result != undefined && data.result == true) {
+                                let $td = $button.closest('tr').find('td:eq(3)');
+                                if ($td && $td.length > 0)
+                                    $td.html('<span class="text-success">Approve</span>');
+                                $button.removeClass('btn-warning').addClass('btn-success');
+                                $button.removeClass('reject_training').addClass('approve_training').attr('data-original-title', 'Approve');
+                            } else {
+                                bootbox.alert('An error occured');
+                            }
+                        }
+                    });
+                }
+            }});
+        });
+        // REJECT
+        $('body').on('click', 'button.reject_training', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/reject_training/' + id;
+            bootbox.confirm({message : 'Do you really want to reject this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    let $td = $button.closest('tr').find('td:eq(3)');
+                                    if ($td && $td.length > 0)
+                                        $td.html('<span class="text-success">Reject</span>');
+                                    $button.removeClass('btn-success').addClass('btn-warning');
+                                    $button.removeClass('approve_training').addClass('reject_training').attr('data-original-title', 'Reject');
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+        // DELETE
+        $('body').on('click', 'button.delete_training', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/delete_training/' + id;
+            bootbox.confirm({message : 'Are you sure you want to delete this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $('#datatable-task').DataTable()
+                                        .row( $button.closest('tr') )
+                                        .remove()
+                                        .draw();
+                                    
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+    }
+
+    /**
      * Actions sur les utilisateurs
      */
     runUsersActions = () => {
@@ -652,12 +760,15 @@ class Admin {
     init = function() {
         this.runDatatableHome();
         this.runDatatableTask();
+        this.runDatatableInstitution();
+        this.runDatatableUsers();
         this.runDatatableWork();
         this.runDatatableSkill();
         this.seeDetailWork();
         this.runMap();
         this.getDetails();
         this.runUsersActions();
+        this.runTrainingsActions();
 
         $('[data-toggle="tooltip"]').tooltip();
 

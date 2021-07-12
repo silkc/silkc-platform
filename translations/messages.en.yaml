@@ -39,6 +39,10 @@ button:
     suspect: Mark user as "suspect"
     raise_suspicion: Raise suspicion
     edit: Edit
+    delete: Delete
+    approve: Approve
+    detail: Detail
+    reject: Reject
 header:
     my_institution: My institution    
     my_account: My account    

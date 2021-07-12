@@ -17,8 +17,11 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     =   Search
 ============================================================================= */
 #search {
-  background: url("../images/banner_search.jpg") no-repeat center / cover;
   padding-bottom: 75px;
+  animation: bgSearch 60s infinite linear;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
 
   .intro {
     margin: 0;
@@ -166,22 +169,43 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 .img-bottom {
-    img {
-        max-width: 100%;
-    }
+  img {
+    max-width: 100%;
+  }
 }
 
 .checkbox-search {
-    display: none;
-    color: #fff;
+  display: none;
+  color: #fff;
 }
 
 @media (max-width: 767px) {
-    #blc-search-by-skill {
-        display: none;
-    }
+  #blc-search-by-skill {
+    display: none;
+  }
 
-    .checkbox-search {
-        display: block;
-    }
+  .checkbox-search {
+    display: block;
+  }
+}
+
+@keyframes bgSearch {
+  0% {
+    background-image: url("../images/search/01.jpg");
+  }
+  16% {
+    background-image: url("../images/search/02.jpg");
+  }
+  33% {
+    background-image: url("../images/search/03.jpg");
+  }
+  50% {
+    background-image: url("../images/search/04.jpg");
+  }
+  66% {
+    background-image: url("../images/search/05.jpg");
+  }
+  82% {
+    background-image: url("../images/search/06.jpg");
+  }
 }

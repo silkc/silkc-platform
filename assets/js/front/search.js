@@ -45,8 +45,20 @@ class Search {
         });
     }
 
+
+    carouselSearch = () => {
+        let imgs = ['01.jpg', '02.jpg', '01.jpg', '04.jpg', '05.jpg', '06.jpg'];
+        let cpt = 0;
+        setInterval(function() {
+            let img = imgs[cpt];
+            cpt++;
+            if (cpt >= imgs.length ) cpt = 0;
+        }, 2000);
+    }
+
     init = function() {
         this.initSelectTypeSearch();
+        this.carouselSearch();
     }
 }
 
