@@ -52,8 +52,9 @@ class Search {
         setInterval(function() {
             let img = imgs[cpt];
             cpt++;
+            $('#search').css('background-image', 'url(../build/images/search/' + img + ')');
             if (cpt >= imgs.length ) cpt = 0;
-        }, 2000);
+        }, 10000);
     }
 
     init = function() {

@@ -18,7 +18,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 ============================================================================= */
 #search {
   padding-bottom: 75px;
-  animation: bgSearch 60s infinite linear;
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
@@ -186,26 +185,5 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
   .checkbox-search {
     display: block;
-  }
-}
-
-@keyframes bgSearch {
-  0% {
-    background-image: url("../images/search/01.jpg");
-  }
-  16% {
-    background-image: url("../images/search/02.jpg");
-  }
-  33% {
-    background-image: url("../images/search/03.jpg");
-  }
-  50% {
-    background-image: url("../images/search/04.jpg");
-  }
-  66% {
-    background-image: url("../images/search/05.jpg");
-  }
-  82% {
-    background-image: url("../images/search/06.jpg");
   }
 }
