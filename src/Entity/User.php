@@ -46,21 +46,25 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned": true})
+     * @Groups({"training:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true, unique=true)
+     * @Groups({"training:read"})
      */
     private $username;
 
@@ -74,6 +78,7 @@ class User implements UserInterface
      *      minMessage = "Your email address must be at least {{ limit }} characters long",
      *      maxMessage = "Your email address cannot be longer than {{ limit }} characters"
      * )
+     * @Groups({"training:read"})
      */
     private $email;
 

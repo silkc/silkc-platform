@@ -12,13 +12,15 @@
 	<div id="search">
 		<div
 			class="container">
-			{#<div class="info">
-																						<p class="text-center">
-																		                    {{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans }}<br />
-																		                    {{ 'home.training_available'|trans }}<br />
-																		                    {{ 'home.registered_jobs'|trans }}
-																						</p>
-																					</div>#}
+			{#
+				<div class="info">
+					<p class="text-center">
+						{{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans }}<br />
+						{{ 'home.training_available'|trans }}<br />
+						{{ 'home.registered_jobs'|trans }}
+					</p>
+				</div>
+			#}
 
 			<div class="search">
 				<p class="intro">
@@ -35,7 +37,7 @@
 									with {
 										'url': '/apip/occupations',
 										'autocomplete': true,
-										'placeholder': 'What is your dream job?',
+										'placeholder': 'search_by_job_placeholder'|trans,
 										'formats': 'json',
 										'pagination': 'false',
 										'name': 'training_search_by_occupation'
@@ -58,7 +60,7 @@
 									with {
 										'url': '/apip/skills',
 										'autocomplete': true,
-										'placeholder': 'What is your dream job?',
+										'placeholder': 'search_by_skill_placeholder'|trans,
 										'formats': 'json',
 										'pagination': 'false',
 										'name': 'training_search_by_skill'

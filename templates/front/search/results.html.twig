@@ -113,9 +113,11 @@
 								</div>
 							</div>
 
+							{% if training.url is defined and training.url is not empty %}
 							<div class="text-center">
-								<a href="#" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
+								<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
 							</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>

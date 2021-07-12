@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TrainingRepository::class)
@@ -17,6 +18,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ApiResource(
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
+ *      normalizationContext={"groups"={"training:read"}},
+ *      denormalizationContext={"groups"={"training:write"}},
  *      attributes={
  *          "formats"={"json"}
  *     }
@@ -49,87 +52,104 @@ class Training
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"training:read", "training:write"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
+     * @Groups({"training:read", "training:write"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(name="creator_id", referencedColumnName="id", nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $creator;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"training:read", "training:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $endAt;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Groups({"training:read", "training:write"})
      */
     private $hasSessions = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Groups({"training:read", "training:write"})
      */
     private $isOnline = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Groups({"training:read", "training:write"})
      */
     private $isOnlineMonitored = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Groups({"training:read", "training:write"})
      */
     private $isPresential = 0;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"training:read", "training:write"})
      */
     private $files;
 
@@ -140,6 +160,7 @@ class Training
 
     /**
      * @ORM\OneToMany(targetEntity=TrainingSkill::class, mappedBy="training", orphanRemoval=true, fetch="EAGER")
+     * @Groups({"training:read", "training:write"})
      */
     private $trainingSkills;
 

@@ -211,6 +211,8 @@ training: Training
 yes: yes
 no: no
 list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
+search_by_job_placeholder: What is your dream job?
+search_by_skill_placeholder: What skill do you want to acquire?
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.
