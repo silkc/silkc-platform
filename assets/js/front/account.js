@@ -7,6 +7,7 @@ import '../../scss/elements/header.scss';
 import '../../scss/account.scss';
 
 require('bootstrap');
+require('bootstrap-rating-input');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
@@ -1049,18 +1050,13 @@ class Account {
 									</div>
 
 									<div class="mb-3">
-                                    <span class="required-skills d-block mb-3 title">Acquired skills</span>
+                                     <span class="required-skills d-block mb-3 title">Acquired skills</span>
                                         <ul>
                                             ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
                                         </ul>
 									</div>
 								</div>
-							</div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <a href="/training/edit/${id}" class="btn btn-primary">Edit</a>
-                                </div>
-                            </div>`;
+							</div>`;
 
 
                         $modal.find('.modal-title').html(data.name ? data.name : '');
@@ -1088,7 +1084,7 @@ class Account {
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
             let name = $(this).attr('data-name');
-            //let url = '/api/skills_by_occupation/' + id;
+            let url = '/apip/trainings_feedbacks/' + id;
             /*$.ajax({
                 type: "GET",
                 url: url,
@@ -1097,11 +1093,31 @@ class Account {
 
                     $modal.find('.modal-title').html(name ? name : '');
 
+                    let feedbacksHTML = `<ul><li>
+                                                <input class="rating" data-max="5" data-min="1" name="rating" type="number" value="3"/>
+                                                <p class="comment">frefrfrf</p>
+                                            </li></ul>`;
 
-                    $(`NOTE + DESCRIPTION`).appendTo($modal.find('.modal-body'));
+                    /*let feedbacksHTML = ``;
+                    if (data.feedbacks && data.feedbacks.length > 0) {
+                        feedbacksHTML += `<ul>`;
+                        for (let k = 0; k < data.feedbacks.length; k++)  {
+                            let feedback = data.feedbacks;
+                            commentsHTML += `<li>
+                                                <input class="rating" data-max="5" data-min="1" id="some_id" name="rating" type="number" value="${feedback.mark}"/>
+                                                <p class="comment">${feedback.comment}</p>
+                                            </li>`;
+                        }
+                        feedbacksHTML += `</ul>`;
+                    }*/
+
+                    $(feedbacksHTML).appendTo($modal.find('.modal-body'));
 
                     $('#common-modal').modal('show');
-                /*}
+
+
+                    $('input.rating').rating();
+                /* }
             });*/
         });
     }

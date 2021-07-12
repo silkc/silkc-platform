@@ -458,16 +458,18 @@ class Admin {
                                         </ul>
 									</div>
 								</div>
-							</div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <a href="/training/edit/${id}" class="btn btn-primary">Edit</a>
-                                </div>
-                            </div>`;
+							</div>`;
 
+
+                        let editHTML = `<div class="row blc-edit-training">
+                                            <div class="col-md-12 text-right">
+                                                <a href="/training/edit/${id}" class="btn btn-primary">Edit</a>
+                                            </div>
+                                        </div>`;
 
                         $modal.find('.modal-title').html(data.name ? data.name : '');
                         $(modalBodyHTML).appendTo($modal.find('.modal-body'));
+                        $(editHTML).prependTo($modal.find('.modal-footer'));
                         $modal.find('.modal-dialog').addClass('modal-lg');
 
                         $modal.find('[data-toggle="popover"]').popover();
@@ -775,11 +777,13 @@ class Admin {
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-footer').find('.blc-edit-training').remove();
         });
-
+        
         $('#common-modal-2').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-footer').find('.blc-edit-training').remove();
         });
     }
 }
