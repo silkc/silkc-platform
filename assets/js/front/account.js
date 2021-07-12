@@ -1132,6 +1132,8 @@ class Account {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
         });
+
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 

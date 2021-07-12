@@ -609,6 +609,8 @@ class Institutional {
         this.removeSkillsToTraining();
         this.displayMessage();
         this.runMap();
+
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 

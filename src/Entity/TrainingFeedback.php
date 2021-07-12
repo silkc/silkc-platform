@@ -5,10 +5,16 @@ namespace App\Entity;
 use App\Repository\TrainingFeedbackRepository;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=TrainingFeedbackRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"training_feedback:read"}},
+ *      denormalizationContext={"groups"={"training_feedback:write"}}
+ * )
  */
 class TrainingFeedback
 {
@@ -22,22 +28,26 @@ class TrainingFeedback
     /**
      * @ORM\ManyToOne(targetEntity=Training::class, inversedBy="trainingFeedback")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"training_feedback:read", "training_feedback:write"})
      */
     private $training;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"training_feedback:read", "training_feedback:write"})
      */
     private $user;
 
     /**
      * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
+     * @Groups({"training_feedback:read", "training_feedback:write"})
      */
     private $mark = 0;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"training_feedback:read", "training_feedback:write"})
      */
     private $comment;
 

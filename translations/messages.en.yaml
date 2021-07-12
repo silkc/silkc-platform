@@ -213,6 +213,10 @@ no: no
 list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
 search_by_job_placeholder: What is your dream job?
 search_by_skill_placeholder: What skill do you want to acquire?
+user_formation_details_tooltip: Skills linked to this training
+user_formation_unlink_tooltip: Remove this training
+user_formation_feedback_tooltip: Provide feedback
+user_had_done_this_training_btn: I've done this training
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.

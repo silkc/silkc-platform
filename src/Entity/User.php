@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -26,6 +27,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(
  *     fields={"email"},
  *     message="This email already exists."
+ * )
+ * @ApiResource(
+ *      normalizationContext={"groups"={"user:read"}}
  * )
  */
 class User implements UserInterface
@@ -46,7 +50,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned": true})
-     * @Groups({"training:read"})
+     * @Groups({"user:read", "training:read"})
      */
     private $id;
 
@@ -78,7 +82,7 @@ class User implements UserInterface
      *      minMessage = "Your email address must be at least {{ limit }} characters long",
      *      maxMessage = "Your email address cannot be longer than {{ limit }} characters"
      * )
-     * @Groups({"training:read"})
+     * @Groups({"user:read", "training:read"})
      */
     private $email;
 
