@@ -16,6 +16,15 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 /* =============================================================================
     =   Account
 ============================================================================= */
+.link-description {
+    color: #18bc9c;
+    cursor: pointer;
+
+    &:hover {
+      color: #0f7864;
+    }
+  }
+  
 #account {
   margin-top: 60px;
 

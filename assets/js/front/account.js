@@ -953,6 +953,131 @@ class Account {
     }
 
     /**
+     * Voir le detail d'une formation
+     */
+     seeDetailTraining = () => { 
+
+        $('body').on('click', '#content-training .see-detail', function(e) {
+            e.preventDefault();
+            let $modal = $('#common-modal');
+            let id = $(this).attr('data-id');
+            let url = '/apip/trainings/' + id;
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                success: function (data, textStatus, jqXHR) {
+                    if (data) {
+
+                        let requireSkillsHTML = '';
+                        let acquireSkillsHTML = '';
+
+                        if (data.trainingSkills && data.trainingSkills.length > 0 ) {
+                            for (let k in data.trainingSkills) {
+                                let skill = data.trainingSkills[k].skill;
+                                if (data.trainingSkills[k].isRequired) {
+                                    requireSkillsHTML += `<li>
+                                                            <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="" data-content="${skill.description ? skill.description : ''}" data-original-title="${skill.preferredLabel ? skill.preferredLabel : ''}">
+                                                                ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                            </span>
+                                                        </li>`;
+                                }
+                                if (data.trainingSkills[k].isToAcquire) {
+                                    acquireSkillsHTML += `<li>
+                                                            <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="" data-content="${skill.description ? skill.description : ''}" data-original-title="${skill.preferredLabel ? skill.preferredLabel : ''}">
+                                                                ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                            </span>
+                                                        </li>`;
+                                }
+                            }
+                        }
+
+                        let modalBodyHTML = `<div class="row">
+								<div class="col-md-12 detail-training">
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Name</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.name ? data.name : ''}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Location</span>
+										</div>
+										<div class="col-lg-8">
+											<div>${data.location ? data.location : ''}</div>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Duration</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.duration ? data.duration : ''}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Description</span>
+										</div>
+										<div class="col-lg-8">
+											<p class="text-justify m-0">
+                                                ${data.description ? data.description : '-'}
+											</p>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Price</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.price ? data.price : ''}</span>
+										</div>
+									</div>
+									<div class="mb-3">
+                                        <span class="required-skills d-block mb-3 title">Required skills</span>
+                                        <ul>
+                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : ''}
+                                        </ul>
+									</div>
+
+									<div class="mb-3">
+                                    <span class="required-skills d-block mb-3 title">Acquired skills</span>
+                                        <ul>
+                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
+                                        </ul>
+									</div>
+								</div>
+							</div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <a href="/training/edit/${id}" class="btn btn-primary">Edit</a>
+                                </div>
+                            </div>`;
+
+
+                        $modal.find('.modal-title').html(data.name ? data.name : '');
+                        $(modalBodyHTML).appendTo($modal.find('.modal-body'));
+                        $modal.find('.modal-dialog').addClass('modal-lg');
+
+                        $modal.find('[data-toggle="popover"]').popover();
+
+                        $modal.modal('show');
+                    }
+                }
+            });
+        });
+
+    }
+
+    /**
      * Affichage feedback
      */
      displayFeedback = () => { 
@@ -996,6 +1121,7 @@ class Account {
         this.displayMessage();
         this.displayFeedback();
         this.runMap();
+        this.seeDetailTraining();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
