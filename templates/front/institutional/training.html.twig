@@ -7,7 +7,7 @@
 	<div class="accordion" id="list-trainings">
 		{% if trainings is defined %}
 			{% for k, training in trainings %}
-				<div class="card" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
+				<div class="card mb-1" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
 					<form method="POST" action="{{ path('app_institution') }}">
 						<input type="hidden" name="training_id" value="{{ attribute(training, 'id') is defined ? training.id : '' }}"/>
 						<div class="card-header" id="heading_{{ k }}">

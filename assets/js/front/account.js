@@ -14,7 +14,29 @@ require('bootstrap-star-rating/themes/krajee-svg/theme.css');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
-require('@fortawesome/fontawesome-free/js/all.min'); 
+require('@fortawesome/fontawesome-free/js/all.min');
+
+function renderDate(date, format = 'DD MMMM YYYY à HH:mm') {
+    if (
+        date == undefined ||
+        (typeof date != 'string' && typeof date != 'object') ||
+        (typeof date == 'string' && date.length == 0)
+    )
+        return '-';
+
+    const oDate = moment(date);
+    if (oDate === null)
+        return '-';
+
+    if (oDate > moment().startOf('day') && oDate < moment().endOf('day')) {
+        return "Today at " + oDate.locale('en').format('HH:mm');
+    }
+    else if (oDate > moment().subtract(1, 'day').startOf('day') && oDate < moment().subtract(1, 'day').endOf('day')) {
+        return "Yesterday at " + oDate.locale('en').format('HH:mm');
+    }
+
+    return oDate.locale('fr').format(format);
+}
 
 class Account { 
     instanceProperty = "Account";
@@ -1120,8 +1142,9 @@ class Account {
 
                         feedbacksHTML += `<ul class="ul-trainings-feedback">`;
                         for (let k = 0; k < data.length; k++)  {
+                            let date = renderDate(data[k].createdAt);
                             feedbacksHTML += `<li>
-                                                <p class="author"><span class="date">${data[k].createdAt}</span> ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
+                                                <p class="author"><span class="date">${date}</span> ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${data[k].mark}"/>
                                                 <p class="comment">${data[k].comment}</p>
                                             </li>`;

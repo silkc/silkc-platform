@@ -31,7 +31,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/{tab}", name="home")
+     * @Route("/home/{tab}", name="home")
      */
     public function index(
         $tab = 'home',

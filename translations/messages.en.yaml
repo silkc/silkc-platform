@@ -194,6 +194,7 @@ other_skills: Other skills
 previously_unselected: Previously unselected
 please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
 don_t_find_your_training: Don't find your training? Add it here!
+don_t_find_your_institution: Don't find your institution? Add it here!
 training_name: Training name
 please_indicate_your_current_job: Please indicate your current job. We will use it to guess your current skills.
 please_indicate_any_previous_jobs: Please indicate any previous jobs. We will use them to guess skills. Use the + button to add more.

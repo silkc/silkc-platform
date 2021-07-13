@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\UserSkill;
+use App\Entity\Training;
 use App\Entity\UserOccupation;
 use App\Entity\OccupationSkill;
 use App\Repository\UserRepository;
@@ -254,5 +255,35 @@ class ApiController extends AbstractController
         ];
 
         return $this->json($results, 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/done_training/{id}", name="done_training", methods={"POST"})
+     */
+    public function done_training(Training $training)
+    {
+        $user = $this->getUser();
+        $user->addTraining($training);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/undone_training/{id}", name="undone_training", methods={"POST"})
+     */
+    public function undone_training(Training $training)
+    {
+        $user = $this->getUser();
+        $user->removeTraining($training);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }
