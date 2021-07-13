@@ -36,7 +36,18 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   padding: 0;
   margin: 0;
 
+  li {
+    margin-bottom: 30px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #ddd;
+  }
+
   .comment {
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  .date {
     font-style: italic;
     font-size: 0.9rem;
   }

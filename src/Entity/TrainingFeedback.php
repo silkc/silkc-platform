@@ -57,6 +57,7 @@ class TrainingFeedback
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"training_feedback:read", "training_feedback:write"})
      */
     private $createdAt;
 

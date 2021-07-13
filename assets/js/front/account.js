@@ -1094,35 +1094,34 @@ class Account {
             let baseUrl = '/apip/training_feedbacks';
             let params = $.param({'id': id, 'formats': 'json'});
             let url = `${baseUrl}?${params}`;
-            
+
+            let formFeedback = `<div class="form-feedback">
+                                    <input class="rating-training rating " data-max="5" data-min="0" name="rating" type="number" />
+                                    <textarea class="form-control comment"></textarea>
+                                    <div class="text-right mt-2">
+                                        <button type="button" class="btn btn-primary" data-training-id="${id}" data-user-id="${user_id}">Save</button>
+                                    </div>
+                                    <div class="spinner">
+                                        <div class="spinner-grow" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>`;
+
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function (data, textStatus, jqXHR) {
+
                     $modal.find('.modal-dialog').addClass('modal-lg');
                     $modal.find('.modal-title').html(name ? name : '');
                     let feedbacksHTML = ``;
                     if (data && data.length > 0) {
 
-                        let formFeedback = `<div class="form-feedback">
-                                                <input class="rating-training rating " data-max="5" data-min="0" name="rating" type="number" />
-                                                <textarea class="form-control comment"></textarea>
-                                                <div class="text-right mt-2">
-                                                    <button type="button" class="btn btn-primary" data-training-id="${id}" data-user-id="${user_id}">Save</button>
-                                                </div>
-                                                <div class="spinner">
-                                                    <div class="spinner-grow" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                </div>
-                                            </div>`;
-
-                        $(formFeedback).appendTo($modal.find('.modal-body'));
-
                         feedbacksHTML += `<ul class="ul-trainings-feedback">`;
                         for (let k = 0; k < data.length; k++)  {
                             feedbacksHTML += `<li>
-                                                <p class="author">${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
+                                                <p class="author"><span class="date">${data[k].createdAt}</span> ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${data[k].mark}"/>
                                                 <p class="comment">${data[k].comment}</p>
                                             </li>`;
@@ -1130,6 +1129,8 @@ class Account {
                             if (k == data.length - 1) {
                                 feedbacksHTML += `</ul>`;
                                 $(feedbacksHTML).appendTo($modal.find('.modal-body'));
+                                $(formFeedback).appendTo($modal.find('.modal-body'));
+
                                 $('#common-modal').modal('show');
     
                                 $('input.rating-readonly-training').rating({
@@ -1154,8 +1155,17 @@ class Account {
                         }
                     } else {
                         $('<p class="not-ratings">No feedback on this training</p>').appendTo($modal.find('.modal-body'));
+                        $(formFeedback).appendTo($modal.find('.modal-body'));
                         $('#common-modal').modal('show');
                         $(_this).removeAttr('disabled');
+                            
+                        $('input.rating-training').rating({
+                            filledStar: '<i class="fas fa-star"></i>',
+                            emptyStar: '<i class="far fa-star"></i>',
+                            showCaption: false,
+                            step: 1,
+                            size: 'md'
+                        });
                     }
                 },
                 error : function(resultat, statut, erreur){
@@ -1202,27 +1212,28 @@ class Account {
                 contentType: "application/json",
                 headers: {"X-auth-token": token},
                 success: function (data, textStatus, jqXHR) {
-                    $(_this).find('.spinner-button').remove();
 
+                    $(_this).find('.spinner-button').remove();
                     $(_this).closest('.form-feedback').find('input.rating-training').rating('clear');
                     $(_this).closest('.form-feedback').find('textarea').val('');
 
                     let feedbacksHTML = ``;
-                    
+
                     if($('.ul-trainings-feedback').length == 0) {
+                        $('#common-modal .not-ratings').remove();
                         feedbacksHTML += `<ul class="ul-trainings-feedback">
                                             <li>
-                                                <p class="author">${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
+                                                <p class="author"><span class="date">${data.createdAt}</span> ${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${feedback.mark}"/>
                                                 <p class="comment">${feedback.comment}</p>
                                             </li>
                                         </ul>`;
 
-                        $(feedbacksHTML).appendTo($('#common-modal .modal-body'));
+                        $(feedbacksHTML).prependTo($('#common-modal .modal-body'));
 
                     } else {
                         feedbacksHTML += `<li>
-                                              <p class="author">${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
+                                              <p class="author"><span class="date">${data.createdAt}</span> ${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
                                               <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${feedback.mark}"/>
                                               <p class="comment">${feedback.comment}</p>
                                           </li>`;
