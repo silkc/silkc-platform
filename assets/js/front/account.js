@@ -7,13 +7,16 @@ import '../../scss/elements/header.scss';
 import '../../scss/account.scss';
 
 require('bootstrap');
-require('bootstrap-rating-input');
+
+require('bootstrap-star-rating');
+require('bootstrap-star-rating/css/star-rating.css');
+require('bootstrap-star-rating/themes/krajee-svg/theme.css');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
-require('@fortawesome/fontawesome-free/js/all.min');
+require('@fortawesome/fontawesome-free/js/all.min'); 
 
-class Account {
+class Account { 
     instanceProperty = "Account";
     boundFunction = () => {
         return this.instanceProperty;
@@ -1081,44 +1084,202 @@ class Account {
         $('body').on('click', '#content-training .feedback', function(e) {
             e.preventDefault();
 
+            let _this = this;
+            $(_this).attr('disabled', true);
+
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
+            let user_id = $(this).attr('data-user-id');
             let name = $(this).attr('data-name');
-            let url = '/apip/trainings_feedbacks/' + id;
-            /*$.ajax({
+            let baseUrl = '/apip/training_feedbacks';
+            let params = $.param({'id': id, 'formats': 'json'});
+            let url = `${baseUrl}?${params}`;
+            
+            $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
-                success: function (data, textStatus, jqXHR) {*/
-
+                success: function (data, textStatus, jqXHR) {
+                    $modal.find('.modal-dialog').addClass('modal-lg');
                     $modal.find('.modal-title').html(name ? name : '');
+                    let feedbacksHTML = ``;
+                    if (data && data.length > 0) {
 
-                    let feedbacksHTML = `<ul><li>
-                                                <input class="rating" data-max="5" data-min="1" name="rating" type="number" value="3"/>
-                                                <p class="comment">frefrfrf</p>
-                                            </li></ul>`;
+                        let formFeedback = `<div class="form-feedback">
+                                                <input class="rating-training rating " data-max="5" data-min="0" name="rating" type="number" />
+                                                <textarea class="form-control comment"></textarea>
+                                                <div class="text-right mt-2">
+                                                    <button type="button" class="btn btn-primary" data-training-id="${id}" data-user-id="${user_id}">Save</button>
+                                                </div>
+                                                <div class="spinner">
+                                                    <div class="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                </div>
+                                            </div>`;
 
-                    /*let feedbacksHTML = ``;
-                    if (data.feedbacks && data.feedbacks.length > 0) {
-                        feedbacksHTML += `<ul>`;
-                        for (let k = 0; k < data.feedbacks.length; k++)  {
-                            let feedback = data.feedbacks;
-                            commentsHTML += `<li>
-                                                <input class="rating" data-max="5" data-min="1" id="some_id" name="rating" type="number" value="${feedback.mark}"/>
-                                                <p class="comment">${feedback.comment}</p>
+                        $(formFeedback).appendTo($modal.find('.modal-body'));
+
+                        feedbacksHTML += `<ul class="ul-trainings-feedback">`;
+                        for (let k = 0; k < data.length; k++)  {
+                            feedbacksHTML += `<li>
+                                                <p class="author">${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
+                                                <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${data[k].mark}"/>
+                                                <p class="comment">${data[k].comment}</p>
                                             </li>`;
+
+                            if (k == data.length - 1) {
+                                feedbacksHTML += `</ul>`;
+                                $(feedbacksHTML).appendTo($modal.find('.modal-body'));
+                                $('#common-modal').modal('show');
+    
+                                $('input.rating-readonly-training').rating({
+                                    filledStar: '<i class="fas fa-star"></i>',
+                                    emptyStar: '<i class="far fa-star"></i>',
+                                    showCaption: false,
+                                    size: 'xs',
+                                    step: 1,
+                                    readonly: true
+                                });
+    
+                                $('input.rating-training').rating({
+                                    filledStar: '<i class="fas fa-star"></i>',
+                                    emptyStar: '<i class="far fa-star"></i>',
+                                    showCaption: false,
+                                    step: 1,
+                                    size: 'md'
+                                });
+
+                                $(_this).removeAttr('disabled');
+                            }
                         }
-                        feedbacksHTML += `</ul>`;
-                    }*/
+                    } else {
+                        $('<p class="not-ratings">No feedback on this training</p>').appendTo($modal.find('.modal-body'));
+                        $('#common-modal').modal('show');
+                        $(_this).removeAttr('disabled');
+                    }
+                },
+                error : function(resultat, statut, erreur){
+                    $(_this).removeAttr('disabled');
+                },
+                complete : function(resultat, statut, erreur){
+                    $(_this).removeAttr('disabled');
+                }
+            });
+        });
 
-                    $(feedbacksHTML).appendTo($modal.find('.modal-body'));
+        $('body').on('click', '.form-feedback button', function(){
 
-                    $('#common-modal').modal('show');
+            let _this = this;
+            let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
+            $(loader).prependTo(this);
+
+            let trainingId = $(this).attr('data-training-id');
+            let userId = $(this).attr('data-user-id');
+            let mark = $(this).closest('.form-feedback').find('input.rating-training').val();
+            let comment = $(this).closest('.form-feedback').find('textarea').val();
+            let token = $('body').attr('data-token');
 
 
-                    $('input.rating').rating();
-                /* }
-            });*/
+            if (!userId || !trainingId) {
+                $(_this).find('.spinner-button').remove();
+                return false;
+            }
+
+            let url = '/apip/training_feedbacks';
+            let feedback = {};
+            feedback.user = '/apip/users/' + userId;
+            feedback.training = '/apip/trainings/' + trainingId;
+            feedback.mark = parseInt(mark ? mark : 0);
+            feedback.comment = comment && comment.length > 0 ? comment : '-';
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: JSON.stringify(feedback),
+                dataType: "json",
+                contentType: "application/json",
+                headers: {"X-auth-token": token},
+                success: function (data, textStatus, jqXHR) {
+                    $(_this).find('.spinner-button').remove();
+
+                    $(_this).closest('.form-feedback').find('input.rating-training').rating('clear');
+                    $(_this).closest('.form-feedback').find('textarea').val('');
+
+                    let feedbacksHTML = ``;
+                    
+                    if($('.ul-trainings-feedback').length == 0) {
+                        feedbacksHTML += `<ul class="ul-trainings-feedback">
+                                            <li>
+                                                <p class="author">${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
+                                                <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${feedback.mark}"/>
+                                                <p class="comment">${feedback.comment}</p>
+                                            </li>
+                                        </ul>`;
+
+                        $(feedbacksHTML).appendTo($('#common-modal .modal-body'));
+
+                    } else {
+                        feedbacksHTML += `<li>
+                                              <p class="author">${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
+                                              <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${feedback.mark}"/>
+                                              <p class="comment">${feedback.comment}</p>
+                                          </li>`;
+
+                        $(feedbacksHTML).appendTo($('.ul-trainings-feedback'));
+                    }
+
+                        
+                    $('input.rating-readonly-training').rating({
+                        filledStar: '<i class="fas fa-star"></i>',
+                        emptyStar: '<i class="far fa-star"></i>',
+                        showCaption: false,
+                        size: 'xs',
+                        step: 1,
+                        readonly: true
+                    });
+
+                    $('#common-modal').animate({ scrollTop: $('#common-modal .modal-dialog').height() }, "slow");
+                },
+                error : function(resultat, statut, erreur){
+                    $(_this).find('.spinner-button').remove();
+                },
+                complete : function(resultat, statut, erreur){
+                    $(_this).find('.spinner-button').remove();
+                }
+            });
+        });
+    }
+
+
+     runDonetraining = () => { 
+
+        $('body').on('click', '#search-results #accordion .btn-done', function(e) {
+            e.preventDefault();
+
+            let _this = this;
+            $(_this).attr('disabled', true);
+
+            let trainingId = $(this).attr('data-training-id');
+            let userId = $(this).attr('data-user-id');
+            let baseUrl = '';
+            let params = $.param({'id': id, 'formats': 'json'});
+            let url = `${baseUrl}?${params}`;
+            
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data, textStatus, jqXHR) {
+                    
+                },
+                error : function(resultat, statut, erreur){
+                    
+                },
+                complete : function(resultat, statut, erreur){
+                    
+                }
+            });
         });
     }
 
@@ -1138,15 +1299,18 @@ class Account {
         this.displayFeedback();
         this.runMap();
         this.seeDetailTraining();
+        this.runDonetraining();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
         });
-
+        
         $('#common-modal-2').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
         });
 
         $('[data-toggle="tooltip"]').tooltip();

@@ -13,7 +13,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ORM\HasLifecycleCallbacks()
  * @ApiResource(
  *      normalizationContext={"groups"={"training_feedback:read"}},
- *      denormalizationContext={"groups"={"training_feedback:write"}}
+ *      denormalizationContext={"groups"={"training_feedback:write"}},
+ *      attributes={
+ *          "formats"={"json"},
+ *          "order"={"id":"ASC"}
+ *     }
  * )
  */
 class TrainingFeedback

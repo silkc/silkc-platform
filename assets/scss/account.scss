@@ -17,14 +17,55 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     =   Account
 ============================================================================= */
 .link-description {
-    color: #18bc9c;
-    cursor: pointer;
+  color: #18bc9c;
+  cursor: pointer;
 
-    &:hover {
-      color: #0f7864;
-    }
+  &:hover {
+    color: #0f7864;
   }
-  
+}
+
+.rating-stars,
+.rating-stars:hover,
+.rating-stars:focus {
+  outline: none !important;
+}
+
+.ul-trainings-feedback {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  .comment {
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+}
+
+.form-feedback {
+  position: relative;
+
+  .spinner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.form-feedback {
+  .comment {
+    width: 100%;
+    height: 200px;
+    resize: none;
+  }
+}
+
 #account {
   margin-top: 60px;
 
@@ -298,5 +339,5 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 .no_training_result {
-    list-style: none;
+  list-style: none;
 }

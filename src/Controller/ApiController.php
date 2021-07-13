@@ -8,6 +8,7 @@ use App\Entity\OccupationSkill;
 use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
+use App\Repository\TrainingFeedbackRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\OccupationSkillRepository;
 use Symfony\Contracts\Cache\ItemInterface;
