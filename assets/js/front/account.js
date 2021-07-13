@@ -1305,7 +1305,34 @@ class Account {
                 type: "GET",
                 url: url,
                 success: function (data, textStatus, jqXHR) {
+                    $(_this).removeClass('btn-done').addClass('btn-notdone');
+                },
+                error : function(resultat, statut, erreur){
                     
+                },
+                complete : function(resultat, statut, erreur){
+                    
+                }
+            });
+        });
+
+        $('body').on('click', '#search-results #accordion .btn-notdone', function(e) {
+            e.preventDefault();
+
+            let _this = this;
+            $(_this).attr('disabled', true);
+
+            let trainingId = $(this).attr('data-training-id');
+            let userId = $(this).attr('data-user-id');
+            let baseUrl = '';
+            let params = $.param({'id': id, 'formats': 'json'});
+            let url = `${baseUrl}?${params}`;
+            
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data, textStatus, jqXHR) {
+                    $(_this).removeClass('btn-notdone').addClass('btn-done');
                 },
                 error : function(resultat, statut, erreur){
                     
