@@ -35,6 +35,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class HomeController extends AbstractController
 {
     /**
+     * @Route("/")
      * @Route("/home", name="home")
      */
     public function index(): Response

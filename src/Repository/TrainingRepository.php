@@ -68,6 +68,7 @@ class TrainingRepository extends ServiceEntityRepository
                 ) 
                     * CAST(sq2.institutionCompletion AS UNSIGNED) 
                     * CAST(sq2.trainingCompletion AS UNSIGNED) 
+                    * 0.001
                 AS score
             FROM training AS t
             LEFT JOIN (
