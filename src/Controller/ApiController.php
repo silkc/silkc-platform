@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\UserSkill;
 use App\Entity\Training;
+use App\Entity\User;
 use App\Entity\UserOccupation;
 use App\Entity\OccupationSkill;
 use App\Repository\UserRepository;
@@ -21,6 +22,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/api", name="api_")
@@ -279,6 +283,55 @@ class ApiController extends AbstractController
     {
         $user = $this->getUser();
         $user->removeTraining($training);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/add_institution", name="add_institution", methods={"POST"})
+     */
+    public function add_institution(
+        Request $request, 
+        ValidatorInterface $validator, 
+        UserPasswordEncoderInterface $passwordEncoder, 
+        SluggerInterface $slugger, 
+        UserRepository $userRepository
+    )
+    {
+        $data = $request->request->all();
+        
+        if (!$data || !is_array($data) || !array_key_exists('name', $data) || empty($data['name']))
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        $alreadyExistsUser = $userRepository->findOneBy(['username' => $data['name']]);
+        if ($alreadyExistsUser)
+            return new JsonResponse(['message' => 'Instituion name already exists'], Response::HTTP_BAD_REQUEST);
+
+        $user = new User();
+        $user->setUsername($data['name']);
+        if (array_key_exists('address', $data) && !empty($data['address']))
+            $user->setAddress($data['address']);
+
+        $email = $slugger->slug($user->getUsername()) . '.' . uniqid() . '@silkc-platform.org';
+        $user->setEmail($email);
+        $roles = [User::ROLE_INSTITUTION];
+        $createdAt = new \DateTime('now');
+        $password = random_bytes(10);
+        $password = $passwordEncoder->encodePassword($user, $password);
+        $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
+        $user->setTokenCreatedAt($createdAt);
+        $user->setCreatedAt($createdAt);
+        $user->setApiToken($apiToken);
+        $user->setRoles($roles);
+        $user->setPassword($password);
+
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) 
+            return new Response((string) $errors, 400);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

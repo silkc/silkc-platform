@@ -25,37 +25,37 @@ class Skill
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $conceptType;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $conceptUri;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $skillType;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $reuseLevel;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $preferredLabel;
 
@@ -96,7 +96,7 @@ class Skill
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read"})
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $description;
 

@@ -18,10 +18,33 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 ============================================================================= */
 #search {
   padding-bottom: 75px;
-  background-image: url("../images/search/01.jpg");
+  //background-image: url("../images/search/01.jpg");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
+  position: relative;
+  overflow: hidden;
+
+  .slider-img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: none;
+
+      &:first-child {
+          display: block;
+      }
+    }
+  }
 
   .intro {
     margin: 0;

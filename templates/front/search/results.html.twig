@@ -46,8 +46,7 @@
 											<span class="title">{{ 'label.location'|trans  }}</span>
 										</div>
 										<div class="col-lg-8">
-											<div class="google-map" data-location="{{ attribute(training, 'location') is defined and training.location is not empty ? training.location : '-' }}"></div>
-											<!--<iframe src="https://maps.google.com/maps?q=paris=&z=6&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+                                            <span>{{ attribute(training, 'location') is defined and training.location is not empty ? training.location : 'n_a'|trans }}</span>
 										</div>
 									</div>
 
@@ -56,7 +55,7 @@
 											<span class="title">{{ 'label.duration'|trans  }}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : '-' }}</span>
+											<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : 'n_a'|trans }}</span>
 										</div>
 									</div>
 
@@ -66,7 +65,7 @@
 										</div>
 										<div class="col-lg-8">
 											<p class="text-justify m-0">
-												{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : '-' }}
+												{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : 'n_a'|trans }}
 											</p>
 										</div>
 									</div>
@@ -76,7 +75,7 @@
 											<span class="title">{{ 'label.price'|trans  }}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : '-' }}</span>
+											<span>{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : 'n_a'|trans }}</span>
 										</div>
 									</div>
 
@@ -90,7 +89,7 @@
 												{% for trainingSkill in training.requiredSkills %}
 													{% set skill = trainingSkill.skill %}
 													<li class="list-group-item d-flex justify-content-between align-items-center">
-														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : '-' }}
+														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
 													</li>
 												{% endfor %}
 											</ul>
@@ -104,7 +103,7 @@
 												{% for trainingSkill in training.toAcquireSkills %}
 													{% set skill = trainingSkill.skill %}
 													<li class="list-group-item d-flex justify-content-between align-items-center">
-														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : '-' }}
+														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
 													</li>
 												{% endfor %}
 											</ul>
@@ -114,11 +113,11 @@
 							</div>
 
 							<div class="text-center">
-								{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+								{% if training.url is defined and training.url is not empty %}
 									<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
 								{% endif %}
-								{% if training.url is defined and training.url is not empty %}
-									<button class="btn btn-success btn-done">{{ 'user_had_done_this_training_btn'|trans }}</button>
+								{% if is_granted('IS_AUTHENTICATED_FULLY') == true %}
+									<button class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
 								{% endif %}
 							</div>
 						</div>

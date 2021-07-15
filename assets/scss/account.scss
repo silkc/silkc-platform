@@ -40,6 +40,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     margin-bottom: 30px;
     padding-bottom: 14px;
     border-bottom: 1px solid #ddd;
+
+    &:last-child {
+        border: 0;
+    }
   }
 
   .comment {

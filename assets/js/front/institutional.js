@@ -539,7 +539,7 @@ class Institutional {
     /**
      * Affichage carte
      */
-     runMap = () => { 
+     runMap = () => {
 
         let inputHidden = document.getElementById('user_address');
         var map = null;
@@ -599,7 +599,129 @@ class Institutional {
             }
         }
     }
+        
+    /**
+     * Affichage carte modal
+     */
+     runMapModal = () => {
 
+        let inputHidden = document.getElementById('institution-location');
+        var map = null;
+        map = L.map('map-modal').setView([0, 0], 1);
+        let geocoder = L.Control.Geocoder.nominatim();
+        
+        if (inputHidden) {
+            let control = L.Control.geocoder({
+                collapsed: false,
+                placeholder: 'Search here...',
+                position: 'topleft',
+                geocoder: geocoder
+            }).on('markgeocode', function(e) {
+                if (e.geocode && e.geocode.center) {
+                    let lat = e.geocode.center.lat;
+                    let lng = e.geocode.center.lng;
+                    let name = e.geocode.name;
+                    
+                    let newCoords = {
+                        "city": name,
+                        "lat": lat,
+                        "lng": lng
+                    };
+                    newCoords = JSON.stringify(newCoords);
+                    
+                    let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
+                    leafletControlGeocoderForm.value = name;
+                    inputHidden.value = newCoords;
+                }
+            }).addTo(map);
+            
+            // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+            // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                attribution: '',
+                minZoom: 1,
+                maxZoom: 20
+            }).addTo(map);
+            
+            document.getElementById('searchmap-modal').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+        }
+    }
+    
+
+    runModalAddUser = () => {
+        let _this = this;
+
+        $('body').on('click', '.btn-modal-add-user', function() {
+            let $modal = $('#common-modal');
+
+            if ($modal) {
+                $modal.find('.modal-title').html('Add institution');
+                let buttonSubmit = `<button type="button" class="btn btn-primary btn-add-user">Add</button>`;
+                let formAddUser = `<div class="form-add-user">
+                                        <div class="form-group">
+                                            <label for="institution-name">Name</label>
+                                            <input type="text" class="form-control" id="institution-name">
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="institution-location">Location</label>
+                                            <input type="hidden" class="form-control" id="institution-location">
+                                            <div id="searchmap-modal"></div>
+                                            <div id="map-modal"></div>
+                                        </div>
+                                    </div>`;
+                $(formAddUser).appendTo($modal.find('.modal-body'));
+                $(buttonSubmit).appendTo($modal.find('.modal-footer'));
+                $('#common-modal').modal('show');
+            }
+        });
+
+        $('body').on('click', '.btn-add-user', function() {
+
+            let $modal = $('#common-modal');
+            let name = $modal.find('input#institution-name').val();
+            let address = $modal.find('input#institution-location').val();
+
+            if (!name) return false;
+
+            let token = $('body').attr('data-token');
+            let url = '/api/add_institution';
+            let data = {};
+            data.name = name ? name : '';
+            data.address = address ? JSON.stringify(address) : '';
+
+            if ($modal) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json',
+                    data: data,
+                    headers: {"X-auth-token": token},
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.result != undefined && data.result == true) {
+                            document.location.reload();
+                        } else {
+                            bootbox.alert('An error occured');
+                        }
+                    },
+                    error: function () {
+                        bootbox.alert('An error occured');
+                    },
+                    complete: function () {
+                        $('#common-modal').modal('hide');
+                    }
+                });
+
+            }
+        });
+
+        $('#common-modal').on('shown.bs.modal', function (e) {
+            if ($(this).find('.form-add-user').length > 0) {
+                _this.runMapModal();
+            }
+        });
+    }
+
+    
     init = function() {
         this.runAutocompletion();
         this.duplicateTraining();
@@ -609,6 +731,21 @@ class Institutional {
         this.removeSkillsToTraining();
         this.displayMessage();
         this.runMap();
+        this.runModalAddUser();
+
+        $('#common-modal').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-footer').find('.btn-add-user').remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
+        });
+        
+        $('#common-modal-2').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-footer').find('.btn-add-user').remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
+        });
 
         $('[data-toggle="tooltip"]').tooltip();
     }

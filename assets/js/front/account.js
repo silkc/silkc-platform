@@ -1026,7 +1026,7 @@ class Account {
 											<span class="title">Name</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.name ? data.name : ''}</span>
+											<span>${data.name ? data.name : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -1035,7 +1035,7 @@ class Account {
 											<span class="title">Location</span>
 										</div>
 										<div class="col-lg-8">
-											<div>${data.location ? data.location : ''}</div>
+											<div>${data.location ? data.location : 'N/A'}</div>
 										</div>
 									</div>
 
@@ -1044,7 +1044,7 @@ class Account {
 											<span class="title">Duration</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.duration ? data.duration : ''}</span>
+											<span>${data.duration ? data.duration : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -1054,7 +1054,7 @@ class Account {
 										</div>
 										<div class="col-lg-8">
 											<p class="text-justify m-0">
-                                                ${data.description ? data.description : '-'}
+                                                ${data.description ? data.description : 'N/A'}
 											</p>
 										</div>
 									</div>
@@ -1064,20 +1064,20 @@ class Account {
 											<span class="title">Price</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.price ? data.price : ''}</span>
+											<span>${data.price ? data.price : 'N/A'}</span>
 										</div>
 									</div>
 									<div class="mb-3">
                                         <span class="required-skills d-block mb-3 title">Required skills</span>
                                         <ul>
-                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : ''}
+                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : 'N/A'}
                                         </ul>
 									</div>
 
 									<div class="mb-3">
                                      <span class="required-skills d-block mb-3 title">Acquired skills</span>
                                         <ul>
-                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
+                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : 'N/A'}
                                         </ul>
 									</div>
 								</div>
@@ -1120,20 +1120,16 @@ class Account {
             let formFeedback = `<div class="form-feedback">
                                     <input class="rating-training rating " data-max="5" data-min="0" name="rating" type="number" />
                                     <textarea class="form-control comment"></textarea>
-                                    <div class="text-right mt-2">
-                                        <button type="button" class="btn btn-primary" data-training-id="${id}" data-user-id="${user_id}">Save</button>
-                                    </div>
-                                    <div class="spinner">
-                                        <div class="spinner-grow" role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                    </div>
                                 </div>`;
+
+            let buttonSubmit = `<button type="button" class="btn btn-primary btn-submit-feedback" data-training-id="${id}" data-user-id="${user_id}">Save</button>`;
 
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function (data, textStatus, jqXHR) {
+
+                    let statusFeedback = false;
 
                     $modal.find('.modal-dialog').addClass('modal-lg');
                     $modal.find('.modal-title').html(name ? name : '');
@@ -1142,9 +1138,12 @@ class Account {
 
                         feedbacksHTML += `<ul class="ul-trainings-feedback">`;
                         for (let k = 0; k < data.length; k++)  {
+                            if (data[k].user.id == user_id) {
+                                statusFeedback = true;
+                            }
                             let date = renderDate(data[k].createdAt);
                             feedbacksHTML += `<li>
-                                                <p class="author"><span class="date">${date}</span> ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
+                                                <p class="author"><span class="date">${date}</span> - ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${data[k].mark}"/>
                                                 <p class="comment">${data[k].comment}</p>
                                             </li>`;
@@ -1152,7 +1151,10 @@ class Account {
                             if (k == data.length - 1) {
                                 feedbacksHTML += `</ul>`;
                                 $(feedbacksHTML).appendTo($modal.find('.modal-body'));
-                                $(formFeedback).appendTo($modal.find('.modal-body'));
+                                if(!statusFeedback) {
+                                    $(formFeedback).appendTo($modal.find('.modal-body'));
+                                    $(buttonSubmit).appendTo($modal.find('.modal-footer'));
+                                }
 
                                 $('#common-modal').modal('show');
     
@@ -1179,6 +1181,7 @@ class Account {
                     } else {
                         $('<p class="not-ratings">No feedback on this training</p>').appendTo($modal.find('.modal-body'));
                         $(formFeedback).appendTo($modal.find('.modal-body'));
+                        $(buttonSubmit).appendTo($modal.find('.modal-footer'));
                         $('#common-modal').modal('show');
                         $(_this).removeAttr('disabled');
                             
@@ -1200,7 +1203,7 @@ class Account {
             });
         });
 
-        $('body').on('click', '.form-feedback button', function(){
+        $('body').on('click', '.btn-submit-feedback', function(){
 
             let _this = this;
             let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
@@ -1210,8 +1213,8 @@ class Account {
 
             let trainingId = $(this).attr('data-training-id');
             let userId = $(this).attr('data-user-id');
-            let mark = $(this).closest('.form-feedback').find('input.rating-training').val();
-            let comment = $(this).closest('.form-feedback').find('textarea').val();
+            let mark = $('.form-feedback').find('input.rating-training').val();
+            let comment = $('.form-feedback').find('textarea').val();
             let token = $('body').attr('data-token');
 
 
@@ -1235,18 +1238,19 @@ class Account {
                 contentType: "application/json",
                 headers: {"X-auth-token": token},
                 success: function (data, textStatus, jqXHR) {
-
                     $(_this).find('.spinner-button').remove();
-                    $(_this).closest('.form-feedback').find('input.rating-training').rating('clear');
-                    $(_this).closest('.form-feedback').find('textarea').val('');
+                    $('.form-feedback').find('input.rating-training').rating('clear');
+                    $('.form-feedback').find('textarea').val('');
 
                     let feedbacksHTML = ``;
+
+                    let date = renderDate(data.createdAt);
 
                     if($('.ul-trainings-feedback').length == 0) {
                         $('#common-modal .not-ratings').remove();
                         feedbacksHTML += `<ul class="ul-trainings-feedback">
                                             <li>
-                                                <p class="author"><span class="date">${data.createdAt}</span> ${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
+                                                <p class="author"><span class="date">${date}</span> - ${data.user.username ? data.user.username : data.user.firstname ? data.user.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${feedback.mark}"/>
                                                 <p class="comment">${feedback.comment}</p>
                                             </li>
@@ -1256,7 +1260,7 @@ class Account {
 
                     } else {
                         feedbacksHTML += `<li>
-                                              <p class="author"><span class="date">${data.createdAt}</span> ${data.username ? data.username : data.firstname ? data.firstname : ''}</p>
+                                              <p class="author"><span class="date">${date}</span> - ${data.user.username ? data.user.username : data.user.firstname ? data.user.firstname : ''}</p>
                                               <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${feedback.mark}"/>
                                               <p class="comment">${feedback.comment}</p>
                                           </li>`;
@@ -1264,6 +1268,8 @@ class Account {
                         $(feedbacksHTML).appendTo($('.ul-trainings-feedback'));
                     }
 
+                    $('.form-feedback').remove();
+                    $(_this).remove();
                         
                     $('input.rating-readonly-training').rating({
                         filledStar: '<i class="fas fa-star"></i>',
@@ -1286,64 +1292,6 @@ class Account {
         });
     }
 
-
-     runDonetraining = () => { 
-
-        $('body').on('click', '#search-results #accordion .btn-done', function(e) {
-            e.preventDefault();
-
-            let _this = this;
-            $(_this).attr('disabled', true);
-
-            let trainingId = $(this).attr('data-training-id');
-            let userId = $(this).attr('data-user-id');
-            let baseUrl = '';
-            let params = $.param({'id': id, 'formats': 'json'});
-            let url = `${baseUrl}?${params}`;
-            
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function (data, textStatus, jqXHR) {
-                    $(_this).removeClass('btn-done').addClass('btn-notdone');
-                },
-                error : function(resultat, statut, erreur){
-                    
-                },
-                complete : function(resultat, statut, erreur){
-                    
-                }
-            });
-        });
-
-        $('body').on('click', '#search-results #accordion .btn-notdone', function(e) {
-            e.preventDefault();
-
-            let _this = this;
-            $(_this).attr('disabled', true);
-
-            let trainingId = $(this).attr('data-training-id');
-            let userId = $(this).attr('data-user-id');
-            let baseUrl = '';
-            let params = $.param({'id': id, 'formats': 'json'});
-            let url = `${baseUrl}?${params}`;
-            
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function (data, textStatus, jqXHR) {
-                    $(_this).removeClass('btn-notdone').addClass('btn-done');
-                },
-                error : function(resultat, statut, erreur){
-                    
-                },
-                complete : function(resultat, statut, erreur){
-                    
-                }
-            });
-        });
-    }
-
     init = function() {
         this.runDetail();
         this.runAutocompletion();
@@ -1360,7 +1308,6 @@ class Account {
         this.displayFeedback();
         this.runMap();
         this.seeDetailTraining();
-        this.runDonetraining();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();

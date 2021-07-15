@@ -32,7 +32,7 @@
             {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') == false %}
                 {{ form_row(form.user) }}
                 <p class="text-right m-0">
-                    <button class="btn btn-link">{{ 'don_t_find_your_institution'|trans }}</button>
+                    <button type="button" class="btn btn-link btn-modal-add-user">{{ 'don_t_find_your_institution'|trans }}</button>
                 </p>
             {% endif %}
             {{ form_row(form.location) }}

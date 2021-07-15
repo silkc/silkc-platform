@@ -12,7 +12,9 @@
         {% block stylesheets %}{% endblock %}
         
 		</head>
-		<body data-token="{{ user is defined and attribute(user, 'apiToken') is defined ? user.apiToken : false }}" class="{% block body_class %}{% endblock %}">
+		<body data-token="{{ app is defined and app is not empty
+                                and attribute(app, 'user') is defined and app.user is not empty
+                                and attribute(app.user, 'apiToken') is defined  and app.user.apiToken is not empty ? app.user.apiToken : false }}" class="{% block body_class %}{% endblock %}">
 			{% block carousel %}{% endblock %}
 			{% block header %}{% endblock %}
 			{% block body %}{% endblock %}

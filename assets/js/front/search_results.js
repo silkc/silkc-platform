@@ -8,6 +8,7 @@ import '../../scss/elements/header.scss';
 import '../../scss/search_results.scss';
 
 require('bootstrap');
+const bootbox = require('bootbox/bootbox');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
@@ -85,9 +86,88 @@ class SearchResults {
         })
     }
 
+
+    runDonetraining = () => { 
+
+       $('body').on('click', '#search-results #accordion .btn-done', function() {
+
+            let _this = this;
+            $(_this).attr('disabled', true);
+
+            let token = $('body').attr('data-token');
+            let id = $(this).attr('data-id');
+            let url = '/api/done_training/' + id;
+           
+            bootbox.confirm({message : 'Can you confirm that you have completed this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                if (result == true) {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        dataType: 'json',
+                        data: {},
+                        headers: {"X-auth-token": token},
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.result != undefined && data.result == true) {
+                                $(_this).removeClass('btn-done').addClass('btn-notdone');
+                                $(_this).removeClass('btn-success').addClass('btn-warning');
+                                $(_this).html('I did not do this training');
+                            } else {
+                                bootbox.alert('An error occured');
+                            }
+                        },
+                        error : function(resultat, statut, erreur){
+                            bootbox.alert('An error occured');
+                        },
+                        complete: function () {
+                            $(_this).attr('disabled', false);
+                        }
+                    });
+                }
+            }});
+       });
+
+       $('body').on('click', '#search-results #accordion .btn-notdone', function() {
+
+           let _this = this;
+           $(_this).attr('disabled', true);
+
+           let token = $('body').attr('data-token');
+           let id = $(this).attr('data-id');
+           let url = '/api/undone_training/' + id;
+                      
+            bootbox.confirm({message : 'Can you confirm that you did not take this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                if (result == true) {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        dataType: 'json',
+                        data: {},
+                        headers: {"X-auth-token": token},
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.result != undefined && data.result == true) {
+                                $(_this).removeClass('btn-notdone').addClass('btn-done');
+                                $(_this).removeClass('btn-warning').addClass('btn-success');
+                                $(_this).html("I've done this training");
+                            } else {
+                                bootbox.alert('An error occured');
+                            }
+                        },
+                        error : function(resultat, statut, erreur){
+                            bootbox.alert('An error occured');
+                        },
+                        complete: function () {
+                            $(_this).attr('disabled', false);
+                        }
+                    });
+                }
+            }});
+       });
+   }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
+        this.runDonetraining();
     }
 }
 

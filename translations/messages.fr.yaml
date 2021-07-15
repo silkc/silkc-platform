@@ -39,6 +39,10 @@ button:
     suspect: Mark user as "suspect"
     raise_suspicion: Raise suspicion
     edit: Edit
+    delete: Delete
+    approve: Approve
+    detail: Detail
+    reject: Reject
 header:
     my_institution: My institution    
     my_account: My account    
@@ -190,6 +194,7 @@ other_skills: Other skills
 previously_unselected: Previously unselected
 please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
 don_t_find_your_training: Don't find your training? Add it here!
+don_t_find_your_institution: Don't find your institution? Add it here!
 training_name: Training name
 please_indicate_your_current_job: Please indicate your current job. We will use it to guess your current skills.
 please_indicate_any_previous_jobs: Please indicate any previous jobs. We will use them to guess skills. Use the + button to add more.
@@ -207,6 +212,13 @@ training: Training
 yes: yes
 no: no
 list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
+search_by_job_placeholder: What is your dream job?
+search_by_skill_placeholder: What skill do you want to acquire?
+user_formation_details_tooltip: Skills linked to this training
+user_formation_unlink_tooltip: Remove this training
+user_formation_feedback_tooltip: Provide feedback
+user_had_done_this_training_btn: I've done this training
+n_a: N/A
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.

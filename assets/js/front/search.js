@@ -47,13 +47,13 @@ class Search {
 
 
     carouselSearch = () => {
-        let imgs = ['02.jpg', '01.jpg', '04.jpg', '05.jpg', '06.jpg'];
+        let imgs = $('#search .slider-img img');
         let cpt = 0;
         setInterval(function() {
-            let img = imgs[cpt];
             cpt++;
-            $('#search').css('background-image', 'url(../build/images/search/' + img + ')');
             if (cpt >= imgs.length ) cpt = 0;
+            imgs.fadeOut(2000);
+            imgs.eq(cpt).fadeIn(1000);
         }, 10000);
     }
 
