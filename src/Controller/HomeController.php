@@ -84,7 +84,14 @@ class HomeController extends AbstractController
             }
         }
 
-        return $this->render('front/search/index.html.twig', ['trainings' => $trainings, 'search' => $search]);
+        return $this->render(
+            'front/search/index.html.twig',
+            [
+                'trainings' => $trainings,
+                'search' => $search,
+                'user' => $user
+            ]
+        );
     }
 
     /**
@@ -391,6 +398,33 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
             'training' => $training,
         ]);
+    }
+
+    /**
+     * @Route("/training/duplicate/{id}", name="training_duplicate")
+     */
+    public function training_duplicate(Training $training, TranslatorInterface $translator): Response
+    {
+        $user = $this->getUser();
+        $newTraining = clone $training;
+
+        if ($newTraining->getUser() === null)
+            $newTraining->setUser($user);
+        $newTraining->setCreator($user);
+        $newTraining->setName($newTraining->getName() . $translator->trans('training_duplicate_suffix'));
+        // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
+        $newTraining->setIsValidated($this->isGranted(User::ROLE_INSTITUTION));
+        // S'il s'agit d'une création par un utilisateur, on lui associe la formation
+        if (!$this->isGranted(User::ROLE_INSTITUTION))
+            $user->addTraining($newTraining);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newTraining);
+        $em->flush();
+
+        $this->addFlash('success', $translator->trans('duplicate_training_success'));
+
+        return $this->redirectToRoute('app_training_edit', ['id' => $newTraining->getId()]);
     }
 
     /**

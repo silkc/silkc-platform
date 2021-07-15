@@ -117,7 +117,11 @@
 									<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
 								{% endif %}
 								{% if is_granted('IS_AUTHENTICATED_FULLY') == true %}
-									<button class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
+									{% if training in user.trainings %}
+										<button class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
+									{% else %}
+										<button class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
+									{% endif %}
 								{% endif %}
 							</div>
 						</div>

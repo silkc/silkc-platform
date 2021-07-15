@@ -20,10 +20,10 @@
 								<div class="d-inline-flex align-items-center justify-content-end">
 									<div class="block-clone">
 										<span class="spinner-border spinner-border-sm loader" role="status" aria-hidden="true"></span>
-										<a href="{{ path('app_training_edit', {id: training.id}) }}" title="Edit this training">
+										<a href="{{ path('app_training_edit', {id: training.id}) }}" data-toggle="tooltip" title="Edit this training">
 											<i class="far fa-edit text-primary"></i>
 										</a>
-										<a href="#" title="Clone this training">
+										<a href="{{ path('app_training_duplicate', { id: training.id }) }}" data-toggle="tooltip" title="Clone this training">
 											<i class="far fa-clone text-primary"></i>
 										</a>
 									</div>

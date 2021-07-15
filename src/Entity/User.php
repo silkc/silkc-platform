@@ -68,7 +68,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true, unique=true)
-     * @Groups({"training:read", "training_feedback:read"})
+     * @Groups({"user:read", "training:read", "training_feedback:read"})
      */
     private $username;
 

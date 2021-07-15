@@ -98,7 +98,7 @@ class AdminController extends AbstractController
                 'user' => $user,
                 'form' => $form->createView(),
                 'notifications' => $notificationRepository->findBy(['isRead' => false]),
-                'to_validated_trainings' => $trainingRepository->findBy(['isValidated' => false]),
+                'to_validated_trainings' => $trainingRepository->findBy(['isValidated' => false, 'isRejected' => false]),
                 'to_validated_institutions' => $userRepository->findBy(['isValidated' => false]),
                 'trainings' => $trainingRepository->findAll(),
                 'skills' => $skillRepository->findAll(),

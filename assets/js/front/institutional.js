@@ -14,6 +14,7 @@ require('bootstrap');
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
+const bootbox = require('bootbox/bootbox');
 
 require('bootstrap-select');
 import 'bootstrap-select/dist/css/bootstrap-select.min.css'
@@ -676,10 +677,13 @@ class Institutional {
         });
 
         $('body').on('click', '.btn-add-user', function() {
-
+            let $button = $(this);
+            $button.data('keep-content', $(this).html());
+            $button.html('<i class="fas fa-spinner fa-spin"></i>');
             let $modal = $('#common-modal');
             let name = $modal.find('input#institution-name').val();
             let address = $modal.find('input#institution-location').val();
+            let $institutionDropdown = $('select[name="training[user]"]');
 
             if (!name) return false;
 
@@ -697,17 +701,24 @@ class Institutional {
                     data: data,
                     headers: {"X-auth-token": token},
                     success: function (data, textStatus, jqXHR) {
-                        if (data.result != undefined && data.result == true) {
-                            document.location.reload();
+                        $button.html($button.data('keep-content'));
+
+                        if (data.result != undefined && data.result == true && data.institution != undefined) {
+                            console.log($institutionDropdown);
+                            $modal.modal('hide');
+                            $institutionDropdown.selectpicker('deselectAll');
+                            $institutionDropdown.append(`<option selected="selected" value="${data.institution.id}">${data.institution.username}</option>`);
+                            $institutionDropdown.selectpicker('refresh').val(data.institution.id);
                         } else {
                             bootbox.alert('An error occured');
                         }
                     },
                     error: function () {
+                        $button.html($button.data('keep-content'));
                         bootbox.alert('An error occured');
                     },
                     complete: function () {
-                        $('#common-modal').modal('hide');
+                        $modal.modal('hide');
                     }
                 });
 

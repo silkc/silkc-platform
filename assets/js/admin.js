@@ -585,8 +585,9 @@ class Admin {
                                 let $td = $button.closest('tr').find('td:eq(3)');
                                 if ($td && $td.length > 0)
                                     $td.html('<span class="text-success">Approve</span>');
-                                $button.removeClass('btn-warning').addClass('btn-success');
-                                $button.removeClass('reject_training').addClass('approve_training').attr('data-original-title', 'Approve');
+                                $button.removeClass('btn-success').addClass('btn-warning');
+                                $button.find('i, svg').removeClass('fa-check').addClass('fa-ban');
+                                $button.removeClass('approve_training').addClass('reject_training').attr('data-original-title', 'Reject');
                             } else {
                                 bootbox.alert('An error occured');
                             }
@@ -610,9 +611,10 @@ class Admin {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(3)');
                                     if ($td && $td.length > 0)
-                                        $td.html('<span class="text-success">Reject</span>');
-                                    $button.removeClass('btn-success').addClass('btn-warning');
-                                    $button.removeClass('approve_training').addClass('reject_training').attr('data-original-title', 'Reject');
+                                        $td.html('<span class="text-warning">Reject</span>');
+                                    $button.removeClass('btn-warning').addClass('btn-success');
+                                    $button.find('i, svg').removeClass('fa-ban').addClass('fa-check');
+                                    $button.removeClass('reject_training').addClass('approve_training').attr('data-original-title', 'Approve');
                                 } else {
                                     bootbox.alert('An error occured');
                                 }

@@ -218,7 +218,10 @@ user_formation_details_tooltip: Skills linked to this training
 user_formation_unlink_tooltip: Remove this training
 user_formation_feedback_tooltip: Provide feedback
 user_had_done_this_training_btn: I've done this training
+user_had_not_done_this_training_btn: I did not do this training
 n_a: N/A
+duplicate_training_success: La formation a bien été dupliquée
+training_duplicate_suffix: " - (duplicate)"
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.
