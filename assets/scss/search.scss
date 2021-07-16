@@ -33,7 +33,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     left: 0;
 
     img {
-      position: absolute;
+      position: absolute; 
       top: 0;
       bottom: 0;
       right: 0;
@@ -49,6 +49,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   .intro {
     margin: 0;
     padding: 75px 0 120px;
+    position: relative;
 
     > span {
       display: block;
