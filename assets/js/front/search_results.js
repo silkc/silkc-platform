@@ -164,10 +164,61 @@ class SearchResults {
        });
    }
 
+
+   runMap = () => { 
+
+        $('#search-results #accordion').on('shown.bs.collapse', function (e) {
+            let blcMap = e.target.querySelector('.blc-map');
+            if (blcMap) {
+                let mapContent = blcMap.querySelector('.map');
+                let trainingAddress = blcMap.querySelector('.training_address');
+                let trainingAddressHidden = blcMap.querySelector('.training_address_hidden');
+
+                if (mapContent.innerHTML != '') return false;
+
+                let map = null;
+                let coords = trainingAddressHidden.value;
+    
+                if (!coords) return false;
+
+                coords = JSON.parse(coords);
+                map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
+                
+                let geocoder = L.Control.Geocoder.nominatim();
+                
+                let control = L.Control.geocoder({
+                    collapsed: false,
+                    placeholder: 'Search here...',
+                    position: 'topleft',
+                    geocoder: geocoder
+                }).addTo(map);
+                
+                // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: '',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(map);
+                
+                //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+    
+                if (coords) {
+                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                    marker.bindPopup(coords.city); // Bulle d'info
+    
+                    trainingAddress.innerHTML = coords.city;
+                }
+            }
+
+        })
+   }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
         this.runDonetraining();
+        this.runMap();
     }
 }
 

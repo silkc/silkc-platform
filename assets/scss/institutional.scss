@@ -96,6 +96,18 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
       }
     }
+
+    .blc-map {
+      .map {
+        width: 100%;
+        height: 200px;
+        margin-top: 15px;
+      }
+
+      .leaflet-touch .leaflet-control-geocoder {
+        display: none !important;
+      }
+    }
   }
 }
 
@@ -167,4 +179,18 @@ form[name="training"] {
   color: #fff !important;
   font-weight: 600;
   margin-top: 15px;
+}
+
+form[name="training"] {
+  .blc-map {
+    .map {
+      width: 100%;
+      height: 200px;
+      margin-top: 15px;
+    }
+
+    .leaflet-touch .leaflet-control-geocoder {
+      display: none !important;
+    }
+  }
 }

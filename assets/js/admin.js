@@ -222,9 +222,10 @@ class Admin {
 
         let initMap = function () {
             let inputHidden = document.getElementById('user_address');
+            let mapContent = document.getElementById('map');
             var map = null;
 
-            if (inputHidden) {
+            if (inputHidden && mapContent) {
                 let coords = inputHidden.value;
 
                 if (coords) {
@@ -395,6 +396,17 @@ class Admin {
                             }
                         }
 
+                        let locationHTML = ``;
+                        if (data.location != undefined && data.location != '') {
+                            locationHTML += `<div class="blc-map">
+                                                <span class="training_address"></span>
+                                                <input type="hidden" class="training_address_hidden" value='${data.location}' />
+                                                <div class="map"></div>
+                                            </div>`;
+                        } else {
+                            locationHTML = false;
+                        }
+
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
 
@@ -412,7 +424,7 @@ class Admin {
 											<span class="title">Location</span>
 										</div>
 										<div class="col-lg-8">
-											<div>${data.location ? data.location : 'N/A'}</div>
+											${locationHTML ? locationHTML : 'N/A'}
 										</div>
 									</div>
 
@@ -847,6 +859,57 @@ class Admin {
         });
     }
 
+    runMapTraining = () => { 
+
+        $('#common-modal').on('shown.bs.modal', function (e) {
+            let blcMap = e.target.querySelector('.blc-map');
+            if (blcMap) {
+                let mapContent = blcMap.querySelector('.map');
+                let trainingAddress = blcMap.querySelector('.training_address');
+                let trainingAddressHidden = blcMap.querySelector('.training_address_hidden');
+
+                console.log('mapContent >> ', mapContent)
+                console.log('trainingAddress >> ', trainingAddress)
+                console.log('trainingAddressHidden >> ', trainingAddressHidden)
+                
+                let map = null;
+                let coords = trainingAddressHidden.value;
+                
+                if (!coords) return false;
+                
+                console.log('coords >> ', coords)
+                coords = JSON.parse(coords);
+                map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
+                
+                let geocoder = L.Control.Geocoder.nominatim();
+                
+                let control = L.Control.geocoder({
+                    collapsed: false,
+                    placeholder: 'Search here...',
+                    position: 'topleft',
+                    geocoder: geocoder
+                }).addTo(map);
+                
+                // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: '',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(map);
+                
+                //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+    
+                if (coords) {
+                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                    marker.bindPopup(coords.city); // Bulle d'info
+    
+                    trainingAddress.innerHTML = coords.city;
+                }
+            }
+
+        })
+   }
     init = function() {
         this.runDatatableHome();
         this.runDatatableTask();
@@ -856,6 +919,7 @@ class Admin {
         this.runDatatableSkill();
         this.seeDetailWork();
         this.runMap();
+        this.runMapTraining();
         this.getDetails();
         this.runUsersActions();
         this.runTrainingsActions();

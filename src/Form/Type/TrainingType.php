@@ -48,7 +48,7 @@ class TrainingType extends AbstractType
                 'translation_domain' => 'messages',
                 'label' => 'label.name',
             ])
-            ->add('location', TextType::class, [
+            ->add('location', HiddenType::class, [
                 'translation_domain' => 'messages',
                 'label' => 'label.location',
                 'required' => false,

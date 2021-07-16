@@ -2,61 +2,67 @@
 {% set skillsIdsAcquired = [] %}
 
 {% if training is defined %}
-    {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
-        {% for k, trainingSkill in training.trainingSkills %}
-            {% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
-            {% set skill =  trainingSkill.skill %}
-                {% set skillsIdsRequired = skillsIdsRequired|merge([skill.id]) %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+	{% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+		{% for k, trainingSkill in training.trainingSkills %}
+			{% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
+				{% set skill =  trainingSkill.skill %}
+				{% set skillsIdsRequired = skillsIdsRequired|merge([skill.id]) %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
 {% endif %}
 
 {% if training is defined %}
-    {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
-        {% for k, trainingSkill in training.trainingSkills %}
-            {% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
-            {% set skill =  trainingSkill.skill %}
-                {% set skillsIdsAcquired = skillsIdsAcquired|merge([skill.id]) %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+	{% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+		{% for k, trainingSkill in training.trainingSkills %}
+			{% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
+				{% set skill =  trainingSkill.skill %}
+				{% set skillsIdsAcquired = skillsIdsAcquired|merge([skill.id]) %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
 {% endif %}
 
 {% set skillsHidden = {'required': skillsIdsRequired, 'acquired': skillsIdsAcquired,} %}
 
 {{ form_start(form, {attr: attr|default({})}) }}
-    <div class="row">
-        <div class="col-6">
-            {{ form_row(form.name) }}
-            {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') == false %}
-                {{ form_row(form.user) }}
-                <p class="text-right m-0">
-                    <button type="button" class="btn btn-link btn-modal-add-user">{{ 'don_t_find_your_institution'|trans }}</button>
-                </p>
-            {% endif %}
-            {{ form_row(form.location) }}
-            {{ form_row(form.url) }}
-            {{ form_row(form.duration) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.price) }}
-            {{ form_row(form.startAt) }}
-            {{ form_row(form.endAt) }}
-            {{ form_row(form.isOnline) }}
-            {{ form_row(form.isOnlineMonitored) }}
-            {{ form_row(form.isPresential) }}            
-        </div>
+<div class="row">
+	<div class="col-6">
+		{{ form_row(form.name) }}
+		{% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') == false %}
+			{{ form_row(form.user) }}
+			<p class="text-right m-0">
+				<button type="button" class="btn btn-link btn-modal-add-user">{{ 'don_t_find_your_institution'|trans }}</button>
+			</p>
+		{% endif %}
 
-        <div class="col-6">
-            <div class="occupations-select">
-                {{ form_row(form.occupation) }}
-            </div>
 
-            <p class="title mb-0">{{ 'required_skills'|trans  }}</p>
-            <div class="p-4 content-skills">
-                <div class="mb-3 add-skill" data-type="required">
-                    <input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
-                    {% include 'front/elements/input_add_search.html.twig'
+        <div id="searchmap"></div>
+        <div id="map"></div>
+		{{ form_row(form.location) }}
+
+
+		{{ form_row(form.url) }}
+		{{ form_row(form.duration) }}
+		{{ form_row(form.description) }}
+		{{ form_row(form.price) }}
+		{{ form_row(form.startAt) }}
+		{{ form_row(form.endAt) }}
+		{{ form_row(form.isOnline) }}
+		{{ form_row(form.isOnlineMonitored) }}
+		{{ form_row(form.isPresential) }}
+	</div>
+
+	<div class="col-6">
+		<div class="occupations-select">
+			{{ form_row(form.occupation) }}
+		</div>
+
+		<p class="title mb-0">{{ 'required_skills'|trans  }}</p>
+		<div class="p-4 content-skills">
+			<div class="mb-3 add-skill" data-type="required">
+				<input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
+				{% include 'front/elements/input_add_search.html.twig'
                         with {
                             'id': 'skill-name-required',
                             'url': '/apip/skills',
@@ -67,48 +73,46 @@
                             'placeholder': "Add skill"
                         }
                     %}
-                    <div class="content-list-skill mt-4">
-                        <ul class="list-group ul-skills" id="skills-required">
-                            {% if training is defined %}
-                                {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
-                                    {% for k, trainingSkill in training.trainingSkills %}
-                                        {% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
-                                        {% set skill =  trainingSkill.skill %}
-                                            <li class="list-group-item">
-                                                <div class="d-flex flex-nowrap justify-content-between">
-                                                    <div>
-                                                        <span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
-                                                    </div>
-                                                    <div>
-                                                        <a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="required" title="Remove this skill">
-                                                            <i class="fas fa-minus"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
+				<div class="content-list-skill mt-4">
+					<ul class="list-group ul-skills" id="skills-required">
+						{% if training is defined %}
+							{% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+								{% for k, trainingSkill in training.trainingSkills %}
+									{% if attribute(trainingSkill, 'isRequired') is defined and trainingSkill.isRequired == true %}
+										{% set skill =  trainingSkill.skill %}
+										<li class="list-group-item">
+											<div class="d-flex flex-nowrap justify-content-between">
+												<div>
+													<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+												</div>
+												<div>
+													<a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="required" title="Remove this skill">
+														<i class="fas fa-minus"></i>
+													</a>
+												</div>
+											</div>
+										</li>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</div>
 
-            <p class="title mb-0">{{ 'acquired_skills'|trans  }}</p>
-            <div class="p-4 content-skills">
-                <div class="mb-3 add-skill" data-type="acquired">
-                    <div class="content-list-skill">
-                        <div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-secondary">
-                            <div class="pl-2 pr-2 pb-2">{{ 'esco'|trans }}</div>
-                            <div class="occupation">
-                                <ul class="list-group ul-skills" id="skills-occupations-acquired">
-                                
-                                </ul>
-                                <a href="#" class="skills-associated" id="all-associated">All associated</a>
-                            </div>
-                        </div>
-                        {% include 'front/elements/input_add_search.html.twig'
+		<p class="title mb-0">{{ 'acquired_skills'|trans  }}</p>
+		<div class="p-4 content-skills">
+			<div class="mb-3 add-skill" data-type="acquired">
+				<div class="content-list-skill">
+					<div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-secondary">
+						<div class="pl-2 pr-2 pb-2">{{ 'esco'|trans }}</div>
+						<div class="occupation">
+							<ul class="list-group ul-skills" id="skills-occupations-acquired"></ul>
+							<a href="#" class="skills-associated" id="all-associated">All associated</a>
+						</div>
+					</div>
+					{% include 'front/elements/input_add_search.html.twig'
                             with {
                             'id': 'skill-name-acquired',
                             'url': '/apip/skills',
@@ -119,41 +123,41 @@
                             'placeholder': "Add skill"
                         }
                         %}
-                        <div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-light">
-                            <div class="pl-2 pr-2 pb-2">{{ 'no_esco'|trans }}</div>
-                            <div class="not-occupation">
-                                <ul class="list-group ul-skills" id="skills-not-occupations-acquired">
-                                    {% if training is defined %}
-                                        {% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
-                                            {% for k, trainingSkill in training.trainingSkills %}
-                                                {% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
-                                                    {% set skill =  trainingSkill.skill %}
-                                                    <li class="list-group-item">
-                                                        <div class="d-flex flex-nowrap justify-content-between">
-                                                            <div>
-                                                                <span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="acquired" title="Remove this skill">
-                                                                    <i class="fas fa-minus"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+					<div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-light">
+						<div class="pl-2 pr-2 pb-2">{{ 'no_esco'|trans }}</div>
+						<div class="not-occupation">
+							<ul class="list-group ul-skills" id="skills-not-occupations-acquired">
+								{% if training is defined %}
+									{% if attribute(training, 'trainingSkills') is defined and training.trainingSkills is iterable %}
+										{% for k, trainingSkill in training.trainingSkills %}
+											{% if attribute(trainingSkill, 'isToAcquire') is defined and trainingSkill.isToAcquire == true %}
+												{% set skill =  trainingSkill.skill %}
+												<li class="list-group-item">
+													<div class="d-flex flex-nowrap justify-content-between">
+														<div>
+															<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+														</div>
+														<div>
+															<a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="acquired" title="Remove this skill">
+																<i class="fas fa-minus"></i>
+															</a>
+														</div>
+													</div>
+												</li>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <p class="text-center mt-4">
-        {{ form_widget(form.save, {'label': 'label.save'|trans }) }}
-    </p>
+<p class="text-center mt-4">
+	{{ form_widget(form.save, {'label': 'label.save'|trans }) }}
+</p>
 {{ form_end(form) }}

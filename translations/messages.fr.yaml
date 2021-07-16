@@ -1,87 +1,87 @@
 carousel:
-    text_1: Ne jamais<br/>cesser<br/>d'apprendre
-    text_2: Ne jamais<br/>cesser<br/>d'apprendre
-    text_3: Ne jamais<br/>cesser<br/>d'apprendre
-    text_4: Ne jamais<br/>cesser<br/>d'apprendre
+    text_1: Never<br/>Stop<br/>Learning
+    text_2: IMPROVE<br/>YOUR<br/>SKILLS
+    text_3: FIND<br/>YOUR<br/>DREAM JOB
+    text_4: Never<br/>Stop<br/>Learning
 
 title_page:
-    results: Résultats
+    results: Results
     administration: Administration
 
 label:
     label: Label
-    name: Nom
-    location: Localisation
-    duration: Durée
+    name: Name
+    location: Location
+    duration: Duration
     description: Description
     roles: Roles
-    price: Prix
-    start_at: Commence le
-    end_at: Termine le
-    training_info_url: URL d'information sur la formation
+    price: Price
+    start_at: Start at
+    end_at: End at
+    training_info_url: Training info URL
     url: URL
-    online: En ligne
-    is_online_monitored: En ligne
-    is_presential: En présentiel
-    save: Enregistrer
-    create: Enregistrer
-    edit_training: Enregistrer
-    pseudo: Nom d'utilisateur
-    close: Fermer
-    institution_name: Nom de l'institution
-    search: Rechercher
-    advanced_search: Recherche avancée
+    online: Online
+    is_online_monitored: Monitored online
+    is_presential: Face to face
+    save: Save
+    create: Save
+    edit_training: Save
+    pseudo: Username
+    close: Close
+    institution_name: Institution name
+    search: Search
+    advanced_search: Advanced search
 button:
-    see_related_trainings: Voir formations liées
-    see_skills_to_be_learn: Voir compétences à acquérir
-    suspend: Suspendre
-    unsuspend: Réhabiliter
-    suspect: Marquer comme "suspect"
-    raise_suspicion: Élever la suspicion
-    edit: Éditer
-    delete: Supprimer
-    approve: Approuver
-    detail: Détails
-    reject: Rejeter
+    see_related_trainings: See related trainings
+    see_skills_to_be_learn: See skills to be learn
+    suspend: Suspend
+    unsuspend: Unsuspend
+    suspect: Mark user as "suspect"
+    raise_suspicion: Mark suspicious
+    edit: Edit
+    delete: Delete
+    approve: Approve
+    detail: Details
+    reject: Reject
 header:
-    my_institution: Mon institution    
-    my_account: Mon compte
-    full_search_page: Page de recherche complète
+    my_institution: My institution    
+    my_account: My account    
+    full_search_page: Full search page    
     intro: Skills Integration in a Learning Knowledge and Career PATHway
 
 nav:
-    dashboard: Tableau de bord
-    home: Accueil
-    personal_informations: Mon compte
-    institutional_informations: Informations institutionnelles
-    work: Job
-    training: Formation
-    change_password: Mot de passe
-    skills: Compétences
-    tasks: Tâches
-    users: Utilisateurs
+    dashboard: Dashboard
+    home: Home
+    personal_informations: My account
+    institutional_informations: Institutional information
+    work: Jobs
+    training: Training
+    change_password: Password
+    skills: Skills
+    tasks: Tasks
+    users: Users
 
 notification:
     label:
         date: Date
-        subject: Sujet
-    mark_selected_as_read: Marquer la sélection comme "lue"
+        subject: Subject
+    mark_selected_as_read: Mark selected as read
 
 content_training:
     label:
-        name: Nom
-        registered_on: Enregistrée le
-        registered_by: Enregistrée par
-        status: Statut
+        name: Name
+        registered_on: Registered on
+        registered_by: Registered by
+        status: Status
         action: Action
-        approved: Approuvé
-        pending: En attente
-        rejected: Rejeté
+        approved: Approved
+        pending: Pending
+        rejected: Rejected
     action:
-        approve: Approuvé
-        see_details: Voir détails
-        delete: Supprimer
-        reject: Rejeter
+        approve: Approve
+        see_details: See details
+        delete: Delete
+        reject: Reject
 
 work:
     label: label
@@ -89,147 +89,152 @@ work:
 
 user:
     id: ID
-    firstname: Prénom
-    lastname: Nom
-    username: Nom d'utilisateur
-    is_suspended: Suspendu ?
+    firstname: Firstname
+    lastname: Lastname
+    username: Username
+    is_suspended: Suspended ?
     is_suspected: Suspect ?
-    role_user: utilisateur
+    role_user: user
     role_institution: institution
     role_admin: admin
-    role: Profil
-    create_user: Créer utilisateur
-    edit_user_breadcrumb: Éditer %username%
+    role: Profile
+    create_user: Create user
+    edit_user_breadcrumb: Edit %username%
 task:
     label:
-        name: Nom
-        registered_on: Enregistré le
-        registered_by: Enregistré par
-        status: Statut
+        name: Name
+        registered_on: Registered on
+        registered_by: Registered by
+        status: Status
         action: Action
-        approved: Approuvé
-        pending: En attente
-        rejected: Rejeté
+        approved: Approved
+        pending: Pending
+        rejected: Rejected
     action:
-        approve: Approuvé
-        see_details: Voir détails
-        delete: Supprimer
-        reject: Rejeter
+        approve: Approve
+        see_details: See details
+        delete: Delete
+        reject: Reject
 
 
 login:
     form:
-        or: ou
-        disconnect_message: "%username%, vous êtes déjà connecté, "
-        not_identical_password: Les mots de passe introduits ne sont pas identiques
-        disconnect_button: Se déconnecter
-        admin_access_button: Accès admin
-        user_access_button: Accès utilisateur
-        institution_access_button: Accès institutionnel
-        log_in: Se connecter
+        or: or
+        disconnect_message: "%username%, you are already connected, "
+        not_identical_password: The passwords entered are not identical.
+        disconnect_button: Sign out
+        admin_access_button: Admin access
+        user_access_button: User access
+        institution_access_button: Institution access
+        log_in: Log in
         title:
-            connect: Se connecter
+            connect: Connect
             signup: Inscription
-            you_do_not_have_an_account: Vous n'avez pas encore de compte?
-            forgot_password: J'ai oublié mon mot de passe
+            you_do_not_have_an_account: You do not have an account?
+            forgot_password: Forgot password
         label:
-            username: Nom d'utilisateur
-            firstname: Prénom
-            institution_name: Nom de l'institution
-            pseudo: Pseudo
-            lastname: Nom
+            username: Username
+            firstname: Firstname
+            institution_name: Institution name
+            pseudo: Username
+            lastname: Lastname
             email: Email
-            email_or_username: Email ou nom d'utilisateur
-            address: Adresse
-            city: Ville
-            homepage: Page d'accueil
+            email_or_username: Email or username
+            address: Address
+            city: City
+            homepage: Homepage
             roles: Roles
-            year_of_birth: Année de naissance
-            year_of_creation: Année de création
-            date_of_birth: Date de naissance
-            send_password_reset_email: E-mail de modification de mot de passe envoyé
+            year_of_birth: Year of birth
+            year_of_creation: Year of creation
+            date_of_birth: Date of birth
+            send_password_reset_email: Send password reset email
             password: 
-                current_password: Mot de passe actuel
-                new_password: Nouveau mot de passe
-                confirm_new_password: Confirmer le nouveau mot de passe
-                first: Mot de passe
-                second: Confirmez le mot de passe
+                current_password: Current password
+                new_password: New password
+                confirm_new_password: Confirm new password
+                first: Password
+                second: Confirm password
         button:
-            save: Enregistrer
-            save_and_create: Enregistrer et créer
+            save: Save
+            save_and_create: Save and create
             
-        you_do_not_have_an_account: Vous n'avez pas encore de compte?
-        sign_up: Créer un compte
-        sign_in: S'identifier
-        sign_out: Se déconnecter
+        you_do_not_have_an_account: You do not have an account?
+        sign_up: Sign up
+        sign_in: Sign in
+        sign_out: Sign out
    
 email:
-    validate_your_account: Validez votre compte
-    to_finalize_your_account_creation: Pour finaliser la création de votre compte sur la plateforme SILKC, merci de cliquer sur le lien de validation suivant
-    to_change_password: Pour changer votre mot de passe sur la plateforme SILKC, cliquez sur le lien suivant
-    this_link_is_valid_for_minutes: Ce lien est valable pendant 60 minutes seulement. Si vous ne l'utilisez pas dans ce délai, il vous faudra en demander un nouveau.
-    if_you_receive_this_email: Si vous n'avez pas demandé la réinitialisation de votre mot de passe, pensez à signaler cet incident à votre équipe de support.
-    change_password: Changer mon mot de passe
-    change_password_content: "Bonjour, si vous avez demander le changement de votre mot de passe, cliquez sur le lien suivant :"
+    validate_your_account: Validate your account
+    to_finalize_your_account_creation: To finalize your account creation on the SILKC platform, please click on the following validation link
+    to_change_password: To change your password on the SILKC platform, please click on the following validation link
+    this_link_is_valid_for_minutes: This link is only valid for 60 minutes. If you do not use it within this period, you will need to request a new one.
+    if_you_receive_this_email: If you receive this email for no apparent reason, please report it as suspicious behavior to your support team.
+    change_password: Change password
+    change_password_content: "Hello, if you have requested to change your password, please click on the following link :"
 home:
-    let_improve: <span>Améliorons</span><span>votre situation professionnelle ensemble!</span>
-    find_out_how_to_get_there: Découvrez comment y parvenir!
-    search_by_occupation: Recherche par métier
-    search_by_skill: Recherchepar compétence
-    training_available: formations disponibles
-    people_have_found_a_trining_through_the_silkc_path: personnes ont trouvé une formation au travers de SILKC
-    registered_job: métiers enregistrés
+    let_improve: <span>Let's improve</span><span>your professional situation!</span>
+    find_out_how_to_get_there: Find out how to get there!
+    search_by_occupation: Search by occupation
+    search_by_skill: Search by skill
+    training_available: training available
+    people_have_found_a_trining_through_the_silkc_path: people have found a training through SILKC platform
+    registered_job: registered jobs
 
-no_result_found : Aucun résultat trouvé
-required_skills : Compétences requises
-acquired_skills : Compétences à acquérir
-skills_you_can_acquire : Compétences que vous pouvez acquérir
-no_item: Aucun élément
-esco: Dans ESCO, pour ce métier
-no_esco: Hors ESCO, pour ce métier
+no_result_found : No result found
+required_skills : Required skills
+acquired_skills : Acquired skills
+skills_you_can_acquire : Skills you can acquire
+no_item: No element
+esco: In ESCO for this occupation
+no_esco: Not in ESCO for this occupation
 
-the_following_skills_have_been_calculated_based: Les compétences suivantes ont été calculées sur base de votre expérience professionnelle et de votre historique de formations
-see_more: Voir plus
-other_skills: Autres compétences
-previously_unselected: Désélectionnées antérieurement
-please_indicate_any_professional_training: Veuillez indiquer les formations professionnelles que vous avez suivies au cours des 5 dernières années
-don_t_find_your_training: Vous ne trouvez pas votre formation? Ajoutez-la ici!
-don_t_find_your_institution: Vous ne trouvez pas l'institution? Ajoutez-la ici!
-training_name: Nom de la formation
-please_indicate_your_current_job: Veuillez renseigner votre métier actuel. Nous l'utiliserons pour deviner vos compétences actuelles.
-please_indicate_any_previous_jobs: Veuillez renseigner vos métiers antérieurs. Nous les utiliserons pour deviner vos compétences. Utilisez le bouton + pour en ajouter d'autres.
-please_indicate_your_desired_jobs: Veuillez renseigner votre métier de rêve. Nous les utiliserons pour suggérer la meilleure formation pour vous, sur base de votre localisation et de vos compétences actuelles.
-current_job: Métier actuel
-previous_job: Métier antérieur
-desired_job: Métier désiré
-more_info: Plus d'infos
-match: correspondance
-login_to_finetune: Connectez-vous pour plus de précision
-training_opportunities_to_land_your_dream_job_as: Opportunités de formation pour décrocher votre métier de 
-i_am_an_institution: Je suis une institution
-i_am_a_user: Je suis un utilisateur
-training: Formations
-yes: oui
-no: non
-list_of_professional_training_you_have_previously_followed: Liste des formations professionnelles que vous avez suivies antérieurement
-search_by_job_placeholder: Quel est votre métier de rêve?
-search_by_skill_placeholder: Quelle compétence souhaitez-vous acquérir?
-user_formation_details_tooltip: Compétences liées à cette formation
-user_formation_unlink_tooltip: Supprimer cette formation
-user_formation_feedback_tooltip: Donnez votre avis
-user_had_done_this_training_btn: J'ai suivi cette formation
+the_following_skills_have_been_calculated_based: The following skills list has been compiled based on your work experience and training history
+see_more: See more
+other_skills: Other skills
+previously_unselected: Previously unselected
+please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
+don_t_find_your_training: Can't find your training? Add it here!
+don_t_find_your_institution: Can't find your institution? Add it here!
+training_name: Training name
+please_indicate_your_current_job: Please indicate your current job. We will use it to guess your current skills.
+please_indicate_any_previous_jobs: Please indicate any previous job. We will use them to guess your skills. Use the + button to add more.
+please_indicate_your_desired_jobs: Please indicate your desired jobs. We will use them to give you the best training based on your location and current skillset.
+current_job: Current job
+previous_job: Previous job
+desired_job: Desired job
+more_info: More info
+match: match
+login_to_finetune: Login to finetune
+training_opportunities_to_land_your_dream_job_as: Training opportunities to land your dream job as
+i_am_an_institution: I am an institution
+i_am_a_user: I am a user
+training: Training
+yes: yes
+no: no
+list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
+search_by_job_placeholder: What is your dream job?
+search_by_skill_placeholder: What skill do you want to acquire?
+user_formation_details_tooltip: Skills linked to this training
+user_formation_unlink_tooltip: Remove this training
+user_formation_feedback_tooltip: Provide feedback
+user_had_done_this_training_btn: I've followed this training
+user_had_not_done_this_training_btn: I did not follow this training
 n_a: N/A
+duplicate_training_success: The training has been duplicated successfully
+training_duplicate_suffix: " - (duplicate)"
+you_have_an_account: You have an account?
+sign_in: Sign in
 
 flash:
-    your_account_is_validated: Votre compte est maintenant validé, merci.
-    invalid_code: Le code de validation est incorrect.
-    expired_code: Code expiré.
-    unknown_email: Email inconnu.
-    unknown_user: Utilisateur inconnu.
-    validation_link_has_been_sent: Un lien de validation vous a été envoyé par email
-    an_error_occured: Une erreur s'est produite
-    email_already_exists: Cette adresse e-mail est déjà utilisée
-    username_already_exists: Ce nom d'utilisateur est déjà utilisé
-    your_password_is_changed: Votre mot de passe a été modifié.
-    non_identical_password: Mots de passes non-identiques.
+    your_account_is_validated: Your account is now validated, thank you.
+    invalid_code: The validation code is invalid.
+    expired_code: Code expired.
+    unknown_email: Unknown email.
+    unknown_user: Unknown user.
+    validation_link_has_been_sent: A validation link has been sent to your e-mail
+    an_error_occured: An error occured
+    email_already_exists: This email address is already in use
+    username_already_exists: This username is already in use
+    your_password_is_changed: Your password has been changed.
+    non_identical_password: Non-identical passwords.
 

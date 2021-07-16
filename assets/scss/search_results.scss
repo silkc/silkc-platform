@@ -19,6 +19,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 ============================================================================= */
 #search-results {
     
+    .blc-map {
+        .map {
+            width: 100%;
+            height: 200px;
+        }
+
+        .leaflet-touch .leaflet-control-geocoder {
+            display: none !important;
+        }
+    }
+
     .form-search {
         margin-top: 60px;
 

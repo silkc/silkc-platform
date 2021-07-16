@@ -107,8 +107,6 @@ class Login {
                 }, 1000);
             });
 
-
-
             if (coords) {
                 let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
                 marker.bindPopup(coords.city); // Bulle d'info

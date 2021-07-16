@@ -42,7 +42,16 @@
 
 										<div class="form-group">
 											<label for="location_{{ k }}">{{ 'label.location'|trans }}</label>
-											<input type="text" class="form-control" disabled id="location_{{ k }}" name="location" value="{{ attribute(training, 'location') is defined ? training.location : '' }}">
+
+                                            {% if training.location is defined and training.location is not empty %}
+                                                <div class="blc-map">
+                                                    <input type="text" class="form-control training_address" disabled id="location_{{ k }}">
+                                                    <input type="hidden" class="training_address_hidden" value="{{ training.location }}" />
+                                                    <div class="map"></div>
+                                                </div>
+                                            {% else %}
+                                                <input type="text" class="form-control" disabled id="location_{{ k }}" value="{{ 'n_a'|trans }}">
+                                            {% endif %}
 										</div>
 
 										<div class="form-group">

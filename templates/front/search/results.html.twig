@@ -45,11 +45,19 @@
 										<div class="col-lg-4">
 											<span class="title">{{ 'label.location'|trans  }}</span>
 										</div>
-										<div class="col-lg-8">
-                                            <span>{{ attribute(training, 'location') is defined and training.location is not empty ? training.location : 'n_a'|trans }}</span>
-										</div>
+                                        {% if training.location is defined and training.location is not empty %}
+                                            <div class="col-lg-8 blc-map">
+                                                <span class="training_address"></span>
+                                                <input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}" />
+                                                <div class="map"></div>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-lg-8">
+                                                <span>{{ 'n_a'|trans }}</span>
+                                            </div>
+                                        {% endif %}
 									</div>
-
+²
 									<div class="row mb-3">
 										<div class="col-lg-4">
 											<span class="title">{{ 'label.duration'|trans  }}</span>
