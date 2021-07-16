@@ -46,7 +46,7 @@ Loading fixtures will create 3 user accounts:
 
 These accounts *must* be secured later on by changing their password or removing them. The admin account must not be removed.
 
-    php bin/console doctrine:fixtures:load --append
+    php bin/console doctrine:fixtures:load --append --env dev
 
 **Install packages and generate assets**
 
