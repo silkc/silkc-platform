@@ -98,7 +98,7 @@ class TrainingRepository extends ServiceEntityRepository
                     t.id AS training_id,
                     t.completion AS trainingCompletion,
                     i.completion AS institutionCompletion,
-                    IF (t.occupation_id IS NOT NULL, :occupationCoefficient, 0) AS occupationWeight
+                    IF (t.occupation_id IS NOT NULL AND t.occupation_id = :occupationId, :occupationCoefficient, 0) AS occupationWeight
                 FROM training t
                 INNER JOIN user i ON i.id = t.user_id
                 GROUP BY t.id
