@@ -222,6 +222,8 @@ user_had_not_done_this_training_btn: I did not follow this training
 n_a: N/A
 duplicate_training_success: The training has been duplicated successfully
 training_duplicate_suffix: " - (duplicate)"
+you_have_an_account: You have an account?
+sign_in: Sign in
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.
