@@ -76,11 +76,11 @@
                     </td>
                     <td style="width: 90px;">
                         {% if institution.isValidated == false %}
-                            <button class="btn btn-sm btn-warning approve_user" data-id="{{ institution.id }}" data-toggle="tooltip" title="{{ 'button.approve'|trans }}">
-                                <i class="fas fa-ban"></i>
+                            <button class="btn btn-sm btn-success approve_user" data-id="{{ institution.id }}" data-toggle="tooltip" title="{{ 'button.approve'|trans }}">
+                                <i class="fas fa-check"></i>
                             </button>
                         {% else %}
-                            <button class="btn btn-sm btn-success reject_user" data-id="{{ institution.id }}" data-toggle="tooltip" title="{{ 'button.reject'|trans }}">
+                            <button class="btn btn-sm btn-warning reject_user" data-id="{{ institution.id }}" data-toggle="tooltip" title="{{ 'button.reject'|trans }}">
                                 <i class="fas fa-ban"></i>
                             </button>
                         {% endif %}

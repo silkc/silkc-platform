@@ -668,12 +668,12 @@ class Admin {
                         async: true,
                         success: function (data, textStatus, jqXHR) {
                             if (data.result != undefined && data.result == true) {
-                                let $td = $button.closest('tr').find('td:eq(3)');
+                                let $td = $button.closest('tr').find('td:eq(2)');
                                 if ($td && $td.length > 0)
                                     $td.html('<span class="text-success">Approve</span>');
                                 $button.removeClass('btn-success').addClass('btn-warning');
                                 $button.find('i, svg').removeClass('fa-check').addClass('fa-ban');
-                                $button.removeClass('approve_training').addClass('reject_training').attr('data-original-title', 'Reject');
+                                $button.removeClass('approve_user').addClass('reject_user').attr('data-original-title', 'Reject');
                             } else {
                                 bootbox.alert('An error occured');
                             }
@@ -686,7 +686,7 @@ class Admin {
         $('body').on('click', 'button.reject_user', function() {
             let $button = $(this);
             let id = $button.attr('data-id');
-            let url = '/admin/rejected_user/' + id;
+            let url = '/admin/reject_user/' + id;
             bootbox.confirm({message : 'Do you really want to reject this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
@@ -695,12 +695,12 @@ class Admin {
                             async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
-                                    let $td = $button.closest('tr').find('td:eq(3)');
+                                    let $td = $button.closest('tr').find('td:eq(2)');
                                     if ($td && $td.length > 0)
                                         $td.html('<span class="text-warning">Reject</span>');
                                     $button.removeClass('btn-warning').addClass('btn-success');
                                     $button.find('i, svg').removeClass('fa-ban').addClass('fa-check');
-                                    $button.removeClass('reject_training').addClass('approve_training').attr('data-original-title', 'Approve');
+                                    $button.removeClass('reject_user').addClass('approve_user').attr('data-original-title', 'Approve');
                                 } else {
                                     bootbox.alert('An error occured');
                                 }
@@ -713,7 +713,7 @@ class Admin {
         $('body').on('click', 'button.delete_user', function() {
             let $button = $(this);
             let id = $button.attr('data-id');
-            let url = '/admin/delete_training/' + id;
+            let url = '/admin/delete_user/' + id;
             bootbox.confirm({message : 'Are you sure you want to delete this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
@@ -722,7 +722,7 @@ class Admin {
                             async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
-                                    $('#datatable-task').DataTable()
+                                    $('#datatable-institution').DataTable()
                                         .row( $button.closest('tr') )
                                         .remove()
                                         .draw();
