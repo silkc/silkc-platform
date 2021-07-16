@@ -21,8 +21,8 @@ label:
     training_info_url: Training info URL
     url: URL
     online: Online
-    is_online_monitored: Is online monitored
-    is_presential: Is face to face
+    is_online_monitored: Monitored online
+    is_presential: Face to face
     save: Save
     create: Save
     edit_training: Save
@@ -37,11 +37,11 @@ button:
     suspend: Suspend
     unsuspend: Unsuspend
     suspect: Mark user as "suspect"
-    raise_suspicion: Raise suspicion
+    raise_suspicion: Mark suspicious
     edit: Edit
     delete: Delete
     approve: Approve
-    detail: Detail
+    detail: Details
     reject: Reject
 header:
     my_institution: My institution    
@@ -53,7 +53,7 @@ nav:
     dashboard: Dashboard
     home: Home
     personal_informations: My account
-    institutional_informations: Institutional informations
+    institutional_informations: Institutional information
     work: Jobs
     training: Training
     change_password: Password
@@ -92,12 +92,12 @@ user:
     firstname: Firstname
     lastname: Lastname
     username: Username
-    is_suspended: Suspendu ?
+    is_suspended: Suspended ?
     is_suspected: Suspect ?
     role_user: user
     role_institution: institution
     role_admin: admin
-    role: Profil
+    role: Profile
     create_user: Create user
     edit_user_breadcrumb: Edit %username%
 task:
@@ -167,8 +167,8 @@ email:
     validate_your_account: Validate your account
     to_finalize_your_account_creation: To finalize your account creation on the SILKC platform, please click on the following validation link
     to_change_password: To change your password on the SILKC platform, please click on the following validation link
-    this_link_is_valid_for_minutes: This link is valid for 60 minutes. If you do not use it within this period on the SILKC application, you can resend a new one.
-    if_you_receive_this_email: If you receive this email for no apparent reason, you can still report suspicious behavior to your support team.
+    this_link_is_valid_for_minutes: This link is only valid for 60 minutes. If you do not use it within this period, you will need to request a new one.
+    if_you_receive_this_email: If you receive this email for no apparent reason, please report it as suspicious behavior to your support team.
     change_password: Change password
     change_password_content: "Hello, if you have requested to change your password, please click on the following link :"
 home:
@@ -188,17 +188,17 @@ no_item: No element
 esco: In ESCO for this occupation
 no_esco: Not in ESCO for this occupation
 
-the_following_skills_have_been_calculated_based: The following skills have been calculated based on your work experiences and training history
+the_following_skills_have_been_calculated_based: The following skills list has been compiled based on your work experience and training history
 see_more: See more
 other_skills: Other skills
 previously_unselected: Previously unselected
 please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
-don_t_find_your_training: Don't find your training? Add it here!
-don_t_find_your_institution: Don't find your institution? Add it here!
+don_t_find_your_training: Can't find your training? Add it here!
+don_t_find_your_institution: Can't find your institution? Add it here!
 training_name: Training name
 please_indicate_your_current_job: Please indicate your current job. We will use it to guess your current skills.
-please_indicate_any_previous_jobs: Please indicate any previous jobs. We will use them to guess skills. Use the + button to add more.
-please_indicate_your_desired_jobs: Please indicate your desired jobs. We will use them to suggest the best training based on your location and current skillset.
+please_indicate_any_previous_jobs: Please indicate any previous job. We will use them to guess your skills. Use the + button to add more.
+please_indicate_your_desired_jobs: Please indicate your desired jobs. We will use them to give you the best training based on your location and current skillset.
 current_job: Current job
 previous_job: Previous job
 desired_job: Desired job
@@ -217,10 +217,10 @@ search_by_skill_placeholder: What skill do you want to acquire?
 user_formation_details_tooltip: Skills linked to this training
 user_formation_unlink_tooltip: Remove this training
 user_formation_feedback_tooltip: Provide feedback
-user_had_done_this_training_btn: I've done this training
-user_had_not_done_this_training_btn: I did not do this training
+user_had_done_this_training_btn: I've followed this training
+user_had_not_done_this_training_btn: I did not follow this training
 n_a: N/A
-duplicate_training_success: La formation a bien été dupliquée
+duplicate_training_success: The training has been duplicated successfully
 training_duplicate_suffix: " - (duplicate)"
 
 flash:
@@ -229,10 +229,10 @@ flash:
     expired_code: Code expired.
     unknown_email: Unknown email.
     unknown_user: Unknown user.
-    validation_link_has_been_sent: A validation link has been sent to you by e-mail
+    validation_link_has_been_sent: A validation link has been sent to your e-mail
     an_error_occured: An error occured
     email_already_exists: This email address is already in use
     username_already_exists: This username is already in use
-    your_password_is_changed: Your password is changed.
+    your_password_is_changed: Your password has been changed.
     non_identical_password: Non-identical passwords.
 
