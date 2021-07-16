@@ -35,7 +35,7 @@ Requirements
 
     php bin/console doctrine:database:create
     php bin/console doctrine:schema:update --force
-    mysql -u [USER_NAME] -p[PASSWORD] [DATABASE_NAME] < silk.sql
+    mysql -u [USER_NAME] -p[PASSWORD] [DATABASE_NAME] < data.sql
 
 **Load fixtures data**
 
