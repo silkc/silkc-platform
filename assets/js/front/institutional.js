@@ -704,7 +704,6 @@ class Institutional {
                         $button.html($button.data('keep-content'));
 
                         if (data.result != undefined && data.result == true && data.institution != undefined) {
-                            console.log($institutionDropdown);
                             $modal.modal('hide');
                             $institutionDropdown.selectpicker('deselectAll');
                             $institutionDropdown.append(`<option selected="selected" value="${data.institution.id}">${data.institution.username}</option>`);
