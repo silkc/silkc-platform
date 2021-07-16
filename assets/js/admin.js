@@ -611,7 +611,7 @@ class Admin {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(3)');
                                     if ($td && $td.length > 0)
-                                        $td.html('<span class="text-warning">Reject</span>');
+                                        $td.html('<span class="text-warning">Rejected</span>');
                                     $button.removeClass('btn-warning').addClass('btn-success');
                                     $button.find('i, svg').removeClass('fa-ban').addClass('fa-check');
                                     $button.removeClass('reject_training').addClass('approve_training').attr('data-original-title', 'Approve');
@@ -629,6 +629,92 @@ class Admin {
             let id = $button.attr('data-id');
             let url = '/admin/delete_training/' + id;
             bootbox.confirm({message : 'Are you sure you want to delete this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $('#datatable-task').DataTable()
+                                        .row( $button.closest('tr') )
+                                        .remove()
+                                        .draw();
+                                    
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+    }
+
+    /**
+     * Actions sur les users
+     */
+     runUsersTasksActions = () => {
+        // APPROVE
+        $('body').on('click', 'button.approve_user', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/approve_user/' + id;
+            bootbox.confirm({message : 'Are you sure you want to approve this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                if (result == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        async: true,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.result != undefined && data.result == true) {
+                                let $td = $button.closest('tr').find('td:eq(3)');
+                                if ($td && $td.length > 0)
+                                    $td.html('<span class="text-success">Approve</span>');
+                                $button.removeClass('btn-success').addClass('btn-warning');
+                                $button.find('i, svg').removeClass('fa-check').addClass('fa-ban');
+                                $button.removeClass('approve_training').addClass('reject_training').attr('data-original-title', 'Reject');
+                            } else {
+                                bootbox.alert('An error occured');
+                            }
+                        }
+                    });
+                }
+            }});
+        });
+        // REJECT
+        $('body').on('click', 'button.reject_user', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/rejected_user/' + id;
+            bootbox.confirm({message : 'Do you really want to reject this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: true,
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    let $td = $button.closest('tr').find('td:eq(3)');
+                                    if ($td && $td.length > 0)
+                                        $td.html('<span class="text-warning">Reject</span>');
+                                    $button.removeClass('btn-warning').addClass('btn-success');
+                                    $button.find('i, svg').removeClass('fa-ban').addClass('fa-check');
+                                    $button.removeClass('reject_training').addClass('approve_training').attr('data-original-title', 'Approve');
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+        // DELETE
+        $('body').on('click', 'button.delete_user', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let url = '/admin/delete_training/' + id;
+            bootbox.confirm({message : 'Are you sure you want to delete this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -773,6 +859,7 @@ class Admin {
         this.getDetails();
         this.runUsersActions();
         this.runTrainingsActions();
+        this.runUsersTasksActions();
 
         $('[data-toggle="tooltip"]').tooltip();
 
