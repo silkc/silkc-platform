@@ -357,6 +357,56 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/approve_user/{id}", name="approve_user", methods="POST")
+     */
+    public function approve_user(User $user)
+    {
+        $user->setIsValidated(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/reject_user/{id}", name="reject_user", methods="POST")
+     */
+    public function reject_user(User $user)
+    {
+        $user->setIsValidated(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
+     * @Route("/delete_user/{id}", name="delete_user", methods="POST")
+     */
+    public function delete_user(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        return $this->json(
+            ['result' => true],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    /**
      * @Route("/suspect_user/{id}", name="suspect_user", methods="POST")
      */
     public function suspect_user(User $user)
