@@ -381,14 +381,14 @@ class Admin {
                                 if (data.trainingSkills[k].isRequired) {
                                     requireSkillsHTML += `<li>
                                                             <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="" data-content="${skill.description ? skill.description : ''}" data-original-title="${skill.preferredLabel ? skill.preferredLabel : ''}">
-                                                                ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                                ${skill.preferredLabel ? skill.preferredLabel : 'N/A'}
                                                             </span>
                                                         </li>`;
                                 }
                                 if (data.trainingSkills[k].isToAcquire) {
                                     acquireSkillsHTML += `<li>
                                                             <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="" data-content="${skill.description ? skill.description : ''}" data-original-title="${skill.preferredLabel ? skill.preferredLabel : ''}">
-                                                                ${skill.preferredLabel ? skill.preferredLabel : ''}
+                                                                ${skill.preferredLabel ? skill.preferredLabel : 'N/A'}
                                                             </span>
                                                         </li>`;
                                 }
@@ -403,7 +403,7 @@ class Admin {
 											<span class="title">Name</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.name ? data.name : ''}</span>
+											<span>${data.name ? data.name : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -412,7 +412,7 @@ class Admin {
 											<span class="title">Location</span>
 										</div>
 										<div class="col-lg-8">
-											<div>${data.location ? data.location : ''}</div>
+											<div>${data.location ? data.location : 'N/A'}</div>
 										</div>
 									</div>
 
@@ -421,7 +421,7 @@ class Admin {
 											<span class="title">Duration</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.duration ? data.duration : ''}</span>
+											<span>${data.duration ? data.duration : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -431,7 +431,7 @@ class Admin {
 										</div>
 										<div class="col-lg-8">
 											<p class="text-justify m-0">
-                                                ${data.description ? data.description : '-'}
+                                                ${data.description ? data.description : 'N/A'}
 											</p>
 										</div>
 									</div>
@@ -441,20 +441,20 @@ class Admin {
 											<span class="title">Price</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.price ? data.price : ''}</span>
+											<span>${data.price ? data.price : 'N/A'}</span>
 										</div>
 									</div>
 									<div class="mb-3">
                                         <span class="required-skills d-block mb-3 title">Required skills</span>
                                         <ul>
-                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : ''}
+                                            ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : 'N/A'}
                                         </ul>
 									</div>
 
 									<div class="mb-3">
                                     <span class="required-skills d-block mb-3 title">Acquired skills</span>
                                         <ul>
-                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : ''}
+                                            ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : 'N/A'}
                                         </ul>
 									</div>
 								</div>
