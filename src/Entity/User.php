@@ -158,6 +158,11 @@ class User implements UserInterface
     private $isSuspected = 0;
 
     /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 1})
+     */
+    private $isSearchesKept = 1;
+
+    /**
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
     private $code;
@@ -189,6 +194,11 @@ class User implements UserInterface
      */
     private $userSkills;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserSearch::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userSearches;
+
     public function __construct()
     {
         $this->userOccupations = new ArrayCollection();
@@ -197,6 +207,7 @@ class User implements UserInterface
         $this->desiredOccupations = new ArrayCollection();
         $this->trainings = new ArrayCollection();
         $this->userSkills = new ArrayCollection();
+        $this->userSearches = new ArrayCollection();
     }
 
     /**
@@ -619,6 +630,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getIsSearchesKept(): ?bool
+    {
+        return $this->isSearchesKept;
+    }
+
+    public function setIsSearchesKept(bool $isSearchesKept): self
+    {
+        $this->isSearchesKept = $isSearchesKept;
+
+        return $this;
+    }
+
     public function getCode(): ?int
     {
         return $this->code;
@@ -638,6 +661,36 @@ class User implements UserInterface
     public function setCodeCreatedAt(\DateTimeInterface $codeCreatedAt): self
     {
         $this->codeCreatedAt = $codeCreatedAt;
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserSearch[]
+     */
+    public function getUserSearches(): Collection
+    {
+        return $this->userSearches;
+    }
+
+    public function addUserSearch(UserSearch $userSearch): self
+    {
+        if (!$this->userSearches->contains($userSearch)) {
+            $this->userSearches[] = $userSearch;
+            $userSearch->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserSearch(UserSearch $userSearch): self
+    {
+        if ($this->userSearches->removeElement($userSearch)) {
+            // set the owning side to null (unless already changed)
+            if ($userSearch->getUser() === $this) {
+                $userSearch->setUser(null);
+            }
+        }
+
         return $this;
     }
 }

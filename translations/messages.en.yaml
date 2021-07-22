@@ -224,6 +224,7 @@ duplicate_training_success: The training has been duplicated successfully
 training_duplicate_suffix: " - (duplicate)"
 you_have_an_account: You have an account?
 sign_in: Sign in
+search_history_count_results_tooltip: this search returned %count% result(s)
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.
@@ -237,4 +238,6 @@ flash:
     username_already_exists: This username is already in use
     your_password_is_changed: Your password has been changed.
     non_identical_password: Non-identical passwords.
+    search_parameters_error: An error occurred in the search parameters
+    search_save_results_label: Keep my searches
 

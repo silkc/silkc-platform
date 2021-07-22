@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Skill;
 use App\Entity\Training;
 use App\Entity\UserActivity;
+use App\Entity\UserSearch;
 use App\Form\Type\UserType;
 use App\Entity\TrainingSkill;
 use App\Form\Type\TrainingType;
@@ -16,6 +17,7 @@ use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\UserOccupationRepository;
+use App\Repository\UserSearchRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -40,55 +42,85 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-
         return $this->render('front/home/search.html.twig');
     }
 
     /**
-     * @Route("/search_results", name="search_results")
+     * @Route("/search_results/{type}/{id}", name="search_results", requirements={"id"="\d+"})
      */
-    public function searchResults(Request $request, OccupationRepository $occupationRepository, TrainingRepository $trainingRepository, SkillRepository $skillRepository): Response
+    public function searchResults(
+        $type = null,
+        $id = null,
+        Request $request,
+        OccupationRepository $occupationRepository,
+        TrainingRepository $trainingRepository,
+        SkillRepository $skillRepository,
+        UserSearchRepository $userSearchRepository,
+        TranslatorInterface $translator
+    ): Response
     {
         $user = $this->getUser();
-        $type_search = $request->get('type_search'); // Type de recherche (occupation ou skill)
+        $type_search = ($type) ? $type : $request->get('type_search'); // Type de recherche (occupation ou skill)
+        $occupation_id = ($id) ? $id : $request->get('hidden_training_search_by_occupation');
+        $skill_id = ($id) ? $id :$request->get('hidden_training_search_by_skill');
         $trainings = []; // Listes des formations
-        $search = []; // Parametres de recherche renvoyés à la vue
-        
+        $searchParams = []; // Parametres de recherche renvoyés à la vue
+        $user = $this->getUser();
+        $searches = ($user) ? $userSearchRepository->getLast($user) : null;
+
         if ($type_search) {
-            $search['type_search'] = $type_search;
+            $search = new UserSearch();
+            $search->setUser($user);
+            $searchParams['type_search'] = $type_search;
             
             switch ($type_search) {
                 case 'occupation':
-                        $occupation_id = $request->get('hidden_training_search_by_occupation');
-                        $occupation_name = $request->get('training_search_by_occupation');
-                        if ($occupation_id && $occupation_name) {
-                            $search['id'] = $occupation_id;
-                            $search['name'] = $occupation_name;
+                        if ($occupation_id) {
                             $occupation = $occupationRepository->findOneBy(['id' => $occupation_id]);
+                            if (!$occupation) {
+                                $this->addFlash('error', $translator->trans('flash.search_parameters_error'));
+                                return $this->redirectToRoute('app_search_results');
+                            }
+                            $searchParams['name'] = $occupation->getPreferredLabel();
+                            $searchParams['id'] = $occupation->getId();
                             $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation);
+                            $search->setOccupation($occupation);
+                            $search->setCountResults(count($trainings));
                         }
                     break;
                 case 'skill':
-                        $skill_id = $request->get('hidden_training_search_by_skill');
-                        $skill_name = $request->get('training_search_by_skill');
-                        if ($skill_id && $skill_name) {
-                            $search['id'] = $skill_id;
-                            $search['name'] = $skill_name;
+                        if ($skill_id) {
                             $skill = $skillRepository->findOneBy(['id' => $skill_id]);
+                            if (!$skill) {
+                                $this->addFlash('error', $translator->trans('flash.search_parameters_error'));
+                                return $this->redirectToRoute('app_search_results');
+                            }
+                            $searchParams['name'] = $skill->getPreferredLabel();
+                            $searchParams['id'] = $skill->getId();
                             $trainings = $trainingRepository->searchTrainingBySkill($skill);
+                            $search->setSkill($skill);
+                            $search->setCountResults(count($trainings));
                         }
                     break;
                 default:
                     $trainings = false;
                     break;
             }
+
+            if ($user) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($search);
+                $em->flush();
+            }
+
         }
 
         return $this->render(
             'front/search/index.html.twig',
             [
                 'trainings' => $trainings,
-                'search' => $search,
+                'search' => $searchParams,
+                'searches' => $searches,
                 'user' => $user
             ]
         );
@@ -130,13 +162,13 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
             
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data'));
             
             return $this->redirectToRoute('app_account');
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
                 $errors = $validator->validate($user);
-                dd($errors);
+                return new Response((string)$errors, 400);
             }
 
             $tab = 'change_password';
@@ -149,7 +181,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data'));
         }
 
         return $this->render(
@@ -192,21 +224,20 @@ class HomeController extends AbstractController
 
             $errors = $validator->validate($user);
             if (count($errors) > 0) {
-                die('error');
-                return new Response((string)$errors, 400);
+                return new Response((string) $errors, 400);
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data'));
 
             return $this->redirectToRoute('app_institution');
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
                 $errors = $validator->validate($user);
-                dd($errors);
+                return new Response((string) $errors, 400);
             }
 
             $tab = 'change_password';
@@ -219,7 +250,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('Updated data'));
         }
 
         $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : $tab ? $tab : false;
@@ -310,7 +341,7 @@ class HomeController extends AbstractController
             $em->persist($training);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('The training was created', [], 'admin'));
+            $this->addFlash('success', $translator->trans('The training was created'));
 
             return $this->redirectToRoute('app_training_edit', array('id' => $training->getId()));
         }
@@ -386,7 +417,7 @@ class HomeController extends AbstractController
             $em->persist($training);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('The training has been updated', [], 'admin'));
+            $this->addFlash('success', $translator->trans('The training has been updated'));
 
             return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
         }

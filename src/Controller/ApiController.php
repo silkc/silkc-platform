@@ -339,4 +339,20 @@ class ApiController extends AbstractController
 
         return $this->json(['result' => true, 'institution' => $user], 200, ['Access-Control-Allow-Origin' => '*']);
     }
+
+    /**
+     * @Route("/toggle_user_searches_param", name="toggle_user_searches_param", methods={"POST"})
+     */
+    public function toggle_user_searches_param()
+    {
+        $user = $this->getUser();
+
+        $user->setIsSearchesKept(!$user->getIsSearchesKept());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
 }
