@@ -212,11 +212,40 @@ class SearchResults {
         })
    }
 
+
+   runKeepSearch = () => { 
+
+        $('body').on('change', 'radio', function (e) {
+
+            let url = '';
+            let data = {};
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json',
+                data: data,
+                headers: {"X-auth-token": token},
+                success: function (data, textStatus, jqXHR) {
+                    if (data.result != undefined) {
+
+                    } else {
+                        bootbox.alert('An error occured');
+                    }
+                },
+                error: function () {
+                    bootbox.alert('An error occured');
+                }
+            });
+        })
+   }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
         this.runDonetraining();
         this.runMap();
+        this.runKeepSearch();
     }
 }
 
