@@ -44,6 +44,7 @@ Encore
     .addEntry('search', './assets/js/front/search.js')
     .addEntry('account', './assets/js/front/account.js')
     .addEntry('institutional', './assets/js/front/institutional.js')
+    .addEntry('history', './assets/js/front/history.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

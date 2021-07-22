@@ -120,6 +120,8 @@ class SearchResults {
                             $(_this).attr('disabled', false);
                         }
                     });
+                } else {
+                    $(_this).attr('disabled', false);
                 }
             }});
        });
@@ -157,6 +159,8 @@ class SearchResults {
                             $(_this).attr('disabled', false);
                         }
                     });
+                } else {
+                    $(_this).attr('disabled', false);
                 }
             }});
        });

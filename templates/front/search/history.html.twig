@@ -1,47 +1,68 @@
 {% extends 'front/layout.html.twig' %}
 
-{% block title %}History{% endblock %}
+{% block title %}History
+{% endblock %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('admin') }}
 {% endblock %}
 
 {% block content %}
-<table id="datatable-work" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-    <tr>
-        <th>{{ 'search_history.label.name'|trans }}</th>
-        <th>{{ 'search_history.label.registered_on'|trans }}</th>
-        <th>{{ 'search_history.label.registered_by'|trans }}</th>
-        <th>{{ 'search_history.label.status'|trans }}</th>
-        <th>{{ 'search_history.label.action'|trans }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% if searches is defined and searches is iterable and searches|length > 0 %}
-        {% for search in searches %}
-            {% set type = (search.occupation) ? 'occupation' : 'skill' %}
-            {% set item =  (type == 'occupation') ? search.occupation : search.skill %}
-            <tr>
-                <td>{{ item.preferredLabel }}</td>
-                <td>{{ type|trans }}</td>
-                <td>{{ search.createdAt|date('Y/m/d') }}</td>
-                <td>{{ search.countResults }}</td>
-                <td>{{ search.countSearches }}</td>
-                <td>
-                    <a href="{{ path('app_search_results', { 'type': type, 'id': item.id }) }}" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-    {% endif %}
-    </tbody>
-</table>
+	<div class="container mt-2">
+		<nav aria-label="breadcrumb" class="mt-4">
+			<ol class="breadcrumb create_training">
+				<li class="breadcrumb-item">
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('admin_home', {tab: 'home'})}}">{{ 'nav.home'|trans }}</a>
+					{% elseif is_granted('ROLE_INSTITUTION') %}
+						<a href="{{ path('app_institution', {tab: 'personal_informations'})}}">{{ 'nav.home'|trans }}</a>
+					{% else %}
+						<a href="{{ path('app_account', {tab: 'personal_informations'} )}}">{{ 'nav.home'|trans }}</a>
+					{% endif %}
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">{{ 'header.search_history'|trans }}</li>
+			</ol>
+		</nav>
+
+		<table id="datatable-search_history" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+				<tr>
+					<th>{{ 'search_history.label.name'|trans }}</th>
+					<th>{{ 'search_history.label.type'|trans }}</th>
+					<th>{{ 'search_history.label.date'|trans }}</th>
+					<th>{{ 'search_history.label.count_result'|trans }}</th>
+					<th>{{ 'search_history.label.count_search'|trans }}</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if searches is defined and searches is iterable and searches|length > 0 %}
+					{% for search in searches %}
+						{% set type = (search.occupation) ? 'occupation' : 'skill' %}
+						{% set item =  (type == 'occupation') ? search.occupation : search.skill %}
+						<tr>
+							<td>{{ item.preferredLabel }}</td>
+							<td>{{ type|trans }}</td>
+							<td>{{ search.createdAt|date('Y/m/d') }}</td>
+							<td>{{ search.countResults }}</td>
+							<td>{{ search.countSearches }}</td>
+							<td>
+								<a href="{{ path('app_search_results', { 'type': type, 'id': item.id }) }}" class="btn btn-primary">
+									<i class="fas fa-search"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}
 
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('main') }}
-    {{ encore_entry_script_tags('common') }}
+	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('common') }}
+	{{ encore_entry_script_tags('history') }}
 {% endblock %}

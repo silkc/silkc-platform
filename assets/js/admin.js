@@ -11,8 +11,6 @@ import 'datatables.net-select-dt/css/select.dataTables.min.css';
 import '../scss/elements/header.scss';
 import '../scss/admin.scss';
 
-
-
 var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
@@ -157,7 +155,7 @@ class Admin {
 
      runDatatableUsers = () => {
         let table = $('#datatable-user').DataTable({
-            searching: false, 
+            searching: true, 
             info: false,
             lengthChange: false,
             columnDefs: [

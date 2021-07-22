@@ -242,3 +242,11 @@ flash:
     search_parameters_error: An error occurred in the search parameters
     search_save_results_label: Keep my searches
 
+search_history:
+    label:
+        name: Name
+        type: Type
+        date: Date
+        count_result: Results
+        count_search: Number of searches
+
