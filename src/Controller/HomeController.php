@@ -66,7 +66,6 @@ class HomeController extends AbstractController
         $trainings = []; // Listes des formations
         $searchParams = []; // Parametres de recherche renvoyés à la vue
         $user = $this->getUser();
-        $searches = ($user) ? $userSearchRepository->getLast($user) : null;
 
         if ($type_search) {
             $search = new UserSearch();
@@ -115,6 +114,8 @@ class HomeController extends AbstractController
 
         }
 
+        $searches = ($user) ? $userSearchRepository->getLast($user) : null;
+
         return $this->render(
             'front/search/index.html.twig',
             [
@@ -151,8 +152,6 @@ class HomeController extends AbstractController
         $passwordForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             $errors = $validator->validate($user);
             if (count($errors) > 0) {
                 return new Response((string)$errors, 400);

@@ -30,7 +30,7 @@ class UserSearchRepository extends ServiceEntityRepository
             ->andWhere('us.user = :user')
             ->andWhere('(us.occupation IS NOT NULL OR us.skill IS NOT NULL)')
             ->setParameter('user', $user)
-            ->orderBy('us.createdAt', 'DESC')
+            ->orderBy('MAX(us.createdAt)', 'DESC')
             ->addGroupBy('us.occupation')
             ->addGroupBy('us.skill')
             ->setMaxResults(5)
@@ -98,7 +98,7 @@ class UserSearchRepository extends ServiceEntityRepository
                 LEFT JOIN skill s ON s.id = us.skill_id     
                 WHERE us.user_id = :userId AND (us.skill_id IS NOT NULL OR us.occupation_id IS NOT NULL)
                 GROUP BY us.occupation_id, us.skill_id
-                ORDER BY us.created_at DESC
+                ORDER BY MAX(us.created_at) DESC
             ', $rsm);
         $query->setParameter('userId', $user->getId());
 
