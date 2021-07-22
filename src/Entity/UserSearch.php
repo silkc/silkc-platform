@@ -47,6 +47,12 @@ class UserSearch
     private $countResults = 0;
 
     /**
+     * Champs virtuel, uniquement rempli par hydratation en utilisant un JOIN et ResultSetMapping
+     * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
+     */
+    private $countSearches = 0;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist(LifecycleEventArgs $args)
@@ -95,12 +101,12 @@ class UserSearch
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(?\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -117,5 +123,10 @@ class UserSearch
         $this->countResults = $countResults;
 
         return $this;
+    }
+
+    public function getCountSearches(): ?int
+    {
+        return $this->countSearches;
     }
 }

@@ -197,6 +197,22 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/search_history", name="search_history")
+     */
+    public function search_history(UserSearchRepository $userSearchRepository)
+    {
+        $user = $this->getUser();
+        $searches = $userSearchRepository->getAll($user);
+
+        return $this->render('front/search/history.html.twig',
+             [
+                 'user'   => $user,
+                 'searches' => $searches
+             ]
+        );
+    }
+
+    /**
      * @Route("/institution/{tab}", name="institution")
      */
     public function institution(
@@ -257,7 +273,7 @@ class HomeController extends AbstractController
         setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
         $trainings = $trainingRepository->findBy(['user' => $user]);
-        return $this->render('front/institutional/index.html.twig', 
+        return $this->render('front/institutional/index.html.twig',
             [
                 'trainings'   => $trainings,
                 'form' => $form->createView(),
