@@ -151,7 +151,7 @@
 								{% if training.url is defined and training.url is not empty %}
 									<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
 								{% endif %}
-								{% if is_granted('IS_AUTHENTICATED_FULLY') == true %}
+								{% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
 									{% if training in user.trainings %}
 										<button class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
 									{% else %}
