@@ -285,7 +285,6 @@ class Account {
                         $.ajax({
                             type: "GET",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (url.includes("skills"))
                                     datas.skills = JSON.stringify(data);
@@ -991,7 +990,6 @@ class Account {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) {
                     if (data) {
 

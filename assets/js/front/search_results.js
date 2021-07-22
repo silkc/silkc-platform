@@ -64,7 +64,6 @@ class SearchResults {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) {}
             });
         })
@@ -80,7 +79,6 @@ class SearchResults {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) {}
             });
         })

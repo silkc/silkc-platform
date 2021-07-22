@@ -4,8 +4,8 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 	{{ encore_entry_link_tags('app') }}
 	{{ encore_entry_link_tags('account') }}
 {% endblock %}
@@ -18,37 +18,47 @@
 
 					<div class="d-flex justify-content-end">
 						<div class="d-flex flex-column" id="profile-completion">
-                            <span>Profile completion</span>
+							<span>Profile completion</span>
 							<div class="progress">
 								<div class="progress-bar" role="progressbar" style="width: {{ app.user.completion }}%;" aria-valuenow="{{ app.user.completion }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.completion }}%</div>
 							</div>
 						</div>
 					</div>
 
+					<a class="btn btn-primary mb-4" href="{{ path('app_home') }}">
+						<i class="fas fa-search"></i>
+						<span>{{ 'header.full_search_page'|trans }}</span>
+					</a>
+
 					<ul class="nav nav-tabs" id="account-tab" role="tablist">
 						<li class="nav-item">
 							<a class="nav-link {% if (tab is defined and (tab == 'personal_informations' or tab == false)) or tab is not defined %}active{% endif %}" id="personal_informations-tab" data-toggle="tab" href="#content-personal_informations" role="tab">
-								<i class="fas fa-user-alt"></i> {{ 'nav.personal_informations'|trans }}
+								<i class="fas fa-user-alt"></i>
+								{{ 'nav.personal_informations'|trans }}
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link {% if tab is defined and tab == 'work' %}active{% endif %}" id="work-tab" data-toggle="tab" href="#content-work" role="tab">
-								<i class="far fa-list-alt"></i> {{ 'nav.work'|trans }}
+								<i class="far fa-list-alt"></i>
+								{{ 'nav.work'|trans }}
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link {% if tab is defined and tab == 'training' %}active{% endif %}" id="training-tab" data-toggle="tab" href="#content-training" role="tab">
-								<i class="fas fa-graduation-cap"></i> {{ 'nav.training'|trans }}
+								<i class="fas fa-graduation-cap"></i>
+								{{ 'nav.training'|trans }}
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link {% if tab is defined and tab == 'skills' %}active{% endif %}" id="skills-tab" data-toggle="tab" href="#content-skills" role="tab">
-								<i class="fas fa-list"></i> {{ 'nav.skills'|trans }}
+								<i class="fas fa-list"></i>
+								{{ 'nav.skills'|trans }}
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link {% if tab is defined and tab == 'change_password' %}active{% endif %}" id="change_password-tab" data-toggle="tab" href="#content-change_password" role="tab">
-								<i class="fas fa-key"></i> {{ 'nav.change_password'|trans }}
+								<i class="fas fa-key"></i>
+								{{ 'nav.change_password'|trans }}
 							</a>
 						</li>
 					</ul>
@@ -75,13 +85,13 @@
 		</div>
 	</div>
 
-    {% include 'front/elements/modal.html.twig' %}
+	{% include 'front/elements/modal.html.twig' %}
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 	{{ encore_entry_script_tags('account') }}
-    {{ encore_entry_script_tags('common') }}
+	{{ encore_entry_script_tags('common') }}
 {% endblock %}

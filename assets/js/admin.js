@@ -298,7 +298,6 @@ class Admin {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) {
                     let dataOccupation =  data && data.occupation != undefined ? data.occupation : false;
                     let dataSkills =  data && data.skills != undefined && data.skills.length > 0 ? data.skills : [];
@@ -349,7 +348,6 @@ class Admin {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) { 
                     if (data) {
                         $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
@@ -369,7 +367,6 @@ class Admin {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) {
                     if (data) {
 
@@ -510,7 +507,6 @@ class Admin {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) { 
                     if (data) {
                         let occupation = data.occupation ? data.occupation : false;
@@ -545,7 +541,6 @@ class Admin {
             $.ajax({
                 type: "GET",
                 url: url,
-                async: true,
                 success: function (data, textStatus, jqXHR) { 
                     if (data) {
                         let skill = data.skill ? data.skill : false;
@@ -591,7 +586,6 @@ class Admin {
                     $.ajax({
                         type: "POST",
                         url: url,
-                        async: true,
                         success: function (data, textStatus, jqXHR) {
                             if (data.result != undefined && data.result == true) {
                                 let $td = $button.closest('tr').find('td:eq(3)');
@@ -618,7 +612,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(3)');
@@ -645,7 +638,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     $('#datatable-task').DataTable()
@@ -677,7 +669,6 @@ class Admin {
                     $.ajax({
                         type: "POST",
                         url: url,
-                        async: true,
                         success: function (data, textStatus, jqXHR) {
                             if (data.result != undefined && data.result == true) {
                                 let $td = $button.closest('tr').find('td:eq(2)');
@@ -704,7 +695,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(2)');
@@ -731,7 +721,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     $('#datatable-institution').DataTable()
@@ -763,7 +752,6 @@ class Admin {
                     $.ajax({
                         type: "POST",
                         url: url,
-                        async: true,
                         success: function (data, textStatus, jqXHR) {
                             if (data.result != undefined && data.result == true) {
                                 let $td = $button.closest('tr').find('td:eq(5)');
@@ -789,7 +777,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(5)');
@@ -815,7 +802,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(6)');
@@ -841,7 +827,6 @@ class Admin {
                         $.ajax({
                             type: "POST",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(6)');

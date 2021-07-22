@@ -508,7 +508,6 @@ class Institutional {
                         $.ajax({
                             type: "GET",
                             url: url,
-                            async: true,
                             success: function (data, textStatus, jqXHR) {
                                 if (url.includes("skills"))
                                     datas.skills = JSON.stringify(data);
