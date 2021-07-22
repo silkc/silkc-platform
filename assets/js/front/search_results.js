@@ -215,22 +215,23 @@ class SearchResults {
 
    runKeepSearch = () => { 
 
-        $('body').on('change', 'radio', function (e) {
+        $('body').on('change', '#search-save-results', function (e) {
 
-            let url = '';
+            let url = '/api/toggle_user_searches_param';
+            let token = $('body').attr('data-token');
             let data = {};
 
             $.ajax({
                 url: url,
                 type: "POST",
-                dataType: 'json',
                 data: data,
+                dataType: 'json',
                 headers: {"X-auth-token": token},
                 success: function (data, textStatus, jqXHR) {
-                    if (data.result != undefined) {
-
+                    if (data.result) {
+                        $('#history-search').show();
                     } else {
-                        bootbox.alert('An error occured');
+                        $('#history-search').hide();
                     }
                 },
                 error: function () {
@@ -246,6 +247,8 @@ class SearchResults {
         this.runDonetraining();
         this.runMap();
         this.runKeepSearch();
+
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 

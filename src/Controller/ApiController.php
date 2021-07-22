@@ -353,6 +353,6 @@ class ApiController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+        return $this->json(['result' => $user->getIsSearchesKept()], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }
