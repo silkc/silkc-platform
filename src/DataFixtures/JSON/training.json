@@ -14,5 +14,21 @@
       "dateOfBirth": "2010-09-01 10:05",
       "address": "rue de la Paix 75000 Paris"
     }
+  ],
+  "training": [
+    {
+      "username": "Mon organisme 1",
+      "email": "organisme1@silkc-platform.org",
+      "homepage": null,
+      "dateOfBirth": null,
+      "address": null
+    },
+    {
+      "username": "Mon organisme 2",
+      "email": "organisme2@silkc-platform.org",
+      "homepage": "https://www.monhomepage.com",
+      "dateOfBirth": "2010-09-01 10:05",
+      "address": "rue de la Paix 75000 Paris"
+    }
   ]
 }
