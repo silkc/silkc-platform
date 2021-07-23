@@ -30,7 +30,7 @@ class UserSearchRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('us')
             ->andWhere('us.user = :user')
-            ->andWhere('us.isActive', true)
+            ->andWhere('us.isActive = 1')
             ->andWhere('(us.occupation IS NOT NULL OR us.skill IS NOT NULL)')
             ->setParameter('user', $user)
             ->orderBy('MAX(us.createdAt)', 'DESC')
