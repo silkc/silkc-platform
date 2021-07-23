@@ -355,4 +355,25 @@ class ApiController extends AbstractController
 
         return $this->json(['result' => $user->getIsSearchesKept()], 200, ['Access-Control-Allow-Origin' => '*']);
     }
+
+    /**
+     * @Route("/delete_search_history", name="delete_search_history", methods={"POST"})
+     */
+    public function delete_search_history(Request $request)
+    {
+        $user = $this->getUser();
+
+        $data = $request->request->all();
+        if (!$data || !is_array($data) || !array_key_exists('type', $data) || !array_key_exists('id', $data))
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        if ($type === 'occupation') {
+
+        } else if ($type === 'skill') {
+
+        } else
+            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
 }

@@ -106,7 +106,7 @@ class HomeController extends AbstractController
                     break;
             }
 
-            if ($user) {
+            if ($user && $user->getIsSearchesKept()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($search);
                 $em->flush();

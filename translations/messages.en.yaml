@@ -246,7 +246,7 @@ search_history:
     label:
         name: Name
         type: Type
-        date: Date
-        count_result: Results
+        date: Last search date
+        count_result: Last search results
         count_search: Number of searches
 

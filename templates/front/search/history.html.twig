@@ -51,6 +51,9 @@
 								<a href="{{ path('app_search_results', { 'type': type, 'id': item.id }) }}" class="btn btn-primary">
 									<i class="fas fa-search"></i>
 								</a>
+								<button data-type="{{ type }}" data-id="{{ item.id }}" class="btn btn-danger delete-search-history">
+									<i class="fas fa-times"></i>
+								</button>
 							</td>
 						</tr>
 					{% endfor %}
