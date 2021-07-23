@@ -35,6 +35,7 @@ class History {
 
             bootbox.confirm({message : 'Are you sure you want to delete this item?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
                     if (result == true) {
+                        $button.html('<i class="fas fa-spinner fa-spin"></i>');
                         $.ajax({
                             url: url,
                             type: "POST",
