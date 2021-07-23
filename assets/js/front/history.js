@@ -21,7 +21,42 @@ class History {
         return this.instanceProperty;
     }
 
+    runDeleteHistory = () => {
+        $('body').on('click', 'button.delete-search-history', function() {
+            let $button = $(this);
+            let id = $button.attr('data-id');
+            let type = $button.attr('data-type');
+            let url = '/api/delete_search_history';
+            let token = $('body').attr('data-token');
 
+            let data = {};
+            data.id = id;
+            data.type = type;
+
+            bootbox.confirm({message : 'Are you sure you want to delete this item?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            dataType: 'json',
+                            data: data,
+                            headers: {"X-auth-token": token},
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $('#datatable-search_history').DataTable()
+                                        .row( $button.closest('tr') )
+                                        .remove()
+                                        .draw();
+                                    
+                                } else {
+                                    bootbox.alert('An error occured');
+                                }
+                            }
+                        });
+                    }
+                }});
+        });
+    }
 
     runDatatableHistory = () => {
         let table = $('#datatable-search_history').DataTable({
@@ -37,6 +72,7 @@ class History {
 
     init = function() {
         this.runDatatableHistory();
+        this.runDeleteHistory();
     }
 }
 
