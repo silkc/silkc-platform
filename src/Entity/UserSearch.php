@@ -53,6 +53,11 @@ class UserSearch
     private $countSearches = 0;
 
     /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 1})
+     */
+    private $isActive = 1;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist(LifecycleEventArgs $args)
@@ -128,5 +133,17 @@ class UserSearch
     public function getCountSearches(): ?int
     {
         return $this->countSearches;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 }

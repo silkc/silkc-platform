@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Occupation;
+use App\Entity\Skill;
 use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -28,6 +30,7 @@ class UserSearchRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('us')
             ->andWhere('us.user = :user')
+            ->andWhere('us.isActive', true)
             ->andWhere('(us.occupation IS NOT NULL OR us.skill IS NOT NULL)')
             ->setParameter('user', $user)
             ->orderBy('MAX(us.createdAt)', 'DESC')
@@ -96,7 +99,7 @@ class UserSearchRepository extends ServiceEntityRepository
                 LEFT JOIN user u ON u.id = us.user_id
                 LEFT JOIN occupation o ON o.id = us.occupation_id
                 LEFT JOIN skill s ON s.id = us.skill_id     
-                WHERE us.user_id = :userId AND (us.skill_id IS NOT NULL OR us.occupation_id IS NOT NULL)
+                WHERE us.is_active = 1 AND us.user_id = :userId AND (us.skill_id IS NOT NULL OR us.occupation_id IS NOT NULL)
                 GROUP BY us.occupation_id, us.skill_id
                 ORDER BY MAX(us.created_at) DESC
             ', $rsm);
