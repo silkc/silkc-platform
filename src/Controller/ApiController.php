@@ -390,7 +390,7 @@ class ApiController extends AbstractController
                 }
             }
         } else if ($data['type'] === 'skill') {
-            $skill = $occupationRepository->findOneBy(['id' => $data['id']]);
+            $skill = $skillRepository->findOneBy(['id' => $data['id']]);
             if (!$skill)
                 return new JsonResponse(['message' => 'Bad parameter'], Response::HTTP_BAD_REQUEST);
             $searches = $userSearchRepository->findBy(['user' => $user, 'skill' => $skill, 'isActive' => true]);
