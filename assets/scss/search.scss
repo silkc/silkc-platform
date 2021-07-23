@@ -32,7 +32,19 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     right: 0;
     left: 0;
 
-    img {
+    > div {
+        background-position: top center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        display: none;
+
+        &:first-child {
+            display: block;
+        }
+    }
+
+    /*img {
       position: absolute; 
       top: 0;
       bottom: 0;
@@ -43,7 +55,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
       &:first-child {
           display: block;
       }
-    }
+    }*/
   }
 
   .intro {

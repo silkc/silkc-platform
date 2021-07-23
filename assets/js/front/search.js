@@ -47,13 +47,13 @@ class Search {
 
 
     carouselSearch = () => {
-        let imgs = $('#search .slider-img img');
+        let divs = $('#search .slider-img div');
         let cpt = 0;
         setInterval(function() {
             cpt++;
-            if (cpt >= imgs.length ) cpt = 0;
-            imgs.fadeOut(2000);
-            imgs.eq(cpt).fadeIn(1000);
+            if (cpt >= divs.length ) cpt = 0;
+            divs.fadeOut(2000);
+            divs.eq(cpt).fadeIn(1000);
         }, 10000);
     }
 
