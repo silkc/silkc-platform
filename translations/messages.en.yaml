@@ -61,6 +61,7 @@ nav:
     skills: Skills
     tasks: Tasks
     users: Users
+    search_page: Search page
 
 notification:
     label:
