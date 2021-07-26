@@ -51,13 +51,18 @@ class TrainingRepository extends ServiceEntityRepository
             SELECT 
                 t.*,
                 IFNULL(sq1.weight, 0) AS skill_weight,
+                IFNULL(sq1.maxWeight, 0) AS max_skill_weight,
                 IFNULL(sq2.trainingCompletion, 0) AS training_completion,
                 IFNULL(sq2.institutionCompletion, 0) AS institution_completion,
                 IFNULL(sq2.occupationWeight, 0) AS occupation_weight,
                 IFNULL(sq1.knowledgeCoeff, 0) AS knowledge_coeff,
+                IFNULL(sq1.maxKnowledgeCoeff, 0) AS max_knowledge_coeff,
                 IFNULL(sq1.knowledgeOptionalCoeff, 0) AS knowledge_optional_coeff,
+                IFNULL(sq1.maxKnowledgeOptionalCoeff, 0) AS max_knowledge_optional_coeff,
                 IFNULL(sq1.skillCoeff, 0) AS skill_coeff,
-                IFNULL(sq1.skillOptionalCoeff, 0) AS skill_optional_coeff,
+                IFNULL(sq1.maxSkillCoeff, 0) AS max_skill_coeff,
+                IFNULL(sq1.skillOptionalCoeff, 0) AS skill_optional_coeff,       
+                IFNULL(sq1.maxSkillOptionalCoeff, 0) AS max_skill_optional_coeff,
                 IFNULL(sq3.acquiredSkillCoefficient, 0) AS acquired_skill_coefficient,
                 IFNULL(sq3.notAcquiredSkillCoefficient, 0) AS not_acquired_skill_coefficient,
                 (
@@ -68,27 +73,44 @@ class TrainingRepository extends ServiceEntityRepository
                 ) 
                     * CAST(sq2.institutionCompletion AS UNSIGNED) 
                     * CAST(sq2.trainingCompletion AS UNSIGNED) 
-                    * 0.001
-                AS score
+                AS score,
+                (
+                    IFNULL(CAST(sq1.maxWeight AS UNSIGNED), 0) + 
+                    :occupationCoefficient +
+                    IFNULL(CAST(sq3.maxAcquiredSkillCoefficient AS UNSIGNED), 0)
+                ) 
+                    * 100
+                    * 100
+                AS max_score
             FROM training AS t
             LEFT JOIN (
                 SELECT 
                     ssq1.training_id,
+                    ssq1.maxKnowledgeCoeff,
+                    ssq1.maxKnowledgeOptionalCoeff,
+                    ssq1.maxSkillCoeff,
+                    ssq1.maxSkillOptionalCoeff,
                     ssq1.knowledgeCoeff,
                     ssq1.knowledgeOptionalCoeff,
                     ssq1.skillCoeff,
                     ssq1.skillOptionalCoeff,
-                    CAST(ssq1.knowledgeCoeff AS UNSIGNED) + CAST(ssq1.knowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.skillCoeff AS UNSIGNED) + CAST(ssq1.skillOptionalCoeff AS UNSIGNED) AS weight
+                    CAST(ssq1.knowledgeCoeff AS UNSIGNED) + CAST(ssq1.knowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.skillCoeff AS UNSIGNED) + CAST(ssq1.skillOptionalCoeff AS UNSIGNED) AS weight,
+                    CAST(ssq1.maxKnowledgeCoeff AS UNSIGNED) + CAST(ssq1.maxKnowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.maxSkillCoeff AS UNSIGNED) + CAST(ssq1.maxSkillOptionalCoeff AS UNSIGNED) AS maxWeight
                 FROM (
                     SELECT
                         t.id AS training_id,
-                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :knowledgeSkillType, :knowledgeCoefficient, 0)) AS knowledgeCoeff,
-                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :knowledgeSkillType, :knowledgeOptionalCoefficient, 0)) AS knowledgeOptionalCoeff,
-                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :skillSkillType, :skillCoefficient, 0)) AS skillCoeff,
-                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :skillSkillType, :skillOptionalCoefficient, 0)) AS skillOptionalCoeff
+                        COALESCE(ts.id) AS ts_id,
+                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :knowledgeSkillType, :knowledgeCoefficient, 0)) AS maxKnowledgeCoeff,
+                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :knowledgeSkillType, :knowledgeOptionalCoefficient, 0)) AS maxKnowledgeOptionalCoeff,
+                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :skillSkillType, :skillCoefficient, 0)) AS maxSkillCoeff,
+                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :skillSkillType, :skillOptionalCoefficient, 0)) AS maxSkillOptionalCoeff,
+                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :knowledgeSkillType AND ts.id IS NOT NULL, :knowledgeCoefficient, 0)) AS knowledgeCoeff,
+                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :knowledgeSkillType AND ts.id IS NOT NULL, :knowledgeOptionalCoefficient, 0)) AS knowledgeOptionalCoeff,
+                        SUM(IF(os.relation_type = :essentialRelationType AND os.skill_type = :skillSkillType AND ts.id IS NOT NULL, :skillCoefficient, 0)) AS skillCoeff,
+                        SUM(IF(os.relation_type = :optionalRelationType AND os.skill_type = :skillSkillType AND ts.id IS NOT NULL, :skillOptionalCoefficient, 0)) AS skillOptionalCoeff
                     FROM training t
-                    INNER JOIN training_skill ts ON ts.training_id = t.id AND ts.is_to_acquire = 1
-                    INNER JOIN occupation_skill os ON os.occupation_id = :occupationId AND os.skill_id = ts.skill_id
+                    INNER JOIN occupation_skill os ON os.occupation_id = :occupationId 
+                    LEFT JOIN training_skill AS ts ON ts.training_id = t.id AND ts.skill_id = os.skill_id AND ts.is_to_acquire = 1
                     GROUP BY t.id
                 ) AS ssq1
                 GROUP BY ssq1.training_id
@@ -106,6 +128,7 @@ class TrainingRepository extends ServiceEntityRepository
             LEFT JOIN (
                 SELECT 
                     t.id AS training_id,
+                    COUNT(DISTINCT(ts.id)) * :acquiredCoefficient AS maxAcquiredSkillCoefficient,
                     SUM(IF(us.id IS NOT NULL, 1, 0)) * :acquiredCoefficient AS acquiredSkillCoefficient,
                     SUM(IF(us.id IS NULL, 1, 0)) * :notAcquiredCoefficient AS notAcquiredSkillCoefficient
                 FROM training t
@@ -133,6 +156,117 @@ class TrainingRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    /*
+    --- DEBUG ---
+    SET @essentialRelationType = 'essential';
+    SET @optionalRelationType = 'optional';
+    SET @knowledgeSkillType = 'knowledge';
+    SET @skillSkillType = 'skill/competence';
+    SET @knowledgeCoefficient = 2;
+    SET @knowledgeOptionalCoefficient = 1;
+    SET @skillCoefficient = 10;
+    SET @skillOptionalCoefficient = 5;
+    SET @acquiredCoefficient = 2;
+    SET @notAcquiredCoefficient = 20;
+    SET @occupationId = 92;
+    SET @userId = 1;
+    SET @occupationCoefficient = 100;
+
+    SELECT
+        t.*,
+        IFNULL(sq1.weight, 0) AS skill_weight,
+        IFNULL(sq1.maxWeight, 0) AS max_skill_weight,
+        IFNULL(sq2.trainingCompletion, 0) AS training_completion,
+        IFNULL(sq2.institutionCompletion, 0) AS institution_completion,
+        IFNULL(sq2.occupationWeight, 0) AS occupation_weight,
+        IFNULL(sq1.knowledgeCoeff, 0) AS knowledge_coeff,
+        IFNULL(sq1.maxKnowledgeCoeff, 0) AS max_knowledge_coeff,
+        IFNULL(sq1.knowledgeOptionalCoeff, 0) AS knowledge_optional_coeff,
+        IFNULL(sq1.maxKnowledgeOptionalCoeff, 0) AS max_knowledge_optional_coeff,
+        IFNULL(sq1.skillCoeff, 0) AS skill_coeff,
+        IFNULL(sq1.maxSkillCoeff, 0) AS max_skill_coeff,
+        IFNULL(sq1.skillOptionalCoeff, 0) AS skill_optional_coeff,
+        IFNULL(sq1.maxSkillOptionalCoeff, 0) AS max_skill_optional_coeff,
+        IFNULL(sq3.acquiredSkillCoefficient, 0) AS acquired_skill_coefficient,
+        IFNULL(sq3.notAcquiredSkillCoefficient, 0) AS not_acquired_skill_coefficient,
+        (
+            IFNULL(CAST(sq1.weight AS UNSIGNED), 0) +
+            IFNULL(CAST(sq2.occupationWeight AS UNSIGNED), 0) +
+            IFNULL(CAST(sq3.acquiredSkillCoefficient AS UNSIGNED), 0) -
+            IFNULL(CAST(sq3.notAcquiredSkillCoefficient AS UNSIGNED), 0)
+        )
+            * CAST(sq2.institutionCompletion AS UNSIGNED)
+            * CAST(sq2.trainingCompletion AS UNSIGNED)
+        AS score,
+        (
+            IFNULL(CAST(sq1.maxWeight AS UNSIGNED), 0) +
+            @occupationCoefficient +
+            IFNULL(CAST(sq3.maxAcquiredSkillCoefficient AS UNSIGNED), 0)
+        )
+            * 100
+            * 100
+        AS max_score
+    FROM training AS t
+    LEFT JOIN (
+        SELECT
+            ssq1.training_id,
+            ssq1.maxKnowledgeCoeff,
+            ssq1.maxKnowledgeOptionalCoeff,
+            ssq1.maxSkillCoeff,
+            ssq1.maxSkillOptionalCoeff,
+            ssq1.knowledgeCoeff,
+            ssq1.knowledgeOptionalCoeff,
+            ssq1.skillCoeff,
+            ssq1.skillOptionalCoeff,
+            CAST(ssq1.knowledgeCoeff AS UNSIGNED) + CAST(ssq1.knowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.skillCoeff AS UNSIGNED) + CAST(ssq1.skillOptionalCoeff AS UNSIGNED) AS weight,
+            CAST(ssq1.maxKnowledgeCoeff AS UNSIGNED) + CAST(ssq1.maxKnowledgeOptionalCoeff AS UNSIGNED) + CAST(ssq1.maxSkillCoeff AS UNSIGNED) + CAST(ssq1.maxSkillOptionalCoeff AS UNSIGNED) AS maxWeight
+        FROM (
+            SELECT
+                t.id AS training_id,
+                COALESCE(ts.id) AS ts_id,
+                SUM(IF(os.relation_type = @essentialRelationType AND os.skill_type = @knowledgeSkillType, @knowledgeCoefficient, 0)) AS maxKnowledgeCoeff,
+                SUM(IF(os.relation_type = @optionalRelationType AND os.skill_type = @knowledgeSkillType, @knowledgeOptionalCoefficient, 0)) AS maxKnowledgeOptionalCoeff,
+                SUM(IF(os.relation_type = @essentialRelationType AND os.skill_type = @skillSkillType, @skillCoefficient, 0)) AS maxSkillCoeff,
+                SUM(IF(os.relation_type = @optionalRelationType AND os.skill_type = @skillSkillType, @skillOptionalCoefficient, 0)) AS maxSkillOptionalCoeff,
+                SUM(IF(os.relation_type = @essentialRelationType AND os.skill_type = @knowledgeSkillType AND ts.id IS NOT NULL, @knowledgeCoefficient, 0)) AS knowledgeCoeff,
+                SUM(IF(os.relation_type = @optionalRelationType AND os.skill_type = @knowledgeSkillType AND ts.id IS NOT NULL, @knowledgeOptionalCoefficient, 0)) AS knowledgeOptionalCoeff,
+                SUM(IF(os.relation_type = @essentialRelationType AND os.skill_type = @skillSkillType AND ts.id IS NOT NULL, @skillCoefficient, 0)) AS skillCoeff,
+                SUM(IF(os.relation_type = @optionalRelationType AND os.skill_type = @skillSkillType AND ts.id IS NOT NULL, @skillOptionalCoefficient, 0)) AS skillOptionalCoeff
+            FROM training t
+            INNER JOIN occupation_skill os ON os.occupation_id = @occupationId
+            LEFT JOIN training_skill AS ts ON ts.training_id = t.id AND ts.skill_id = os.skill_id AND ts.is_to_acquire = 1
+            GROUP BY t.id
+        ) AS ssq1
+        GROUP BY ssq1.training_id
+    ) AS sq1 ON sq1.training_id = t.id
+    LEFT JOIN (
+        SELECT
+            t.id AS training_id,
+            t.completion AS trainingCompletion,
+            i.completion AS institutionCompletion,
+            IF (t.occupation_id IS NOT NULL AND t.occupation_id = @occupationId, @occupationCoefficient, 0) AS occupationWeight
+        FROM training t
+        INNER JOIN user i ON i.id = t.user_id
+        GROUP BY t.id
+    ) AS sq2 ON sq2.training_id = t.id
+    LEFT JOIN (
+        SELECT
+            t.id AS training_id,
+            COUNT(DISTINCT(ts.id)) * @acquiredCoefficient AS maxAcquiredSkillCoefficient,
+            SUM(IF(us.id IS NOT NULL, 1, 0)) * @acquiredCoefficient AS acquiredSkillCoefficient,
+            SUM(IF(us.id IS NULL, 1, 0)) * @notAcquiredCoefficient AS notAcquiredSkillCoefficient
+        FROM training t
+            INNER JOIN training_skill ts ON ts.training_id = t.id AND ts.is_required = 1
+            LEFT JOIN user_skill us ON us.skill_id = ts.skill_id AND us.is_selected = 1 AND us.user_id = @userId
+            GROUP BY t.id
+    ) AS sq3 ON sq3.training_id = t.id
+    GROUP BY t.id
+    HAVING score IS NOT NULL AND score > 0
+    ORDER BY score DESC
+
+     */
+
     /*public function searchTrainingByOccupation(Occupation $occupation): ?array
     {
         $query = $this->getEntityManager()->createNativeQuery("

@@ -3,7 +3,7 @@
 	<div class="mb-3">
 		<div class="row">
 			<div class="col-6 col-lg-9">
-                <div id="history-search" style="display: {{ user.isSearchesKept == 1 ? '' : 'none' }};">
+                <div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
                     {% if searches is defined and searches is iterable and searches|length > 0 %}
                         <p class="m0">Dernières recherches :
                         {% for s in searches %}
@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-6 col-lg-3 text-right">
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" {{ user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
+					<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
 					<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
 				</div>
 			</div>
@@ -29,13 +29,15 @@
 	<div id="accordion">
 		{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
 			{% for training in trainings %}
+				{% set maxScore = (training.maxScore is defined and training.maxScore > 0) ? training.maxScore : 1 %}
+				{% set score = (training.score is defined and training.score > 0) ? max(1, (training.score / maxScore) * 100)|number_format : 0 %}
 				<div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
 					<div class="card-header" id="heading{{ loop.index0 }}">
 						<h5 class="d-flex justify-content-between align-items-center">
 							<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
 								<div class="title">
 									{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}
-									({{ attribute(training, 'score') is defined and training.score is not empty ? training.score : '' }}% {{ 'match'|trans  }})
+									({{ score }}% {{ 'match'|trans  }})
 								</div>
 							</button>
 							<div class="count">

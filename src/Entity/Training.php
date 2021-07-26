@@ -179,6 +179,11 @@ class Training
     private $score = 0;
 
     /**
+     * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
+     */
+    private $maxScore = 0;
+
+    /**
      * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
      */
     private $completion = 0;
@@ -567,6 +572,18 @@ class Training
     public function setScore(?int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getMaxScore(): ?int
+    {
+        return $this->maxScore;
+    }
+
+    public function setMaxScore(?int $maxScore): self
+    {
+        $this->maxScore = $maxScore;
 
         return $this;
     }
