@@ -49,9 +49,11 @@ These accounts *must* be secured later on by changing their password or removing
     php bin/console doctrine:fixtures:load --group=AppFixtures --append --env dev
 
 Import institution profiles from src/DataFixtures/JSON/xxx.json file
+
     php bin/console doctrine:fixtures:load --group=InstitutionImportFixtures --append --env dev
 
 Import training from src/DataFixtures/JSON/xxx.json file
+
     php bin/console doctrine:fixtures:load --group=TrainingImportFixtures --append --env dev
 
 **Install packages and generate assets**
