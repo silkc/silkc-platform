@@ -17,18 +17,34 @@
   ],
   "training": [
     {
-      "username": "Mon organisme 1",
-      "email": "organisme1@silkc-platform.org",
-      "homepage": null,
-      "dateOfBirth": null,
-      "address": null
+      "institution_email": "organisme1@silkc-platform.org",
+      "occupation_concept_uri": "http://data.europa.eu/esco/occupation/0b1d8dcb-d941-4d79-99bf-fc10c1806c43",
+      "name": "Ma formation AZERTY",
+      "location": null,
+      "duration": null,
+      "description": null,
+      "price": null,
+      "start_at": null,
+      "end_at": null,
+      "is_online": null,
+      "is_online_monitored": null,
+      "is_presential": null,
+      "url": null
     },
     {
-      "username": "Mon organisme 2",
-      "email": "organisme2@silkc-platform.org",
-      "homepage": "https://www.monhomepage.com",
-      "dateOfBirth": "2010-09-01 10:05",
-      "address": "rue de la Paix 75000 Paris"
+      "institution_email": "organisme2@silkc-platform.org",
+      "occupation_concept_uri": "http://data.europa.eu/esco/occupation/0b1d8dcb-d941-4d79-99bf-fc10c1806c43",
+      "name": "Ma formation AZERTY",
+      "location": "4 rue Saint-Martin 75003 PARIS",
+      "duration": "2 weeks",
+      "description": "Good formation",
+      "price": "2.000 €",
+      "start_at": "2021-08-01 07:00:00",
+      "end_at": "2021-08-08 07:00:00",
+      "is_online": true,
+      "is_online_monitored": true,
+      "is_presential": true,
+      "url": "https://www.maformationazerty.com"
     }
   ]
 }

@@ -411,7 +411,7 @@ class Training
 
     public function setIsOnlineMonitored(bool $isOnlineMonitored): self
     {
-        $this->isOnline = $isOnlineMonitored;
+        $this->isOnlineMonitored = $isOnlineMonitored;
 
         return $this;
     }
