@@ -2,23 +2,17 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>
+		<title>Silkc -
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
-		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}"/>
-        {% block stylesheets %}{% endblock %}
-        
+		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}"/> {% block stylesheets %}{% endblock %}
+
 		</head>
-		<body data-token="{{ app is defined and app is not empty
-                                and attribute(app, 'user') is defined and app.user is not empty
-                                and attribute(app.user, 'apiToken') is defined  and app.user.apiToken is not empty ? app.user.apiToken : false }}" class="{% block body_class %}{% endblock %}">
-			{% block carousel %}{% endblock %}
-			{% block header %}{% endblock %}
-			{% block body %}{% endblock %}
-			{% block javascripts %}{% endblock %}
-		</body>
-	</html>
-</div></body></html>
+		<body data-token="{{ app is defined and app is not empty and attribute(app, 'user') is defined and app.user is not empty and attribute(app.user, 'apiToken') is defined and app.user.apiToken is not empty ? app.user.apiToken : false }}" class="{% block body_class %}{% endblock %}"> {% block carousel %}{% endblock %}{% block header %}{% endblock %}{% block body %}{% endblock %}{% block javascripts %}{% endblock %}
+			</body>
+		</html>
+	</div>
+</body></html>
