@@ -1,49 +1,49 @@
 {% extends 'front/layout.html.twig' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    {{ encore_entry_link_tags('app') }}
-    {{ encore_entry_link_tags('institutional') }}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('institutional') }}
 {% endblock %}
 
 {% block content %}
-    {% autoescape false %}
-    <div class="container">
-        <nav aria-label="breadcrumb" class="mt-4">
-            <ol class="breadcrumb create_training">
-                <li class="breadcrumb-item">
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('admin_home', {tab: 'home'})}}">{{ 'nav.home'|trans }}</a>
-                    {% elseif is_granted('ROLE_INSTITUTION') %}
-                        <a href="{{ path('app_institution', {tab: 'personal_informations'})}}">{{ 'nav.home'|trans }}</a>
-                    {% else %}
-                        <a href="{{ path('app_account', {tab: 'personal_informations'} )}}">{{ 'nav.home'|trans }}</a>
-                    {% endif %}
-                </li>
-                <li class="breadcrumb-item">
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('admin_home', {tab: 'training'})}}">{{ 'training'|trans }}</a>
-                    {% elseif is_granted('ROLE_INSTITUTION') %}
-                        <a href="{{ path('app_institution', {tab: 'training'})}}">{{ 'training'|trans }}</a>
-                    {% else %}
-                        <a href="{{ path('app_account', {tab: 'training'} )}}">{{ 'training'|trans }}</a>
-                    {% endif %}
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ attribute(training, 'name') is defined ? training.name : '' }}</li>
-            </ol>
-        </nav>
+	{% autoescape false %}
+		<div class="container">
+			<nav aria-label="breadcrumb" class="mt-4">
+				<ol class="breadcrumb create_training">
+					<li class="breadcrumb-item">
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_home')}}#content-home">{{ 'nav.home'|trans }}</a>
+						{% elseif is_granted('ROLE_INSTITUTION') %}
+							<a href="{{ path('app_institution')}}#content-personal_informations">{{ 'nav.home'|trans }}</a>
+						{% else %}
+							<a href="{{ path('app_account')}}#content-personal_informations">{{ 'nav.home'|trans }}</a>
+						{% endif %}
+					</li>
+					<li class="breadcrumb-item">
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_home')}}#content-training">{{ 'training'|trans }}</a>
+						{% elseif is_granted('ROLE_INSTITUTION') %}
+							<a href="{{ path('app_institution')}}#content-training">{{ 'training'|trans }}</a>
+						{% else %}
+							<a href="{{ path('app_account')}}#content-training">{{ 'training'|trans }}</a>
+						{% endif %}
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ attribute(training, 'name') is defined ? training.name : '' }}</li>
+				</ol>
+			</nav>
 
-         {{ include('front/institutional/_form.html.twig') }}
-    </div>
-    {% endautoescape %}
+			{{ include('front/institutional/_form.html.twig') }}
+		</div>
+	{% endautoescape %}
 
-    {% include 'front/elements/modal.html.twig' %}
+	{% include 'front/elements/modal.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 	{{ encore_entry_script_tags('main') }}
 	{{ encore_entry_script_tags('institutional') }}
 {% endblock %}

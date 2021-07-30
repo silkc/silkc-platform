@@ -1,21 +1,21 @@
-<div class="results">
+<div
+	class="results">
 	{# HISTORIQUE DES RECHERCHES #}
 	<div class="mb-3">
 		<div class="row">
 			<div class="col-6 col-lg-9">
-                <div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
-                    {% if searches is defined and searches is iterable and searches|length > 0 %}
-                        <p class="m0">Dernières recherches :
-                        {% for s in searches %}
-                            <a class="btn btn-sm btn-secondary" href="{{ path('app_search_results', (s.occupation) ? {'type': 'occupation', 'id': s.occupation.id } : {'type': 'skill', 'id': s.skill.id}) }}">
-                                {{ (s.occupation) ? s.occupation.preferredLabel : s.skill.preferredLabel }}
-
-                                <span class="badge badge-success" data-toggle="tooltip" title="{{ 'search_history_count_results_tooltip'|trans({'%count%': s.countResults}) }}">{{ s.countResults }}</span>
-                            </a>
-                        {% endfor %}
-                        </p>
-                    {% endif %}
-                </div>
+				<div id="history-search" style="display: {{ user.isSearchesKept == 1 ? '' : 'none' }};">
+					{% if searches is defined and searches is iterable and searches|length > 0 %}
+						<p class="m0">Dernières recherches :
+							{% for s in searches %}
+								<a class="btn btn-sm btn-secondary" href="{{ path('app_search_results', (s.occupation) ? {'type': 'occupation', 'id': s.occupation.id } : {'type': 'skill', 'id': s.skill.id}) }}">
+									{{ (s.occupation) ? s.occupation.preferredLabel : s.skill.preferredLabel }}
+									<span class="badge badge-success" data-toggle="tooltip" title="{{ 'search_history_count_results_tooltip'|trans({'%count%': s.countResults}) }}">{{ s.countResults }}</span>
+								</a>
+							{% endfor %}
+						</p>
+					{% endif %}
+				</div>
 			</div>
 			<div class="col-6 col-lg-3 text-right">
 				<div class="custom-control custom-checkbox">
@@ -37,14 +37,19 @@
 							<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
 								<div class="title">
 									{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}
-									({{ score }}% {{ 'match'|trans  }})
+									({{ score }}%
+									{{ 'match'|trans  }})
 								</div>
 							</button>
 							<div class="count">
 								({{ loop.index }}
 								of
 								{{ trainings|length }}
-								training {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} - <a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>{% endif %}
+								training
+								{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+									-
+									<a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>
+								{% endif %}
 								)
 							</div>
 						</h5>
@@ -74,17 +79,17 @@
 										<div class="col-lg-4">
 											<span class="title">{{ 'label.location'|trans  }}</span>
 										</div>
-                                        {% if training.location is defined and training.location is not empty %}
-                                            <div class="col-lg-8 blc-map">
-                                                <span class="training_address"></span>
-                                                <input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}" />
-                                                <div class="map"></div>
-                                            </div>
-                                        {% else %}
-                                            <div class="col-lg-8">
-                                                <span>{{ 'n_a'|trans }}</span>
-                                            </div>
-                                        {% endif %}
+										{% if training.location is defined and training.location is not empty %}
+											<div class="col-lg-8 blc-map">
+												<span class="training_address"></span>
+												<input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
+												<div class="map"></div>
+											</div>
+										{% else %}
+											<div class="col-lg-8">
+												<span>{{ 'n_a'|trans }}</span>
+											</div>
+										{% endif %}
 									</div>
 
 									<div class="row mb-3">
@@ -93,6 +98,17 @@
 										</div>
 										<div class="col-lg-8">
 											<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : 'n_a'|trans }}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">{{ 'label.date'|trans  }}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>{{ training.startAt is defined and training.startAt is not empty ? training.startAt|date('Y/m/d') : 'n_a'|trans }}</span>
+											<span>{{ 'to'|trans }}</span>
+											<span>{{ training.endAt is defined and training.endAt is not empty ? training.endAt|date('Y/m/d') : 'n_a'|trans }}</span>
 										</div>
 									</div>
 
@@ -166,7 +182,7 @@
 				</div>
 			{% endfor %}
 		{% elseif trainings is defined and trainings is iterable and trainings|length == 0 %}
-            <p style="font-size: 1.2rem;">{{ 'no_result_found'|trans  }}</p>
+			<p style="font-size: 1.2rem;">{{ 'no_result_found'|trans  }}</p>
 		{% endif %}
 	</div>
 </div>

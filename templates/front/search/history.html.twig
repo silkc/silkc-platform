@@ -43,7 +43,11 @@
 						{% set item =  (type == 'occupation') ? search.occupation : search.skill %}
 						<tr>
 							<td>{{ item.preferredLabel }}</td>
-							<td>{{ type|trans }}</td>
+							<td class="text-center">
+								<span data-toggle="tooltip" title="{{ type|trans == 'occupation' ? 'occupation_type_search'|trans : 'skill_type_search'|trans }}" class="type">
+									{{ type|trans == 'occupation' ? '<i class="fas fa-suitcase"></i>' : '<i class="fas fa-bullseye"></i>' }}
+								</span>
+							</td>
 							<td>{{ search.createdAt|date('Y/m/d') }}</td>
 							<td>{{ search.countResults }}</td>
 							<td>{{ search.countSearches }}</td>

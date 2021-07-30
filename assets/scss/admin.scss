@@ -14,29 +14,29 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "./abstracts/mixins";
 
 body {
-  padding-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 /* =============================================================================
     =   Account
 ============================================================================= */
 .modal {
-  h1 {
-    font-size: 1rem;
-  }
-
-  .link-description {
-    color: #18bc9c;
-    cursor: pointer;
-
-    &:hover {
-      color: #0f7864;
+    h1 {
+        font-size: 1rem;
     }
-  }
 
-  .title {
-      font-weight: 600;
-  }
+    .link-description {
+        color: #18bc9c;
+        cursor: pointer;
+
+        &:hover {
+            color: #0f7864;
+        }
+    }
+
+    .title {
+        font-weight: 600;
+    }
 }
 
 .lk-open-training {
@@ -44,121 +44,121 @@ body {
     cursor: pointer;
 
     &:hover {
-      color: #0f7864;
+        color: #0f7864;
     }
-  }
+}
 
 #common-modal {
-  .detail-training {
-    span.title {
-      font-weight: 600;
+    .detail-training {
+        span.title {
+            font-weight: 600;
+        }
     }
-  }
 }
 
 #admin {
-  margin-top: 60px;
-
-  .nav.nav-tabs {
-    margin-bottom: 60px;
-  }
-
-  .form-block {
     margin-top: 60px;
-  }
 
-  .button-group {
-    margin-top: 30px;
-  }
-
-  /* TAB Home */
-  #content-home {
-    .btn-read {
-      margin-bottom: 15px;
+    .nav.nav-tabs {
+        margin-bottom: 60px;
     }
-  }
+
+    .form-block {
+        margin-top: 60px;
+    }
+
+    .button-group {
+        margin-top: 30px;
+    }
+
+    /* TAB Home */
+    #content-home {
+        .btn-read {
+            margin-bottom: 15px;
+        }
+    }
 }
 
 form[name="training"] {
-  padding-top: 30px;
+    padding-top: 30px;
 
-  .content-list-skill {
-    > .skill {
-      margin: 10px 0;
-    }
-  }
-
-  label {
-    white-space: nowrap;
-    text-align: left;
-    display: block;
-    font-weight: 500;
-  }
-
-  .title {
-    text-align: left;
-    font-weight: 500;
-    background-color: #2c4969;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-top: 30px;
-    color: #fff;
-  }
-
-  .content-skills {
-    border: 2px solid #eee;
-    border-top: 0;
-
-    .rmv,
-    .add {
-      color: #fff;
-      padding: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .content-list-skill {
+        > .skill {
+            margin: 10px 0;
+        }
     }
 
-    .rmv {
-      background-color: #dc3545;
+    label {
+        white-space: nowrap;
+        text-align: left;
+        display: block;
+        font-weight: 500;
     }
 
-    .add {
-      background-color: #28a745;
+    .title {
+        text-align: left;
+        font-weight: 500;
+        background-color: #2c4969;
+        padding: 10px;
+        box-sizing: border-box;
+        margin-top: 30px;
+        color: #fff;
     }
-  }
+
+    .content-skills {
+        border: 2px solid #eee;
+        border-top: 0;
+
+        .rmv,
+        .add {
+            color: #fff;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rmv {
+            background-color: #dc3545;
+        }
+
+        .add {
+            background-color: #28a745;
+        }
+    }
 }
 
 #modal_skills {
-  .check-all {
-    margin-bottom: 15px;
-  }
+    .check-all {
+        margin-bottom: 15px;
+    }
 }
 
 #list-trainings .form-check-input {
-  position: absolute;
-  left: 1.25rem;
+    position: absolute;
+    left: 1.25rem;
 }
 
 #all-associated {
-  display: none;
+    display: none;
 }
 
 .skills-associated {
-  color: #fff !important;
-  font-weight: 600;
-  margin-top: 15px;
+    color: #fff !important;
+    font-weight: 600;
+    margin-top: 15px;
 }
 
 .modal-content {
-  .blc-map {
-    .map {
-      width: 100%;
-      height: 200px;
-      margin-top: 15px;
-    }
+    .blc-map {
+        .map {
+            width: 100%;
+            height: 200px;
+            margin-top: 15px;
+        }
 
-    .leaflet-touch .leaflet-control-geocoder {
-      display: none !important;
+        .leaflet-touch .leaflet-control-geocoder {
+            display: none !important;
+        }
     }
-  }
 }

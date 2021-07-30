@@ -16,6 +16,29 @@ require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
 require('bootstrap-select');
 
+
+function renderDate(date, format = 'DD MMMM YYYY to HH:mm') {
+    if (
+        date == undefined ||
+        (typeof date != 'string' && typeof date != 'object') ||
+        (typeof date == 'string' && date.length == 0)
+    )
+        return '-';
+
+    const oDate = moment(date);
+    if (oDate === null)
+        return '-';
+
+    if (oDate > moment().startOf('day') && oDate < moment().endOf('day')) {
+        return "Today at " + oDate.locale('en').format('HH:mm');
+    }
+    else if (oDate > moment().subtract(1, 'day').startOf('day') && oDate < moment().subtract(1, 'day').endOf('day')) {
+        return "Yesterday at " + oDate.locale('en').format('HH:mm');
+    }
+
+    return oDate.locale('en').format(format);
+}
+
 class Admin {
     instanceProperty = "Admin";
     boundFunction = () => {
@@ -393,14 +416,23 @@ class Admin {
 
                         let locationHTML = ``;
                         if (data.location != undefined && data.location != '') {
+                            let location = data.location.replace(/&/g, "&amp;")
+                                            .replace(/</g, "&lt;")
+                                            .replace(/>/g, "&gt;")
+                                            .replace(/"/g, "&quot;")
+                                            .replace(/'/g, "&#039;");
+
                             locationHTML += `<div class="blc-map">
                                                 <span class="training_address"></span>
-                                                <input type="hidden" class="training_address_hidden" value='${data.location}' />
+                                                <input type="hidden" class="training_address_hidden" value="${location}" />
                                                 <div class="map"></div>
                                             </div>`;
                         } else {
                             locationHTML = false;
                         }
+
+                        let dateStart = data.startAt ? renderDate(data.startAt) : false;
+                        let dateEnd = data.endAt ? renderDate(data.endAt) : false;
 
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
@@ -431,6 +463,18 @@ class Admin {
 											<span>${data.duration ? data.duration : 'N/A'}</span>
 										</div>
 									</div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-4">
+                                            <span class="title">Date</span>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <span>From</span>
+                                            <span>${dateStart ? dateStart : 'N/A'}</span>
+                                            <span>to</span>
+                                            <span>${dateEnd ? dateEnd : 'N/A'}</span>
+                                        </div>
+                                    </div>
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
@@ -851,16 +895,11 @@ class Admin {
                 let trainingAddress = blcMap.querySelector('.training_address');
                 let trainingAddressHidden = blcMap.querySelector('.training_address_hidden');
 
-                console.log('mapContent >> ', mapContent)
-                console.log('trainingAddress >> ', trainingAddress)
-                console.log('trainingAddressHidden >> ', trainingAddressHidden)
-                
                 let map = null;
                 let coords = trainingAddressHidden.value;
                 
                 if (!coords) return false;
                 
-                console.log('coords >> ', coords)
                 coords = JSON.parse(coords);
                 map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
                 
@@ -909,24 +948,31 @@ class Admin {
         this.runUsersTasksActions();
 
         $('[data-toggle="tooltip"]').tooltip();
-
+        
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
             $(this).find('.modal-footer').find('.blc-edit-training').remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
         });
         
         $('#common-modal-2').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
             $(this).find('.modal-footer').find('.blc-edit-training').remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
+        });
+
+        // TABS
+        let hash = location.hash.replace(/^#/, ''); 
+        if (hash) {
+            $('#admin [data-toggle="tab"][href="#' + hash + '"]').tab('show');
+        }
+        $('#admin [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
         });
     }
 }
-
-
-
-
 
 $(document).ready(function() {
     let admin = new Admin();

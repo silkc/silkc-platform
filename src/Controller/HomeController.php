@@ -249,6 +249,7 @@ class HomeController extends AbstractController
             $this->addFlash('success', $translator->trans('Updated data'));
 
             return $this->redirectToRoute('app_institution');
+            
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
                 $errors = $validator->validate($user);

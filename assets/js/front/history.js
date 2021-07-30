@@ -74,6 +74,8 @@ class History {
     init = function() {
         this.runDatatableHistory();
         this.runDeleteHistory();
+
+        $('[data-toggle="tooltip"]').tooltip();
     }
 }
 

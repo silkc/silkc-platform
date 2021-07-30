@@ -31,6 +31,7 @@ label:
     institution_name: Institution name
     search: Search
     advanced_search: Advanced search
+    date: Date
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learn
@@ -227,6 +228,10 @@ training_duplicate_suffix: " - (duplicate)"
 you_have_an_account: You have an account?
 sign_in: Sign in
 search_history_count_results_tooltip: this search returned %count% result(s)
+to: to 
+from: From 
+occupation_type_search: Occupation type search
+skill_type_search: Skill type search
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.

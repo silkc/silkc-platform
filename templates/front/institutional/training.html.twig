@@ -15,6 +15,15 @@
 								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#training_{{ k }}" aria-expanded="false" aria-controls="training_{{ k }}">
 									<a class="icon mr-2" data-toggle="collapse" href="#training_{{ k }}">
 										<span>{{ attribute(training, 'name') is defined ? training.name : '' }}</span>
+
+										{% if training.startAt is defined and training.startAt is not empty %}
+											(
+											<span>{{ 'from'|trans }}</span>
+											<span>{{ training.startAt is defined and training.startAt is not empty ? training.startAt|date('Y/m/d') : 'n_a'|trans }}</span>
+											<span>{{ 'to'|trans }}</span>
+											<span>{{ training.endAt is defined and training.endAt is not empty ? training.endAt|date('Y/m/d') : 'n_a'|trans }}</span>
+											)
+										{% endif %}
 									</a>
 								</div>
 								<div class="d-inline-flex align-items-center justify-content-end">
@@ -43,15 +52,15 @@
 										<div class="form-group">
 											<label for="location_{{ k }}">{{ 'label.location'|trans }}</label>
 
-                                            {% if training.location is defined and training.location is not empty %}
-                                                <div class="blc-map">
-                                                    <input type="text" class="form-control training_address" disabled id="location_{{ k }}">
-                                                    <input type="hidden" class="training_address_hidden" value="{{ training.location }}" />
-                                                    <div class="map"></div>
-                                                </div>
-                                            {% else %}
-                                                <input type="text" class="form-control" disabled id="location_{{ k }}" value="{{ 'n_a'|trans }}">
-                                            {% endif %}
+											{% if training.location is defined and training.location is not empty %}
+												<div class="blc-map">
+													<input type="text" class="form-control training_address" disabled id="location_{{ k }}">
+													<input type="hidden" class="training_address_hidden" value="{{ training.location }}"/>
+													<div class="map"></div>
+												</div>
+											{% else %}
+												<input type="text" class="form-control" disabled id="location_{{ k }}" value="{{ 'n_a'|trans }}">
+											{% endif %}
 										</div>
 
 										<div class="form-group">

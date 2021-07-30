@@ -878,6 +878,15 @@ class Institutional {
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        // TABS
+        let hash = location.hash.replace(/^#/, ''); 
+        if (hash) {
+            $('#institutional [data-toggle="tab"][href="#' + hash + '"]').tab('show');
+        }
+        $('#institutional [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
+        });
     }
 }
 

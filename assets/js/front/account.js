@@ -16,7 +16,7 @@ var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
 
-function renderDate(date, format = 'DD MMMM YYYY à HH:mm') {
+function renderDate(date, format = 'DD MMMM YYYY to HH:mm') {
     if (
         date == undefined ||
         (typeof date != 'string' && typeof date != 'object') ||
@@ -35,7 +35,7 @@ function renderDate(date, format = 'DD MMMM YYYY à HH:mm') {
         return "Yesterday at " + oDate.locale('en').format('HH:mm');
     }
 
-    return oDate.locale('fr').format(format);
+    return oDate.locale('en').format(format);
 }
 
 class Account { 
@@ -154,13 +154,58 @@ class Account {
             let $this = $(this);
 
             let name = $this.attr('data-name');
+            let id = $this.attr('data-id');
             let description = $this.attr('data-description');
             let $modal = $('#common-modal');
+            
+            if ($modal && id) {
+                
+                let url = 'api/skills_by_occupation/' + id;
+                
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data, textStatus, jqXHR) {
 
-            if ($modal) {
-                $modal.find('.modal-title').html(name);
-                $(`<p>${description}</p>`).appendTo($modal.find('.modal-body'));
-                $('#common-modal').modal('show');
+                        console.log('data', data.length)
+
+                        if (data) {
+                            $modal.find('.modal-title').html(name);
+                            $(`<p>${description}</p>`).appendTo($modal.find('.modal-body'));
+
+                            if (data.skills && data.skills.length > 0) {
+                                let dataSkills = data.skills;
+                                let htmlEssential = '';
+                                let htmlOptional = '';
+                                for (var k = 0; k < dataSkills.length; k++) {
+                                    let li = `<li>
+                                        <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="${dataSkills[k].skill.preferredLabel}" data-content="${dataSkills[k].skill.description}">
+                                            ${dataSkills[k].skill.preferredLabel}
+                                        </span>
+                                    </li>`;
+
+                                    if (dataSkills[k].relationType == 'essential')
+                                        htmlEssential += li;
+                                    if (dataSkills[k].relationType == 'optional')
+                                        htmlOptional += li;
+
+                                    if (k == dataSkills.length - 1) {
+                                        $(`<h1 style="font-size: 1rem;">Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
+                                        $(`<h1 style="font-size: 1rem;">Optional skills</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
+                                        $('#common-modal').find('.modal-dialog').addClass('modal-lg');
+                                        $('#common-modal').modal('show');
+                                        $('#common-modal [data-toggle="popover"]').popover();
+                                    }
+                                }
+                            } else {
+                                $('#common-modal').find('.modal-dialog').addClass('modal-lg');
+                                $('#common-modal').modal('show');
+                            }
+                        }
+                    },
+                    error : function(resultat, statut, erreur){},
+                    complete : function(resultat, statut, erreur){}
+                });
             }
         });
     }
@@ -1320,6 +1365,15 @@ class Account {
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        // TABS
+        let hash = location.hash.replace(/^#/, ''); 
+        if (hash) {
+            $('#account [data-toggle="tab"][href="#' + hash + '"]').tab('show');
+        }
+        $('#account [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
+        });
     }
 }
 

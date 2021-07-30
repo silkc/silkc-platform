@@ -31,6 +31,7 @@ label:
     institution_name: Institution name
     search: Search
     advanced_search: Advanced search
+    date: Date
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learn
@@ -48,6 +49,7 @@ header:
     my_account: My account    
     full_search_page: Full search page    
     intro: Skills Integration in a Learning Knowledge and Career PATHway
+    search_history: Search history
 
 nav:
     dashboard: Dashboard
@@ -60,6 +62,7 @@ nav:
     skills: Skills
     tasks: Tasks
     users: Users
+    search_page: Search page
 
 notification:
     label:
@@ -224,6 +227,11 @@ duplicate_training_success: The training has been duplicated successfully
 training_duplicate_suffix: " - (duplicate)"
 you_have_an_account: You have an account?
 sign_in: Sign in
+search_history_count_results_tooltip: this search returned %count% result(s)
+to: to 
+from: From 
+occupation_type_search: Occupation type search
+skill_type_search: Skill type search
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.
@@ -237,4 +245,14 @@ flash:
     username_already_exists: This username is already in use
     your_password_is_changed: Your password has been changed.
     non_identical_password: Non-identical passwords.
+    search_parameters_error: An error occurred in the search parameters
+    search_save_results_label: Keep my searches
+
+search_history:
+    label:
+        name: Name
+        type: Type
+        date: Last search date
+        count_result: Last search results
+        count_search: Number of searches
 
