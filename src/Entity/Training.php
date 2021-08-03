@@ -507,6 +507,14 @@ class Training
         return $this->trainingSkills;
     }
 
+    /**
+     * @return Collection|TrainingSkill[]
+     */
+    public function setTrainingSkills($trainingsSkills): Collection
+    {
+        return $this->trainingSkills = $trainingsSkills;
+    }
+
     public function addTrainingSkill(TrainingSkill $trainingSkill): self
     {
         if (!$this->trainingSkills->contains($trainingSkill)) {

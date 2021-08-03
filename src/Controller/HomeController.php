@@ -452,8 +452,25 @@ class HomeController extends AbstractController
      */
     public function training_duplicate(Training $training, TranslatorInterface $translator): Response
     {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $newTraining = clone $training;
+
+        $trainingSkills = new ArrayCollection();
+        if ($training->getTrainingSkills()) {
+            foreach ($training->getTrainingSkills() as $trainingSkill) {
+                $newTrainingSkill = new TrainingSkill();
+                $newTrainingSkill->setTraining($newTraining);
+                $newTrainingSkill->setSkill($trainingSkill->getSkill());
+                $newTrainingSkill->setIsRequired($trainingSkill->getIsRequired());
+                $newTrainingSkill->setIsToAcquire($trainingSkill->getIsToAcquire());
+
+                $trainingSkills->add($newTrainingSkill);
+
+                $em->persist($newTrainingSkill);
+            }
+        }
+        $newTraining->setTrainingSkills($trainingSkills);
 
         if ($newTraining->getUser() === null)
             $newTraining->setUser($user);
@@ -465,7 +482,6 @@ class HomeController extends AbstractController
         if (!$this->isGranted(User::ROLE_INSTITUTION))
             $user->addTraining($newTraining);
 
-        $em = $this->getDoctrine()->getManager();
         $em->persist($newTraining);
         $em->flush();
 
