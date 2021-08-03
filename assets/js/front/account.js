@@ -58,7 +58,7 @@ class Account {
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
                 <a href="" class="jobs-linked mr-2">
-                    <span class="badge badge-success">10</span>
+                    <span class="badge badge-success">${occupation.skills ? occupation.skills.length : 0}</span>
                 </a>
                 <a href="" class="text-danger item rmv" title="Remove this job" 
                         data-name="${occupation.name}" 
@@ -166,9 +166,6 @@ class Account {
                     type: "GET",
                     url: url,
                     success: function (data, textStatus, jqXHR) {
-
-                        console.log('data', data.length)
-
                         if (data) {
                             $modal.find('.modal-title').html(name);
                             $(`<p>${description}</p>`).appendTo($modal.find('.modal-body'));
@@ -433,10 +430,22 @@ class Account {
                 inputJobs.val(JSON.stringify(jobsList))
 
                 if (ulJobs) {
-                    let type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
-                    occupation.type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
-                    let li = _this.tplJob(occupation);
-                    $(ulJobs).append(li);
+                    let url = 'api/skills_by_occupation/' + jobIdToAdd;
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data, textStatus, jqXHR) {
+                            if (data) {
+                                let type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
+                                occupation.type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
+                                occupation.skills = data.skills != undefined ? data.skills : false;
+                                let li = _this.tplJob(occupation);
+                                $(ulJobs).append(li);
+                            }
+                        },
+                        error : function(resultat, statut, erreur){},
+                        complete : function(resultat, statut, erreur){}
+                    });
                 }
             }
         });

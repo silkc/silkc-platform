@@ -16,6 +16,7 @@ use App\Form\Type\UserPasswordType;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\OccupationRepository;
+use App\Repository\OccupationSkillRepository;
 use App\Repository\UserOccupationRepository;
 use App\Repository\UserSearchRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -137,7 +138,8 @@ class HomeController extends AbstractController
         TranslatorInterface $translator,
         UserPasswordEncoderInterface $passwordEncoder,
         SkillRepository $skillRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        OccupationSkillRepository $occupationSkillRepository
     ):Response
     {
         if ($this->isGranted(User::ROLE_INSTITUTION))
@@ -183,10 +185,33 @@ class HomeController extends AbstractController
             $this->addFlash('success', $translator->trans('Updated data'));
         }
 
+        $currentOccupations = $user->getCurrentOccupations();
+        $desiredOccupations = $user->getDesiredOccupations();
+        $previousOccupations = $user->getPreviousOccupations();
+
+        if ($currentOccupations && count($currentOccupations) > 0) {
+            foreach ($currentOccupations as $k => $currentOccupation) {
+                $currentOccupation->skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $currentOccupation->getOccupation()]));
+            }
+        }
+        if ($desiredOccupations && count($desiredOccupations) > 0) {
+            foreach ($desiredOccupations as $k => $desiredOccupation) {
+                $desiredOccupation->skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $desiredOccupation->getOccupation()]));
+            }
+        }
+        if ($previousOccupations && count($previousOccupations) > 0) {
+            foreach ($previousOccupations as $k => $previousOccupation) {
+                $previousOccupation->skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $previousOccupation->getOccupation()]));
+            }
+        }
+
         return $this->render(
             'front/account/index.html.twig',
             [
                 'user' => $user,
+                'currentOccupations' => $currentOccupations,
+                'desiredOccupations' => $desiredOccupations,
+                'previousOccupations' => $previousOccupations,
                 'form' => $form->createView(),
                 'password_form' => $passwordForm->createView(),
                 'related_skills' => $skillRepository->getByOccupationAndTraining($user),
@@ -450,7 +475,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/training/duplicate/{id}", name="training_duplicate")
      */
-    public function training_duplicate(Training $training, TranslatorInterface $translator): Response
+    public function training_duplicate(Training $training, SkillRepository $skillRepository, TrainingRepository $trainingRepository, TranslatorInterface $translator): Response
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -473,15 +498,17 @@ class HomeController extends AbstractController
         $newTraining->setTrainingSkills($trainingSkills);
 
         if ($newTraining->getUser() === null)
-            $newTraining->setUser($user);
+        $newTraining->setUser($user);
         $newTraining->setCreator($user);
         $newTraining->setName($newTraining->getName() . $translator->trans('training_duplicate_suffix'));
+        
         // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
         $newTraining->setIsValidated($this->isGranted(User::ROLE_INSTITUTION));
         // S'il s'agit d'une création par un utilisateur, on lui associe la formation
         if (!$this->isGranted(User::ROLE_INSTITUTION))
-            $user->addTraining($newTraining);
 
+        $user->addTraining($newTraining);
+        
         $em->persist($newTraining);
         $em->flush();
 
