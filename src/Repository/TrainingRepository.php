@@ -332,7 +332,8 @@ class TrainingRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT
                 t.*,
-                IF (ts.is_to_acquire = 1, 100, 50) AS score
+                IF (ts.is_to_acquire = 1, 100, 50) AS score,
+                100 AS max_score
             FROM training t
             INNER JOIN training_skill ts ON ts.training_id = t.id AND ts.skill_id = :skillId
             GROUP BY t.id
