@@ -182,34 +182,41 @@ class SearchResults {
                 let coords = trainingAddressHidden.value;
     
                 if (!coords) return false;
-
-                coords = JSON.parse(coords);
-                map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
                 
-                let geocoder = L.Control.Geocoder.nominatim();
+                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                    
+                    coords = JSON.parse(coords);
+                    map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
+                    let geocoder = L.Control.Geocoder.nominatim();
+                    
+                    let control = L.Control.geocoder({
+                        collapsed: false,
+                        placeholder: 'Search here...',
+                        position: 'topleft',
+                        geocoder: geocoder
+                    }).addTo(map);
+                    
+                    // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+                    // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+                    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                        attribution: '',
+                        minZoom: 1,
+                        maxZoom: 20
+                    }).addTo(map);
+                    
+                    //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+        
+                    if (coords) {
+                        let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                        marker.bindPopup(coords.city); // Bulle d'info
+        
+                        trainingAddress.innerHTML = coords.city;
+                    }
                 
-                let control = L.Control.geocoder({
-                    collapsed: false,
-                    placeholder: 'Search here...',
-                    position: 'topleft',
-                    geocoder: geocoder
-                }).addTo(map);
-                
-                // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                    attribution: '',
-                    minZoom: 1,
-                    maxZoom: 20
-                }).addTo(map);
-                
-                //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
-    
-                if (coords) {
-                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
-                    marker.bindPopup(coords.city); // Bulle d'info
-    
-                    trainingAddress.innerHTML = coords.city;
+                } else {
+                    blcMap.innerHTML = coords;
                 }
             }
 

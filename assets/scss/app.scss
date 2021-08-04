@@ -432,3 +432,7 @@ body > div.autocomplete {
 #datatable-search_history td span.type {
     font-size: 1.4rem;
 }
+
+#searchmap-modal .leaflet-control-geocoder.leaflet-bar {
+    display: none;
+}

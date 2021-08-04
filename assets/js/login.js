@@ -55,8 +55,14 @@ class Login {
             let coords = inputHidden.value;
 
             if (coords) {
-                coords = JSON.parse(coords);
-                map = L.map('map').setView([coords.lat, coords.lng], 10);
+                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                    coords = JSON.parse(coords);
+                    map = L.map('map').setView([coords.lat, coords.lng], 10);
+                } else {
+                    map = L.map('map').setView([0, 0], 2);
+                }
             } else {
                 map = L.map('map').setView([0, 0], 2);
             }

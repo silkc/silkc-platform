@@ -979,8 +979,14 @@ class Account {
             let coords = inputHidden.value;
 
             if (coords) {
-                coords = JSON.parse(coords);
-                map = L.map('map').setView([coords.lat, coords.lng], 10);
+                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                    coords = JSON.parse(coords);
+                    map = L.map('map').setView([coords.lat, coords.lng], 10);
+                } else {
+                    map = L.map('map').setView([0, 0], 2);
+                }
             } else {
                 map = L.map('map').setView([0, 0], 2);
             }
@@ -1005,7 +1011,7 @@ class Account {
                     };
                     newCoords = JSON.stringify(newCoords);
                     
-                    let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
+                    let leafletControlGeocoderForm = document.querySelector('#content-personal_informations .leaflet-control-geocoder-form input');
                     leafletControlGeocoderForm.value = name;
                     inputHidden.value = newCoords;
                 }
@@ -1019,14 +1025,82 @@ class Account {
                 maxZoom: 20
             }).addTo(map);
             
-            document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+            document.getElementById('searchmap').appendChild(document.querySelector('#content-personal_informations .leaflet-control-geocoder.leaflet-bar'));
 
             if (coords) {
                 let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
                 marker.bindPopup(coords.city); // Bulle d'info
 
-                let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
+                let leafletControlGeocoderForm = document.querySelector('#content-personal_informations .leaflet-control-geocoder-form input');
                 leafletControlGeocoderForm.value = coords.city;
+            }
+        }
+    }
+
+    /**
+     * Affichage carte modal
+     */
+     runMapModal = () => { 
+
+        let inputHidden = document.getElementById('training_address_hidden');
+        let locationModal = document.querySelector('#common-modal #location-modal');
+        var map = null;
+
+        if (inputHidden) {
+            let coords = inputHidden.value;
+
+            if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+            replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+            replace(/(?:^|:|,)(?:\s*\[)+/g, '')) && coords.length > 0) {
+                coords = JSON.parse(coords);
+                map = L.map('map-modal').setView([coords.lat, coords.lng], 10);
+                let geocoder = L.Control.Geocoder.nominatim();
+            
+                let control = L.Control.geocoder({
+                    collapsed: false,
+                    placeholder: 'Search here...',
+                    position: 'topleft',
+                    geocoder: geocoder
+                }).on('markgeocode', function(e) {
+                    if (e.geocode && e.geocode.center) {
+                        let lat = e.geocode.center.lat;
+                        let lng = e.geocode.center.lng;
+                        let name = e.geocode.name;
+                        
+                        let newCoords = {
+                            "city": name,
+                            "lat": lat,
+                            "lng": lng
+                        };
+                        newCoords = JSON.stringify(newCoords);
+                        
+                        let leafletControlGeocoderForm = document.querySelector('#common-modal .leaflet-control-geocoder-form input');
+                        leafletControlGeocoderForm.value = name;
+                        inputHidden.value = newCoords;
+                    }
+                }).addTo(map);
+                
+                // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    attribution: '',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(map);
+                
+                document.getElementById('searchmap-modal').appendChild(document.querySelector('#common-modal .leaflet-control-geocoder.leaflet-bar'));
+
+                if (coords) {
+                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                    marker.bindPopup(coords.city); // Bulle d'info
+                    let leafletControlGeocoderForm = document.querySelector('#common-modal .leaflet-control-geocoder-form input');
+                    leafletControlGeocoderForm.value = coords.city;
+                    locationModal.innerHTML = coords.city ? coords.city : 'N/A';
+                    leafletControlGeocoderForm.readOnly = true;
+                }
+            } else {
+                locationModal.innerHTML = coords ? coords : 'N/A';
+                $('#map-modal').hide();
             }
         }
     }
@@ -1035,7 +1109,7 @@ class Account {
      * Voir le detail d'une formation
      */
      seeDetailTraining = () => { 
-
+        let _this = this;
         $('body').on('click', '#content-training .see-detail', function(e) {
             e.preventDefault();
             let $modal = $('#common-modal');
@@ -1070,6 +1144,12 @@ class Account {
                             }
                         }
 
+                        let location = data.location.replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(/"/g, "&quot;")
+                            .replace(/'/g, "&#039;");
+
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
 
@@ -1087,7 +1167,10 @@ class Account {
 											<span class="title">Location</span>
 										</div>
 										<div class="col-lg-8">
-											<div>${data.location ? data.location : 'N/A'}</div>
+                                            <span id="location-modal">N/A</span>
+											<input type="hidden" value='${location ? location : ''}' id="training_address_hidden" />
+                                            <div id="searchmap-modal"></div>
+                                            <div id="map-modal"></div>
 										</div>
 									</div>
 
@@ -1345,6 +1428,9 @@ class Account {
     }
 
     init = function() {
+
+        let _this = this;
+
         this.runDetail();
         this.runAutocompletion();
         this.addJob();
@@ -1360,6 +1446,13 @@ class Account {
         this.displayFeedback();
         this.runMap();
         this.seeDetailTraining();
+
+
+        $('#common-modal').on('shown.bs.modal', function (e) {
+            if ($(this).find('#training_address_hidden').length > 0) {
+                _this.runMapModal();
+            }
+        });
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();

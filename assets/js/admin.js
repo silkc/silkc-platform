@@ -250,8 +250,14 @@ class Admin {
                 let coords = inputHidden.value;
 
                 if (coords) {
-                    coords = JSON.parse(coords);
-                    map = L.map('map').setView([coords.lat, coords.lng], 10);
+                    if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+                        replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                        replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                        coords = JSON.parse(coords);
+                        map = L.map('map').setView([coords.lat, coords.lng], 10);
+                    } else {
+                        map = L.map('map').setView([0, 0], 2);
+                    }
                 } else {
                     map = L.map('map').setView([0, 0], 2);
                 }
@@ -414,21 +420,13 @@ class Admin {
                             }
                         }
 
-                        let locationHTML = ``;
+                        let location = ``;
                         if (data.location != undefined && data.location != '') {
-                            let location = data.location.replace(/&/g, "&amp;")
+                            location = data.location.replace(/&/g, "&amp;")
                                             .replace(/</g, "&lt;")
                                             .replace(/>/g, "&gt;")
                                             .replace(/"/g, "&quot;")
                                             .replace(/'/g, "&#039;");
-
-                            locationHTML += `<div class="blc-map">
-                                                <span class="training_address"></span>
-                                                <input type="hidden" class="training_address_hidden" value="${location}" />
-                                                <div class="map"></div>
-                                            </div>`;
-                        } else {
-                            locationHTML = false;
                         }
 
                         let dateStart = data.startAt ? renderDate(data.startAt) : false;
@@ -451,7 +449,10 @@ class Admin {
 											<span class="title">Location</span>
 										</div>
 										<div class="col-lg-8">
-											${locationHTML ? locationHTML : 'N/A'}
+                                            <span id="location-modal">N/A</span>
+                                            <input type="hidden" value='${location ? location : ''}' id="training_address_hidden" />
+                                            <div id="searchmap-modal"></div>
+                                            <div id="map-modal"></div>
 										</div>
 									</div>
 
@@ -886,7 +887,7 @@ class Admin {
         });
     }
 
-    runMapTraining = () => { 
+    /*runMapTraining = () => { 
 
         $('#common-modal').on('shown.bs.modal', function (e) {
             let blcMap = e.target.querySelector('.blc-map');
@@ -900,16 +901,95 @@ class Admin {
                 
                 if (!coords) return false;
                 
+                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+                    replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                    replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+
+                    coords = JSON.parse(coords);
+                    map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
+                    
+                    let geocoder = L.Control.Geocoder.nominatim();
+                    
+                    let control = L.Control.geocoder({
+                        collapsed: false,
+                        placeholder: 'Search here...',
+                        position: 'topleft',
+                        geocoder: geocoder
+                    }).addTo(map);
+                    
+                    // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+                    // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+                    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                        attribution: '',
+                        minZoom: 1,
+                        maxZoom: 20
+                    }).addTo(map);
+                    
+                    //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
+                    
+                    if (coords) {
+                        let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                        marker.bindPopup(coords.city); // Bulle d'info
+                        
+                        trainingAddress.innerHTML = coords.city;
+                    }
+                } else {
+                    blcMap.innerHTML = coords;
+                }
+            }
+
+        })
+   }*/
+
+   
+    /**
+     * Affichage carte modal
+     */
+     runMapModal = (numModal = '') => { 
+
+        let inputHidden = document.getElementById('training_address_hidden');
+        let modalId = ''
+        if (numModal != '') {
+            modalId = '#common-modal-' + numModal;
+        } else {
+            modalId = '#common-modal';
+        }
+
+        let locationModal = document.querySelector(modalId + ' #location-modal');
+        var map = null;
+
+        if (inputHidden) {
+            let coords = inputHidden.value;
+
+            if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+            replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+            replace(/(?:^|:|,)(?:\s*\[)+/g, '')) && coords.length > 0) {
                 coords = JSON.parse(coords);
-                map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
-                
+                map = L.map('map-modal').setView([coords.lat, coords.lng], 10);
                 let geocoder = L.Control.Geocoder.nominatim();
-                
+            
                 let control = L.Control.geocoder({
                     collapsed: false,
                     placeholder: 'Search here...',
                     position: 'topleft',
                     geocoder: geocoder
+                }).on('markgeocode', function(e) {
+                    if (e.geocode && e.geocode.center) {
+                        let lat = e.geocode.center.lat;
+                        let lng = e.geocode.center.lng;
+                        let name = e.geocode.name;
+                        
+                        let newCoords = {
+                            "city": name,
+                            "lat": lat,
+                            "lng": lng
+                        };
+                        newCoords = JSON.stringify(newCoords);
+                        
+                        let leafletControlGeocoderForm = document.querySelector(modalId + ' .leaflet-control-geocoder-form input');
+                        leafletControlGeocoderForm.value = name;
+                        inputHidden.value = newCoords;
+                    }
                 }).addTo(map);
                 
                 // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
@@ -920,19 +1000,27 @@ class Admin {
                     maxZoom: 20
                 }).addTo(map);
                 
-                //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
-    
+                document.getElementById('searchmap-modal').appendChild(document.querySelector(modalId + ' .leaflet-control-geocoder.leaflet-bar'));
+
                 if (coords) {
                     let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
                     marker.bindPopup(coords.city); // Bulle d'info
-    
-                    trainingAddress.innerHTML = coords.city;
+                    let leafletControlGeocoderForm = document.querySelector(modalId + ' .leaflet-control-geocoder-form input');
+                    leafletControlGeocoderForm.value = coords.city;
+                    locationModal.innerHTML = coords.city ? coords.city : 'N/A';
+                    leafletControlGeocoderForm.readOnly = true;
                 }
+            } else {
+                locationModal.innerHTML = coords ? coords : 'N/A';
+                $('#map-modal').hide();
             }
+        }
+    }
 
-        })
-   }
     init = function() {
+
+        let _this = this;
+
         this.runDatatableHome();
         this.runDatatableTask();
         this.runDatatableInstitution();
@@ -940,15 +1028,27 @@ class Admin {
         this.runDatatableWork();
         this.runDatatableSkill();
         this.seeDetailWork();
-        this.runMap();
-        this.runMapTraining();
+        //this.runMap();
+        //this.runMapTraining();
         this.getDetails();
         this.runUsersActions();
         this.runTrainingsActions();
         this.runUsersTasksActions();
 
         $('[data-toggle="tooltip"]').tooltip();
-        
+
+        $('#common-modal').on('shown.bs.modal', function (e) {
+            if ($(this).find('#training_address_hidden').length > 0) {
+                _this.runMapModal();
+            }
+        });
+
+        $('#common-modal-2').on('shown.bs.modal', function (e) {
+            if ($(this).find('#training_address_hidden').length > 0) {
+                _this.runMapModal(2);
+            }
+        });
+
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();
             $(this).find('.modal-body').children().remove();
@@ -969,6 +1069,9 @@ class Admin {
             $('#admin [data-toggle="tab"][href="#' + hash + '"]').tab('show');
         }
         $('#admin [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            if (e.target.hash == "#content-personal_informations") {
+                _this.runMap();
+            }
             window.location.hash = e.target.hash;
         });
     }
