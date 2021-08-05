@@ -67,6 +67,7 @@ class HomeController extends AbstractController
         $trainings = []; // Listes des formations
         $searchParams = []; // Parametres de recherche renvoyés à la vue
         $user = $this->getUser();
+        //dd($request->request->all());
 
         if ($type_search) {
             $search = new UserSearch();
