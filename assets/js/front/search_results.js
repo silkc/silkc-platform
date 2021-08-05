@@ -1,7 +1,9 @@
-//import $ from 'jquery';
-const $ = require('jquery');
+import $ from 'jquery';
+var Slider = require("bootstrap-slider");
+require('bootstrap-slider/dist/css/bootstrap-slider.min.css');
 
 //import '../../css/bootstrap-extended.css';
+
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../../scss/elements/header.scss';
@@ -252,14 +254,51 @@ class SearchResults {
         })
    }
 
+
+    sliderSearch = () => { 
+        
+        // DISTANCE
+        var sliderDistance = new Slider('#formControlRangeDistance', {
+            formatter: function(value) {
+                return value + ' km';
+            }
+        });
+        sliderDistance.on("slide", function(value) {
+            $("#distanceVal").text(value + 'km');
+        });
+        
+        // PRIX
+        var sliderPrice = new Slider('#formControlRangePrice', {
+            formatter: function(value) {
+                let devise = $('#devise').val();
+                return value + devise;
+            }
+        });
+        sliderPrice.on("slide", function(slideEvt) {
+            let min = slideEvt[0];
+            let max = slideEvt[1];
+            let devise = $('#devise').val();
+
+            $("#priceValMin > span:first-child").text(min);
+            $("#priceValMax > span:first-child").text(max);
+            $("#priceValMin > span:last-child").text(devise);
+            $("#priceValMax > span:last-child").text(devise);
+        });
+        $('#devise').on('change', function() {
+            $("#priceValMin > span:last-child").text($(this).val());
+            $("#priceValMax > span:last-child").text($(this).val());
+        });
+    }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
         this.runDonetraining();
         this.runMap();
         this.runKeepSearch();
+        this.sliderSearch();
 
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip;
     }
 }
 
