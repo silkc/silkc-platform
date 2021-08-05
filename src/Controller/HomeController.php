@@ -294,7 +294,7 @@ class HomeController extends AbstractController
             $this->addFlash('success', $translator->trans('Updated data'));
         }
 
-        $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : $tab ? $tab : false;
+        $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : ($tab ? $tab : false);
         setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
         $trainings = $trainingRepository->findBy(['user' => $user]);

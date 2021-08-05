@@ -43,7 +43,7 @@ class OccupationSkill
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Occupation::class, inversedBy="occupationSkills")
+     * @ORM\ManyToOne(targetEntity=Occupation::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"occupationSkill:read"})
      */

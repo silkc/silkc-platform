@@ -18,7 +18,7 @@ class UserOccupation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Occupation")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userOccupations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

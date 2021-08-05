@@ -11,8 +11,11 @@ use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -63,10 +66,17 @@ class TrainingType extends AbstractType
                 'label'              => 'label.description',
                 'required'           => false,
             ])
-            ->add('price', TextType::class, [
+            ->add('price', NumberType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.price',
                 'required'           => false,
+                'attr' => ['placeholder' => 'placeholder.training_price']
+            ])
+            ->add('currency', ChoiceType::class, [
+                'label' => 'label.currency',
+                'required' => true,
+                'choices' => Training::getCurrencies(TRUE),
+                'attr' => ['class' => 'custom-select']
             ])
             ->add('url', TextType::class, [
                 'translation_domain' => 'messages',

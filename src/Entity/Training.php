@@ -27,6 +27,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Training
 {
+    public const CURRENCY_EURO = 'euro';
+    public const CURRENCY_ZLOTY = 'złoty';
+
+    protected static $currencies = [
+        self::CURRENCY_EURO => 'Euro',
+        self::CURRENCY_ZLOTY => 'Złoty',
+    ];
+
     /**
      * Coéfficient de pondération pour la recherche de formation via formulaire
      * par correspondance occupation-training
@@ -94,10 +102,15 @@ class Training
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float", length=255, nullable=true)
      * @Groups({"training:read", "training:write"})
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false, options={"default": "euro"}, columnDefinition="ENUM('euro', 'złoty')")
+     */
+    private $currency = self::CURRENCY_EURO;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -277,6 +290,15 @@ class Training
         return $this->id;
     }
 
+    /**
+     * @param  string $typeShortName
+     * @return string
+     */
+    public static function getCurrencies(bool $flip = FALSE):array
+    {
+        return ($flip) ? array_flip(static::$currencies) : static::$currencies;
+    }
+
     public function getCreator(): ?User
     {
         return $this->creator;
@@ -357,6 +379,21 @@ class Training
     public function setPrice(?string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(?string $currency): self
+    {
+        if (!in_array($currency, [self::CURRENCY_EURO, self::CURRENCY_ZLOTY]))
+            throw new \InvalidArgumentException("Invalid currency");
+
+        $this->currency = $currency;
 
         return $this;
     }

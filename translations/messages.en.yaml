@@ -12,12 +12,12 @@ label:
     label: Label
     name: Name
     location: Location
-    duration: Duration
+    duration: Effective Duration (from Start to End Date)
     description: Description
     roles: Roles
     price: Price
-    start_at: Start at
-    end_at: End at
+    start_at: Start Date
+    end_at: End Date
     training_info_url: Training info URL
     url: URL
     online: Online
@@ -37,6 +37,9 @@ label:
     city: City
     exclude_training_without_a_completed_description: Exclude training without a completed description
     without_specified_duration: Without specified duration
+    currency: Currency
+placeholder:
+    training_price: 'Ex: 1000.00'
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learn
@@ -261,3 +264,7 @@ search_history:
         count_result: Last search results
         count_search: Number of searches
 
+Euro: Euro
+Złoty: Złoty
+Save: Save
+Occupation: Occupation
