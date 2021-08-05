@@ -38,6 +38,7 @@ label:
     exclude_training_without_a_completed_description: Exclude training without a completed description
     without_specified_duration: Without specified duration
     currency: Currency
+    clear: Clear
 placeholder:
     training_price: 'Ex: 1000.00'
 button:
