@@ -55,6 +55,12 @@ class TrainingType extends AbstractType
                 'label'              => 'label.location',
                 'required'           => false,
             ])
+            ->add('longitude', HiddenType::class, [
+                'required'           => false,
+            ])
+            ->add('latitude', HiddenType::class, [
+                'required'           => false,
+            ])
             ->add('duration', TextType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.duration',

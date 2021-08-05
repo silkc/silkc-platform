@@ -47,7 +47,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     
     #advanced-search  {
         width: 100%;
-        
+
         > div {
             width: 100%;
             border: 1px solid #ddd;
@@ -58,14 +58,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
         .row {
             margin-bottom: 20px;
-        }
-
-        .slider {
-            width: 100%;
-        }
-
-        #map {
-            display: none !important;
         }
     }
 
