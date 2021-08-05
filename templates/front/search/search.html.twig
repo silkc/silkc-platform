@@ -56,19 +56,19 @@
                         <label for="city">{{ 'label.city'|trans }}</label>
                         <div id="searchmap"></div>
                         <div id="map"></div>
-                        <input type="hidden" id="city" name="city" class="form-control">
+                        <input type="hidden" id="city" name="city">
                     </div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
                     <div class="form-group flex-column align-items-start">
-
                         <div class="d-flex flex-row">
                             <label for="formControlRangeDistance" class="mr-1">{{ 'label.distance'|trans }}</label>
                             <span id="distanceVal">0km</span>
                         </div>
-                        <input id="formControlRangeDistance" data-slider-id='formControlRangeDistance' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="1" data-slider-value="0"/>
+                        <input id="formControlRangeDistance" data-slider-id='formControlRangeDistance' type="text" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="0"/>
+                        <input type="hidden" id="distance" name="distance" value="0">
                     </div>
 				</div>
 			</div>
@@ -76,15 +76,15 @@
                 <div class="col-md-12">
                     <div class="form-group flex-column align-items-start">
                         <div class="w-100 d-flex flex-column">
-                            <p>
+                            <div class="d-flex flex-row">
                                 <label for="formControlRangePrice" class="mr-1">{{ 'label.price'|trans }}</label>
                                 <span id="priceValMin"><span>0</span><span>€</span></span>
                                 <span class="mr-1 ml-1"> - </span>
-                                <span id="priceValMax"><span>1000</span><span>€</span></span>
-                            </p>
-                            <div class="input-group mb-3">
-                                <input id="formControlRangePrice" type="text" class="form-control" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
-                                <div class="input-group-append">
+                                <span id="priceValMax"><span>5000</span><span>€</span></span>
+                            </div>
+                            <div class="d-flex flex-row align-items-center flex-nowrap">
+                                <input id="formControlRangePrice" type="text" class="form-control" value="" data-slider-min="0" data-slider-max="5000" data-slider-step="5" data-slider-value="[0,5000]"/>
+                                <div class="input-group-append ml-4">
                                     <select id="devise" class="form-control custom-select">
                                         <option value="€">Euro</option>
                                         <option value="zł">Złoty</option>
@@ -92,7 +92,8 @@
                                 </div>
                             </div>
                         </div>
-
+                        <input type="hidden" id="price-min" name="price-min" value="0">
+                        <input type="hidden" id="price-max" name="price-max" value="5000">
                     </div>
                 </div>
 			</div>
@@ -115,7 +116,7 @@
 				<div class="col-4">
                     <div class="form-group">
                         <div class="form-check">        
-                            <input type="checkbox" id="isOnline" class="form-check-input" value="1">
+                            <input type="checkbox" name="isOnline" id="isOnline" class="form-check-input" value="1">
                             <label class="form-check-label" for="isOnline">{{ 'label.online'|trans }}</label>
                         </div>
                     </div>
@@ -123,7 +124,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <div class="form-check">        
-                            <input type="checkbox" id="isOnlineMonitored" class="form-check-input" value="1">
+                            <input type="checkbox" name="isOnlineMonitored" id="isOnlineMonitored" class="form-check-input" value="1">
                             <label class="form-check-label" for="isOnlineMonitored">{{ 'label.is_online_monitored'|trans }}</label>
                         </div>
                     </div>
@@ -131,7 +132,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <div class="form-check">        
-                            <input type="checkbox" id="isPresential" class="form-check-input" value="1">
+                            <input type="checkbox" name="isPresential" id="isPresential" class="form-check-input" value="1">
                             <label class="form-check-label" for="isPresential">{{ 'label.is_presential'|trans }}</label>
                         </div>
                     </div>
@@ -141,7 +142,7 @@
 				<div class="col-md-12">
                     <div class="form-group">
                         <div class="form-check">        
-                            <input type="checkbox" id="exclude-training-without-completed-description" class="form-check-input" value="1">
+                            <input type="checkbox" name="exclude-training-without-completed-description" id="exclude-training-without-completed-description" class="form-check-input" value="1">
                             <label class="form-check-label" for="exclude-training-without-completed-description">{{ 'label.exclude_training_without_a_completed_description'|trans }}</label>
                         </div>
                     </div>
@@ -151,7 +152,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="form-check">
-                            <input type="checkbox" id="without-specified-duration" class="form-check-input" value="1">
+                            <input type="checkbox" name="without-specified-duration" id="without-specified-duration" class="form-check-input" value="1">
                             <label class="form-check-label" for="without-specified-duration">{{ 'label.without_specified_duration'|trans }}</label>
                         </div>
                     </div>

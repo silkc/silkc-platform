@@ -265,6 +265,7 @@ class SearchResults {
         });
         sliderDistance.on("slide", function(value) {
             $("#distanceVal").text(value + 'km');
+            $("#distance").val(value);
         });
         
         // PRIX
@@ -283,10 +284,13 @@ class SearchResults {
             $("#priceValMax > span:first-child").text(max);
             $("#priceValMin > span:last-child").text(devise);
             $("#priceValMax > span:last-child").text(devise);
+            $("#price-min").val(min);
+            $("#price-max").val(max);
         });
         $('#devise').on('change', function() {
             $("#priceValMin > span:last-child").text($(this).val());
             $("#priceValMax > span:last-child").text($(this).val());
+
         });
     }
 
