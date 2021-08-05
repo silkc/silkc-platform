@@ -795,6 +795,8 @@ class Institutional {
    runMapAddTraining = () => { 
 
         let inputHidden = document.querySelector('form[name="training"] #training_location');
+        let inputHiddenLat = document.querySelector('form[name="training"] #training_latitude');
+        let inputHiddenLng = document.querySelector('form[name="training"] #training_longitude');
         var map = null;
 
         if (inputHidden) {
@@ -835,6 +837,8 @@ class Institutional {
                     let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
                     leafletControlGeocoderForm.value = name;
                     inputHidden.value = newCoords;
+                    inputHiddenLat.value = lat;
+                    inputHiddenLng.value = lng;
                 }
             }).addTo(map);
 
