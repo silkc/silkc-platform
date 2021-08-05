@@ -83,7 +83,14 @@ class HomeController extends AbstractController
                             }
                             $searchParams['name'] = $occupation->getPreferredLabel();
                             $searchParams['id'] = $occupation->getId();
-                            $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation);
+                            $params = [
+                                'isOnline' => true,
+                                'isOnlineMonitored' => true,
+                                'isPresential' => true,
+                                'minPrice' => 10,
+                                'maxPrice' => 400.54
+                            ];
+                            $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $params);
                             $search->setOccupation($occupation);
                             $search->setCountResults(count($trainings));
                         }

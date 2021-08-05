@@ -30,7 +30,11 @@ class TrainingRepository extends ServiceEntityRepository
      *
      * @access public
      */
-    public function searchTrainingByOccupation(?User $user = null, Occupation $occupation): ?array
+    public function searchTrainingByOccupation(
+        ?User $user = null,
+        Occupation $occupation,
+        ?array $params = []
+    ): ?array
     {
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMappingBuilder($entityManager);
@@ -46,6 +50,34 @@ class TrainingRepository extends ServiceEntityRepository
         $rsm->addScalarResult('occupation_weight', 'occupation_weight');
         $rsm->addScalarResult('acquired_skill_coefficient', 'acquired_skill_coefficient');
         $rsm->addScalarResult('not_acquired_skill_coefficient', 'not_acquired_skill_coefficient');*/
+
+        $filter = '';
+        /*?bool $isOnline = null,
+        ?bool $isOnlineMonitored = null,
+        ?bool $isPresential = null,
+        ?float $minPrice = null,
+        ?float $maxPrice = null,
+        ?int $distance = null,
+        ?float $latitude = null,
+        ?float $longitude = null*/
+        if ($params && is_array($params)) {
+            $filterParams = [];
+            if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']))
+                $filterParams[] = "t.is_online = " . intval($params['isOnline']);
+            if (array_key_exists('isOnlineMonitored', $params) && is_bool($params['isOnlineMonitored']))
+                $filterParams[] = "t.is_online_monitored = " . intval($params['isOnlineMonitored']);
+            if (array_key_exists('isPresential', $params) && is_bool($params['isPresential']))
+                $filterParams[] = "t.is_presential = " . intval($params['isPresential']);
+            if (
+                array_key_exists('minPrice', $params) && !empty($params['minPrice']) && $params['minPrice'] !== null &&
+                array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null
+            )
+                $filterParams[] = "(t.price > " . floatval($params['minPrice']) . " AND t.price < " . floatval($params['maxPrice']) . ")";
+
+            if (count($filterParams) > 0) {
+                $filter = "WHERE (" . implode($filterParams, ' AND ') . ")";
+            }
+        }
 
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT 
@@ -136,6 +168,7 @@ class TrainingRepository extends ServiceEntityRepository
                     LEFT JOIN user_skill us ON us.skill_id = ts.skill_id AND us.is_selected = 1 AND us.user_id = :userId
                     GROUP BY t.id
             ) AS sq3 ON sq3.training_id = t.id
+            $filter
             GROUP BY t.id
             HAVING score IS NOT NULL AND score > 0
             ORDER BY score DESC
