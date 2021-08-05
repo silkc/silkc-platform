@@ -290,6 +290,51 @@ class SearchResults {
         });
     }
 
+    
+    /**
+     * Affichage carte
+     */
+     runMapFilter = () => { 
+
+        var map = L.map('map').setView([0, 0], 2);
+        let geocoder = L.Control.Geocoder.nominatim();
+        let inputHidden = document.getElementById('city');
+        
+        let control = L.Control.geocoder({
+            collapsed: false,
+            placeholder: 'Search here...',
+            position: 'topleft',
+            geocoder: geocoder
+        }).on('markgeocode', function(e) {
+            if (e.geocode && e.geocode.center) {
+                let lat = e.geocode.center.lat;
+                let lng = e.geocode.center.lng;
+                let name = e.geocode.name;
+                
+                let newCoords = {
+                    "lat": lat,
+                    "lng": lng
+                };
+                newCoords = JSON.stringify(newCoords);
+                
+                let leafletControlGeocoderForm = document.querySelector('#search-results .leaflet-control-geocoder-form input');
+                leafletControlGeocoderForm.value = name;
+
+                if (inputHidden) inputHidden.value = newCoords;
+            }
+        }).addTo(map);
+        
+        // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+        /*L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 20
+        }).addTo(map);*/
+        
+        document.getElementById('searchmap').appendChild(document.querySelector('#search-results .leaflet-control-geocoder.leaflet-bar'));
+    }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
@@ -297,6 +342,7 @@ class SearchResults {
         this.runMap();
         this.runKeepSearch();
         this.sliderSearch();
+        this.runMapFilter();
 
         $('[data-toggle="tooltip"]').tooltip;
     }

@@ -63,6 +63,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         .slider {
             width: 100%;
         }
+
+        #map {
+            display: none !important;
+        }
     }
 
     .results {
