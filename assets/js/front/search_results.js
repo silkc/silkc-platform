@@ -257,41 +257,88 @@ class SearchResults {
 
     sliderSearch = () => { 
         
-        // DISTANCE
-        var sliderDistance = new Slider('#formControlRangeDistance', {
-            formatter: function(value) {
-                return value + ' km';
-            }
-        });
-        sliderDistance.on("slide", function(value) {
-            $("#distanceVal").text(value + 'km');
-            $("#distance").val(value);
-        });
-        
-        // PRIX
-        var sliderPrice = new Slider('#formControlRangePrice', {
-            formatter: function(value) {
-                let devise = $('#devise').val();
-                return value + devise;
-            }
-        });
-        sliderPrice.on("slide", function(slideEvt) {
-            let min = slideEvt[0];
-            let max = slideEvt[1];
-            let devise = $('#devise').val();
+        let sliderDistance;
+        let sliderPrice;
 
-            $("#priceValMin > span:first-child").text(min);
-            $("#priceValMax > span:first-child").text(max);
-            $("#priceValMin > span:last-child").text(devise);
-            $("#priceValMax > span:last-child").text(devise);
-            $("#price-min").val(min);
-            $("#price-max").val(max);
-        });
+        // DISTANCE
+        let initSliderDistance = function() {
+            sliderDistance = new Slider('#formControlRangeDistance', {
+                formatter: function(value) {
+                    return value + ' km';
+                }
+            });
+            sliderDistance.on("change", function(obj) {
+                $("#distanceVal").text(obj.newValue + 'km');
+                $("#distance").val(obj.newValue);
+            });
+        }
+
+        // PRIX
+        let initSliderPrice = function() {
+            sliderPrice = new Slider('#formControlRangePrice', {
+                formatter: function(value) {
+                    let devise = $('#devise').val();
+                    return value + devise;
+                }
+            });
+            sliderPrice.on("change", function(slideEvt) {
+                let min = slideEvt.newValue[0];
+                let max = slideEvt.newValue[1];
+                let devise = $('#devise').val();
+
+                $("#priceValMin > span:first-child").text(min);
+                $("#priceValMax > span:first-child").text(max);
+                $("#priceValMin > span:last-child").text(devise);
+                $("#priceValMax > span:last-child").text(devise);
+                $("#minPrice").val(min);
+                $("#maxPrice").val(max);
+            });
+        }
+        
         $('#devise').on('change', function() {
             $("#priceValMin > span:last-child").text($(this).val());
             $("#priceValMax > span:last-child").text($(this).val());
 
+            let max = sliderPrice.element.dataset.sliderMax;
+            $("#priceValMin > span:first-child").text(0);
+            $("#priceValMax > span:first-child").text(max);
+
+            $("#minPrice").val(0);
+            $("#maxPrice").val(max);
+
+            sliderPrice.destroy();
+            initSliderPrice();
         });
+
+        // Clear filter
+        $('body').on('click', 'button.btn-clear', function() {
+            sliderDistance.destroy();
+            sliderPrice.destroy();
+
+            // Distance
+            $("#distanceVal").text('0km');
+            $("#distance").val(0);
+
+            // Prix
+            let max = sliderPrice.element.dataset.sliderMax;
+            $("#priceValMin > span:first-child").text(0);
+            $("#priceValMax > span:first-child").text(max);
+
+            $("#minPrice").val(0);
+            $("#maxPrice").val(max);
+
+            // Input text, date ...
+            $("#advanced-search input[type=date], #advanced-search input[type=text], #advanced-search input[type=datetime-local]").val("");
+            
+            // Checkbox
+            $("#advanced-search input[type=checkbox]").prop("checked", false);
+
+            initSliderDistance();
+            initSliderPrice();
+        });
+
+        initSliderDistance();
+        initSliderPrice();
     }
 
     
