@@ -260,19 +260,6 @@ class SearchResults {
         let sliderDistance;
         let sliderPrice;
 
-        // DISTANCE
-        let initSliderDistance = function() {
-            sliderDistance = new Slider('#formControlRangeDistance', {
-                formatter: function(value) {
-                    return value + ' km';
-                }
-            });
-            sliderDistance.on("change", function(obj) {
-                $("#distanceVal").text(obj.newValue + 'km');
-                $("#distance").val(obj.newValue);
-            });
-        }
-
         // PRIX
         let initSliderPrice = function() {
             sliderPrice = new Slider('#formControlRangePrice', {
@@ -295,6 +282,19 @@ class SearchResults {
             });
         }
         
+        // DISTANCE
+        let initSliderDistance = function() {
+            sliderDistance = new Slider('#formControlRangeDistance', {
+                formatter: function(value) {
+                    return value + ' km';
+                }
+            });
+            sliderDistance.on("change", function(obj) {
+                $("#distanceVal").text(obj.newValue + 'km');
+                $("#distance").val(obj.newValue);
+            });
+        }
+
         $('#devise').on('change', function() {
             $("#priceValMin > span:last-child").text($(this).val());
             $("#priceValMax > span:last-child").text($(this).val());
@@ -312,32 +312,30 @@ class SearchResults {
 
         // Clear filter
         $('body').on('click', 'button.btn-clear', function() {
-            sliderDistance.destroy();
-            sliderPrice.destroy();
+            sliderDistance.setValue(0);
+            sliderPrice.setValue([0, 5000]);
+            //sliderPrice.destroy();
 
             // Distance
             $("#distanceVal").text('0km');
             $("#distance").val(0);
-
+            
             // Prix
             let max = sliderPrice.element.dataset.sliderMax;
             $("#priceValMin > span:first-child").text(0);
             $("#priceValMax > span:first-child").text(max);
-
+            
             $("#minPrice").val(0);
             $("#maxPrice").val(max);
-
+            
             // Input text, date ...
             $("#advanced-search input[type=date], #advanced-search input[type=text], #advanced-search input[type=datetime-local]").val("");
             
             // Checkbox
             $("#advanced-search input[type=checkbox]").prop("checked", false);
-
-            initSliderDistance();
-            initSliderPrice();
         });
 
-        initSliderDistance();
+        initSliderDistance(0);
         initSliderPrice();
     }
 
@@ -350,19 +348,7 @@ class SearchResults {
         var map = L.map('map').setView([0, 0], 2);
         let geocoder = L.Control.Geocoder.nominatim();
         let inputHidden = document.getElementById('city');
-
-        if (inputHidden) {
-            let coords = inputHidden.value;
-            if (coords) {
-                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
-                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-                    coords = JSON.parse(coords);
-                    map = L.map('map').setView([coords.lat, coords.lng], 10);
-                }
-            }
-        }
-
+        let inputHiddenCity = document.getElementById('inputCity');
 
         let control = L.Control.geocoder({
             collapsed: false,
@@ -385,6 +371,7 @@ class SearchResults {
                 leafletControlGeocoderForm.value = name;
 
                 if (inputHidden) inputHidden.value = newCoords;
+                if (inputHiddenCity) inputHiddenCity.value = name;
             }
         }).addTo(map);
         
@@ -397,6 +384,11 @@ class SearchResults {
         }).addTo(map);*/
         
         document.getElementById('searchmap').appendChild(document.querySelector('#search-results .leaflet-control-geocoder.leaflet-bar'));
+
+        if (inputHiddenCity) {
+            let leafletControlGeocoderForm = document.querySelector('#search-results .leaflet-control-geocoder-form input');
+            leafletControlGeocoderForm.value = inputHiddenCity.value;
+        }
     }
 
     init = function() {

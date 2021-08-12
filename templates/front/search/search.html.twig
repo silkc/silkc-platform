@@ -48,7 +48,7 @@
 		<i class="fas fa-chevron-down"></i> {{ 'label.advanced_search'|trans }}
 	</button>
 
-	<div class="collapse" id="advanced-search">
+	<div class="collapse {{ requestParams is defined and requestParams|length > 0 ? 'show' : '' }}" id="advanced-search">
 		<div>
             <div class="grp">
                 <label class="main-title">{{ 'label.distance_from'|trans }}</label>
@@ -58,6 +58,7 @@
                             <div id="searchmap"></div>
                             <div id="map"></div>
                             <input type="hidden" id="city" name="city" value="{{ requestParams.city is defined ? requestParams.city : '' }}">
+                            <input type="hidden" id="inputCity" name="inputCity" value="{{ requestParams.inputCity is defined ? requestParams.inputCity : '' }}">
                         </div>
                     </div>
                     <div class="col-md-6">
