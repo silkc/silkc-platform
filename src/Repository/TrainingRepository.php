@@ -67,8 +67,12 @@ class TrainingRepository extends ServiceEntityRepository
             // Recherche par ville
             if (
                 array_key_exists('distance', $params) &&
-                array_key_exists('location', $params)
+                array_key_exists('location', $params) && is_array($params['location']) &&
+                array_key_exists('latitude', $params['location']) &&
+                array_key_exists('longitude', $params['location'])
             ) {
+                $latitude = $params['location']['latitude'];
+                $longitude = $params['location']['longitude'];
                 $select = "CASE
                     WHEN t.latitude IS NULL AND t.longitude IS NULL THEN NULL 
                     ELSE 
@@ -77,9 +81,9 @@ class TrainingRepository extends ServiceEntityRepository
                         ASIN(
                             (
                                 SQRT(
-                                    POW(COS(((PI()/180) * 49.18687424193316)) - COS(((PI()/180) * t.latitude)) * COS((PI()/180) * (-0.3658107651082919 - t.longitude)), 2) +
-                                    POW(COS(((PI()/180) * t.latitude)) * SIN((PI()/180) * (-0.3658107651082919 - t.longitude)), 2) +
-                                    POW(SIN(((PI()/180) * 49.18687424193316)) - SIN(((PI()/180) * t.latitude)), 2)    
+                                    POW(COS(((PI()/180) * $latitude)) - COS(((PI()/180) * t.latitude)) * COS((PI()/180) * ($longitude - t.longitude)), 2) +
+                                    POW(COS(((PI()/180) * t.latitude)) * SIN((PI()/180) * ($longitude - t.longitude)), 2) +
+                                    POW(SIN(((PI()/180) * $latitude)) - SIN(((PI()/180) * t.latitude)), 2)    
                                 )
                             ) / 2
                         ) / 
@@ -91,6 +95,14 @@ class TrainingRepository extends ServiceEntityRepository
             }
 
             $filterParams = [];
+            if (array_key_exists('excludeWithoutDescription', $params) && $params['excludeWithoutDescription'] === true)
+                $filterParams[] = "t.description IS NOT NULL";
+            if (array_key_exists('excludeWithoutDuration', $params) && $params['excludeWithoutDuration'] === true)
+                $filterParams[] = "t.duration IS NOT NULL";
+            if (array_key_exists('startAt', $params) && is_bool($params['startAt']))
+                $filterParams[] = "t.start_at >= " . intval($params['startAt']);
+            if (array_key_exists('endAt', $params) && is_bool($params['endAt']))
+                $filterParams[] = "t.end_at <= " . intval($params['end_at']);
             if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']))
                 $filterParams[] = "t.is_online = " . intval($params['isOnline']);
             if (array_key_exists('isOnlineMonitored', $params) && is_bool($params['isOnlineMonitored']))

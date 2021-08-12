@@ -67,9 +67,7 @@ class HomeController extends AbstractController
         $trainings = []; // Listes des formations
         $searchParams = []; // Parametres de recherche renvoyés à la vue
         $user = $this->getUser();
-        //dd($request->request->all());
         $advanceSearchParams = $this->_get_advance_search_params($request);
-        //dd($advanceSearchParams);
 
         if ($type_search) {
             $search = new UserSearch();
@@ -88,7 +86,6 @@ class HomeController extends AbstractController
                             $searchParams['id'] = $occupation->getId();
 
                             $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $advanceSearchParams);
-                            //dd($trainings);
                             $search->setOccupation($occupation);
                             $search->setCountResults(count($trainings));
                         }
@@ -169,6 +166,11 @@ class HomeController extends AbstractController
 
         if (array_key_exists('specifiedDuration', $rp) && !empty($rp['specifiedDuration']))
             $params['excludeWithoutDuration'] = (bool) $rp['specifiedDuration'];
+
+        if (array_key_exists('startAt', $rp) && !empty($rp['startAt']))
+            $params['startAt'] = $rp['startAt'];
+        if (array_key_exists('endAt', $rp) && !empty($rp['endAt']))
+            $params['endAt'] = $rp['endAt'];
 
         return $params;
     }
