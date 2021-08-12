@@ -1,5 +1,5 @@
 <form class="form-inline form-search" method="POST" action="{{ path('app_search_results') }}">
-	<label for="input-search" class="mr-2">{{ 'training_opportunities_to_land_your_dream_job_as'|trans  }}:</label>
+	<label for="input-search">{{ 'training_opportunities_to_land_your_dream_job_as'|trans  }}:</label>
 
 	<div class="form-search-occupation"  
         style="display: {{ search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' ? 'none' : 'block' }}">
@@ -37,7 +37,7 @@
         %}
 	</div>
 
-	<select class="form-control ml-2" name="type_search">
+	<select class="form-control" name="type_search">
 		<option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>{{ 'home.search_by_occupation'|trans }}</option>
 		<option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>{{ 'home.search_by_skill'|trans  }}</option>
 	</select>
@@ -51,7 +51,7 @@
 	<div class="collapse" id="advanced-search">
 		<div>
             <div class="grp">
-                <label class="main-title">{{ 'label.city'|trans }}</label>
+                <label class="main-title">{{ 'label.distance_from'|trans }}</label>
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="form-group flex-column align-items-start">
@@ -108,12 +108,12 @@
                             <div class="d-flex flex-row">
                                 <div class="form-group flex-column align-items-start mr-2">
                                     <label for="startAt">{{ 'label.start'|trans }}</label>
-                                    <input type="datetime-local" id="startAt" class="form-control">
+                                    <input type="date" id="startAt" class="form-control">
                                 </div>
 
                                 <div class="form-group flex-column align-items-start">
                                     <label for="startEnd">{{ 'label.end'|trans }}</label>
-                                    <input type="datetime-local" id="startEnd" class="form-control">
+                                    <input type="date" id="startEnd" class="form-control">
                                 </div>
                             </div>
                         </div>

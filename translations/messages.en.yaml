@@ -37,6 +37,7 @@ label:
     distance: Distance
     refine_my_search: Refine my search
     city: City
+    distance_from: Distance from
     exclude_training_without_a_completed_description: Exclude training without a completed description
     without_specified_duration: Without specified duration
     currency: Currency

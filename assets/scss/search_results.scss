@@ -1,4 +1,4 @@
-$web-font-path: 'data:text/css;base64,';
+$web-font-path: "data:text/css;base64,";
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 @import "~bootswatch/dist/flatly/variables";
@@ -13,12 +13,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "./abstracts/variables";
 @import "./abstracts/mixins";
 
-
 /* =============================================================================
     =   Search results
 ============================================================================= */
 #search-results {
-    
     .blc-map {
         .map {
             width: 100%;
@@ -44,8 +42,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             margin-bottom: 7px;
         }
     }
-    
-    #advanced-search  {
+
+    #advanced-search {
         width: 100%;
 
         > div {
@@ -96,20 +94,22 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             font-size: 1.1rem;
             outline: none;
             border: 0;
-            
-            &:focus, &:hover {
+
+            &:focus,
+            &:hover {
                 outline: none;
                 box-shadow: 0 0 0;
                 border: 0;
             }
-            
+
             button {
                 flex: 1;
                 text-align: left;
                 outline: none;
                 border: 0;
-                
-                &:focus, &:hover {
+
+                &:focus,
+                &:hover {
                     outline: none;
                     box-shadow: 0 0 0;
                     border: 0;
@@ -120,11 +120,9 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             .count {
                 font-size: 0.8rem;
             }
-
         }
 
         .card-body {
-
             .google-map {
                 height: 200px;
             }
@@ -138,9 +136,21 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     .form-search-occupation,
     .form-search-skill {
         flex: 1;
+        margin-right: 1rem;
     }
+
 
     .form-search-skill {
         display: none;
+    }
+
+    @media (max-width: 992px) {
+        
+        .form-search-occupation,
+        .form-search-skill {
+            margin-right: 0;
+            flex: 100%;
+            margin-bottom: 15px;
+        }
     }
 }
