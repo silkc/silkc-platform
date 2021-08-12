@@ -358,6 +358,7 @@ class SearchResults {
                 replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
                 replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
                     coords = JSON.parse(coords);
+                    map = L.map('map').setView([coords.lat, coords.lng], 10);
                 }
             }
         }
@@ -375,13 +376,10 @@ class SearchResults {
                 let name = e.geocode.name;
                 
                 let newCoords = {
-                    "city": name,
                     "lat": lat,
                     "lng": lng
                 };
                 newCoords = JSON.stringify(newCoords);
-                
-                console.log('newCoords', newCoords)
 
                 let leafletControlGeocoderForm = document.querySelector('#search-results .leaflet-control-geocoder-form input');
                 leafletControlGeocoderForm.value = name;

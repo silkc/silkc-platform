@@ -45,7 +45,7 @@
 	<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>{{ 'label.search'|trans }}</button>
 
 	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
-		{{ 'label.advanced_search'|trans }}
+		<i class="fas fa-chevron-down"></i> {{ 'label.advanced_search'|trans }}
 	</button>
 
 	<div class="collapse" id="advanced-search">
