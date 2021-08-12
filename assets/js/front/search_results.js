@@ -316,7 +316,9 @@ class SearchResults {
             sliderPrice.setValue([0, 5000]);
             //sliderPrice.destroy();
 
-            // Distance
+            // Distance - ville
+            $("#city").val('');
+            $("#inputCity").val('');
             $("#distanceVal").text('0km');
             $("#distance").val(0);
             
