@@ -69,7 +69,9 @@
 					<div class="form-group col-md-6">
 						{% if form.offsetExists('password') %}
 							<div class="row special">
-								{{ form_row(form.password) }}
+                                <div class="col-12">
+                                    {{ form_row(form.password) }}
+                                </div>
 							</div>
 						{% endif %}
 					</div>

@@ -29,6 +29,10 @@
 		</div>
 	</div>
 
+    <p class="font-italic">
+        {{ 'info_search_result'|trans }}
+    </p>
+
 	<div id="accordion">
 		{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
 			{% for training in trainings %}

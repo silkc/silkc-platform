@@ -1020,6 +1020,7 @@ class Admin {
     init = function() {
 
         let _this = this;
+        let hrefLocation = window.location.href;
 
         this.runDatatableHome();
         this.runDatatableTask();
@@ -1074,6 +1075,11 @@ class Admin {
             }
             window.location.hash = e.target.hash;
         });
+
+        // CREATE USER
+        if (hrefLocation.indexOf('create_user') != -1) {
+            _this.runMap();
+        }
     }
 }
 

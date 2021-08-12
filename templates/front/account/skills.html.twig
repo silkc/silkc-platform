@@ -25,7 +25,7 @@
                                 <a href="#" class="more mr-2" data-name="{{ row.skillPreferredLabel }}" data-trainings="{{ row.trainingNames }}" data-occupations="{{ row.occupationPreferredLabels }}">
                                     <i class="fas fa-question-circle text-primary"></i>
                                 </a>
-                                <a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ row.skillPreferredLabel }}" data-id="{{ row.skillId }}">
+                                <a href="" class="text-danger rmv item" data-toggle="tooltip" title="{{ 'tooltip.remove_this_skill'|trans }}" data-name="{{ row.skillPreferredLabel }}" data-id="{{ row.skillId }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -87,7 +87,7 @@
 									</a>
 								</div>
 								<div class="d-inline-flex align-items-center justify-content-end">
-									<a href="" class="text-danger rmv item" title="Remove this skill" data-name="{{ skill.preferredLabel }}" data-id="{{ skill.id }}" data-url="url de suppression">
+									<a href="" class="text-danger rmv item" data-toggle="tooltip" title="{{ 'tooltip.remove_this_skill'|trans }}"  data-name="{{ skill.preferredLabel }}" data-id="{{ skill.id }}" data-url="url de suppression">
 										<i class="fas fa-trash-alt"></i>
 									</a>
 								</div>
@@ -133,7 +133,7 @@
 									</a>
 								</div>
 								<div class="d-inline-flex align-items-center justify-content-end">
-									<a href="" class="text-success add" title="Add this skill back into the list above">
+									<a href="" class="text-success add" data-toggle="tooltip" title="{{ 'tooltip.add_this_skill_back_into_the_list_above'|trans }}">
 										<i class="fas fa-plus text-primary"></i>
 									</a>
 								</div>

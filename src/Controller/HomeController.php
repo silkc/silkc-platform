@@ -196,19 +196,26 @@ class HomeController extends AbstractController
         $desiredOccupations = $user->getDesiredOccupations();
         $previousOccupations = $user->getPreviousOccupations();
 
+        $currentOccupationsInput = [];
+        $desiredOccupationsInput = [];
+        $previousOccupationsInput = [];
+
         if ($currentOccupations && count($currentOccupations) > 0) {
             foreach ($currentOccupations as $k => $currentOccupation) {
                 $currentOccupation->skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $currentOccupation->getOccupation()]));
+                array_push($currentOccupationsInput, $currentOccupation->getOccupation()->getId());
             }
         }
         if ($desiredOccupations && count($desiredOccupations) > 0) {
             foreach ($desiredOccupations as $k => $desiredOccupation) {
                 $desiredOccupation->skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $desiredOccupation->getOccupation()]));
+                array_push($desiredOccupationsInput, $desiredOccupation->getOccupation()->getId());
             }
         }
         if ($previousOccupations && count($previousOccupations) > 0) {
             foreach ($previousOccupations as $k => $previousOccupation) {
                 $previousOccupation->skills = new ArrayCollection($occupationSkillRepository->findBy(['occupation' => $previousOccupation->getOccupation()]));
+                array_push($previousOccupationsInput, $previousOccupation->getOccupation()->getId());
             }
         }
 
@@ -219,6 +226,9 @@ class HomeController extends AbstractController
                 'currentOccupations' => $currentOccupations,
                 'desiredOccupations' => $desiredOccupations,
                 'previousOccupations' => $previousOccupations,
+                'currentOccupationsInput' => $currentOccupationsInput,
+                'desiredOccupationsInput' => $desiredOccupationsInput,
+                'previousOccupationsInput' => $previousOccupationsInput,
                 'form' => $form->createView(),
                 'password_form' => $passwordForm->createView(),
                 'related_skills' => $skillRepository->getByOccupationAndTraining($user),

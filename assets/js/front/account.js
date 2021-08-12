@@ -38,6 +38,16 @@ function renderDate(date, format = 'DD MMMM YYYY to HH:mm') {
     return oDate.locale('en').format(format);
 }
 
+
+Object.size = function(obj) {
+    var size = 0,
+      key;
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+  };
+
 class Account { 
     instanceProperty = "Account";
     boundFunction = () => {
@@ -57,17 +67,20 @@ class Account {
                 </a>
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
-                <a href="" class="jobs-linked mr-2">
+                <a href="#" class="detail mr-2" data-toggle="tooltip" title="Number of associated skills - click for more details" 
+                        data-name="${occupation.name}" 
+                        data-description="${occupation.description}" 
+                        data-id="${occupation.id}">
                     <span class="badge badge-success">${occupation.skills ? occupation.skills.length : 0}</span>
                 </a>
-                <a href="" class="text-danger item rmv" title="Remove this job" 
+                <a href="#" class="text-danger item rmv" data-toggle="tooltip" title="Remove this job" 
                         data-name="${occupation.name}" 
                         data-type="${occupation.type}" 
                         data-id="${occupation.id}">
                     <i class="fas fa-trash-alt text-danger"></i>
                 </a>
                 ${occupation.type == 'desired' ? 
-                    `<!--<a href="#" class="search ml-2" title="Search for training required for this job">
+                    `<!--<a href="#" class="search ml-2" data-toggle="tooltip" title="Search for training required for this job">
                         <i class="fas fa-search-plus text-primary"></i>
                     </a>-->` : '' }
             </div>
@@ -81,13 +94,13 @@ class Account {
                 <span>${training.name}</span>
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
-                <a href="" class="link mr-2" title="Skills linked to this training">
+                <a href="" class="link mr-2" data-toggle="tooltip" title="Skills linked to this training">
                     <i class="fas fa-search text-primary"></i>
                 </a>
-                <a href="" class="text-danger item rmv mr-2" title="Remove this training" data-name="${training.name}" data-id="${training.id}" >
+                <a href="" class="text-danger item rmv mr-2" data-toggle="tooltip" title="Remove this training" data-name="${training.name}" data-id="${training.id}" >
                     <i class="fas fa-unlink text-danger"></i>
                 </a>
-                <a href="" class="text-success feedback" title="Provide feedback">
+                <a href="" class="text-success feedback" data-toggle="tooltip" title="Provide feedback">
                     <i class="fas fa-plus text-primary"></i>
                 </a>
             </div>
@@ -108,7 +121,7 @@ class Account {
                         </a>
                     </div>
                     <div class="d-inline-flex align-items-center justify-content-end">
-                        <a href="" class="text-danger rmv item" title="Remove this skill" data-name="${skill.name}" data-id="${skill.id}">
+                        <a href="" class="text-danger rmv item" data-toggle="tooltip" title="Remove this skill" data-name="${skill.name}" data-id="${skill.id}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -364,6 +377,9 @@ class Account {
             let jobDescription = inputAutocomplete.attr('data-description');
             let name = inputAutocomplete.val();
             let jobsList = {};
+            jobsList.currentOccupations = [];
+            jobsList.previousOccupations = [];
+            jobsList.desiredOccupations = [];
 
             if (inputJobToAdd && inputJobToAdd.val()) {
                 let jobIdToAdd = inputJobToAdd.val();
@@ -384,7 +400,7 @@ class Account {
                 
                 if (div.hasClass('add-current-job')) {
                     if ('currentOccupations' in jobsList) {
-                        if (jobsList.currentOccupations.length == 0) {
+                        if (Object.size(jobsList.currentOccupations) == 0) {
                             jobsList.currentOccupations = [jobIdToAdd];
                         } else { 
                             for (let k in jobsList.currentOccupations) {
@@ -399,7 +415,7 @@ class Account {
                 
                 if (div.hasClass('add-previous-job')) {
                     if ('previousOccupations' in jobsList) {
-                        if (jobsList.previousOccupations.length == 0) {
+                        if (Object.size(jobsList.previousOccupations) == 0) {
                             jobsList.previousOccupations = [jobIdToAdd];
                         } else {
                             for (let k in jobsList.previousOccupations) {
@@ -414,7 +430,7 @@ class Account {
                 
                 if (div.hasClass('add-desired-job')) {
                     if ('desiredOccupations' in jobsList) {
-                        if (jobsList.desiredOccupations.length == 0) {
+                        if (Object.size(jobsList.desiredOccupations) == 0) {
                             jobsList.desiredOccupations = [jobIdToAdd];
                         } else {
                             for (let k in jobsList.desiredOccupations) {
@@ -442,6 +458,8 @@ class Account {
                                 let li = _this.tplJob(occupation);
                                 $(ulJobs).append(li);
                             }
+
+                            $('[data-toggle="tooltip"]').tooltip();
                         },
                         error : function(resultat, statut, erreur){},
                         complete : function(resultat, statut, erreur){}
@@ -460,6 +478,7 @@ class Account {
 
         $('body').on('click', '.list-job .item.rmv', function(e) {
             e.preventDefault();
+            $('[data-toggle="tooltip"]').tooltip('hide');
 
             let occupation = {};
             let inputJobs = $('body').find('#jobs[type="hidden"]');
@@ -551,6 +570,7 @@ class Account {
 
         $('body').on('click', '#content-training .list-trainings .item.rmv', function(e) {
             e.preventDefault();
+            $('[data-toggle="tooltip"]').tooltip('hide');
 
             let inputTrainings = $('body').find('#trainings[type="hidden"]');
             let id = $(this).attr('data-id');
@@ -601,10 +621,10 @@ class Account {
                 
                 let occupations = JSON.parse(inputOccupation.val());
                 let url = `/api/user_occupation`;
-                
+
                 $.each(occupations, function (k, occupation) {
-                    if (!occupation || occupation.length == 0) {
-                        occupations[k] = [null]
+                    if (!occupation || Object.size(occupation) == 0) {
+                        occupations[k] = [null];
                     }
                 });
 
@@ -741,6 +761,8 @@ class Account {
                     });
                     let li = _this.tplSkill(skill);
                     $(ul).append(li);
+
+                    $('[data-toggle="tooltip"]').tooltip();
                 }
             }
         });
@@ -748,16 +770,14 @@ class Account {
         // Remove skills
         $('body').on('click', '#content-skills .rmv.item', function(e) {
             e.preventDefault();
+            $('[data-toggle="tooltip"]').tooltip('hide');
 
             let status = true;
             let skillId = $(this).attr('data-id');
             let card = $(this).closest('.card');
             let div = $(this).closest('.card').find('.card-header > div > div:last-child');
-            let links = `<a href="#" class="more mr-2" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fas fa-question-circle text-primary"></i>
-                        </a>
-                        <a href="" class="text-success add" title="Remove this skill">
-                        <i class="fas fa-plus text-primary"></i>
+            let links = `<a href="#" data-toggle="tooltip" class="text-success add" title="Add this skill back into the list above">
+                            <i class="fas fa-plus text-primary"></i>
                         </a>`;
 
             _this.removeSkill(skillId, 'associatedSkills');
@@ -770,6 +790,7 @@ class Account {
                 $('<div class="card">' + html + '</div>').prependTo($('#list-previously_unselected'));
             card.remove();
 
+            $('[data-toggle="tooltip"]').tooltip();
         });
 
         // Sauvegarde skills

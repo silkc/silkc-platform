@@ -56,16 +56,35 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             box-sizing: border-box;
         }
 
-        .row {
-            margin-bottom: 20px;
-        }
-
         #map {
             display: none !important;
         }
 
         .slider {
             width: 100%;
+        }
+
+        .main-title {
+            display: block;
+            text-transform: uppercase;
+            margin: 0 0 8px;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .grp {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #ddd;
+            padding: 0 15px 25px;
+        }
+
+        .grp-last {
+            border: 0;
+            padding: 0 15px 0;
+        }
+
+        #searchmap .leaflet-control-geocoder.leaflet-bar {
+            margin: 0;
         }
     }
 

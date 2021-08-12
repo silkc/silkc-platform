@@ -18,6 +18,8 @@ label:
     price: Price
     start_at: Start Date
     end_at: End Date
+    start: Start
+    end: End
     training_info_url: Training info URL
     url: URL
     online: Online
@@ -245,6 +247,16 @@ front_last_searches_label: Last searches
 see_details_tooltip: See details
 delete_search_tooltip: Delete search
 front_account_work_skills_tooltip: Number of associated skills - click for more details
+
+tooltip:
+    remove_this_skill: Remove this skill
+    add_this_skill_back_into_the_list_above: Add this skill back into the list above
+    remove_this_job: Remove this job
+
+
+info_search_result: "Info: We come up with the training suggestions below based on the information you provided in profile (experience, training, skills, age, location) and the experiences
+                    of other successful peaople in similar sircumstances. Our system evolves continuously when new people search for training and report their own experiences.
+                    This is why it is important taht you provide us with some feedback about past training or work experiences. Your experience may help others find their ideal job!"
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.

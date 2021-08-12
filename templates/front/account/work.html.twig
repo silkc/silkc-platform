@@ -45,7 +45,7 @@
 							>
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" title="Remove this job" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="currentOccupations">
+							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="currentOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
 						</div>
@@ -91,10 +91,15 @@
 							</a>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="#" class="detail mr-2" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
+							<a href="#" class="detail mr-2" 
+                                data-name="{{ occupation.preferredLabel }}" 
+                                data-description="{{ occupation.description }}" 
+                                data-id="{{ occupation.id }}"
+                                data-toggle="tooltip"
+								title="{{ 'front_account_work_skills_tooltip'|trans }}">
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" title="Remove this job" data-name="{{ occupation.preferredLabel }}" data-type="previousOccupations" data-id="{{ occupation.id }}">
+							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ occupation.preferredLabel }}" data-type="previousOccupations" data-id="{{ occupation.id }}">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
 						</div>
@@ -142,9 +147,11 @@
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
 							<a href="#" class="detail mr-2" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
-								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
+								<span class="badge badge-success"
+                                data-toggle="tooltip"
+								title="{{ 'front_account_work_skills_tooltip'|trans }}">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" title="Remove this job" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
+							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
 							<!--<a href="" class="search" title="Search for training required for this job">
@@ -159,7 +166,7 @@
 </fieldset>
 {# Desired job #}
 
-<input type="hidden" name="jobs" id="jobs" value='{"currentOccupations": {{ currentOccupations|json_encode() }},"previousOccupations":{{ previousOccupations|json_encode() }},"desiredOccupations":{{ desiredOccupations|json_encode() }}}'/>
+<input type="hidden" name="jobs" id="jobs" value='{"currentOccupations": {{ currentOccupationsInput|json_encode() }},"previousOccupations":{{ previousOccupationsInput|json_encode() }},"desiredOccupations":{{ desiredOccupationsInput|json_encode() }}}'/>
 
 <div class="form-group button-group text-right">
 	<button type="submit" class="btn btn-primary">{{ 'label.save'|trans }}</button>
