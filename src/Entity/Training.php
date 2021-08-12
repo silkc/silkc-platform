@@ -36,6 +36,12 @@ class Training
     ];
 
     /**
+     * Constante de conversion des degrés
+     * For conversion: 69.172 mi/deg or 111.325 km/deg'
+     */
+    public const SEARCH_DEG_CONVERSION = 111.325;
+
+    /**
      * Coéfficient de pondération pour la recherche de formation via formulaire
      * par correspondance occupation-training
      */

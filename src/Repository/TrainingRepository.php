@@ -39,8 +39,9 @@ class TrainingRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMappingBuilder($entityManager);
         $rsm->addRootEntityFromClassMetadata('App\Entity\Training', 't');
-        /*$rsm->addFieldResult('t', 'score', 'score');
-        $rsm->addScalarResult('knowledge_coeff', 'knowledge_coeff');
+        //$rsm->addFieldResult('t', 'score', 'score');
+        $rsm->addScalarResult('distance', 'distance');
+        /*$rsm->addScalarResult('knowledge_coeff', 'knowledge_coeff');
         $rsm->addScalarResult('knowledge_optional_coeff', 'knowledge_optional_coeff');
         $rsm->addScalarResult('skill_coeff', 'skill_coeff');
         $rsm->addScalarResult('skill_optional_coeff', 'skill_optional_coeff');
@@ -52,6 +53,8 @@ class TrainingRepository extends ServiceEntityRepository
         $rsm->addScalarResult('not_acquired_skill_coefficient', 'not_acquired_skill_coefficient');*/
 
         $filter = '';
+        $select = '';
+        $having = '';
         /*?bool $isOnline = null,
         ?bool $isOnlineMonitored = null,
         ?bool $isPresential = null,
@@ -61,6 +64,32 @@ class TrainingRepository extends ServiceEntityRepository
         ?float $latitude = null,
         ?float $longitude = null*/
         if ($params && is_array($params)) {
+            // Recherche par ville
+            if (
+                array_key_exists('distance', $params) &&
+                array_key_exists('location', $params)
+            ) {
+                $select = "CASE
+                    WHEN t.latitude IS NULL AND t.longitude IS NULL THEN NULL 
+                    ELSE 
+                    (
+                        2 * 
+                        ASIN(
+                            (
+                                SQRT(
+                                    POW(COS(((PI()/180) * 49.18687424193316)) - COS(((PI()/180) * t.latitude)) * COS((PI()/180) * (-0.3658107651082919 - t.longitude)), 2) +
+                                    POW(COS(((PI()/180) * t.latitude)) * SIN((PI()/180) * (-0.3658107651082919 - t.longitude)), 2) +
+                                    POW(SIN(((PI()/180) * 49.18687424193316)) - SIN(((PI()/180) * t.latitude)), 2)    
+                                )
+                            ) / 2
+                        ) / 
+                        (PI()/180) *
+                        ".Training::SEARCH_DEG_CONVERSION."
+                    )
+                END AS distance,";
+                $having = " AND distance < ".intval($params['distance']);
+            }
+
             $filterParams = [];
             if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']))
                 $filterParams[] = "t.is_online = " . intval($params['isOnline']);
@@ -81,7 +110,8 @@ class TrainingRepository extends ServiceEntityRepository
 
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT 
-                t.*,
+                t.*,  
+                $select 
                 IFNULL(sq1.weight, 0) AS skill_weight,
                 IFNULL(sq1.maxWeight, 0) AS max_skill_weight,
                 IFNULL(sq2.trainingCompletion, 0) AS training_completion,
@@ -171,6 +201,7 @@ class TrainingRepository extends ServiceEntityRepository
             $filter
             GROUP BY t.id
             HAVING score IS NOT NULL AND score > 0
+            $having
             ORDER BY score DESC
             ", $rsm);
         $query->setParameter('occupationId', $occupation->getId());
