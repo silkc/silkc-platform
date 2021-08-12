@@ -67,6 +67,16 @@ class HomeController extends AbstractController
         $trainings = []; // Listes des formations
         $searchParams = []; // Parametres de recherche renvoyés à la vue
         $user = $this->getUser();
+        dd($request->request->all());
+        $advanceSearchParams = [
+            /*'isOnline' => true,
+            'isOnlineMonitored' => true,
+            'isPresential' => true,
+            'minPrice' => 10,
+            'maxPrice' => 400.54,*/
+            'distance' => 200,
+            'location' => ['latitude' => 49.18687424193316, 'longitude' => -0.3658107651082919],
+        ];
 
         if ($type_search) {
             $search = new UserSearch();
@@ -83,16 +93,8 @@ class HomeController extends AbstractController
                             }
                             $searchParams['name'] = $occupation->getPreferredLabel();
                             $searchParams['id'] = $occupation->getId();
-                            $params = [
-                                /*'isOnline' => true,
-                                'isOnlineMonitored' => true,
-                                'isPresential' => true,
-                                'minPrice' => 10,
-                                'maxPrice' => 400.54,*/
-                                'distance' => 200,
-                                'location' => ['latitude' => 49.18687424193316, 'longitude' => -0.3658107651082919],
-                            ];
-                            $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $params);
+
+                            $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $advanceSearchParams);
                             dd($trainings);
                             $search->setOccupation($occupation);
                             $search->setCountResults(count($trainings));
@@ -133,7 +135,8 @@ class HomeController extends AbstractController
                 'trainings' => $trainings,
                 'search' => $searchParams,
                 'searches' => $searches,
-                'user' => $user
+                'user' => $user,
+                'requestParams' => $request->request->all()
             ]
         );
     }

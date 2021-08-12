@@ -40,7 +40,7 @@ class TrainingRepository extends ServiceEntityRepository
         $rsm = new ResultSetMappingBuilder($entityManager);
         $rsm->addRootEntityFromClassMetadata('App\Entity\Training', 't');
         //$rsm->addFieldResult('t', 'score', 'score');
-        $rsm->addScalarResult('distance', 'distance');
+        //$rsm->addScalarResult('distance', 'distance');
         /*$rsm->addScalarResult('knowledge_coeff', 'knowledge_coeff');
         $rsm->addScalarResult('knowledge_optional_coeff', 'knowledge_optional_coeff');
         $rsm->addScalarResult('skill_coeff', 'skill_coeff');
