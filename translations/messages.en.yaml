@@ -71,7 +71,7 @@ nav:
     skills: Skills
     tasks: Tasks
     users: Users
-    search_page: Search page
+    search_page: Go back to search page
 
 notification:
     label:
@@ -241,6 +241,10 @@ to: to
 from: From 
 occupation_type_search: Occupation type search
 skill_type_search: Skill type search
+front_last_searches_label: Last searches
+see_details_tooltip: See details
+delete_search_tooltip: Delete search
+front_account_work_skills_tooltip: Number of associated skills - click for more details
 
 flash:
     your_account_is_validated: Your account is now validated, thank you.

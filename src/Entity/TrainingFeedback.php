@@ -7,6 +7,8 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=TrainingFeedbackRepository::class)
@@ -33,6 +35,7 @@ class TrainingFeedback
      * @ORM\ManyToOne(targetEntity=Training::class, inversedBy="trainingFeedback")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"training_feedback:read", "training_feedback:write"})
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      */
     private $training;
 

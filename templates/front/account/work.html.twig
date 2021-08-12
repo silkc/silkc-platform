@@ -34,7 +34,15 @@
 							</a>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="#" class="detail mr-2" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
+							<a
+								href="#"
+								class="detail mr-2"
+								data-name="{{ occupation.preferredLabel }}"
+								data-description="{{ occupation.description }}"
+								data-id="{{ occupation.id }}"
+								data-toggle="tooltip"
+								title="{{ 'front_account_work_skills_tooltip'|trans }}"
+							>
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
 							<a href="#" class="text-danger item rmv" title="Remove this job" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="currentOccupations">

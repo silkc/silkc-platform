@@ -1120,9 +1120,20 @@ class Account {
                 url: url,
                 success: function (data, textStatus, jqXHR) {
                     if (data) {
-
                         let requireSkillsHTML = '';
                         let acquireSkillsHTML = '';
+
+                        // Nom institution
+                        let institution_name = 'N/A';
+                        if (data.user != undefined && data.user != '') {
+                            if (data.user.username != undefined && data.user.username != '')
+                                institution_name = data.user.username;
+                            else if (
+                                data.user.firstname != undefined && data.user.firstname != '' &&
+                                data.user.lastname != undefined && data.user.lastname != ''
+                            )
+                                institution_name = data.user.firstname + ' ' + data.user.lastname;
+                        }
 
                         if (data.trainingSkills && data.trainingSkills.length > 0 ) {
                             for (let k in data.trainingSkills) {
@@ -1144,11 +1155,13 @@ class Account {
                             }
                         }
 
-                        let location = data.location.replace(/&/g, "&amp;")
-                            .replace(/</g, "&lt;")
-                            .replace(/>/g, "&gt;")
-                            .replace(/"/g, "&quot;")
-                            .replace(/'/g, "&#039;");
+                        let location = (data.location != undefined && data.location != null && data.location != '') ?
+                            data.location.replace(/&/g, "&amp;")
+                                .replace(/</g, "&lt;")
+                                .replace(/>/g, "&gt;")
+                                .replace(/"/g, "&quot;")
+                                .replace(/'/g, "&#039;") :
+                            'N/A';
 
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
@@ -1159,6 +1172,15 @@ class Account {
 										</div>
 										<div class="col-lg-8">
 											<span>${data.name ? data.name : 'N/A'}</span>
+										</div>
+									</div>
+									
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Institution name</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${institution_name}</span>
 										</div>
 									</div>
 
@@ -1243,13 +1265,14 @@ class Account {
 
             let _this = this;
             $(_this).attr('disabled', true);
+            $(_this).tooltip('hide');
 
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
             let user_id = $(this).attr('data-user-id');
             let name = $(this).attr('data-name');
             let baseUrl = '/apip/training_feedbacks';
-            let params = $.param({'id': id, 'formats': 'json'});
+            let params = $.param({'training': id, 'formats': 'json'});
             let url = `${baseUrl}?${params}`;
 
             let formFeedback = `<div class="form-feedback">
@@ -1257,7 +1280,10 @@ class Account {
                                     <textarea class="form-control comment"></textarea>
                                 </div>`;
 
-            let buttonSubmit = `<button type="button" class="btn btn-primary btn-submit-feedback" data-training-id="${id}" data-user-id="${user_id}">Save</button>`;
+            let buttonSubmit = `
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-submit-feedback" data-training-id="${id}" data-user-id="${user_id}">Save</button>
+            `;
 
             $.ajax({
                 type: "GET",
@@ -1315,8 +1341,8 @@ class Account {
                         }
                     } else {
                         $('<p class="not-ratings">No feedback on this training</p>').appendTo($modal.find('.modal-body'));
-                        $(formFeedback).appendTo($modal.find('.modal-body'));
-                        $(buttonSubmit).appendTo($modal.find('.modal-footer'));
+                        $modal.find('.modal-body').html($(formFeedback));
+                        $modal.find('.modal-footer').html($(buttonSubmit));
                         $('#common-modal').modal('show');
                         $(_this).removeAttr('disabled');
                             

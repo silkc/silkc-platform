@@ -4,9 +4,10 @@
 	<div class="mb-3">
 		<div class="row">
 			<div class="col-6 col-lg-9">
-				<div id="history-search" style="display: {{ user.isSearchesKept == 1 ? '' : 'none' }};">
+				<div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
 					{% if searches is defined and searches is iterable and searches|length > 0 %}
-						<p class="m0">Dernières recherches :
+						<p class="m0">
+							{{ 'front_last_searches_label'|trans }} :
 							{% for s in searches %}
 								<a class="btn btn-sm btn-secondary" href="{{ path('app_search_results', (s.occupation) ? {'type': 'occupation', 'id': s.occupation.id } : {'type': 'skill', 'id': s.skill.id}) }}">
 									{{ (s.occupation) ? s.occupation.preferredLabel : s.skill.preferredLabel }}
@@ -18,10 +19,12 @@
 				</div>
 			</div>
 			<div class="col-6 col-lg-3 text-right">
+				{% if user is defined and user is not null %}
 				<div class="custom-control custom-checkbox">
 					<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
 					<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

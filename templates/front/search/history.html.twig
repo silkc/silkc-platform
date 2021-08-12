@@ -52,10 +52,10 @@
 							<td>{{ search.countResults }}</td>
 							<td>{{ search.countSearches }}</td>
 							<td>
-								<a href="{{ path('app_search_results', { 'type': type, 'id': item.id }) }}" class="btn btn-primary">
+								<a href="{{ path('app_search_results', { 'type': type, 'id': item.id }) }}" class="btn btn-primary" data-toggle="tooltip" title="{{ 'see_details_tooltip'|trans }}">
 									<i class="fas fa-search"></i>
 								</a>
-								<button data-type="{{ type }}" data-id="{{ item.id }}" class="btn btn-danger delete-search-history">
+								<button data-type="{{ type }}" data-id="{{ item.id }}" class="btn btn-danger delete-search-history" data-toggle="tooltip" title="{{ 'delete_search_tooltip'|trans }}">
 									<i class="fas fa-times"></i>
 								</button>
 							</td>

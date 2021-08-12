@@ -36,6 +36,7 @@ security:
 
     access_control:
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/home$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/signin, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }

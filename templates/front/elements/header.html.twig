@@ -1,7 +1,7 @@
 <header id="main-header">
     <div class="container p-3">
         <div class="justify-content-left">
-            <a href="{{ path('app_home') }}">
+            <a href="{{ path('app_home_root') }}">
                 <img src="{{asset('build/images/logo.png')}}" alt="Logo" />
             </a>
             <span class="intro">
@@ -22,7 +22,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
 
-                        <a class="dropdown-item" href="{{ path('app_home') }}"><i class="fas fa-search"></i><span>{{ 'header.full_search_page'|trans }}</span></a>
+                        <a class="dropdown-item" href="{{ path('app_home_root') }}"><i class="fas fa-search"></i><span>{{ 'header.full_search_page'|trans }}</span></a>
                         <a class="dropdown-item" href="{{ path('app_search_history') }}"><i class="fas fa-history"></i><span>{{ 'header.search_history'|trans }}</span></a>
                         {% if app.user is defined and app.user is not null and is_granted('ROLE_ADMIN') %}
                             <a class="dropdown-item" href="{{ path('admin_home') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
