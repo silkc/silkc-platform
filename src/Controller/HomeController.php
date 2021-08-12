@@ -68,15 +68,8 @@ class HomeController extends AbstractController
         $searchParams = []; // Parametres de recherche renvoyés à la vue
         $user = $this->getUser();
         //dd($request->request->all());
-        $advanceSearchParams = [
-            /*'isOnline' => true,
-            'isOnlineMonitored' => true,
-            'isPresential' => true,
-            'minPrice' => 10,
-            'maxPrice' => 400.54,*/
-            'distance' => 200,
-            'location' => ['latitude' => 49.18687424193316, 'longitude' => -0.3658107651082919],
-        ];
+        $advanceSearchParams = $this->_get_advance_search_params($request);
+        //dd($advanceSearchParams);
 
         if ($type_search) {
             $search = new UserSearch();
@@ -95,7 +88,7 @@ class HomeController extends AbstractController
                             $searchParams['id'] = $occupation->getId();
 
                             $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $advanceSearchParams);
-                            dd($trainings);
+                            //dd($trainings);
                             $search->setOccupation($occupation);
                             $search->setCountResults(count($trainings));
                         }
@@ -139,6 +132,45 @@ class HomeController extends AbstractController
                 'requestParams' => $request->request->all()
             ]
         );
+    }
+
+    protected function _get_advance_search_params(Request $request)
+    {
+        $params = [];
+        $rp = $request->request->all();
+
+        if (
+            array_key_exists('distance', $rp) && !empty($rp['distance']) && is_numeric($rp['distance']) &&
+            array_key_exists('city', $rp) && !empty($rp['city']) && preg_match('#^\{"lat":([\d.]+),"lng":([\d.]+)}$#', $rp['city'], $matches)
+        ) {
+            $params['distance'] = intval($rp['distance']);
+            $params['location'] = ['latitude' => $matches[1], 'longitude' => $matches[2]];
+        }
+
+        if (
+            array_key_exists('minPrice', $rp) && !empty($rp['minPrice']) && is_numeric($rp['minPrice']) &&
+            array_key_exists('maxPrice', $rp) && !empty($rp['maxPrice']) && is_numeric($rp['maxPrice'])
+        ) {
+            $params['minPrice'] = $rp['minPrice'];
+            $params['maxPrice'] = $rp['maxPrice'];
+        }
+
+        if (array_key_exists('isOnline', $rp) && !empty($rp['isOnline']))
+            $params['isOnline'] = (bool) $rp['isOnline'];
+
+        if (array_key_exists('isOnlineMonitored', $rp) && !empty($rp['isOnlineMonitored']))
+            $params['isOnlineMonitored'] = (bool) $rp['isOnlineMonitored'];
+
+        if (array_key_exists('isPresential', $rp) && !empty($rp['isPresential']))
+            $params['isPresential'] = (bool) $rp['isPresential'];
+
+        if (array_key_exists('excludeTraining', $rp) && !empty($rp['excludeTraining']))
+            $params['excludeWithoutDescription'] = (bool) $rp['excludeTraining'];
+
+        if (array_key_exists('specifiedDuration', $rp) && !empty($rp['specifiedDuration']))
+            $params['excludeWithoutDuration'] = (bool) $rp['specifiedDuration'];
+
+        return $params;
     }
 
     /**
