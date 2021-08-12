@@ -350,7 +350,19 @@ class SearchResults {
         var map = L.map('map').setView([0, 0], 2);
         let geocoder = L.Control.Geocoder.nominatim();
         let inputHidden = document.getElementById('city');
-        
+
+        if (inputHidden) {
+            let coords = inputHidden.value;
+            if (coords) {
+                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                    coords = JSON.parse(coords);
+                }
+            }
+        }
+
+
         let control = L.Control.geocoder({
             collapsed: false,
             placeholder: 'Search here...',
@@ -363,11 +375,14 @@ class SearchResults {
                 let name = e.geocode.name;
                 
                 let newCoords = {
+                    "city": name,
                     "lat": lat,
                     "lng": lng
                 };
                 newCoords = JSON.stringify(newCoords);
                 
+                console.log('newCoords', newCoords)
+
                 let leafletControlGeocoderForm = document.querySelector('#search-results .leaflet-control-geocoder-form input');
                 leafletControlGeocoderForm.value = name;
 

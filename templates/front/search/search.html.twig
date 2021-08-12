@@ -57,17 +57,17 @@
                         <div class="form-group flex-column align-items-start">
                             <div id="searchmap"></div>
                             <div id="map"></div>
-                            <input type="hidden" id="city" name="city">
+                            <input type="hidden" id="city" name="city" value="{{ requestParams.city is defined ? requestParams.city : '' }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group flex-column align-items-start">
                             <div class="d-flex flex-row">
                                 <label for="formControlRangeDistance" class="mr-1">{{ 'label.distance'|trans }}</label>
-                                <span id="distanceVal">0km</span>
+                                <span id="distanceVal">{{ requestParams.distance is defined ? requestParams.distance : 0 }}km</span>
                             </div>
-                            <input id="formControlRangeDistance" data-slider-id='formControlRangeDistance' type="text" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="0"/>
-                            <input type="hidden" id="distance" name="distance" value="0">
+                            <input id="formControlRangeDistance" data-slider-id='formControlRangeDistance' type="text" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="{{ requestParams.distance is defined ? requestParams.distance : 0 }}"/>
+                            <input type="hidden" id="distance" name="distance" value="{{ requestParams.distance is defined ? requestParams.distance : 0 }}">
                         </div>
                     </div>
                 </div>
@@ -80,12 +80,12 @@
                             <div class="w-100 d-flex flex-column">
                                 <div class="d-flex flex-row main-title">
                                     <label for="formControlRangePrice" class="mr-1">{{ 'label.price'|trans }}</label>
-                                    <span id="priceValMin"><span>0</span><span>€</span></span>
+                                    <span id="priceValMin"><span>{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }}</span><span>€</span></span>
                                     <span class="mr-1 ml-1"> - </span>
-                                    <span id="priceValMax"><span>5000</span><span>€</span></span>
+                                    <span id="priceValMax"><span>{{ requestParams.maxPrice is defined ? requestParams.maxPrice : 5000 }}</span><span>€</span></span>
                                 </div>
                                 <div class="d-flex flex-row align-items-center flex-nowrap">
-                                    <input id="formControlRangePrice" type="text" class="form-control" value="" data-slider-min="0" data-slider-max="5000" data-slider-step="5" data-slider-value="[0,5000]"/>
+                                    <input id="formControlRangePrice" type="text" class="form-control" value="" data-slider-min="0" data-slider-max="5000" data-slider-step="5" data-slider-value="[{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }},{{ requestParams.maxPrice is defined ? requestParams.maxPrice : 5000 }}]"/>
                                     <div class="input-group-append ml-4">
                                         <select id="devise" class="form-control custom-select">
                                             <option value="€">Euro</option>
@@ -94,8 +94,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="minPrice" name="minPrice" value="0">
-                            <input type="hidden" id="maxPrice" name="maxPrice" value="5000">
+                            <input type="hidden" id="minPrice" name="minPrice" value="{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }}">
+                            <input type="hidden" id="maxPrice" name="maxPrice" value="{{ requestParams.maxPrice is defined ? requestParams.maxPrice : 5000 }}">
                         </div>
                     </div>
                 </div>
@@ -108,12 +108,12 @@
                             <div class="d-flex flex-row">
                                 <div class="form-group flex-column align-items-start mr-2">
                                     <label for="startAt">{{ 'label.start'|trans }}</label>
-                                    <input type="date" id="startAt" class="form-control">
+                                    <input type="date" id="startAt" class="form-control" name="startAt" value="{{ requestParams.startAt is defined ? requestParams.startAt : '' }}">
                                 </div>
 
                                 <div class="form-group flex-column align-items-start">
-                                    <label for="startEnd">{{ 'label.end'|trans }}</label>
-                                    <input type="date" id="startEnd" class="form-control">
+                                    <label for="endAt">{{ 'label.end'|trans }}</label>
+                                    <input type="date" id="endAt" class="form-control" name="endAt" value="{{ requestParams.endAt is defined ? requestParams.endAt : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                     <div class="col-2">
                         <div class="form-group">
                             <div class="form-check">        
-                                <input type="checkbox" name="isOnline" id="isOnline" class="form-check-input" value="1">
+                                <input type="checkbox" name="isOnline" id="isOnline" class="form-check-input" {{ requestParams.isOnline is defined ? 'checked="cheked"' : '' }}>
                                 <label class="form-check-label" for="isOnline">{{ 'label.online'|trans }}</label>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                     <div class="col-2">
                         <div class="form-group">
                             <div class="form-check">        
-                                <input type="checkbox" name="isOnlineMonitored" id="isOnlineMonitored" class="form-check-input" value="1">
+                                <input type="checkbox" name="isOnlineMonitored" id="isOnlineMonitored" class="form-check-input" {{ requestParams.isOnlineMonitored is defined ? 'checked="cheked"' : '' }}>
                                 <label class="form-check-label" for="isOnlineMonitored">{{ 'label.is_online_monitored'|trans }}</label>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                     <div class="col-2">
                         <div class="form-group">
                             <div class="form-check">        
-                                <input type="checkbox" name="isPresential" id="isPresential" class="form-check-input" value="1">
+                                <input type="checkbox" name="isPresential" id="isPresential" class="form-check-input" {{ requestParams.isPresential is defined ? 'checked="cheked"' : '' }}>
                                 <label class="form-check-label" for="isPresential">{{ 'label.is_presential'|trans }}</label>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-check">        
-                                <input type="checkbox" name="exclude-training-without-completed-description" id="exclude-training-without-completed-description" class="form-check-input" value="1">
+                                <input type="checkbox" name="excludeTraining" id="exclude-training-without-completed-description" class="form-check-input" {{ requestParams.excludeTraining is defined ? 'checked="cheked"' : '' }}>
                                 <label class="form-check-label" for="exclude-training-without-completed-description">{{ 'label.exclude_training_without_a_completed_description'|trans }}</label>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-check">
-                                <input type="checkbox" name="without-specified-duration" id="without-specified-duration" class="form-check-input" value="1">
+                                <input type="checkbox" name="specifiedDuration" id="without-specified-duration" class="form-check-input" {{ requestParams.specifiedDuration is defined ? 'checked="cheked"' : '' }}>
                                 <label class="form-check-label" for="without-specified-duration">{{ 'label.without_specified_duration'|trans }}</label>
                             </div>
                         </div>
