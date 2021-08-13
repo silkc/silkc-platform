@@ -774,9 +774,10 @@ class Account {
 
             let status = true;
             let skillId = $(this).attr('data-id');
+            let skillName = $(this).attr('data-name');
             let card = $(this).closest('.card');
             let div = $(this).closest('.card').find('.card-header > div > div:last-child');
-            let links = `<a href="#" data-toggle="tooltip" class="text-success add" title="Add this skill back into the list above">
+            let links = `<a href="#" data-toggle="tooltip" class="text-success back-skill item" title="Add this skill back into the list above" data-name="${skillName}" data-id="${skillId}">
                             <i class="fas fa-plus text-primary"></i>
                         </a>`;
 
@@ -791,6 +792,43 @@ class Account {
             card.remove();
 
             $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        // Back skills
+        $('body').on('click', '#content-skills .back-skill.item', function(e) {
+            e.preventDefault();
+            $('[data-toggle="tooltip"]').tooltip('hide');
+
+            let that = this;
+            let skill = {};
+            let $card = $(this).closest('.card');
+            let ul = $('#list-other_skills');
+            //let inputSkillToAdd = div.find('input[type="hidden"]');
+
+            let id = $(this).attr('data-id');
+            let name = $(this).attr('data-name');
+            let description = $card.find('.card-body').text();
+
+            skill.description = description;
+            skill.id = id;
+            skill.name = name;
+
+            _this.addSkill(id, 'associatedSkills');
+            _this.removeSkill(id, 'disassociatedSkills');
+
+            if (ul) {
+                skill.k = 0;
+                ul.find('.card').each(function() {
+                    let k = $(this).attr('data-key');
+                    if (parseInt(k) > skill.k) skill.k = parseInt(k) + 1;
+                });
+                let li = _this.tplSkill(skill);
+                $(ul).append(li);
+
+                $(that).closest('.card').remove();
+
+                $('[data-toggle="tooltip"]').tooltip();
+            }
         });
 
         // Sauvegarde skills
