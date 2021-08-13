@@ -1,4 +1,4 @@
-<div id="advanced-search">
+<div id="advanced-search" class="mt-2">
 	<div>
 		<div class="grp">
 			<label class="main-title">{{ 'label.distance_from'|trans }}</label>
@@ -75,6 +75,24 @@
 							<input type="date" id="endAt" class="form-control" name="endAt" value="{{ requestParams.endAt is defined ? requestParams.endAt : '' }}">
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="grp">
+			<label class="main-title">{{ 'label.duration'|trans }}</label>
+			<div class="row">
+				<div class="col-12">
+                    <div class="input-group mb-3">
+                        <input type="text" id="duration" name="duration" placeholder="Ex: 1000.00" class="form-control">
+                        <div class="input-group-append">
+                            <select id="type-duration" class="form-control custom-select" name="typeDuration">
+                                <option value="hours" {% if requestParams.devise is defined and requestParams.devise == "hours" %} selected="selected" {% endif %}>{{ 'label.hours'|trans }}</option>
+                                <option value="days" {% if requestParams.devise is defined and requestParams.devise == "days" %} selected="selected" {% endif %}>{{ 'label.days'|trans }}</option>
+                                <option value="months" {% if requestParams.devise is defined and requestParams.devise == "months" %} selected="selected" {% endif %}>{{ 'label.months'|trans }}</option>
+                            </select>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>

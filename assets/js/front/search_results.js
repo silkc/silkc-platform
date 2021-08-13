@@ -22,6 +22,11 @@ class SearchResults {
         return this.instanceProperty;
     }
 
+    constructor() {
+        this.sliderDistance;
+        this.sliderPrice;
+      }
+
     /**
      * Selection du type de recherche (occupation/skill)
      */
@@ -256,19 +261,19 @@ class SearchResults {
 
 
     sliderSearch = () => { 
-        
-        let sliderDistance;
-        let sliderPrice;
+        let _this = this;
+        /*let sliderDistance;
+        let sliderPrice;*/
 
         // PRIX
         let initSliderPrice = function() {
-            sliderPrice = new Slider('#formControlRangePrice', {
+            _this.sliderPrice = new Slider('#formControlRangePrice', {
                 formatter: function(value) {
                     let devise = $('#devise').val();
                     return value + devise;
                 }
             });
-            sliderPrice.on("change", function(slideEvt) {
+            _this.sliderPrice.on("change", function(slideEvt) {
                 let min = slideEvt.newValue[0];
                 let max = slideEvt.newValue[1];
                 let devise = $('#devise').val();
@@ -284,22 +289,23 @@ class SearchResults {
         
         // DISTANCE
         let initSliderDistance = function() {
-            sliderDistance = new Slider('#formControlRangeDistance', {
+            _this.sliderDistance = new Slider('#formControlRangeDistance', {
                 formatter: function(value) {
                     return value + ' km';
                 }
             });
-            sliderDistance.on("change", function(obj) {
+            _this.sliderDistance.on("change", function(obj) {
                 $("#distanceVal").text(obj.newValue + 'km');
                 $("#distance").val(obj.newValue);
             });
+            _this.sliderDistance.disable();
         }
 
         $('#devise').on('change', function() {
             $("#priceValMin > span:last-child").text($(this).val());
             $("#priceValMax > span:last-child").text($(this).val());
 
-            let max = sliderPrice.element.dataset.sliderMax;
+            let max = _this.sliderPrice.element.dataset.sliderMax;
             $("#priceValMin > span:first-child").text(0);
             $("#priceValMax > span:first-child").text(max);
 
@@ -307,16 +313,13 @@ class SearchResults {
             $("#maxPrice").val(max);
 
             
-            sliderPrice.setValue([0, 5000]);
-            //sliderPrice.destroy();
-            //initSliderPrice();
+            _this.sliderPrice.setValue([0, 5000]);
         });
 
         // Clear filter
         $('body').on('click', 'button.btn-clear', function() {
-            sliderDistance.setValue(0);
-            sliderPrice.setValue([0, 5000]);
-            //sliderPrice.destroy();
+            _this.sliderDistance.setValue(0);
+            _this.sliderPrice.setValue([0, 5000]);
 
             // Distance - ville
             $("#city").val('');
@@ -325,7 +328,7 @@ class SearchResults {
             $("#distance").val(0);
             
             // Prix
-            let max = sliderPrice.element.dataset.sliderMax;
+            let max = _this.sliderPrice.element.dataset.sliderMax;
             $("#priceValMin > span:first-child").text(0);
             $("#priceValMax > span:first-child").text(max);
             
@@ -341,7 +344,7 @@ class SearchResults {
 
         // Remove tags filters
         $('body').on('click', 'button.tag-city', function() {
-            sliderDistance.setValue(0);
+            _this.sliderDistance.setValue(0);
             $("#city").val('');
             $("#inputCity").val('');
             $("#distanceVal").text('0km');
@@ -353,8 +356,8 @@ class SearchResults {
             }, 500);
         });
         $('body').on('click', 'button.tag-price', function() {
-            sliderPrice.setValue([0, 5000]);
-            let max = sliderPrice.element.dataset.sliderMax;
+            _this.sliderPrice.setValue([0, 5000]);
+            let max = _this.sliderPrice.element.dataset.sliderMax;
             $("#priceValMin > span:first-child").text(0);
             $("#priceValMax > span:first-child").text(max);
             $("#minPrice").val(0);
@@ -423,7 +426,7 @@ class SearchResults {
      * Affichage carte
      */
      runMapFilter = () => { 
-
+        let _this = this;
         var map = L.map('map').setView([0, 0], 2);
         let geocoder = L.Control.Geocoder.nominatim();
         let inputHidden = document.getElementById('city');
@@ -451,6 +454,8 @@ class SearchResults {
 
                 if (inputHidden) inputHidden.value = newCoords;
                 if (inputHiddenCity) inputHiddenCity.value = name;
+
+                _this.sliderDistance.enable();
             }
         }).addTo(map);
         
@@ -468,6 +473,16 @@ class SearchResults {
             let leafletControlGeocoderForm = document.querySelector('#search-results .leaflet-control-geocoder-form input');
             leafletControlGeocoderForm.value = inputHiddenCity.value;
         }
+
+        $('body').on('keyup', '#search-results .leaflet-control-geocoder-form input', function(e) {
+            let searchValue = $(this).val();
+            if (searchValue.length == 0) {
+                _this.sliderDistance.setValue(0);
+                $("#distanceVal").text('0km');
+                $("#distance").val(0);
+                _this.sliderDistance.disable();
+            }
+        });
     }
 
     /**

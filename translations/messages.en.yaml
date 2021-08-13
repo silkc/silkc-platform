@@ -42,6 +42,9 @@ label:
     without_specified_duration: Without specified duration
     currency: Currency
     clear: Clear
+    hours: Hours
+    days: Days
+    months: Months
 placeholder:
     training_price: 'Ex: 1000.00'
 button:
