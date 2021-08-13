@@ -57,12 +57,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
     #advanced-search {
         width: 100%;
+        max-width: 280px;
+        display: none;
+        margin-right: 15px;
+        font-size: 0.9rem;
+        margin-bottom: 30px;
 
         > div {
             width: 100%;
             border: 1px solid #ddd;
-            margin-top: 30px;
-            padding: 15px;
+            margin-top: 0.25rem;
+            padding: 15px 0;
             box-sizing: border-box;
         }
 
@@ -95,6 +100,22 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
         #searchmap .leaflet-control-geocoder.leaflet-bar {
             margin: 0;
+        }
+
+        &.active {
+            display: block;
+        }
+
+        .blc-btn {
+            padding: 0 10px 15px;
+        }
+
+        .form-check {
+            align-items: baseline;
+        }
+
+        input[type="date"] {
+            width: 100%;
         }
     }
 
@@ -154,6 +175,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
     .form-search-skill {
         display: none;
+    }
+
+    .frame-results {
+        > div {
+            &:first-child {
+                
+            }
+            &:last-child {
+                flex: 1;
+            }
+        }
     }
 
     @media (max-width: 992px) {

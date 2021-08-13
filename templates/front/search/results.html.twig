@@ -7,7 +7,8 @@
 				<div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
 					{% if searches is defined and searches is iterable and searches|length > 0 %}
 						<p class="m0">
-							{{ 'front_last_searches_label'|trans }} :
+							{{ 'front_last_searches_label'|trans }}
+							:
 							{% for s in searches %}
 								<a class="btn btn-sm btn-secondary" href="{{ path('app_search_results', (s.occupation) ? {'type': 'occupation', 'id': s.occupation.id } : {'type': 'skill', 'id': s.skill.id}) }}">
 									{{ (s.occupation) ? s.occupation.preferredLabel : s.skill.preferredLabel }}
@@ -20,178 +21,256 @@
 			</div>
 			<div class="col-6 col-lg-3 text-right">
 				{% if user is defined and user is not null %}
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
-					<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
-				</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
+						<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
+					</div>
 				{% endif %}
 			</div>
 		</div>
 	</div>
 
-    <p class="font-italic">
-        {{ 'info_search_result'|trans }}
-    </p>
+	<p class="font-italic">
+		{{ 'info_search_result'|trans }}
+	</p>
 
-	<div id="accordion">
-		{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
-			{% for training in trainings %}
-				{% set maxScore = (training.maxScore is defined and training.maxScore > 0) ? training.maxScore : 1 %}
-				{% set score = (training.score is defined and training.score > 0) ? max(1, (training.score / maxScore) * 100)|number_format : 0 %}
-				<div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
-					<div class="card-header" id="heading{{ loop.index0 }}">
-						<h5 class="d-flex justify-content-between align-items-center">
-							<button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
-								<div class="title">
-									{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}
-									({{ score }}%
-									{{ 'match'|trans  }})
-								</div>
-							</button>
-							<div class="count">
-								({{ loop.index }}
-								of
-								{{ trainings|length }}
-								training
-								{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
-									-
-									<a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>
-								{% endif %}
-								)
-							</div>
-						</h5>
-					</div>
+	<div class="d-flex flex-md-nowrap frame-results">
+		<div>
+			{% include 'front/search/filters.html.twig' %}
+		</div>
+		<div>
+			<div class="tags mb-2">
+				{% if requestParams.inputCity is defined and requestParams.inputCity is not empty %}
+					<button type="button" class="btn btn-light mb-1 tag-city">
+						{{ requestParams.inputCity}}
+						{% if requestParams.distance %}
+							{{ requestParams.distance is defined ? requestParams.distance : 0 }}km
+						{% endif %}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
 
-					<div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="heading{{ loop.index0 }}" data-parent="#accordion">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-6">
+				{% if requestParams.minPrice is defined and requestParams.maxPrice is defined 
+                    and (requestParams.minPrice != 0 or requestParams.maxPrice != 5000) %}
+					<button type="button" class="btn btn-light mb-1 tag-price">
+						{{ requestParams.minPrice }} € - {{ requestParams.maxPrice }} €
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
 
-									<div class="row mb-3">
-										<div class="col-lg-4">
-											<span class="title">{{ 'label.institution_name'|trans  }}</span>
+				{% if requestParams.startAt is defined and requestParams.startAt is not empty %}
+					<button type="button" class="btn btn-light mb-1 tag-startAt">
+						Start at
+						{{ requestParams.startAt }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.endAt is defined and requestParams.endAt is not empty %}
+					<button type="button" class="btn btn-light mb-1 tag-endAt">
+						End at
+						{{ requestParams.endAt }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.isOnline is defined %}
+					<button type="button" class="btn btn-light mb-1 tag-isOnline">
+						{{ 'label.online'|trans }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.isOnlineMonitored is defined %}
+					<button type="button" class="btn btn-light mb-1 tag-isOnlineMonitored">
+						{{ 'label.is_online_monitored'|trans }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.isPresential is defined %}
+					<button type="button" class="btn btn-light mb-1 tag-isPresential">
+						{{ 'label.is_presential'|trans }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.excludeTraining is defined %}
+					<button type="button" class="btn btn-light mb-1 tag-excludeTraining">
+						{{ 'label.exclude_training_without_a_completed_description'|trans }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.specifiedDuration is defined %}
+					<button type="button" class="btn btn-light mb-1 tag-specifiedDuration">
+						{{ 'label.without_specified_duration'|trans }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+			</div>
+
+			<div id="accordion">
+				{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
+					{% for training in trainings %}
+						{% set maxScore = (training.maxScore is defined and training.maxScore > 0) ? training.maxScore : 1 %}
+						{% set score = (training.score is defined and training.score > 0) ? max(1, (training.score / maxScore) * 100)|number_format : 0 %}
+						<div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
+							<div class="card-header" id="heading{{ loop.index0 }}">
+								<h5 class="d-flex justify-content-between align-items-center">
+									<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
+										<div class="title">
+											{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}
+											({{ score }}%
+											{{ 'match'|trans  }})
 										</div>
-										<div class="col-lg-8">
-											<span>
-												{% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
-													{{ training.user.username|capitalize }}
-												{% elseif (training.user is defined and training.user.firstname is not empty) %}
-													{{ training.user.firstname ~ ' ' ~ training.user.lastname }}
+									</button>
+									<div class="count">
+										({{ loop.index }}
+										of
+										{{ trainings|length }}
+										training
+										{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+											-
+											<a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>
+										{% endif %}
+										)
+									</div>
+								</h5>
+							</div>
+
+							<div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="heading{{ loop.index0 }}" data-parent="#accordion">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+
+											<div class="row mb-3">
+												<div class="col-lg-4">
+													<span class="title">{{ 'label.institution_name'|trans  }}</span>
+												</div>
+												<div class="col-lg-8">
+													<span>
+														{% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
+															{{ training.user.username|capitalize }}
+														{% elseif (training.user is defined and training.user.firstname is not empty) %}
+															{{ training.user.firstname ~ ' ' ~ training.user.lastname }}
+														{% else %}
+															{{ 'n_a'|trans }}
+														{% endif %}
+													</span>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<div class="col-lg-4">
+													<span class="title">{{ 'label.location'|trans  }}</span>
+												</div>
+												{% if training.location is defined and training.location is not empty %}
+													<div class="col-lg-8 blc-map">
+														<span class="training_address"></span>
+														<input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
+														<div class="map"></div>
+													</div>
 												{% else %}
-													{{ 'n_a'|trans }}
+													<div class="col-lg-8">
+														<span>{{ 'n_a'|trans }}</span>
+													</div>
 												{% endif %}
-											</span>
-										</div>
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-lg-4">
-											<span class="title">{{ 'label.location'|trans  }}</span>
-										</div>
-										{% if training.location is defined and training.location is not empty %}
-											<div class="col-lg-8 blc-map">
-												<span class="training_address"></span>
-												<input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
-												<div class="map"></div>
 											</div>
-										{% else %}
-											<div class="col-lg-8">
-												<span>{{ 'n_a'|trans }}</span>
+
+											<div class="row mb-3">
+												<div class="col-lg-4">
+													<span class="title">{{ 'label.duration'|trans  }}</span>
+												</div>
+												<div class="col-lg-8">
+													<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : 'n_a'|trans }}</span>
+												</div>
 											</div>
+
+											<div class="row mb-3">
+												<div class="col-lg-4">
+													<span class="title">{{ 'label.date'|trans  }}</span>
+												</div>
+												<div class="col-lg-8">
+													<span>{{ training.startAt is defined and training.startAt is not empty ? training.startAt|date('Y/m/d') : 'n_a'|trans }}</span>
+													<span>{{ 'to'|trans }}</span>
+													<span>{{ training.endAt is defined and training.endAt is not empty ? training.endAt|date('Y/m/d') : 'n_a'|trans }}</span>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<div class="col-lg-4">
+													<span class="title">{{ 'label.description'|trans  }}</span>
+												</div>
+												<div class="col-lg-8">
+													<p class="text-justify m-0">
+														{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : 'n_a'|trans }}
+													</p>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<div class="col-lg-4">
+													<span class="title">{{ 'label.price'|trans  }}</span>
+												</div>
+												<div class="col-lg-8">
+													<span>{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : 'n_a'|trans }}</span>
+												</div>
+											</div>
+
+
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												{% if attribute(training, 'requiredSkills') is defined and training.requiredSkills is not empty and training.requiredSkills is iterable %}
+													<span class="required-skills d-block mb-3 title">{{ 'required_skills'|trans  }}</span>
+													<ul class="list-group">
+														{% for trainingSkill in training.requiredSkills %}
+															{% set skill = trainingSkill.skill %}
+															<li class="list-group-item d-flex justify-content-between align-items-center">
+																{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+											</div>
+
+											<div class="mb-3">
+												{% if attribute(training, 'toAcquireSkills') is defined and training.toAcquireSkills is not empty  and training.toAcquireSkills is iterable %}
+													<span class="required-skills d-block mb-3 title">{{ 'skills_you_can_acquire'|trans  }}</span>
+													<ul class="list-group">
+														{% for trainingSkill in training.toAcquireSkills %}
+															{% set skill = trainingSkill.skill %}
+															<li class="list-group-item d-flex justify-content-between align-items-center">
+																{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+
+									<div class="text-center">
+										{% if training.url is defined and training.url is not empty %}
+											<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
 										{% endif %}
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-lg-4">
-											<span class="title">{{ 'label.duration'|trans  }}</span>
-										</div>
-										<div class="col-lg-8">
-											<span>{{ attribute(training, 'duration') is defined and training.duration is not empty ? training.duration : 'n_a'|trans }}</span>
-										</div>
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-lg-4">
-											<span class="title">{{ 'label.date'|trans  }}</span>
-										</div>
-										<div class="col-lg-8">
-											<span>{{ training.startAt is defined and training.startAt is not empty ? training.startAt|date('Y/m/d') : 'n_a'|trans }}</span>
-											<span>{{ 'to'|trans }}</span>
-											<span>{{ training.endAt is defined and training.endAt is not empty ? training.endAt|date('Y/m/d') : 'n_a'|trans }}</span>
-										</div>
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-lg-4">
-											<span class="title">{{ 'label.description'|trans  }}</span>
-										</div>
-										<div class="col-lg-8">
-											<p class="text-justify m-0">
-												{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : 'n_a'|trans }}
-											</p>
-										</div>
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-lg-4">
-											<span class="title">{{ 'label.price'|trans  }}</span>
-										</div>
-										<div class="col-lg-8">
-											<span>{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : 'n_a'|trans }}</span>
-										</div>
-									</div>
-
-
-								</div>
-								<div class="col-md-6">
-									<div class="mb-3">
-										{% if attribute(training, 'requiredSkills') is defined and training.requiredSkills is not empty and training.requiredSkills is iterable %}
-											<span class="required-skills d-block mb-3 title">{{ 'required_skills'|trans  }}</span>
-											<ul class="list-group">
-												{% for trainingSkill in training.requiredSkills %}
-													{% set skill = trainingSkill.skill %}
-													<li class="list-group-item d-flex justify-content-between align-items-center">
-														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
-													</li>
-												{% endfor %}
-											</ul>
-										{% endif %}
-									</div>
-
-									<div class="mb-3">
-										{% if attribute(training, 'toAcquireSkills') is defined and training.toAcquireSkills is not empty  and training.toAcquireSkills is iterable %}
-											<span class="required-skills d-block mb-3 title">{{ 'skills_you_can_acquire'|trans  }}</span>
-											<ul class="list-group">
-												{% for trainingSkill in training.toAcquireSkills %}
-													{% set skill = trainingSkill.skill %}
-													<li class="list-group-item d-flex justify-content-between align-items-center">
-														{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
-													</li>
-												{% endfor %}
-											</ul>
+										{% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
+											{% if training in user.trainings %}
+												<button type="button" class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
+											{% else %}
+												<button type="button" class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
+											{% endif %}
 										{% endif %}
 									</div>
 								</div>
-							</div>
-
-							<div class="text-center">
-								{% if training.url is defined and training.url is not empty %}
-									<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
-								{% endif %}
-								{% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
-									{% if training in user.trainings %}
-										<button class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
-									{% else %}
-										<button class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
-									{% endif %}
-								{% endif %}
 							</div>
 						</div>
-					</div>
-				</div>
-			{% endfor %}
-		{% elseif trainings is defined and trainings is iterable and trainings|length == 0 %}
-			<p style="font-size: 1.2rem;">{{ 'no_result_found'|trans  }}</p>
-		{% endif %}
+					{% endfor %}
+				{% elseif trainings is defined and trainings is iterable and trainings|length == 0 %}
+					<p style="font-size: 1.2rem;">{{ 'no_result_found'|trans  }}</p>
+				{% endif %}
+			</div>
+		</div>
 	</div>
 </div>

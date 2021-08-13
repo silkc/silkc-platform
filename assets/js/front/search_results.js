@@ -339,6 +339,81 @@ class SearchResults {
             $("#advanced-search input[type=checkbox]").prop("checked", false);
         });
 
+        // Remove tags filters
+        $('body').on('click', 'button.tag-city', function() {
+            sliderDistance.setValue(0);
+            $("#city").val('');
+            $("#inputCity").val('');
+            $("#distanceVal").text('0km');
+            $("#distance").val(0);
+            $("#advanced-search .leaflet-control-geocoder-form input[type=text]").val("");
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-price', function() {
+            sliderPrice.setValue([0, 5000]);
+            let max = sliderPrice.element.dataset.sliderMax;
+            $("#priceValMin > span:first-child").text(0);
+            $("#priceValMax > span:first-child").text(max);
+            $("#minPrice").val(0);
+            $("#maxPrice").val(max);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-startAt', function() {
+            $("#advanced-search #startAt").val("");
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-endAt', function() {
+            $("#advanced-search #endAt").val("");
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-isOnline', function() {
+            $('input[type="checkbox"].isOnline').prop('checked', false);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-isOnlineMonitored', function() {
+            $('input[type="checkbox"].isOnlineMonitored').prop('checked', false);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-isPresential', function() {
+            $('input[type="checkbox"].isPresential').prop('checked', false);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-excludeTraining', function() {
+            $('input[type="checkbox"].excludeTraining').prop('checked', false);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-specifiedDuration', function() {
+            $('input[type="checkbox"].specifiedDuration').prop('checked', false);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+
         initSliderDistance(0);
         initSliderPrice();
     }
@@ -395,6 +470,16 @@ class SearchResults {
         }
     }
 
+    /**
+     * Affiche/masque filtres
+     */
+     displayFilters = () => {
+        $('body').on('click', '.btn-filters', function() {
+            let filters = $('#advanced-search');
+            filters.toggleClass('active');
+        });
+     }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
@@ -403,6 +488,7 @@ class SearchResults {
         this.runKeepSearch();
         this.sliderSearch();
         this.runMapFilter();
+        this.displayFilters();
 
         $('[data-toggle="tooltip"]').tooltip;
     }
