@@ -43,6 +43,18 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
     }
 
+    button[data-target="#advanced-search"][aria-expanded="true"]::before {
+        font-family: "Font Awesome 5 Free"; font-weight: 900;
+        content: '\f078';
+        display: inline-block;
+    }
+    
+    button[data-target="#advanced-search"][aria-expanded="false"]::before {
+        font-family: "Font Awesome 5 Free"; font-weight: 900;
+        content: '\f054';
+        display: inline-block;
+    }
+
     #advanced-search {
         width: 100%;
 
