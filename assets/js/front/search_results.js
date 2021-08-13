@@ -306,8 +306,10 @@ class SearchResults {
             $("#minPrice").val(0);
             $("#maxPrice").val(max);
 
-            sliderPrice.destroy();
-            initSliderPrice();
+            
+            sliderPrice.setValue([0, 5000]);
+            //sliderPrice.destroy();
+            //initSliderPrice();
         });
 
         // Clear filter
