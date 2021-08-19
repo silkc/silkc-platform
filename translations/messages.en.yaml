@@ -23,7 +23,7 @@ label:
     training_info_url: Training info URL
     url: URL
     online: Online
-    is_online_monitored: Monitored online
+    is_online_monitored: Tutored online
     is_presential: Face to face
     save: Save
     create: Save
@@ -39,7 +39,7 @@ label:
     city: City
     distance_from: Distance from
     exclude_training_without_a_completed_description: Exclude training without a completed description
-    without_specified_duration: Without specified duration
+    without_specified_duration: Exclude training without specified duration
     currency: Currency
     clear: Clear
     hours: Hours

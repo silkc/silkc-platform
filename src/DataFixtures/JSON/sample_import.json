@@ -24,6 +24,7 @@
       "duration": null,
       "description": null,
       "price": null,
+      "currency": "euro",
       "start_at": null,
       "end_at": null,
       "is_online": null,
