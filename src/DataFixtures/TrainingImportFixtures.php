@@ -83,14 +83,24 @@ class TrainingImportFixtures extends Fixture
                     $training->setName($trainingData->name);
                     if (property_exists($trainingData, 'location') && !empty($trainingData->location))
                         $training->setLocation($trainingData->location);
-                    if (property_exists($trainingData, 'duration') && !empty($trainingData->duration))
-                        $training->setDuration($trainingData->duration);
+                    if (property_exists($trainingData, 'longitude') && !empty($trainingData->longitude))
+                        $training->setLongitude($trainingData->longitude);
+                    if (property_exists($trainingData, 'latitude') && !empty($trainingData->latitude))
+                        $training->setLatitude($trainingData->latitude);
+                    if (property_exists($trainingData, 'duration_value') && !empty($trainingData->duration_value))
+                        $training->setDurationValue($trainingData->duration_value);
+                    if (property_exists($trainingData, 'duration_unity') && !empty($trainingData->duration_unity))
+                        $training->setDurationUnity($trainingData->duration_unity);
+                    if (property_exists($trainingData, 'duration_details') && !empty($trainingData->duration_details))
+                        $training->setDurationDetails($trainingData->duration_details);
                     if (property_exists($trainingData, 'description') && !empty($trainingData->description))
                         $training->setDescription($trainingData->description);
                     if (property_exists($trainingData, 'url') && !empty($trainingData->url))
                         $training->setUrl($trainingData->url);
                     if (property_exists($trainingData, 'price') && !empty($trainingData->price))
-                        $training->setPrice($trainingData->price);
+                        $training->setPrice(intval($trainingData->price));
+                    if (property_exists($trainingData, 'currency') && !empty($trainingData->currency))
+                        $training->setCurrency($trainingData->currency);
                     if (property_exists($trainingData, 'start_at') && !empty($trainingData->start_at)) {
                         $startAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->start_at);
                         if ($startAt && $startAt->format('Y-m-d H:i:s') === $trainingData->start_at)

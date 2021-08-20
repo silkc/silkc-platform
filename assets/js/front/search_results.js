@@ -269,19 +269,19 @@ class SearchResults {
         let initSliderPrice = function() {
             _this.sliderPrice = new Slider('#formControlRangePrice', {
                 formatter: function(value) {
-                    let devise = $('#devise').val();
-                    return value + devise;
+                    let currencyAcronym = $('#currency').find('option:selected').attr('data-acronym');
+                    return value + currencyAcronym;
                 }
             });
             _this.sliderPrice.on("change", function(slideEvt) {
                 let min = slideEvt.newValue[0];
                 let max = slideEvt.newValue[1];
-                let devise = $('#devise').val();
+                let currencyAcronym = $('#currency').find('option:selected').attr('data-acronym');
 
                 $("#priceValMin > span:first-child").text(min);
                 $("#priceValMax > span:first-child").text(max);
-                $("#priceValMin > span:last-child").text(devise);
-                $("#priceValMax > span:last-child").text(devise);
+                $("#priceValMin > span:last-child").text(currencyAcronym);
+                $("#priceValMax > span:last-child").text(currencyAcronym);
                 $("#minPrice").val(min);
                 $("#maxPrice").val(max);
             });
@@ -301,9 +301,9 @@ class SearchResults {
             _this.sliderDistance.disable();
         }
 
-        $('#devise').on('change', function() {
-            $("#priceValMin > span:last-child").text($(this).val());
-            $("#priceValMax > span:last-child").text($(this).val());
+        $('#currency').on('change', function() {
+            $("#priceValMin > span:last-child").text($(this).find('option:selected').attr('data-acronym'));
+            $("#priceValMax > span:last-child").text($(this).find('option:selected').attr('data-acronym'));
 
             let max = _this.sliderPrice.element.dataset.sliderMax;
             $("#priceValMin > span:first-child").text(0);
@@ -492,6 +492,7 @@ class SearchResults {
         $('body').on('click', '.btn-filters', function() {
             let filters = $('#advanced-search');
             filters.toggleClass('active');
+            $(this).toggleClass('active');
         });
      }
 

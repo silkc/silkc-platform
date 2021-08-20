@@ -126,7 +126,8 @@ class HomeController extends AbstractController
                 'search' => $searchParams,
                 'searches' => $searches,
                 'user' => $user,
-                'requestParams' => $request->request->all()
+                'requestParams' => $request->request->all(),
+                'defaultMaxPrice' => $trainingRepository->getMaxPrice()
             ]
         );
     }
@@ -146,26 +147,46 @@ class HomeController extends AbstractController
 
         if (
             array_key_exists('minPrice', $rp) && !empty($rp['minPrice']) && is_numeric($rp['minPrice']) &&
-            array_key_exists('maxPrice', $rp) && !empty($rp['maxPrice']) && is_numeric($rp['maxPrice'])
+            array_key_exists('maxPrice', $rp) && !empty($rp['maxPrice']) && is_numeric($rp['maxPrice']) &&
+            array_key_exists('currency', $rp)
         ) {
             $params['minPrice'] = $rp['minPrice'];
             $params['maxPrice'] = $rp['maxPrice'];
+            $params['currency'] = $rp['currency'];
+        }
+
+        if (array_key_exists('duration', $rp) && !empty($rp['duration']) && is_numeric($rp['duration']) && array_key_exists('unity', $rp)) {
+            switch($rp['unity']) {
+                case 'hours' :
+                    $params['duration']  = intval($rp['duration']) * 60 * 60;
+                    break;
+                case 'days' :
+                    $params['duration']  = intval($rp['duration']) * 60 * 60 * 24;
+                    break;
+                case 'weeks' :
+                    $params['duration']  = intval($rp['duration']) * 60 * 60 * 24 * 7;
+                    break;
+                case 'months' :
+                    $params['duration']  = intval($rp['duration']) * 60 * 60 * 24 * 30;
+                    break;
+            }
+            $params['unity'] = $rp['unity'];
         }
 
         if (array_key_exists('isOnline', $rp) && !empty($rp['isOnline']))
-            $params['isOnline'] = (bool) $rp['isOnline'];
+            $params['isOnline'] = (bool) ($rp['isOnline'] === true || $rp['isOnline'] === 'on');
 
         if (array_key_exists('isOnlineMonitored', $rp) && !empty($rp['isOnlineMonitored']))
-            $params['isOnlineMonitored'] = (bool) $rp['isOnlineMonitored'];
+            $params['isOnlineMonitored'] = (bool) ($rp['isOnlineMonitored'] === true || $rp['isOnlineMonitored'] === 'on');
 
         if (array_key_exists('isPresential', $rp) && !empty($rp['isPresential']))
-            $params['isPresential'] = (bool) $rp['isPresential'];
+            $params['isPresential'] = (bool) ($rp['isPresential'] === true || $rp['isPresential'] === 'on');
 
         if (array_key_exists('excludeTraining', $rp) && !empty($rp['excludeTraining']))
-            $params['excludeWithoutDescription'] = (bool) $rp['excludeTraining'];
+            $params['excludeWithoutDescription'] = (bool) ($rp['excludeTraining'] === true || $rp['excludeTraining'] === 'on');
 
         if (array_key_exists('specifiedDuration', $rp) && !empty($rp['specifiedDuration']))
-            $params['excludeWithoutDuration'] = (bool) $rp['specifiedDuration'];
+            $params['excludeWithoutDuration'] = (bool) ($rp['specifiedDuration'] === true || $rp['specifiedDuration'] === 'on');
 
         if (array_key_exists('startAt', $rp) && !empty($rp['startAt']))
             $params['startAt'] = $rp['startAt'];

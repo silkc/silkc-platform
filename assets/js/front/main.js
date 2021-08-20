@@ -13,6 +13,7 @@ var moment = require('moment');
 require('chart.js');
 require('@fortawesome/fontawesome-free/js/all.min');
 require('bootstrap-select');
+const marked = require("marked");
 
 class Main {
     instanceProperty = "Main";
@@ -176,9 +177,23 @@ class Main {
         });*/
     }
 
+    runMarkdown = () => {
+        console.log('OK');
+        const markdownElems = document.querySelectorAll('[markdown="1"]');
+
+        if (markdownElems !== undefined && markdownElems.length !== undefined && markdownElems.length > 0) {
+            markdownElems.forEach(elem => {
+                const elemHTML = elem.innerHTML;
+
+                elem.innerHTML = marked(elemHTML);
+            })
+        }
+    }
+
     init = function() {
         this.runAutocompletion();
         this.tabsSignup();
+        this.runMarkdown();
 
         $('select.selectpicker').selectpicker({
             liveSearch: true,

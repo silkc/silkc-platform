@@ -1,5 +1,10 @@
 <div
 	class="results">
+
+	<p class="font-italic mb-5">
+		{{ 'info_search_result'|trans }}
+	</p>
+
 	{# HISTORIQUE DES RECHERCHES #}
 	<div class="mb-3">
 		<div class="row">
@@ -28,20 +33,17 @@
 				{% endif %}
 			</div>
 		</div>
-	</div>
+		<div class="row mt-2 mb-2">
+			<div class="tags col-12">
+				<button class="btn btn-sm btn-primary btn-filters mb-1" type="button" data-toggle="tooltip" title="{{ 'label.advanced_search'|trans }}" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
+					<i class="fas fa-filter"></i>
 
-	<p class="font-italic">
-		{{ 'info_search_result'|trans }}
-	</p>
+					<span>{{ 'show_panel'|trans }}</span>
+					<span>{{ 'hide_panel'|trans }}</span>
+				</button>
 
-	<div class="d-flex flex-md-nowrap frame-results">
-		<div>
-			{% include 'front/search/filters.html.twig' %}
-		</div>
-		<div>
-			<div class="tags mb-2">
 				{% if requestParams.inputCity is defined and requestParams.inputCity is not empty %}
-					<button type="button" class="btn btn-light mb-1 tag-city">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-city">
 						{{ requestParams.inputCity}}
 						{% if requestParams.distance %}
 							{{ requestParams.distance is defined ? requestParams.distance : 0 }}km
@@ -50,16 +52,16 @@
 					</button>
 				{% endif %}
 
-				{% if requestParams.minPrice is defined and requestParams.maxPrice is defined 
-                    and (requestParams.minPrice != 0 or requestParams.maxPrice != 5000) %}
-					<button type="button" class="btn btn-light mb-1 tag-price">
+				{% if requestParams.minPrice is defined and requestParams.maxPrice is defined
+					and (requestParams.minPrice != 0 or requestParams.maxPrice != defaultMaxPrice) %}
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-price">
 						{{ requestParams.minPrice }} € - {{ requestParams.maxPrice }} €
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
 
 				{% if requestParams.startAt is defined and requestParams.startAt is not empty %}
-					<button type="button" class="btn btn-light mb-1 tag-startAt">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-startAt">
 						Start at
 						{{ requestParams.startAt }}
 						<span class="delete">&times;</span>
@@ -67,7 +69,7 @@
 				{% endif %}
 
 				{% if requestParams.endAt is defined and requestParams.endAt is not empty %}
-					<button type="button" class="btn btn-light mb-1 tag-endAt">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-endAt">
 						End at
 						{{ requestParams.endAt }}
 						<span class="delete">&times;</span>
@@ -75,41 +77,48 @@
 				{% endif %}
 
 				{% if requestParams.isOnline is defined %}
-					<button type="button" class="btn btn-light mb-1 tag-isOnline">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-isOnline">
 						{{ 'label.online'|trans }}
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
 
 				{% if requestParams.isOnlineMonitored is defined %}
-					<button type="button" class="btn btn-light mb-1 tag-isOnlineMonitored">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-isOnlineMonitored">
 						{{ 'label.is_online_monitored'|trans }}
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
 
 				{% if requestParams.isPresential is defined %}
-					<button type="button" class="btn btn-light mb-1 tag-isPresential">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-isPresential">
 						{{ 'label.is_presential'|trans }}
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
 
 				{% if requestParams.excludeTraining is defined %}
-					<button type="button" class="btn btn-light mb-1 tag-excludeTraining">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-excludeTraining">
 						{{ 'label.exclude_training_without_a_completed_description'|trans }}
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
 
 				{% if requestParams.specifiedDuration is defined %}
-					<button type="button" class="btn btn-light mb-1 tag-specifiedDuration">
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-specifiedDuration">
 						{{ 'label.without_specified_duration'|trans }}
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
 			</div>
+		</div>
+	</div>
 
+	<div class="d-flex flex-md-nowrap frame-results">
+		<div>
+			{% include 'front/search/filters.html.twig' %}
+		</div>
+		<div>
 			<div id="accordion">
 				{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
 					{% for training in trainings %}
@@ -165,17 +174,21 @@
 												<div class="col-lg-4">
 													<span class="title">{{ 'label.location'|trans  }}</span>
 												</div>
-												{% if training.location is defined and training.location is not empty %}
-													<div class="col-lg-8 blc-map">
-														<span class="training_address"></span>
-														<input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
-														<div class="map"></div>
-													</div>
-												{% else %}
-													<div class="col-lg-8">
+												<div class="col-lg-8">
+													{% if training.location is defined and training.location is not empty %}
+														<div class="blc-map">
+															<span class="training_address"></span>
+															<input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
+															<div class="map"></div>
+														</div>
+													{% else %}
 														<span>{{ 'n_a'|trans }}</span>
-													</div>
-												{% endif %}
+													{% endif %}
+
+													{% if training.distance is defined and training.distance is not empty and training.distance > 0 %}
+														<span class="badge bg-secondary">{{ training.distance }} {{ 'km away'|trans }}</span>
+													{% endif %}
+												</div>
 											</div>
 
 											<div class="row mb-3">
@@ -203,7 +216,7 @@
 													<span class="title">{{ 'label.description'|trans  }}</span>
 												</div>
 												<div class="col-lg-8">
-													<p class="text-justify m-0">
+													<p class="text-justify m-0" markdown="1">
 														{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : 'n_a'|trans }}
 													</p>
 												</div>

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -61,10 +62,22 @@ class TrainingType extends AbstractType
             ->add('latitude', HiddenType::class, [
                 'required'           => false,
             ])
-            ->add('duration', TextType::class, [
+            ->add('durationValue', IntegerType::class, [
                 'translation_domain' => 'messages',
-                'label'              => 'label.duration',
+                'label'              => 'label.duration_value',
                 'required'           => false,
+            ])
+            ->add('durationUnity', ChoiceType::class, [
+                'translation_domain' => 'messages',
+                'required' => true,
+                'choices' => Training::getUnities(TRUE),
+                'attr' => ['class' => 'custom-select']
+            ])
+            ->add('durationDetails', TextType::class, [
+                'translation_domain' => 'messages',
+                'label'              => 'label.duration_details',
+                'required'           => false,
+                'attr' => ['placeholder' => 'placeholder.duration_details']
             ])
             ->add('description', TextareaType::class, [
                 'attr'               => ['rows' => 8/*, 'class' => 'tinymce'*/],
@@ -126,6 +139,10 @@ class TrainingType extends AbstractType
                 'required'     => false,
                 'by_reference' => true,
                 'placeholder'  => '',
+                'choice_attr' => function($choice, $key, $value) {
+                    // adds a class like attending_yes, attending_no, etc
+                    return ['data-description' => $choice->getDescription()];
+                },
             ]);
 
         if (is_array($options) && array_key_exists('is_user', $options) && $options['is_user'] === true) {

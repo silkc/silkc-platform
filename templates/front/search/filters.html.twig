@@ -39,22 +39,31 @@
 									-
 								</span>
 								<span id="priceValMax">
-									<span>{{ requestParams.maxPrice is defined ? requestParams.maxPrice : 5000 }}</span>
+									<span>{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}</span>
 									<span>€</span>
 								</span>
 							</div>
 							<div class="d-flex flex-row align-items-center flex-nowrap">
-								<input id="formControlRangePrice" type="text" class="form-control" value="" data-slider-min="0" data-slider-max="5000" data-slider-step="5" data-slider-value="[{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }},{{ requestParams.maxPrice is defined ? requestParams.maxPrice : 5000 }}]"/>
+								<input
+									id="formControlRangePrice"
+									type="text"
+									class="form-control"
+									value=""
+									data-slider-min="0"
+									data-slider-max="{{ defaultMaxPrice }}"
+									data-slider-step="5"
+									data-slider-value="[{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }},{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}]"
+								/>
 								<div class="input-group-append ml-4">
-									<select id="devise" class="form-control custom-select" name="device">
-										<option value="€" {% if requestParams.devise is defined and requestParams.devise == "€" %} selected="selected" {% endif %}>Euro</option>
-										<option value="zł" {% if requestParams.devise is defined and requestParams.devise == "zł" %} selected="selected" {% endif %}>Złoty</option>
+									<select id="currency" class="form-control custom-select" name="currency">
+										<option data-acronym="€" value="euro" {% if requestParams.currency is defined and requestParams.currency == "euro" %} selected="selected" {% endif %}>Euro</option>
+										<option data-acronym="zł" value="złoty" {% if requestParams.currency is defined and requestParams.currency == "złoty" %} selected="selected" {% endif %}>Złoty</option>
 									</select>
 								</div>
 							</div>
 						</div>
 						<input type="hidden" id="minPrice" name="minPrice" value="{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }}">
-						<input type="hidden" id="maxPrice" name="maxPrice" value="{{ requestParams.maxPrice is defined ? requestParams.maxPrice : 5000 }}">
+						<input type="hidden" id="maxPrice" name="maxPrice" value="{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}">
 					</div>
 				</div>
 			</div>
@@ -86,10 +95,11 @@
                     <div class="input-group mb-3">
                         <input type="text" id="duration" name="duration" placeholder="Ex: 1000.00" class="form-control">
                         <div class="input-group-append">
-                            <select id="type-duration" class="form-control custom-select" name="typeDuration">
-                                <option value="hours" {% if requestParams.devise is defined and requestParams.devise == "hours" %} selected="selected" {% endif %}>{{ 'label.hours'|trans }}</option>
-                                <option value="days" {% if requestParams.devise is defined and requestParams.devise == "days" %} selected="selected" {% endif %}>{{ 'label.days'|trans }}</option>
-                                <option value="months" {% if requestParams.devise is defined and requestParams.devise == "months" %} selected="selected" {% endif %}>{{ 'label.months'|trans }}</option>
+                            <select id="type-duration" class="form-control custom-select" name="unity">
+                                <option value="hours" {% if requestParams.unity is defined and requestParams.unity == "hours" %} selected="selected" {% endif %}>{{ 'label.hours'|trans }}</option>
+                                <option value="days" {% if requestParams.unity is defined and requestParams.unity == "days" %} selected="selected" {% endif %}>{{ 'label.days'|trans }}</option>
+                                <option value="weeks" {% if requestParams.unity is defined and requestParams.unity == "weeks" %} selected="selected" {% endif %}>{{ 'label.weeks'|trans }}</option>
+                                <option value="months" {% if requestParams.unity is defined and requestParams.unity == "months" %} selected="selected" {% endif %}>{{ 'label.months'|trans }}</option>
                             </select>
                         </div>
                     </div>

@@ -120,7 +120,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     .results {
-        margin-top: 60px;
+        margin-top: 40px;
 
         h5 {
             margin: 0;
@@ -152,6 +152,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
             .count {
                 font-size: 0.8rem;
+            }
+        }
+
+        button.btn-filters {
+            span:first-of-type { display: inline; }
+            span:last-of-type { display: none; }
+
+            &.active {
+                span:first-of-type { display: none; }
+                span:last-of-type { display: inline; }
             }
         }
 
@@ -196,5 +206,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             flex: 100%;
             margin-bottom: 15px;
         }
+    }
+
+    pre {
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
     }
 }

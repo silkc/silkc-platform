@@ -98,22 +98,25 @@ class TrainingRepository extends ServiceEntityRepository
             if (array_key_exists('excludeWithoutDescription', $params) && $params['excludeWithoutDescription'] === true)
                 $filterParams[] = "t.description IS NOT NULL";
             if (array_key_exists('excludeWithoutDuration', $params) && $params['excludeWithoutDuration'] === true)
-                $filterParams[] = "t.duration IS NOT NULL";
-            if (array_key_exists('startAt', $params) && is_bool($params['startAt']))
+                $filterParams[] = "t.duration_value IS NOT NULL";
+            if (array_key_exists('startAt', $params) && !empty($params['startAt']))
                 $filterParams[] = "t.start_at >= " . intval($params['startAt']);
-            if (array_key_exists('endAt', $params) && is_bool($params['endAt']))
-                $filterParams[] = "t.end_at <= " . intval($params['end_at']);
-            if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']))
+            if (array_key_exists('endAt', $params) && !empty($params['endAt']))
+                $filterParams[] = "t.end_at <= " . intval($params['endAt']);
+            if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']) && $params['isOnline'] === true)
                 $filterParams[] = "t.is_online = " . intval($params['isOnline']);
-            if (array_key_exists('isOnlineMonitored', $params) && is_bool($params['isOnlineMonitored']))
+            if (array_key_exists('isOnlineMonitored', $params) && is_bool($params['isOnlineMonitored']) && $params['isOnlineMonitored'] === true)
                 $filterParams[] = "t.is_online_monitored = " . intval($params['isOnlineMonitored']);
-            if (array_key_exists('isPresential', $params) && is_bool($params['isPresential']))
+            if (array_key_exists('isPresential', $params) && is_bool($params['isPresential']) && $params['isPresential'] === true)
                 $filterParams[] = "t.is_presential = " . intval($params['isPresential']);
             if (
                 array_key_exists('minPrice', $params) && !empty($params['minPrice']) && $params['minPrice'] !== null &&
-                array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null
+                array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null &&
+                array_key_exists('currency', $params)
             )
-                $filterParams[] = "(t.price > " . floatval($params['minPrice']) . " AND t.price < " . floatval($params['maxPrice']) . ")";
+                $filterParams[] = "(t.price > " . floatval($params['minPrice']) . " AND t.price < " . floatval($params['maxPrice']) . " AND t.currency = '" . $params['currency'] . "')";
+            if (array_key_exists('duration', $params) && !empty($params['duration']) && $params['duration'] !== null)
+                $filterParams[] = "(t.duration_value > " . floatval($params['duration']) . ")";
 
             if (count($filterParams) > 0) {
                 $filter = "WHERE (" . implode($filterParams, ' AND ') . ")";
@@ -436,15 +439,21 @@ class TrainingRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Training
+    public function getMaxPrice(): ?int
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult( 'max_price', 'max_price');
+
+        $result = $this->getEntityManager()
+            ->createNativeQuery('
+                SELECT 
+                    MAX(t.price) as max_price 
+                FROM training t 
+                WHERE t.price IS NOT NULL
+            ', $rsm)
             ->getOneOrNullResult()
         ;
+
+        return ($result) ? intval($result['max_price']) : 0;
     }
-    */
 }

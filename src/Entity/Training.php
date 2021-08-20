@@ -30,9 +30,21 @@ class Training
     public const CURRENCY_EURO = 'euro';
     public const CURRENCY_ZLOTY = 'złoty';
 
+    public const UNITY_HOURS    = 'hours';
+    public const UNITY_DAYS     = 'days';
+    public const UNITY_WEEKS    = 'weeks';
+    public const UNITY_MONTHS   = 'months';
+
     protected static $currencies = [
-        self::CURRENCY_EURO => 'Euro',
-        self::CURRENCY_ZLOTY => 'Złoty',
+        self::CURRENCY_EURO     => self::CURRENCY_EURO,
+        self::CURRENCY_ZLOTY    => self::CURRENCY_ZLOTY,
+    ];
+
+    protected static $unities = [
+        self::UNITY_HOURS       => self::UNITY_HOURS,
+        self::UNITY_DAYS        => self::UNITY_DAYS,
+        self::UNITY_WEEKS        => self::UNITY_WEEKS,
+        self::UNITY_MONTHS      => self::UNITY_MONTHS,
     ];
 
     /**
@@ -108,10 +120,28 @@ class Training
     private $latitude;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", nullable=true, options={"comment": "Détails sur la durée"})
      * @Groups({"training:read", "training:write"})
      */
-    private $duration;
+    private $durationDetails;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true, "comment": "Valeur saisie dans l'unité indiquée"})
+     * @Groups({"training:read", "training:write"})
+     */
+    private $durationValue;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"comment": "Durée convertie en secondes"})
+     * @Groups({"training:read", "training:write"})
+     */
+    private $durationTimeToSeconds;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false, options={"default": "hours", "comment": "Unitée de la durée indiquée"}, columnDefinition="ENUM('hours', 'days', 'weeks', 'months')")
+     * @Groups({"training:read", "training:write"})
+     */
+    private $durationUnity;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -239,6 +269,11 @@ class Training
      */
     private $rejectedAt;
 
+    /**
+     * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
+     */
+    private $distance = 0;
+
     private $prePersisted = false;
 
     /**
@@ -301,6 +336,26 @@ class Training
 
         $completion = ($completed === 0) ? 0 : floor(($completed / count($toCompleteProperties)) * 100);
         $training->completion = $completion;
+
+        if ($training->durationValue === null) {
+            $training->durationTimeToSeconds = null;
+        } else {
+            // Convertion de la durée de formation
+            switch ($training->durationUnity) {
+                case self::UNITY_HOURS :
+                    $training->durationTimeToSeconds = $training->durationValue * 60 * 60;
+                    break;
+                case self::UNITY_DAYS :
+                    $training->durationTimeToSeconds = $training->durationValue * 60 * 60 * 24;
+                    break;
+                case self::UNITY_WEEKS :
+                    $training->durationTimeToSeconds = $training->durationValue * 60 * 60 * 24 * 7;
+                    break;
+                case self::UNITY_MONTHS :
+                    $training->durationTimeToSeconds = $training->durationValue * 60 * 60 * 24 * 30;
+                    break;
+            }
+        }
     }
 
     public function getId(): ?int
@@ -315,6 +370,15 @@ class Training
     public static function getCurrencies(bool $flip = FALSE):array
     {
         return ($flip) ? array_flip(static::$currencies) : static::$currencies;
+    }
+
+    /**
+     * @param  string $typeShortName
+     * @return string
+     */
+    public static function getUnities(bool $flip = FALSE):array
+    {
+        return ($flip) ? array_flip(static::$unities) : static::$unities;
     }
 
     public function getCreator(): ?User
@@ -389,14 +453,50 @@ class Training
         return $this;
     }
 
-    public function getDuration(): ?string
+    public function getDurationDetails(): ?string
     {
-        return $this->duration;
+        return $this->durationDetails;
     }
 
-    public function setDuration(?string $duration): self
+    public function setDurationDetails(?string $durationDetails): self
     {
-        $this->duration = $duration;
+        $this->durationDetails = $durationDetails;
+
+        return $this;
+    }
+
+    public function getDurationValue(): ?int
+    {
+        return $this->durationValue;
+    }
+
+    public function setDurationValue(?int $durationValue): self
+    {
+        $this->durationValue = $durationValue;
+
+        return $this;
+    }
+
+    public function getDurationUnity(): ?string
+    {
+        return $this->durationUnity;
+    }
+
+    public function setDurationUnity(?string $durationUnity): self
+    {
+        $this->durationUnity = $durationUnity;
+
+        return $this;
+    }
+
+    public function getDurationTimeToSeconds(): ?int
+    {
+        return $this->durationTimeToSeconds;
+    }
+
+    public function setDurationTimeToSeconds(?int $durationTimeToSeconds): self
+    {
+        $this->durationTimeToSeconds = $durationTimeToSeconds;
 
         return $this;
     }
@@ -659,6 +759,18 @@ class Training
     public function setScore(?int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getDistance(): ?int
+    {
+        return $this->distance;
+    }
+
+    public function setDistance(?int $distance): self
+    {
+        $this->distance = $distance;
 
         return $this;
     }

@@ -16,11 +16,6 @@
 		<div class="container">
 			<form class="form-inline form-search form-results" method="POST" action="{{ path('app_search_results') }}">
 				{% include 'front/search/search.html.twig' %}
-				<div class="w-100">
-					<button class="btn btn-sm btn-primary btn-filters mt-2" type="button" data-toggle="tooltip" title="{{ 'label.advanced_search'|trans }}" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
-						<i class="fas fa-filter"></i>
-					</button>
-				</div>
 				{% include 'front/search/results.html.twig' %}
 			</form>
 		</div>

@@ -40,10 +40,7 @@
         <div id="searchmap"></div>
         <div id="map"></div>
 		{{ form_row(form.location) }}
-
-
 		{{ form_row(form.url) }}
-		{{ form_row(form.duration) }}
 		{{ form_row(form.description) }}
 		{{ form_label(form.price) }}
 		<div class="input-group mb-3">
@@ -55,6 +52,16 @@
 
 		{{ form_row(form.startAt) }}
 		{{ form_row(form.endAt) }}
+
+		{{ form_label(form.durationValue) }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.durationValue) }}
+			<div class="input-group-append">
+				{{ form_widget(form.durationUnity) }}
+			</div>
+		</div>
+		{{ form_row(form.durationDetails) }}
+
 		{{ form_row(form.isOnline) }}
 		{{ form_row(form.isOnlineMonitored) }}
 		{{ form_row(form.isPresential) }}

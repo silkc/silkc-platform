@@ -201,7 +201,9 @@ class Institutional {
         let _this = this;
 
         $('body').on('change', '.occupations-select select', function () {
+            let select = $(this);
             let occupation_id = $(this).val();
+            let description = select.find('option:selected').attr('data-description') || '';
             let baseUrl = '/apip/occupation_skills';
             let params = $.param({'occupation': occupation_id});
             let url = `${baseUrl}?${params}`;
@@ -210,6 +212,9 @@ class Institutional {
 
             // Si aucune selection d'un metier
             if (!occupation_id || !url) {
+                // Suppression de la description du métier sélectionné
+                select.closest('.form-group').find('p.occupation_description').remove();
+
                 if (ul.find('li').length > 0) {
                     ul.find('li').each(function(k) {
                         let li = $(this);
@@ -230,6 +235,9 @@ class Institutional {
                     $('body').find('.skills-associated').show();
 
                 return false;
+            } else {
+                select.closest('.form-group').find('p.occupation_description').remove();
+                select.closest('.form-group').append('<p class="occupation_description mt-2" style="font-size: 0.9rem"><em>' + description + '</em></p>');
             }
 
             let skillsList = {};
