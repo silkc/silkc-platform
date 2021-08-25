@@ -41,7 +41,13 @@
         <div id="map"></div>
 		{{ form_row(form.location) }}
 		{{ form_row(form.url) }}
-		{{ form_row(form.description) }}
+		<div class="form-group">
+			<div class="d-flex flex-row justify-content-between">
+				{{ form_label(form.description, null, {'label_attr': {'class': 'd-inline-block'}}) }}
+				<small><em>({{ 'markdown_support_info'|trans }} : <a href="https://www.markdownguide.org/basic-syntax/">www.markdownguide.org</a>)</em></small>
+			</div>
+			{{ form_widget(form.description) }}
+		</div>
 		{{ form_label(form.price) }}
 		<div class="input-group mb-3">
 			{{ form_widget(form.price) }}

@@ -19,32 +19,8 @@ class OccupationRepository extends ServiceEntityRepository
         parent::__construct($registry, Occupation::class);
     }
 
-    // /**
-    //  * @return Occupation[] Returns an array of Occupation objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAll()
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findBy([], ['preferredLabel' => 'ASC']);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Occupation
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

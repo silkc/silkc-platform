@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Type\InstitutionType;
+use App\Form\Type\RecruiterType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,7 +47,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/signup/{type}", name="app_signup", defaults={"type": false})
+     * @Route("/signup/{type}", name="app_signup", defaults={"type": false}, requirements={"type": "user|institution|recruiter"})
      */
     public function signup(
         string $type,
@@ -57,21 +59,35 @@ class SecurityController extends AbstractController
         TranslatorInterface $translator
     ): Response
     {
+        $view = 'security/signup.html.twig';
 
         if ($type) {
-            // On bloque l'inscription pour le moment :
-            //return $this->redirectToRoute('app_login');
             $user = new User();
 
-            $form = $this->createForm(UserType::class, $user, ['require_password' => true, 'is_personal' => ($type === 'user')]);
+            switch($type) {
+                case 'recruiter' :
+                    $form = $this->createForm(RecruiterType::class, $user, ['require_password' => true]);
+                    $roles = [User::ROLE_RECRUITER];
+                    $view = 'security/signup_recruiter.html.twig';
+                    break;
+                case 'institution' :
+                    $form = $this->createForm(InstitutionType::class, $user, ['require_password' => true]);
+                    $roles = [User::ROLE_INSTITUTION];
+                    $view = 'security/signup_institution.html.twig';
+                    break;
+                case 'user':
+                default:
+                    $form = $this->createForm(UserType::class, $user, ['require_password' => true]);
+                    $roles = [User::ROLE_USER];
+                    $view = 'security/signup_user.html.twig';
+                    break;
+            }
 
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-                $isInstitution = !(bool) intval($request->request->get('is_personal'));
 
-                $roles = ($isInstitution) ? [User::ROLE_INSTITUTION] : [User::ROLE_USER];
                 $createdAt = new \DateTime('now');
                 $password = $user->getPassword();
                 $password = $passwordEncoder->encodePassword($user, $password);
@@ -89,7 +105,6 @@ class SecurityController extends AbstractController
                 }
 
                 $entityManager = $this->getDoctrine()->getManager();
-
 
                 $existingEmailUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
                 $existingUsernameUser = $userRepository->findOneBy(['username' => $user->getUsername()]);
@@ -143,19 +158,9 @@ class SecurityController extends AbstractController
             }
         }
 
-
-        $view = 'security/signup.html.twig';
-        if ($type == 'user') {
-            $view = 'security/signup_user.html.twig';
-        }
-        if ($type == 'institution') {
-            $view = 'security/signup_institution.html.twig';
-        }
-
-        return $this->render($view,
-                             [
-                                 'form' =>  $type ? $form->createView() : false
-                             ]
+        return $this->render(
+            $view,
+            ['form' =>  $type ? $form->createView() : false]
         );
     }
 

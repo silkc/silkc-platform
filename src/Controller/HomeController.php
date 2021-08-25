@@ -5,15 +5,20 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Skill;
 use App\Entity\Training;
+use App\Entity\Position;
 use App\Entity\UserActivity;
 use App\Entity\UserSearch;
 use App\Form\Type\UserType;
+use App\Form\Type\RecruiterType;
+use App\Form\Type\InstitutionType;
 use App\Entity\TrainingSkill;
+use App\Form\Type\PositionType;
 use App\Form\Type\TrainingType;
 use App\Repository\UserActivityRepository;
 use App\Repository\UserRepository;
 use App\Form\Type\UserPasswordType;
 use App\Repository\SkillRepository;
+use App\Repository\PositionRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\OccupationSkillRepository;
@@ -99,7 +104,7 @@ class HomeController extends AbstractController
                             }
                             $searchParams['name'] = $skill->getPreferredLabel();
                             $searchParams['id'] = $skill->getId();
-                            $trainings = $trainingRepository->searchTrainingBySkill($skill);
+                            $trainings = $trainingRepository->searchTrainingBySkill($skill, $advanceSearchParams);
                             $search->setSkill($skill);
                             $search->setCountResults(count($trainings));
                         }
@@ -155,19 +160,27 @@ class HomeController extends AbstractController
             $params['currency'] = $rp['currency'];
         }
 
-        if (array_key_exists('duration', $rp) && !empty($rp['duration']) && is_numeric($rp['duration']) && array_key_exists('unity', $rp)) {
+        if (
+            array_key_exists('minDuration', $rp) && !empty($rp['minDuration']) && is_numeric($rp['minDuration']) &&
+            array_key_exists('maxDuration', $rp) && !empty($rp['maxDuration']) && is_numeric($rp['maxDuration']) &&
+            array_key_exists('unity', $rp)
+        ) {
             switch($rp['unity']) {
                 case 'hours' :
-                    $params['duration']  = intval($rp['duration']) * 60 * 60;
+                    $params['minDuration']  = intval($rp['minDuration']) * 60 * 60;
+                    $params['maxDuration']  = intval($rp['maxDuration']) * 60 * 60;
                     break;
                 case 'days' :
-                    $params['duration']  = intval($rp['duration']) * 60 * 60 * 24;
+                    $params['minDuration']  = intval($rp['minDuration']) * 60 * 60 * 24;
+                    $params['maxDuration']  = intval($rp['maxDuration']) * 60 * 60 * 24;
                     break;
                 case 'weeks' :
-                    $params['duration']  = intval($rp['duration']) * 60 * 60 * 24 * 7;
+                    $params['minDuration']  = intval($rp['minDuration']) * 60 * 60 * 24 * 7;
+                    $params['maxDuration']  = intval($rp['maxDuration']) * 60 * 60 * 24 * 7;
                     break;
                 case 'months' :
-                    $params['duration']  = intval($rp['duration']) * 60 * 60 * 24 * 30;
+                    $params['minDuration']  = intval($rp['minDuration']) * 60 * 60 * 24 * 30;
+                    $params['maxDuration']  = intval($rp['maxDuration']) * 60 * 60 * 24 * 30;
                     break;
             }
             $params['unity'] = $rp['unity'];
@@ -331,15 +344,13 @@ class HomeController extends AbstractController
 
         $user = $this->getUser();
 
-        $form = $this->createForm(UserType::class, $user, ['is_personal' => false]);
+        $form = $this->createForm(InstitutionType::class, $user);
         $passwordForm = $this->createForm(UserPasswordType::class, $user);
 
         $form->handleRequest($request);
         $passwordForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             $errors = $validator->validate($user);
             if (count($errors) > 0) {
                 return new Response((string) $errors, 400);
@@ -361,8 +372,6 @@ class HomeController extends AbstractController
 
             $tab = 'change_password';
 
-            //$data = $request->request->all('user_password');
-            //$result = $passwordEncoder->isPasswordValid($user, 'test');
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
 
             $em = $this->getDoctrine()->getManager();
@@ -379,6 +388,75 @@ class HomeController extends AbstractController
         return $this->render('front/institutional/index.html.twig',
             [
                 'trainings'   => $trainings,
+                'form' => $form->createView(),
+                'password_form' => $passwordForm->createView(),
+                'tab' => $tab
+            ]
+        );
+    }
+
+    /**
+     * @Route("/recruiter/{tab}", name="recruiter")
+     */
+    public function recruiter(
+        $tab = 'company_informations',
+        Request $request,
+        PositionRepository $positionRepository,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        UserPasswordEncoderInterface $passwordEncoder
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_RECRUITER))
+            return $this->redirectToRoute('app_home');
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(RecruiterType::class, $user);
+        $passwordForm = $this->createForm(UserPasswordType::class, $user);
+
+        $form->handleRequest($request);
+        $passwordForm->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('Updated data'));
+
+            return $this->redirectToRoute('app_recruiter');
+
+        } else if ($passwordForm->isSubmitted()) {
+            if (!$passwordForm->isValid()) {
+                $errors = $validator->validate($user);
+                return new Response((string) $errors, 400);
+            }
+
+            $tab = 'change_password';
+
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('Updated data'));
+        }
+
+        $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : ($tab ? $tab : false);
+        setcookie('tab_institution_silkc', "", time() - 3600, "/");
+
+        $positions = $positionRepository->findBy(['user' => $user]);
+        return $this->render(
+            'front/recruiter/index.html.twig',
+            [
+                'positions'   => $positions,
                 'form' => $form->createView(),
                 'password_form' => $passwordForm->createView(),
                 'tab' => $tab
@@ -593,6 +671,154 @@ class HomeController extends AbstractController
         $this->addFlash('success', $translator->trans('duplicate_training_success'));
 
         return $this->redirectToRoute('app_training_edit', ['id' => $newTraining->getId()]);
+    }
+
+    /**
+     * @Route("/position/create", name="position_create")
+     */
+    public function position_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
+    {
+        $user = $this->getUser();
+        $position = new Position();
+
+        $form = $this->createForm(PositionType::class, $position, ['is_user' => !$this->isGranted(User::ROLE_RECRUITER)]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($position);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $oldSkills = $position->getSkills();
+            if (
+                $request->request->get('hidden_positionSkills') !== NULL &&
+                @json_decode($request->request->get('hidden_positionSkills')) !== NULL
+            ) {
+                $skills = json_decode($request->request->get('hidden_positionSkills'));
+                foreach ($skills as $skillId) {
+                    $skill = $skillRepository->findOneBy(['id' => $skillId]);
+                    if (!$skill)
+                        continue;
+
+                    $position->addSkill($skill);
+                }
+            }
+            foreach ($oldSkills as $oldSkill) {
+                if (!$position->contains($oldSkill))
+                    $position->removeSkill($oldSkill);
+            }
+
+            if ($position->getUser() === null)
+                $position->setUser($user);
+            $position->setCreator($user);
+            // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
+            $position->setIsValidated($this->isGranted(User::ROLE_RECRUITER));
+            // S'il s'agit d'une création par un utilisateur, on lui associe la formation
+            if (!$this->isGranted(User::ROLE_RECRUITER))
+                $user->addTraining($position);
+
+            $em->persist($position);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('The position was created'));
+
+            return $this->redirectToRoute('app_position_edit', array('id' => $position->getId()));
+        }
+
+        setcookie('tab_recruiter_silkc', 2, time() + 86400, "/");
+
+        return $this->render('front/recruiter/position_create.html.twig', [
+            'controller_name' => 'HomeController',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/position/edit/{id}", name="position_edit")
+     */
+    public function edit_position(Position $position, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, PositionRepository $positionRepository):Response
+    {
+        $form = $this->createForm(PositionType::class, $position, ['is_user' => !$this->isGranted(User::ROLE_RECRUITER)]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($position);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $oldSkills = $position->getSkills();
+            if (
+                $request->request->get('hidden_positionSkills') !== NULL &&
+                @json_decode($request->request->get('hidden_positionSkills')) !== NULL
+            ) {
+                $skills = json_decode($request->request->get('hidden_positionSkills'));
+                foreach ($skills as $skillId) {
+                    $skill = $skillRepository->findOneBy(['id' => $skillId]);
+                    if (!$skill)
+                        continue;
+
+                    $position->addSkill($skill);
+                }
+            }
+
+            foreach ($oldSkills as $oldSkill) {
+                if (!$position->getSkills()->contains($oldSkill))
+                    $position->removeSkill($oldSkill);
+            }
+
+            $em->persist($position);
+            $em->flush();
+
+            $this->addFlash('success', $translator->trans('The position has been updated'));
+
+            return $this->redirectToRoute('app_position_edit', ['id' => $position->getId()]);
+        }
+
+        setcookie('tab_recruiter_silkc', 2, time() + 86400, "/");
+
+        return $this->render('front/recruiter/position_create.html.twig', [
+            'controller_name' => 'HomeController',
+            'form' => $form->createView(),
+            'position' => $position,
+        ]);
+    }
+
+    /**
+     * @Route("/position/duplicate/{id}", name="position_duplicate")
+     */
+    public function position_duplicate(Position $position, SkillRepository $skillRepository, PositionRepository $positionRepository, TranslatorInterface $translator): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $newPosition = clone $position;
+
+        if ($position->getSkills()) {
+            foreach ($position->getSkills() as $skill) {
+                $newPosition->add($skill);
+            }
+        }
+
+        if ($newPosition->getUser() === null)
+            $newPosition->setUser($user);
+        $newPosition->setCreator($user);
+        $newPosition->setName($newPosition->getName() . $translator->trans('position_duplicate_suffix'));
+
+        // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
+        $newPosition->setIsValidated($this->isGranted(User::ROLE_RECRUITER));
+        // S'il s'agit d'une création par un utilisateur, on lui associe la formation
+        if (!$this->isGranted(User::ROLE_RECRUITER))
+            $user->addPosition($newPosition);
+
+        $em->persist($newPosition);
+        $em->flush();
+
+        $this->addFlash('success', $translator->trans('duplicate_position_success'));
+
+        return $this->redirectToRoute('app_training_edit', ['id' => $newPosition->getId()]);
     }
 
     /**

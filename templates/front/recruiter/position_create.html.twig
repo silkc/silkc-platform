@@ -1,0 +1,49 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('recruiter') }}
+{% endblock %}
+
+{% block content %}
+	{% autoescape false %}
+		<div class="container">
+			<nav aria-label="breadcrumb" class="mt-4">
+				<ol class="breadcrumb create_position">
+					<li class="breadcrumb-item">
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_home')}}#content-home">{{ 'nav.home'|trans }}</a>
+						{% elseif is_granted('ROLE_RECRUITER') %}
+							<a href="{{ path('app_recruiter')}}#content-personal_informations">{{ 'nav.home'|trans }}</a>
+						{% else %}
+							<a href="{{ path('app_account')}}#content-personal_informations">{{ 'nav.home'|trans }}</a>
+						{% endif %}
+					</li>
+					<li class="breadcrumb-item">
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('admin_home')}}#content-vacant_positions">{{ 'position'|trans }}</a>
+						{% elseif is_granted('ROLE_RECRUITER') %}
+							<a href="{{ path('app_recruiter')}}#content-vacant_positions">{{ 'position'|trans }}</a>
+						{% else %}
+							<a href="{{ path('app_account')}}#content-vacant_positions">{{ 'position'|trans }}</a>
+						{% endif %}
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ attribute(position, 'name') is defined ? position.name : '' }}</li>
+				</ol>
+			</nav>
+
+			{{ include('front/recruiter/_form.html.twig') }}
+		</div>
+	{% endautoescape %}
+
+	{% include 'front/elements/modal.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('recruiter') }}
+{% endblock %}

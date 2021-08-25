@@ -11,6 +11,9 @@ import '../../scss/search_results.scss';
 
 require('bootstrap');
 const bootbox = require('bootbox/bootbox');
+require('bootstrap-star-rating');
+require('bootstrap-star-rating/css/star-rating.css');
+require('bootstrap-star-rating/themes/krajee-svg/theme.css');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
@@ -26,6 +29,24 @@ class SearchResults {
         this.sliderDistance;
         this.sliderPrice;
       }
+
+   runRater = () => {
+        $('[data-toggle="tooltip"]').tooltip();
+
+       $('span.rating').each(function(index) {
+           let $elem = $(this);
+           let value = $elem.data('value');
+           $elem.rating({
+               filledStar: '<i class="fas fa-star"></i>',
+               emptyStar: '<i class="far fa-star"></i>',
+               showCaption: false,
+               size: 'xs',
+               step: 1,
+               readonly: true,
+               showClear: false,
+           }).rating('update', value);
+       });
+   }
 
     /**
      * Selection du type de recherche (occupation/skill)
@@ -280,10 +301,31 @@ class SearchResults {
 
                 $("#priceValMin > span:first-child").text(min);
                 $("#priceValMax > span:first-child").text(max);
-                $("#priceValMin > span:last-child").text(currencyAcronym);
+                //$("#priceValMin > span:last-child").text(currencyAcronym);
                 $("#priceValMax > span:last-child").text(currencyAcronym);
                 $("#minPrice").val(min);
                 $("#maxPrice").val(max);
+            });
+        }
+        // DURATION
+        let initSliderDuration = function() {
+            _this.sliderDuration = new Slider('#formControlRangeDuration', {
+                formatter: function(value) {
+                    let unity = $('#unity').find('option:selected').val();
+                    return value + unity;
+                }
+            });
+            _this.sliderDuration.on("change", function(slideEvt) {
+                let min = slideEvt.newValue[0];
+                let max = slideEvt.newValue[1];
+                let unity = $('#unity').find('option:selected').val();
+
+                $("#durationValMin > span:first-child").text(min);
+                $("#durationValMax > span:first-child").text(max);
+                //$("#durationValMin > span:last-child").text(unity);
+                $("#durationValMax > span:last-child").text(unity);
+                $("#minDuration").val(min);
+                $("#maxDuration").val(max);
             });
         }
         
@@ -302,7 +344,6 @@ class SearchResults {
         }
 
         $('#currency').on('change', function() {
-            $("#priceValMin > span:last-child").text($(this).find('option:selected').attr('data-acronym'));
             $("#priceValMax > span:last-child").text($(this).find('option:selected').attr('data-acronym'));
 
             let max = _this.sliderPrice.element.dataset.sliderMax;
@@ -314,6 +355,20 @@ class SearchResults {
 
             
             _this.sliderPrice.setValue([0, 5000]);
+        });
+
+        $('#unity').on('change', function() {
+            $("#durationValMax > span:last-child").text($(this).find('option:selected').val());
+
+            let max = _this.sliderDuration.element.dataset.sliderMax;
+            $("#durationValMin > span:first-child").text(0);
+            $("#durationValMax > span:first-child").text(max);
+
+            $("#minDuration").val(0);
+            $("#maxDuration").val(max);
+
+
+            _this.sliderDuration.setValue([0, 5000]);
         });
 
         // Clear filter
@@ -334,6 +389,13 @@ class SearchResults {
             
             $("#minPrice").val(0);
             $("#maxPrice").val(max);
+
+            // Duration
+            $("#durationValMin > span:first-child").text(0);
+            $("#durationValMax > span:first-child").text(100);
+
+            $("#minDuration").val(0);
+            $("#maxDuration").val(100);
             
             // Input text, date ...
             $("#advanced-search input[type=date], #advanced-search input[type=text], #advanced-search input[type=datetime-local]").val("");
@@ -362,6 +424,18 @@ class SearchResults {
             $("#priceValMax > span:first-child").text(max);
             $("#minPrice").val(0);
             $("#maxPrice").val(max);
+            $(this).remove();
+            setTimeout(function() {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $('body').on('click', 'button.tag-duration', function() {
+            _this.sliderPrice.setValue([0, 100]);
+            let max = _this.sliderDuration.element.dataset.sliderMax;
+            $("#durationValMin > span:first-child").text(0);
+            $("#durationValMax > span:first-child").text(max);
+            $("#minDuration").val(0);
+            $("#maxDuration").val(max);
             $(this).remove();
             setTimeout(function() {
                 $(".form-results").submit();
@@ -419,6 +493,7 @@ class SearchResults {
 
         initSliderDistance(0);
         initSliderPrice();
+        initSliderDuration();
     }
 
     
@@ -505,6 +580,7 @@ class SearchResults {
         this.sliderSearch();
         this.runMapFilter();
         this.displayFilters();
+        this.runRater();
 
         $('[data-toggle="tooltip"]').tooltip;
     }

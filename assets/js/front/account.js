@@ -1512,6 +1512,24 @@ class Account {
         });
     }
 
+    runRater = () => {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('span.rating').each(function(index) {
+            let $elem = $(this);
+            let value = $elem.data('value');
+            $elem.rating({
+                filledStar: '<i class="fas fa-star"></i>',
+                emptyStar: '<i class="far fa-star"></i>',
+                showCaption: false,
+                size: 'xs',
+                step: 1,
+                readonly: true,
+                showClear: false,
+            }).rating('update', value);
+        });
+    }
+
     init = function() {
 
         let _this = this;
@@ -1531,6 +1549,7 @@ class Account {
         this.displayFeedback();
         this.runMap();
         this.seeDetailTraining();
+        this.runRater();
 
 
         $('#common-modal').on('shown.bs.modal', function (e) {

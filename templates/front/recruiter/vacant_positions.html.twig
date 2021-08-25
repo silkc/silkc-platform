@@ -1,0 +1,115 @@
+<fieldset>
+
+	<div class="d-flex align-items-end justify-content-start">
+		<a href="{{ path('app_position_create') }}" class="btn btn-primary">{{ 'button.add_position'|trans }}</a>
+	</div>
+
+	<div class="accordion" id="list-positions">
+		{% if positions is defined %}
+			{% for k, position in positions %}
+				<div class="card mb-1" data-id="{{ attribute(position, 'id') is defined ? position.id : '' }}">
+					<form method="POST" action="{{ path('app_institution') }}">
+						<input type="hidden" name="position_id" value="{{ attribute(position, 'id') is defined ? position.id : '' }}"/>
+						<div class="card-header" id="heading_{{ k }}">
+							<div class="d-flex flex-nowrap justify-content-between">
+								<div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#position_{{ k }}" aria-expanded="false" aria-controls="position_{{ k }}">
+									<a class="icon mr-2" data-toggle="collapse" href="#position_{{ k }}">
+										<span>{{ attribute(position, 'name') is defined ? position.name : '' }}</span>
+
+										{% if position.startAt is defined and position.startAt is not empty %}
+											(
+											<span>{{ 'from'|trans }}</span>
+											<span>{{ position.startAt is defined and position.startAt is not empty ? position.startAt|date('Y/m/d') : 'n_a'|trans }}</span>
+											<span>{{ 'to'|trans }}</span>
+											<span>{{ position.endAt is defined and position.endAt is not empty ? position.endAt|date('Y/m/d') : 'n_a'|trans }}</span>
+											)
+										{% endif %}
+									</a>
+								</div>
+								<div class="d-inline-flex align-items-center justify-content-end">
+									<div class="block-clone">
+										<span class="spinner-border spinner-border-sm loader" role="status" aria-hidden="true"></span>
+										<a href="{{ path('app_position_edit', {id: position.id}) }}" data-toggle="tooltip" title="Edit this position">
+											<i class="far fa-edit text-primary"></i>
+										</a>
+										<a href="{{ path('app_position_duplicate', { id: position.id }) }}" data-toggle="tooltip" title="Clone this position">
+											<i class="far fa-clone text-primary"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="position_{{ k }}" class="collapse {% if tab_active is defined and tab_active == 2 and position_active is defined and position_active == position.id %}show{% endif %}" aria-labelledby="heading_{{ k }}" data-parent="#list-positions">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="position-name_{{ k }}">{{ attribute(position, 'name') is defined  ? position.name : '' }}</label>
+											<input type="text" class="form-control" disabled id="location_{{ k }}" name="name" value="{{ attribute(position, 'name') is defined ? position.name : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="location_{{ k }}">{{ 'label.location'|trans }}</label>
+
+											{% if position.location is defined and position.location is not empty %}
+												<div class="blc-map">
+													<input type="text" class="form-control position_address" disabled id="location_{{ k }}">
+													<input type="hidden" class="position_address_hidden" value="{{ position.location }}"/>
+													<div class="map"></div>
+												</div>
+											{% else %}
+												<input type="text" class="form-control" disabled id="location_{{ k }}" value="{{ 'n_a'|trans }}">
+											{% endif %}
+										</div>
+
+										<div class="form-group">
+											<label for="description_{{ k }}">{{ 'label.description'|trans }}</label>
+											<textarea class="form-control" disabled id="description_{{ k }}" name="description">{{ attribute(position, 'description') is defined  ? position.description : '' }}</textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="price_{{ k }}">{{ 'label.salary'|trans }}</label>
+											<input type="text" class="form-control" disabled id="salary_{{ k }}" name="salary" value="{{ attribute(position, 'salary') is defined ? position.salary : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="start-date_{{ k }}">{{ 'label.start_at'|trans }}</label>
+											<input type="date" class="form-control" disabled id="start-date_{{ k }}" name="start_at" value="{{ attribute(position, 'start_at') is defined ? position.start_at : '' }}">
+										</div>
+
+										<div class="form-group">
+											<label for="end-date_{{ k }}">{{ 'label.end_at'|trans }}</label>
+											<input type="date" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ attribute(position, 'end_at') is defined ? position.end_at : '' }}">
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<p class="title">{{ 'required_skills'|trans }}</p>
+										<div class="skills-required-list">
+											<ul class="list-group ul-skills" id="skills-required">
+												{% if position is defined %}
+													{% if attribute(position, 'skills') is defined and position.skills is iterable %}
+														{% for skill in position.skills %}
+															<li class="list-group-item">
+																<div class="d-flex flex-nowrap justify-content-between">
+																	<div>
+																		<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+																	</div>
+																</div>
+															</li>
+														{% endfor %}
+													{% endif %}
+												{% endif %}
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</fieldset>

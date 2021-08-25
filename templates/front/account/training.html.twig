@@ -34,6 +34,17 @@
 							<span>{{ training.name }}</span>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
+							<div class="d-flex flex-row justify-content-start align-items-center mr-4">
+								<span class="rating" data-value="{{ training.avgMark }}"></span>
+								<span
+										title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
+										data-toggle="tooltip"
+										style="font-size: 0.8rem;"
+								>
+									({{ training.totalMark }})
+								</span>
+							</div>
+
 							<button class="btn btn-link p-0 see-detail mr-2" data-id="{{ training.id }}" data-toggle="tooltip" title="{{ 'user_formation_details_tooltip'|trans }}">
 								<i class="fas fa-search text-primary"></i>
 							</button>

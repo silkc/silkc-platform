@@ -21,8 +21,6 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        if (array_key_exists('is_personal', $options) && $options['is_personal'] === true) {
             $builder
                 ->add('username', TextType::class, [
                     'label' => 'login.form.label.pseudo',
@@ -44,24 +42,6 @@ class UserType extends AbstractType
                     'translation_domain' => 'messages',
                     'required'   => false,
                 ]);
-        } else {
-            $builder
-                ->add('username', TextType::class, [
-                    'label' => 'login.form.label.institution_name',
-                    'translation_domain' => 'messages',
-                    'required'   => true,
-                ])
-                ->add('homepage', TextType::class, [
-                    'label'              => 'login.form.label.homepage',
-                    'translation_domain' => 'messages',
-                    'required'           => false,
-                ])
-                ->add('address', HiddenType::class, [
-                    'label'              => 'login.form.label.address',
-                    'translation_domain' => 'messages',
-                    'required'           => false,
-                ]);
-        }
 
         if (array_key_exists('by_admin', $options) && $options['by_admin'] === true) {
             $builder
@@ -73,17 +53,8 @@ class UserType extends AbstractType
                     'choices' => User::getRolesList(),
                 ]);
         }
-        /*
-            $builder->add('roles', ChoiceType::class, [
-                'label'    => 'label.roles',
-                'multiple' => true,
-                'expanded' => true,
-                'required' => true,
-                'choices'  => User::getRolesList(),
-            ]);
-        */
-
-        for ($i = 1900; $i <= 2021; $i++) {
+        $currentYear = intval(date('Y'));
+        for ($i = 1900; $i <= $currentYear; $i++) {
             $dateChoices[$i] = $i;
         }
 
@@ -94,12 +65,12 @@ class UserType extends AbstractType
             ])
             ->add('dateOfBirth', ChoiceType::class, [
                 'choices' => $dateChoices,
-                'label' => array_key_exists('is_personal', $options) && $options['is_personal'] === true ? 'login.form.label.year_of_birth' : 'login.form.label.year_of_creation',
+                'label' => 'login.form.label.year_of_birth',
                 'translation_domain' => 'messages',
                 'required'   => false,
                 'multiple' => false,
                 'expanded' => false,
-                'placeholder' => array_key_exists('is_personal', $options) && $options['is_personal'] === true ? 'login.form.label.year_of_birth' : 'login.form.label.year_of_creation'
+                'placeholder' => 'login.form.label.year_of_birth'
             ]);
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
@@ -128,25 +99,26 @@ class UserType extends AbstractType
                 'label' => 'label.save'
             ]);
 
-            $builder->get('dateOfBirth')->addModelTransformer(new CallbackTransformer(
-                    function ($datetimeToNumber) {
-                        if ($datetimeToNumber === null)
-                            return null;
-                        else if ($datetimeToNumber instanceof \DateTime)
-                            return intval($datetimeToNumber->format('Y'));
+        $builder->get('dateOfBirth')->addModelTransformer(
+            new CallbackTransformer(
+                function ($datetimeToNumber) {
+                    if ($datetimeToNumber === null)
+                        return null;
+                    else if ($datetimeToNumber instanceof \DateTime)
+                        return intval($datetimeToNumber->format('Y'));
 
-                        return $datetimeToNumber;
-                    },
-                    function ($numberToDatetime) {
-                        if ($numberToDatetime === null)
-                            return null;
-                        else if (is_int($numberToDatetime)) {
-                            return \DateTime::createFromFormat('Y', $numberToDatetime);
-                        }    
-                        
-                        return $numberToDatetime;
-                    }
-                ));
+                    return $datetimeToNumber;
+                },
+                function ($numberToDatetime) {
+                    if ($numberToDatetime === null)
+                        return null;
+                    else if (is_int($numberToDatetime))
+                        return \DateTime::createFromFormat('Y', $numberToDatetime);
+
+                    return $numberToDatetime;
+                }
+            )
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

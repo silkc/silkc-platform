@@ -52,9 +52,7 @@ class TrainingRepository extends ServiceEntityRepository
         $rsm->addScalarResult('acquired_skill_coefficient', 'acquired_skill_coefficient');
         $rsm->addScalarResult('not_acquired_skill_coefficient', 'not_acquired_skill_coefficient');*/
 
-        $filter = '';
-        $select = '';
-        $having = '';
+
         /*?bool $isOnline = null,
         ?bool $isOnlineMonitored = null,
         ?bool $isPresential = null,
@@ -63,70 +61,13 @@ class TrainingRepository extends ServiceEntityRepository
         ?int $distance = null,
         ?float $latitude = null,
         ?float $longitude = null*/
-        if ($params && is_array($params)) {
-            // Recherche par ville
-            if (
-                array_key_exists('distance', $params) &&
-                array_key_exists('location', $params) && is_array($params['location']) &&
-                array_key_exists('latitude', $params['location']) &&
-                array_key_exists('longitude', $params['location'])
-            ) {
-                $latitude = $params['location']['latitude'];
-                $longitude = $params['location']['longitude'];
-                $select = "CASE
-                    WHEN t.latitude IS NULL AND t.longitude IS NULL THEN NULL 
-                    ELSE 
-                    (
-                        2 * 
-                        ASIN(
-                            (
-                                SQRT(
-                                    POW(COS(((PI()/180) * $latitude)) - COS(((PI()/180) * t.latitude)) * COS((PI()/180) * ($longitude - t.longitude)), 2) +
-                                    POW(COS(((PI()/180) * t.latitude)) * SIN((PI()/180) * ($longitude - t.longitude)), 2) +
-                                    POW(SIN(((PI()/180) * $latitude)) - SIN(((PI()/180) * t.latitude)), 2)    
-                                )
-                            ) / 2
-                        ) / 
-                        (PI()/180) *
-                        ".Training::SEARCH_DEG_CONVERSION."
-                    )
-                END AS distance,";
-                $having = " AND distance < ".intval($params['distance']);
-            }
 
-            $filterParams = [];
-            if (array_key_exists('excludeWithoutDescription', $params) && $params['excludeWithoutDescription'] === true)
-                $filterParams[] = "t.description IS NOT NULL";
-            if (array_key_exists('excludeWithoutDuration', $params) && $params['excludeWithoutDuration'] === true)
-                $filterParams[] = "t.duration_value IS NOT NULL";
-            if (array_key_exists('startAt', $params) && !empty($params['startAt']))
-                $filterParams[] = "t.start_at >= " . intval($params['startAt']);
-            if (array_key_exists('endAt', $params) && !empty($params['endAt']))
-                $filterParams[] = "t.end_at <= " . intval($params['endAt']);
-            if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']) && $params['isOnline'] === true)
-                $filterParams[] = "t.is_online = " . intval($params['isOnline']);
-            if (array_key_exists('isOnlineMonitored', $params) && is_bool($params['isOnlineMonitored']) && $params['isOnlineMonitored'] === true)
-                $filterParams[] = "t.is_online_monitored = " . intval($params['isOnlineMonitored']);
-            if (array_key_exists('isPresential', $params) && is_bool($params['isPresential']) && $params['isPresential'] === true)
-                $filterParams[] = "t.is_presential = " . intval($params['isPresential']);
-            if (
-                array_key_exists('minPrice', $params) && !empty($params['minPrice']) && $params['minPrice'] !== null &&
-                array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null &&
-                array_key_exists('currency', $params)
-            )
-                $filterParams[] = "(t.price > " . floatval($params['minPrice']) . " AND t.price < " . floatval($params['maxPrice']) . " AND t.currency = '" . $params['currency'] . "')";
-            if (array_key_exists('duration', $params) && !empty($params['duration']) && $params['duration'] !== null)
-                $filterParams[] = "(t.duration_value > " . floatval($params['duration']) . ")";
-
-            if (count($filterParams) > 0) {
-                $filter = "WHERE (" . implode($filterParams, ' AND ') . ")";
-            }
-        }
+        list ($select, $filter, $having) = $this->getFiltersValues($params);
 
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT 
                 t.*,  
-                $select 
+                $select
                 IFNULL(sq1.weight, 0) AS skill_weight,
                 IFNULL(sq1.maxWeight, 0) AS max_skill_weight,
                 IFNULL(sq2.trainingCompletion, 0) AS training_completion,
@@ -213,6 +154,7 @@ class TrainingRepository extends ServiceEntityRepository
                     LEFT JOIN user_skill us ON us.skill_id = ts.skill_id AND us.is_selected = 1 AND us.user_id = :userId
                     GROUP BY t.id
             ) AS sq3 ON sq3.training_id = t.id
+            LEFT JOIN training_feedback AS tf ON tf.training_id = t.id
             $filter
             GROUP BY t.id
             HAVING score IS NOT NULL AND score > 0
@@ -402,20 +344,25 @@ class TrainingRepository extends ServiceEntityRepository
      *
      * @access public
      */
-    public function searchTrainingBySkill(Skill $skill): ?array
+    public function searchTrainingBySkill(Skill $skill, array $params = []): ?array
     {
         $entityManager = $this->getEntityManager();
         $rsm = new ResultSetMappingBuilder($entityManager);
         $rsm->addRootEntityFromClassMetadata('App\Entity\Training', 't');
 
+        list ($select, $filter, $having) = $this->getFiltersValues($params);
+
         $query = $this->getEntityManager()->createNativeQuery(" 
             SELECT
                 t.*,
+                $select
                 IF (ts.is_to_acquire = 1, 100, 50) AS score,
                 100 AS max_score
             FROM training t
             INNER JOIN training_skill ts ON ts.training_id = t.id AND ts.skill_id = :skillId
+            $filter
             GROUP BY t.id
+            $having
             ", $rsm);
         $query->setParameter('skillId', $skill->getId());
 
@@ -455,5 +402,81 @@ class TrainingRepository extends ServiceEntityRepository
         ;
 
         return ($result) ? intval($result['max_price']) : 0;
+    }
+
+    protected function getFiltersValues(array $params = []): array
+    {
+        $filter = '';
+        $select = '';
+        $having = '';
+
+        if ($params && is_array($params)) {
+            // Recherche par ville
+            if (
+                array_key_exists('distance', $params) &&
+                array_key_exists('location', $params) && is_array($params['location']) &&
+                array_key_exists('latitude', $params['location']) &&
+                array_key_exists('longitude', $params['location'])
+            ) {
+                $latitude = $params['location']['latitude'];
+                $longitude = $params['location']['longitude'];
+                $select = "CASE
+                    WHEN t.latitude IS NULL AND t.longitude IS NULL THEN NULL 
+                    ELSE 
+                    (
+                        2 * 
+                        ASIN(
+                            (
+                                SQRT(
+                                    POW(COS(((PI()/180) * $latitude)) - COS(((PI()/180) * t.latitude)) * COS((PI()/180) * ($longitude - t.longitude)), 2) +
+                                    POW(COS(((PI()/180) * t.latitude)) * SIN((PI()/180) * ($longitude - t.longitude)), 2) +
+                                    POW(SIN(((PI()/180) * $latitude)) - SIN(((PI()/180) * t.latitude)), 2)    
+                                )
+                            ) / 2
+                        ) / 
+                        (PI()/180) *
+                        ".Training::SEARCH_DEG_CONVERSION."
+                    )
+                END AS distance,";
+                $having = " AND distance < ".intval($params['distance']);
+            }
+
+            $filterParams = [];
+            if (array_key_exists('excludeWithoutDescription', $params) && $params['excludeWithoutDescription'] === true)
+                $filterParams[] = "t.description IS NOT NULL";
+            if (array_key_exists('excludeWithoutDuration', $params) && $params['excludeWithoutDuration'] === true)
+                $filterParams[] = "t.duration_value IS NOT NULL";
+            if (array_key_exists('startAt', $params) && !empty($params['startAt']))
+                $filterParams[] = "t.start_at >= " . intval($params['startAt']);
+            if (array_key_exists('endAt', $params) && !empty($params['endAt']))
+                $filterParams[] = "t.end_at <= " . intval($params['endAt']);
+            if (array_key_exists('isOnline', $params) && is_bool($params['isOnline']) && $params['isOnline'] === true)
+                $filterParams[] = "t.is_online = " . intval($params['isOnline']);
+            if (array_key_exists('isOnlineMonitored', $params) && is_bool($params['isOnlineMonitored']) && $params['isOnlineMonitored'] === true)
+                $filterParams[] = "t.is_online_monitored = " . intval($params['isOnlineMonitored']);
+            if (array_key_exists('isPresential', $params) && is_bool($params['isPresential']) && $params['isPresential'] === true)
+                $filterParams[] = "t.is_presential = " . intval($params['isPresential']);
+            if (
+                array_key_exists('minPrice', $params) && !empty($params['minPrice']) && $params['minPrice'] !== null &&
+                array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null &&
+                array_key_exists('currency', $params)
+            )
+                $filterParams[] = "(t.price > " . floatval($params['minPrice']) . " AND t.price < " . floatval($params['maxPrice']) . " AND t.currency = '" . $params['currency'] . "')";
+
+            if (array_key_exists('minDuration', $params) && !empty($params['minDuration']) && $params['minDuration'] !== null)
+                $filterParams[] = "t.duration_value >= " . intval($params['minDuration']);
+            if (array_key_exists('maxDuration', $params) && !empty($params['maxDuration']) && $params['maxDuration'] !== null)
+                $filterParams[] = "t.duration_value <= " . intval($params['maxDuration']);
+
+            if (count($filterParams) > 0) {
+                $filter = "WHERE (" . implode(' AND ', $filterParams) . ")";
+            }
+        }
+
+        return [
+            $select,
+            $filter,
+            $having
+        ];
     }
 }

@@ -55,10 +55,12 @@ security:
         - { path: ^/api, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
         - { path: ^/account$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/institution$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/institution$, roles: ROLE_INSTITUTION, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/recruiter$, roles: ROLE_RECRUITER, requires_channel: '%router.request_context.scheme%' }
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
         ROLE_ADMIN: ROLE_MODERATOR
         ROLE_MODERATOR: ROLE_USER
         ROLE_INSTITUTION: ROLE_USER
+        ROLE_RECRUITER: ROLE_RECRUITER

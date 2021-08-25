@@ -13,6 +13,7 @@ label:
     name: Name
     location: Location
     duration: Effective duration
+    effective_duration: Eff. duration
     duration_value: Effective Duration (from Start to End Date)
     duration_details: Duration details
     description: Description
@@ -63,6 +64,7 @@ button:
     approve: Approve
     detail: Details
     reject: Reject
+    add_position: Add a position
 header:
     my_institution: My institution    
     my_account: My account    
@@ -75,6 +77,7 @@ nav:
     home: Home
     personal_informations: My account
     institutional_informations: Institutional information
+    company_informations: Company information
     work: Jobs
     training: Training
     change_password: Password
@@ -82,6 +85,7 @@ nav:
     tasks: Tasks
     users: Users
     search_page: Go back to search page
+    vacant_positions: Vacant positions
 
 notification:
     label:
@@ -230,6 +234,7 @@ login_to_finetune: Login to finetune
 training_opportunities_to_land_your_dream_job_as: Training opportunities to land your dream job as
 i_am_an_institution: I am an institution
 i_am_a_user: I am a user
+i_am_a_recruiter: I am a recruiter
 training: Training
 yes: yes
 no: no
@@ -258,6 +263,9 @@ front_account_work_skills_tooltip: Number of associated skills - click for more 
 show_panel: Show panel
 hide_panel: Hide panel
 km_away: km away
+markdown_support_info: support markdown
+effective_duration_tooltip: Effective duration of training
+training_rating_tooltip: Average training score for %voters% voters
 
 tooltip:
     remove_this_skill: Remove this skill

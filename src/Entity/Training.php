@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrainingRepository;
@@ -250,6 +251,16 @@ class Training
     private $completion = 0;
 
     /**
+     * @ORM\Column(type="float", length=255, nullable=true)
+     */
+    private $avgMark = 0;
+
+    /**
+     * @ORM\Column(type="integer", length=10, nullable=false, options={"default": 0, "unsigned": true})
+     */
+    private $totalMark = 0;
+
+    /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
      */
     private $isValidated = 0;
@@ -314,6 +325,44 @@ class Training
 
         $training = $args->getObject();
         $this->_defineCompletion($training);
+    }
+
+    /**
+     * @ORM\PreFlush
+     */
+    public function preFlush(PreFlushEventArgs $args)
+    {
+        if ($this->prePersisted)
+            return;
+
+        $em = $args->getEntityManager();
+        $uow = $em->getUnitOfWork();
+
+        $entityInsertions = $uow->getScheduledEntityInsertions();
+        $feedbacksInsertions = array_filter($entityInsertions, function($entity) {
+            return $entity instanceof TrainingFeedback;
+        });
+
+        // S'il y a eu une modification des modérations, on redéfinie l'état de modération
+        if (count($feedbacksInsertions) > 0) {
+            $feedbacks = $this->getTrainingFeedback();
+
+            foreach ($feedbacksInsertions as $feedbackInsertion) {
+                if ($feedbacks && !$feedbacks->contains($feedbackInsertion)) {
+                    $feedbacks->add($feedbackInsertion);
+                }
+            }
+
+            $avg = $this->getAverageMark($feedbacks);
+            $this->setAvgMark($avg);
+            $this->setTotalMark($feedbacks->count());
+            $this->prePersisted = true;
+            $em->persist($this);
+
+            $meta = $em->getClassMetadata(get_class($this));
+            $uow->recomputeSingleEntityChangeSet($meta, $this);
+            $uow->computeChangeSets($meta, $this);
+        }
     }
 
     protected function _defineCompletion(Training $training)
@@ -795,6 +844,46 @@ class Training
     public function setCompletion(int $completion): self
     {
         $this->completion = $completion;
+
+        return $this;
+    }
+
+    public function getAverageMark(?Collection $feedbacks = NULL): float
+    {
+        $feedbacks = ($feedbacks) ?
+            $feedbacks :
+            $this->getTrainingFeedback();
+
+        $totalMarks = 0;
+        $countMarks = 0;
+        foreach ($feedbacks as $feedback) {
+            $countMarks++;
+            $totalMarks += $feedback->getMark();
+        }
+
+        return ($countMarks > 0 && $totalMarks != 0) ? $totalMarks/$countMarks : 0;
+    }
+
+    public function getAvgMark(): int
+    {
+        return $this->avgMark;
+    }
+
+    public function setAvgMark(float $avgMark): self
+    {
+        $this->avgMark = $avgMark;
+
+        return $this;
+    }
+
+    public function getTotalMark(): int
+    {
+        return $this->totalMark;
+    }
+
+    public function setTotalMark(int $totalMark): self
+    {
+        $this->totalMark = $totalMark;
 
         return $this;
     }

@@ -37,6 +37,7 @@ class User implements UserInterface
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_MODERATOR = 'ROLE_MODERATOR';
     public const ROLE_INSTITUTION = 'ROLE_INSTITUTION';
+    public const ROLE_RECRUITER = 'ROLE_RECRUITER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     protected static $rolesList = [

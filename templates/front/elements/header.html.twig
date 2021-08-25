@@ -13,7 +13,7 @@
             {% if app.user is defined and is_granted('ROLE_USER') %}
                 <div class="dropdown mr-2">
                     <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
+                        {% if app.user is defined and app.user is not null and (is_granted('ROLE_INSTITUTION') or is_granted('ROLE_RECRUITER')) %}
                             {{ app.user.username }}
                         {% elseif app.user is defined and app.user is not null %}
                             {{ app.user.firstname }} {{ app.user.lastname }}
@@ -28,6 +28,8 @@
                             <a class="dropdown-item" href="{{ path('admin_home') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
                         {% elseif app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
                             <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
+                        {% elseif app.user is defined and app.user is not null and is_granted('ROLE_RECRUITER') %}
+                            <a class="dropdown-item" href="{{ path('app_recruiter') }}"><i class="fas fa-industry"></i><span>{{ 'header.my_account'|trans }}</span></a>
                         {% else %}
                             <a class="dropdown-item" href="{{ path('app_account') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
                         {% endif %}

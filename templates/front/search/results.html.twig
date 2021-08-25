@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-6 col-lg-3 text-right">
 				{% if user is defined and user is not null %}
-					<div class="custom-control custom-checkbox">
+					<div class="custom-control custom-checkbox d-inline-block">
 						<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
 						<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
 					</div>
@@ -72,6 +72,14 @@
 					<button type="button" class="btn btn-sm btn-light mb-1 tag-endAt">
 						End at
 						{{ requestParams.endAt }}
+						<span class="delete">&times;</span>
+					</button>
+				{% endif %}
+
+				{% if requestParams.minDuration is defined and requestParams.maxDuration is defined
+					and (requestParams.minDuration != 0 or requestParams.maxDuration != 100) %}
+					<button type="button" class="btn btn-sm btn-light mb-1 tag-duration">
+						{{ requestParams.minDuration }} - {{ requestParams.maxDuration }} {{ requestParams.unity is defined ? requestParams.unity : 'days' }}
 						<span class="delete">&times;</span>
 					</button>
 				{% endif %}
@@ -134,6 +142,16 @@
 											{{ 'match'|trans  }})
 										</div>
 									</button>
+									<div class="d-flex flex-row justify-content-start align-items-center mr-2">
+										<span class="rating" data-value="{{ training.avgMark }}"></span>
+										<span
+											title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
+											data-toggle="tooltip"
+											style="font-size: 0.8rem;"
+										>
+											({{ training.totalMark }})
+										</span>
+									</div>
 									<div class="count">
 										({{ loop.index }}
 										of

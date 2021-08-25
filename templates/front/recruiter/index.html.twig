@@ -1,0 +1,68 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block title %}Recruiter
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+	{{ encore_entry_link_tags('app') }}
+	{{ encore_entry_link_tags('recruiter') }}
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<section id="recruiter">
+
+					<a class="btn btn-primary mb-4" href="{{ path('app_home') }}">
+						<i class="fas fa-search"></i>
+						<span>{{ 'header.full_search_page'|trans }}</span>
+					</a>
+
+					<ul class="nav nav-tabs" id="account-tab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link {% if (tab is defined and (tab == 'personal_informations' or tab == false)) or tab is not defined %}active{% endif %}" id="personal_informations-tab" data-toggle="tab" href="#content-personal_informations" name="content-personal_informations" role="tab">
+								<i class="fas fa-building"></i>
+								{{ 'nav.company_informations'|trans }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% if tab is defined and tab == 'vacant_positions' %}active{% endif %}" id="vacant_positions-tab" data-toggle="tab" href="#content-vacant_positions" name="content-vacant_positions" role="tab">
+								<i class="fas fa-crosshairs"></i>
+								{{ 'nav.vacant_positions'|trans }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {% if tab is defined and tab == 'change_password' %}active{% endif %}" id="change_password-tab" data-toggle="tab" href="#content-change_password" name="content-change_password" role="tab">
+								<i class="fas fa-key"></i>
+								{{ 'nav.change_password'|trans }}</a>
+						</li>
+					</ul>
+
+					<div class="tab-content" id="account-tab-content">
+						<div class="tab-pane fade {% if (tab is defined and (tab == 'personal_informations' or tab == false)) or tab is not defined %}show active{% endif %}" id="content-personal_informations" role="tabpanel">
+							{% include 'front/recruiter/informations.html.twig' %}
+						</div>
+						<div class="tab-pane fade {% if tab is defined and tab == 'vacant_positions' %}show active{% endif %}" id="content-vacant_positions" role="tabpanel">
+							{% include 'front/recruiter/vacant_positions.html.twig' %}
+						</div>
+						<div class="tab-pane fade {% if tab is defined and tab == 'change_password' %}show active{% endif %}" id="content-change_password" role="tabpanel">
+							{% include 'front/recruiter/change_password.html.twig' %}
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+
+	{% include 'front/elements/modal.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	{{ encore_entry_script_tags('main') }}
+	{{ encore_entry_script_tags('recruiter') }}
+	{{ encore_entry_script_tags('common') }}
+{% endblock %}

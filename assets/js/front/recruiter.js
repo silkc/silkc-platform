@@ -6,7 +6,7 @@ import autocomplete from 'autocompleter';
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../../scss/elements/header.scss';
-import '../../scss/institutional.scss';
+import '../../scss/recruiter.scss';
 
 
 require('bootstrap');
@@ -19,13 +19,13 @@ const bootbox = require('bootbox/bootbox');
 require('bootstrap-select');
 import 'bootstrap-select/dist/css/bootstrap-select.min.css'
 
-class Institutional {
-    instanceProperty = "Institutional";
+class Recruiter {
+    instanceProperty = "Recruiter";
     boundFunction = () => {
         return this.instanceProperty;
     }
 
-    tplSkill = (skill, type, rmv = false, associated = false) => {
+    tplSkill = (skill, rmv = false, associated = false) => {
 
         return `<li class="list-group-item">
             <div class="d-flex flex-nowrap justify-content-between">
@@ -33,7 +33,7 @@ class Institutional {
                     <span>${skill.preferredLabel}</span>
                 </div>
                 <div>
-                    <a href="#" class="${associated ? 'associated' : ''} ${rmv ? 'rmv' : 'add'}" data-id="${skill.id}" data-name="${skill.preferredLabel}" data-type="${type}">
+                    <a href="#" class="${associated ? 'associated' : ''} ${rmv ? 'rmv' : 'add'}" data-id="${skill.id}" data-name="${skill.preferredLabel}">
                         <i class="fas ${rmv ? 'fa-minus' : 'fa-plus'}"></i>
                     </a>
                 </div>
@@ -42,19 +42,19 @@ class Institutional {
     }
 
     /**
-     * Duplicate a training
+     * Duplicate a position
      */
-    duplicateTraining = () => {
-        $('body').on('click', '#list-trainings .clone', function(e) {
+    duplicatePosition = () => {
+        $('body').on('click', '#list-positions .clone', function(e) {
             e.preventDefault();
 
         });
     }
 
     /**
-     * Ajout de compétences à un training
+     * Ajout de compétences à un position
      */
-     addSkillsToTraining = () => {
+     addSkillsToPosition = () => {
 
         let _this = this; 
 
@@ -70,14 +70,14 @@ class Institutional {
             
             if (!skillName) return false;
 
-            status = _this.addSkillToHiddenField(type, skillId);
+            status = _this.addSkillToHiddenField(skillId);
             if (status === false) {
                 skillNameInput.val('');
                 skillIdInput.val('');
                 return false;
             }
 
-            let ulOccupationsAcquired = $('#skills-occupations-acquired');
+            let ulOccupationsAcquired = $('#skills-occupations');
             let statusAppend = true;
 
             if (type != "required" && ulOccupationsAcquired) {
@@ -97,100 +97,63 @@ class Institutional {
 
             if (!statusAppend) return false;
             let data = {id: skillId, preferredLabel: skillName};
-            let html = _this.tplSkill(data, type, true);
+            let html = _this.tplSkill(data, true);
             $(html).appendTo(ul);
         });
     }
 
 
-     addSkillToHiddenField = (type, skillId) => {
-
-        let skillsList = {};
-        let inputSkillsList = $('body').find('#hidden_trainingSkills');
-        skillsList = inputSkillsList.val();
+     addSkillToHiddenField = (skillId) => {
+        let inputSkillsList = $('body').find('#hidden_positionSkills');
+        console.log('INPUT', inputSkillsList, inputSkillsList.val());
+        let skillsList = JSON.parse(inputSkillsList.val()) || {};
+        console.log('SKILList', skillsList);
         skillId = parseInt(skillId);
 
-        if (skillsList) {
-            skillsList = JSON.parse(inputSkillsList.val());
-            if (type == 'required') {
-                if ('required' in skillsList) {
-                    if (type == 'required') {
-                        if (skillsList.required.includes(skillId)) return false;
-                        skillsList.required = [skillId, ...skillsList.required];
-                    }
-                } else {
-                    if (type == 'required') {
-                        if (skillsList.required.includes(skillId)) return false;
-                        skillsList.required = [skillId];
-                    }
-                }
-            }
-            if (type == 'acquired') {
-                if ('acquired' in skillsList) {
-                    if (type == 'acquired') {
-                        if (skillsList.acquired.includes(skillId)) return false;
-                        skillsList.acquired = [skillId, ...skillsList.acquired];
-                    }
-                } else {
-                    if (type == 'acquired') {
-                        if (skillsList.acquired.includes(skillId)) return false;
-                        skillsList.acquired = [skillId];
-                    }
-                }
-            }
-        } else {
-            skillsList = {};
-            if (type == 'required') {
-                if (skillsList.required.includes(skillId)) return false;
-                skillsList.required = [skillId];
-            }
-            if (type == 'acquired') {
-                if (skillsList.acquired.includes(skillId)) return false;
-                skillsList.acquired = [skillId];
-            }
-        }
-        
+        if (skillsList.includes(skillId))
+            return false;
+
+        skillsList = [skillId, ...skillsList];
+
         inputSkillsList.val(JSON.stringify(skillsList))
     }
 
 
     /**
-     * Suppression de compétences à un training
+     * Suppression de compétences à un position
      */
-     removeSkillToHiddenField = (type, skillId) => {
+     removeSkillToHiddenField = (skillId) => {
 
         let _this = this;
-        let inputSkillsList = $('#hidden_trainingSkills');
+        let inputSkillsList = $('#hidden_positionSkills');
         skillId = parseInt(skillId);
 
-        if (type && skillId && inputSkillsList) {
+        if (skillId && inputSkillsList) {
             let skillsList = inputSkillsList.val();
             if (skillsList) {
                 skillsList = JSON.parse(skillsList);
-                if (type in skillsList) {
-                    if (skillsList[type].includes(skillId)) {
-                        skillsList[type] = skillsList[type].filter(function (el) {
-                            return el != skillId;
-                        });
-                        inputSkillsList.val(JSON.stringify(skillsList));
-                    }
+
+                if (skillsList.includes(skillId)) {
+                    skillsList = skillsList.filter(function (el) {
+                        return el != skillId;
+                    });
+                    inputSkillsList.val(JSON.stringify(skillsList));
                 }
             }
         }
     }
 
-    removeSkillsToTraining = () => {
+    removeSkillsToPosition = () => {
 
         let _this = this;
 
-        $('body').on('click', '.ul-skills:not(#skills-occupations-acquired) .rmv', function(e) {
+        $('body').on('click', '.ul-skills:not(#skills-occupations) .rmv', function(e) {
             e.preventDefault();
-            
-            let type = $(this).attr('data-type');
-            let skillId = $(this).attr('data-id');
-            let inputSkillsList = $('#hidden_trainingSkills');
 
-            _this.removeSkillToHiddenField(type, skillId);
+            let skillId = $(this).attr('data-id');
+            let inputSkillsList = $('#hidden_positionSkills');
+
+            _this.removeSkillToHiddenField(skillId);
             $(this).closest('.list-group-item').remove();
         });
     }
@@ -207,7 +170,7 @@ class Institutional {
             let baseUrl = '/apip/occupation_skills';
             let params = $.param({'occupation': occupation_id});
             let url = `${baseUrl}?${params}`;
-            let ul = $('#skills-occupations-acquired');                             
+            let ul = $('#skills-occupations');
             let ulNotOccupation = $('#skills-not-occupations-acquired');
 
             // Si aucune selection d'un metier
@@ -242,7 +205,7 @@ class Institutional {
 
             let skillsList = {};
             skillsList.acquired = [];
-            let inputSkillsList = $('body').find('#hidden_trainingSkills');
+            let inputSkillsList = $('body').find('#hidden_positionSkills');
             if (inputSkillsList) {
                 skillsList = inputSkillsList.val();
                 if (skillsList && skillsList.length > 0) {
@@ -277,17 +240,15 @@ class Institutional {
                         let html = ``;
                         if (data && data.length > 0) {
                             for (let i = 0; i < data.length; i++) {
-                                // Si il y a des comptences liées (dans la partie competences non liées au metier)
-                                // on les deplace dans la partie liée au metier
-                                if ('acquired' in skillsList
-                                    && skillsList.acquired.includes(data[i].skill.id)) {
+                                if (skillsList.includes(data[i].skill.id)) {
                                     if (ulNotOccupation.find('.rmv[data-id="' + data[i].skill.id + '"]').length > 0) {
                                         ulNotOccupation.find('.rmv[data-id="' + data[i].skill.id + '"]').closest('.list-group-item').remove();
                                     }
-                                    html += _this.tplSkill(data[i].skill, "acquired", true, true);
-                                } else {
-                                    html += _this.tplSkill(data[i].skill, "acquired");
-                                }
+
+                                    html += _this.tplSkill(data[i].skill, true, true);
+                                } else
+                                    html += _this.tplSkill(data[i].skill);
+
                                 if (i == data.length - 1) {
                                     $(html).appendTo(ul);
 
@@ -325,12 +286,11 @@ class Institutional {
         $('body').on('click', '#all-associated', function(e) {
             e.preventDefault();
 
-            let ul = $('#skills-occupations-acquired');
+            let ul = $('#skills-occupations');
             if (ul.find('li').length > 0) {
                 ul.find('li').each(function(k) {
                     let skill = $(this).find('a.add');
                     let skillId = skill.attr('data-id');
-                    let type = skill.attr('data-type');
                     
                     skill.addClass('associated');
                     
@@ -338,7 +298,7 @@ class Institutional {
                     skill.children().remove();
                     skill.append('<i class="fas fa-minus"></i>');
                     
-                    _this.addSkillToHiddenField(type, skillId);
+                    _this.addSkillToHiddenField(skillId);
                 });
 
                 $(this).attr('id', 'all-unassociated').html('All unassociated')
@@ -348,7 +308,7 @@ class Institutional {
         $('body').on('click', '#all-unassociated', function(e) {
             e.preventDefault();
 
-            let ul = $('#skills-occupations-acquired');
+            let ul = $('#skills-occupations');
             if (ul.find('li').length > 0) {
                 ul.find('li').each(function(k) {
                     let skill = $(this).find('a.rmv');
@@ -361,14 +321,14 @@ class Institutional {
                     skill.children().remove();
                     skill.append('<i class="fas fa-plus"></i>');
                     
-                    _this.removeSkillToHiddenField(type, skillId);
+                    _this.removeSkillToHiddenField(skillId);
                 });
 
                 $(this).attr('id', 'all-associated').html('All associated')
             }
         });
 
-        $('body').on('click', '#skills-occupations-acquired .add', function(e) {
+        $('body').on('click', '#skills-occupations .add', function(e) {
             e.preventDefault();
 
             let skillId = $(this).attr('data-id');
@@ -380,10 +340,10 @@ class Institutional {
             $(this).children().remove();
             $(this).append('<i class="fas fa-minus"></i>');
             
-            _this.addSkillToHiddenField(type, skillId);
+            _this.addSkillToHiddenField(skillId);
         });
         
-        $('body').on('click', '#skills-occupations-acquired .rmv', function(e) {
+        $('body').on('click', '#skills-occupations .rmv', function(e) {
             e.preventDefault();
             
             let skillId = $(this).attr('data-id');
@@ -395,7 +355,7 @@ class Institutional {
             $(this).children().remove();
             $(this).append('<i class="fas fa-plus"></i>');
 
-            _this.removeSkillToHiddenField(type, skillId);
+            _this.removeSkillToHiddenField(skillId);
         });
     }
 
@@ -425,7 +385,7 @@ class Institutional {
                 render: function(item, currentValue) {
                     let div = document.createElement('div');
                     div.dataset.id = item.id;                    
-                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table training
+                    div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table position
                     return div;
 
                 },
@@ -499,7 +459,7 @@ class Institutional {
                         && (
                             (url.includes("skills") && 'skills' in datas)
                             || (url.includes("occupations") && 'occupations' in datas)
-                            || (url.includes("trainings") && 'trainings' in datas)
+                            || (url.includes("positions") && 'positions' in datas)
                         )) {
                         
                         let data = {};
@@ -507,8 +467,8 @@ class Institutional {
                             data = JSON.parse(datas.skills);
                         if (url.includes("occupations"))
                             data = JSON.parse(datas.occupations);
-                        if (url.includes("trainings"))
-                            data = JSON.parse(datas.trainings);
+                        if (url.includes("positions"))
+                            data = JSON.parse(datas.positions);
 
                         runAutocomplete(data, input);
                         
@@ -521,8 +481,8 @@ class Institutional {
                                     datas.skills = JSON.stringify(data);
                                 if (url.includes("occupations"))
                                     datas.occupations = JSON.stringify(data);
-                                if (url.includes("trainings"))
-                                    datas.trainings = JSON.stringify(data);
+                                if (url.includes("positions"))
+                                    datas.positions = JSON.stringify(data);
 
                                 runAutocomplete(data, input);
                             }
@@ -549,7 +509,7 @@ class Institutional {
      */
      runMap = () => {
 
-        let inputHidden = document.getElementById('institution_address');
+        let inputHidden = document.getElementById('recruiter_address');
         var map = null;
 
         if (inputHidden) {
@@ -619,7 +579,7 @@ class Institutional {
      */
      runMapModal = () => {
 
-        let inputHidden = document.getElementById('institution-location');
+        let inputHidden = document.getElementById('recruiter-location');
         var map = null;
         map = L.map('map-modal').setView([0, 0], 1);
         let geocoder = L.Control.Geocoder.nominatim();
@@ -696,7 +656,7 @@ class Institutional {
             let $modal = $('#common-modal');
             let name = $modal.find('input#institution-name').val();
             let address = $modal.find('input#institution-location').val();
-            let $institutionDropdown = $('select[name="training[user]"]');
+            let $institutionDropdown = $('select[name="position[user]"]');
 
             if (!name) return false;
 
@@ -744,19 +704,19 @@ class Institutional {
         });
     }
 
-    runMapTraining = () => { 
+    runMapPosition = () => {
 
-        $('#institutional #list-trainings').on('shown.bs.collapse', function (e) {
+        $('#recruiter #list-positions').on('shown.bs.collapse', function (e) {
             let blcMap = e.target.querySelector('.blc-map');
             if (blcMap) {
                 let mapContent = blcMap.querySelector('.map');
-                let trainingAddress = blcMap.querySelector('.training_address');
-                let trainingAddressHidden = blcMap.querySelector('.training_address_hidden');
+                let positionAddress = blcMap.querySelector('.position_address');
+                let positionAddressHidden = blcMap.querySelector('.position_address_hidden');
 
                 if (mapContent.innerHTML != '') return false;
 
                 let map = null;
-                let coords = trainingAddressHidden.value;
+                let coords = positionAddressHidden.value;
     
                 if (!coords) return false;
 
@@ -789,8 +749,8 @@ class Institutional {
                     if (coords) {
                         let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
                         marker.bindPopup(coords.city); // Bulle d'info
-                        
-                        trainingAddress.value = coords.city;
+
+                        positionAddress.value = coords.city;
                     }
                 } else {
                     blcMap.innerHTML = '<input type="text" class="form-control" disabled="disabled" name="name" value="' + coords + '">';
@@ -800,11 +760,11 @@ class Institutional {
         })
    }
 
-   runMapAddTraining = () => { 
+   runMapAddPosition = () => {
 
-        let inputHidden = document.querySelector('form[name="training"] #training_location');
-        let inputHiddenLat = document.querySelector('form[name="training"] #training_latitude');
-        let inputHiddenLng = document.querySelector('form[name="training"] #training_longitude');
+        let inputHidden = document.querySelector('form[name="position"] #position_location');
+        let inputHiddenLat = document.querySelector('form[name="position"] #position_latitude');
+        let inputHiddenLng = document.querySelector('form[name="position"] #position_longitude');
         var map = null;
 
         if (inputHidden) {
@@ -826,7 +786,7 @@ class Institutional {
             let geocoder = L.Control.Geocoder.nominatim();
             let control = L.Control.geocoder({
                 collapsed: false,
-                placeholder: (window.location.href).indexOf('institution') != -1 ? 'Address' : 'City',
+                placeholder: (window.location.href).indexOf('recruiter') != -1 ? 'Address' : 'City',
                 position: 'topleft',
                 geocoder: geocoder
             }).on('markgeocode', function(e) {
@@ -883,15 +843,15 @@ class Institutional {
     
     init = function() {
         this.runAutocompletion();
-        this.duplicateTraining();
-        this.addSkillsToTraining();
+        this.duplicatePosition();
+        this.addSkillsToPosition();
         this.addSkillOccupation();
         this.getSkillsFromOccupation();
-        this.removeSkillsToTraining();
+        this.removeSkillsToPosition();
         this.displayMessage();
         this.runMap();
-        this.runMapTraining();
-        this.runMapAddTraining();
+        this.runMapPosition();
+        this.runMapAddPosition();
         this.runModalAddUser();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
@@ -913,15 +873,15 @@ class Institutional {
         // TABS
         let hash = location.hash.replace(/^#/, ''); 
         if (hash) {
-            $('#institutional [data-toggle="tab"][href="#' + hash + '"]').tab('show');
+            $('#recruiter [data-toggle="tab"][href="#' + hash + '"]').tab('show');
         }
-        $('#institutional [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('#recruiter [data-toggle="tab"]').on('shown.bs.tab', function (e) {
             window.location.hash = e.target.hash;
         });
     }
 }
 
 $(document).ready(function() {
-    var institutional = new Institutional();
-    institutional.init();
+    var recruiter = new Recruiter();
+    recruiter.init();
 });
