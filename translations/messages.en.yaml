@@ -14,13 +14,13 @@ label:
     location: Location
     duration: Effective duration
     effective_duration: Eff. duration
-    duration_value: Effective Duration (from Start to End Date)
+    duration_value: Effective duration (from start to end Date)
     duration_details: Duration details
     description: Description
     roles: Roles
     price: Price
-    start_at: Start Date
-    end_at: End Date
+    start_at: Start date
+    end_at: End date
     start: Start
     end: End
     training_info_url: Training info URL
@@ -54,10 +54,10 @@ placeholder:
     duration_details: 'Ex: Mondays and Tuesdays from 8 a.m. to 10 a.m.'
 button:
     see_related_trainings: See related trainings
-    see_skills_to_be_learn: See skills to be learn
+    see_skills_to_be_learn: See skills to be learnt
     suspend: Suspend
-    unsuspend: Unsuspend
-    suspect: Mark user as "suspect"
+    unsuspend: Restore
+    suspect: Mark user as "suspicious"
     raise_suspicion: Mark suspicious
     edit: Edit
     delete: Delete
@@ -156,7 +156,7 @@ login:
         title:
             connect: Connect
             signup: Inscription
-            you_do_not_have_an_account: You do not have an account?
+            you_do_not_have_an_account: Don't have an account?
             forgot_password: Forgot password
         label:
             username: Username
@@ -222,8 +222,8 @@ please_indicate_any_professional_training: Please indicate any professional trai
 don_t_find_your_training: Can't find your training? Add it here!
 don_t_find_your_institution: Can't find your institution? Add it here!
 training_name: Training name
-please_indicate_your_current_job: Please indicate your current job. We will use it to guess your current skills.
-please_indicate_any_previous_jobs: Please indicate any previous job. We will use them to guess your skills. Use the + button to add more.
+please_indicate_your_current_job: Please indicate your current job. We will use it to suggest your current skills.
+please_indicate_any_previous_jobs: Please indicate any previous job. We will use them to suggest your skills. Use the + button to add more.
 please_indicate_your_desired_jobs: Please indicate your desired jobs. We will use them to give you the best training based on your location and current skillset.
 current_job: Current job
 previous_job: Previous job
@@ -273,23 +273,23 @@ tooltip:
     remove_this_job: Remove this job
 
 
-info_search_result: "Info: We come up with the training suggestions below based on the information you provided in profile (experience, training, skills, age, location) and the experiences
-                    of other successful peaople in similar sircumstances. Our system evolves continuously when new people search for training and report their own experiences.
-                    This is why it is important taht you provide us with some feedback about past training or work experiences. Your experience may help others find their ideal job!"
+info_search_result: "Info: We come up with training suggestions below based on the information you provided in profile (experience, training, skills, age, location) and the experiences
+                    of other successful people in similar circumstances. Our system evolves continuously when new people search for training and report their own experiences.
+                    This is why it is important that you provide us with some feedback about past training or work experiences. Your experience may help others find their ideal job!"
 
 flash:
-    your_account_is_validated: Your account is now validated, thank you.
+    your_account_is_validated: Your account has been validated, thank you.
     invalid_code: The validation code is invalid.
     expired_code: Code expired.
     unknown_email: Unknown email.
     unknown_user: Unknown user.
-    validation_link_has_been_sent: A validation link has been sent to your e-mail
-    an_error_occured: An error occured
-    email_already_exists: This email address is already in use
-    username_already_exists: This username is already in use
+    validation_link_has_been_sent: A validation link has been sent to your e-mail.
+    an_error_occured: An error occured.
+    email_already_exists: This email address is already in use.
+    username_already_exists: This username is already in use.
     your_password_is_changed: Your password has been changed.
     non_identical_password: Non-identical passwords.
-    search_parameters_error: An error occurred in the search parameters
+    search_parameters_error: An error occurred in the search parameters.
     search_save_results_label: Keep my searches
 
 search_history:
