@@ -39,6 +39,19 @@
 
         <div id="searchmap"></div>
         <div id="map"></div>
+		<p class="text-right">
+			<button
+				class="btn btn-link"
+				id="copy-location"
+				{{ (training.latitude is not defined or training.latitude is empty or training.longitude is not defined or training.longitude is empty) ? 'disabled="disabled"' }}
+				data-location="{{ (training.latitude is defined and training.latitude is not empty and training.longitude is defined and training.longitude is not empty) ? training.latitude ~ ' ' ~ training.longitude : 'NA'|trans }}"
+				title="{{ 'Copy location to cliboard'|trans }}"
+				data-toggle="tooltip"
+			>
+				<i class="far fa-copy"></i>
+				{{ 'Copy location'|trans }}
+			</button>
+		</p>
 		{{ form_row(form.location) }}
 		{{ form_row(form.url) }}
 		<div class="form-group">

@@ -164,6 +164,16 @@ class User implements UserInterface
     private $isSearchesKept = 1;
 
     /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 1})
+     */
+    private $isListeningPosition = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
+     */
+    private $upToDistance;
+
+    /**
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
     private $code;
@@ -639,6 +649,30 @@ class User implements UserInterface
     public function setIsSearchesKept(bool $isSearchesKept): self
     {
         $this->isSearchesKept = $isSearchesKept;
+
+        return $this;
+    }
+
+    public function getUpToDistance(): ?int
+    {
+        return $this->upToDistance;
+    }
+
+    public function setUpToDistance(bool $upToDistance): self
+    {
+        $this->upToDistance = $upToDistance;
+
+        return $this;
+    }
+
+    public function getIsListeningPosition(): ?bool
+    {
+        return $this->isListeningPosition;
+    }
+
+    public function setIsListeningPosition(bool $isListeningPosition): self
+    {
+        $this->isListeningPosition = $isListeningPosition;
 
         return $this;
     }

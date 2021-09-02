@@ -63,4 +63,53 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    public function searchAffectedUsers(array $skills)
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult( 'count_all', 'count_all');
+        $rsm->addScalarResult( 'count_listening', 'count_listening');
+
+        $query = $this->getEntityManager()
+            ->createNativeQuery('
+                SELECT 
+                    COUNT(ssq.user_id) AS count_all,
+                    IFNULL(SUM(IF(u.is_listening_position = 1, 1, 0)), 0) AS count_listening
+                FROM (
+                    SELECT 
+                        sq.user_id,
+                        COUNT(DISTINCT(sq.skill_id)) AS count_skills
+                    FROM (
+                        SELECT
+                            us.user_id,
+                            us.skill_id
+                        FROM
+                            user_skill AS us
+                        WHERE
+                            us.skill_id IN(:skillIDs) AND us.is_selected = 1
+                
+                        UNION
+                
+                        SELECT
+                            ut.user_id,
+                            ts.skill_id
+                        FROM
+                            training_skill AS ts
+                        INNER JOIN user_training AS ut ON ts.training_id = ut.training_id 
+                        WHERE ts.skill_id IN (:skillIDs)
+                        GROUP BY ut.user_id, ts.skill_id
+                    ) AS sq
+                    GROUP BY sq.user_id
+                    HAVING count_skills >= :countRequiredSkills
+                ) AS ssq
+                INNER JOIN user AS u ON u.id = ssq.user_id
+            ', $rsm)
+            ->setParameter('userId', 1)
+            ->setParameter('skillIDs', $skills)
+            ->setParameter('countRequiredSkills', count($skills));
+
+        $result = $query->getOneOrNullResult();
+
+        return $result;
+    }
 }

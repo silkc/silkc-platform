@@ -801,7 +801,7 @@ class Institutional {
    }
 
    runMapAddTraining = () => { 
-
+        let copyLocationBtn = document.getElementById('copy-location');
         let inputHidden = document.querySelector('form[name="training"] #training_location');
         let inputHiddenLat = document.querySelector('form[name="training"] #training_latitude');
         let inputHiddenLng = document.querySelector('form[name="training"] #training_longitude');
@@ -847,6 +847,11 @@ class Institutional {
                     inputHidden.value = newCoords;
                     inputHiddenLat.value = lat;
                     inputHiddenLng.value = lng;
+
+                    if (copyLocationBtn) {
+                        copyLocationBtn.disabled = false;
+                        copyLocationBtn.setAttribute('data-location', lat + ' ' + lng);
+                    }
                 }
             }).addTo(map);
 
@@ -878,6 +883,26 @@ class Institutional {
                 let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
                 leafletControlGeocoderForm.value = coords.city;
             }
+        }
+
+        // Copy cliboard de la location
+        if (copyLocationBtn) {
+            copyLocationBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (copyLocationBtn.disabled == true)
+                    return false;
+
+                const elem = this;
+                const locationValue = this.getAttribute('data-location');
+
+                navigator.clipboard.writeText('bien').then(function() {
+                    bootbox.alert("Copying location to clipboard was successful: <br><br>" + locationValue);
+                }, function(err) {
+                    bootbox.alert('An error occured');
+                });
+            });
         }
    }
     

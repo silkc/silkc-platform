@@ -4,6 +4,8 @@ namespace App\Form\Type;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -41,6 +43,16 @@ class UserType extends AbstractType
                     'label' => 'login.form.label.address',
                     'translation_domain' => 'messages',
                     'required'   => false,
+                ])
+                ->add('isListeningPosition', CheckboxType::class, [
+                    'label'    => 'label.listening_position',
+                    'required' => false,
+                ])
+                ->add('upToDistance', NumberType::class, [
+                    'translation_domain' => 'messages',
+                    'label'              => 'label.up_to_distance',
+                    'required'           => false,
+                    'attr' => ['placeholder' => 'placeholder.up_to_distance']
                 ]);
 
         if (array_key_exists('by_admin', $options) && $options['by_admin'] === true) {

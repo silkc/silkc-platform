@@ -9,7 +9,7 @@ import '../../scss/elements/header.scss';
 import '../../scss/recruiter.scss';
 
 
-require('bootstrap');
+const bootstrap = require('bootstrap');
 //require('popper');
 var moment = require('moment');
 require('chart.js');
@@ -99,15 +99,15 @@ class Recruiter {
             let data = {id: skillId, preferredLabel: skillName};
             let html = _this.tplSkill(data, true);
             $(html).appendTo(ul);
+
+            _this.resetAffectedUsers();
         });
     }
 
 
      addSkillToHiddenField = (skillId) => {
         let inputSkillsList = $('body').find('#hidden_positionSkills');
-        console.log('INPUT', inputSkillsList, inputSkillsList.val());
         let skillsList = JSON.parse(inputSkillsList.val()) || {};
-        console.log('SKILList', skillsList);
         skillId = parseInt(skillId);
 
         if (skillsList.includes(skillId))
@@ -155,6 +155,7 @@ class Recruiter {
 
             _this.removeSkillToHiddenField(skillId);
             $(this).closest('.list-group-item').remove();
+            _this.resetAffectedUsers();
         });
     }
 
@@ -303,6 +304,8 @@ class Recruiter {
 
                 $(this).attr('id', 'all-unassociated').html('All unassociated')
             }
+
+            _this.resetAffectedUsers();
         });
 
         $('body').on('click', '#all-unassociated', function(e) {
@@ -326,6 +329,8 @@ class Recruiter {
 
                 $(this).attr('id', 'all-associated').html('All associated')
             }
+
+            _this.resetAffectedUsers();
         });
 
         $('body').on('click', '#skills-occupations .add', function(e) {
@@ -341,6 +346,7 @@ class Recruiter {
             $(this).append('<i class="fas fa-minus"></i>');
             
             _this.addSkillToHiddenField(skillId);
+            _this.resetAffectedUsers();
         });
         
         $('body').on('click', '#skills-occupations .rmv', function(e) {
@@ -356,8 +362,16 @@ class Recruiter {
             $(this).append('<i class="fas fa-plus"></i>');
 
             _this.removeSkillToHiddenField(skillId);
+            _this.resetAffectedUsers();
         });
     }
+
+    resetAffectedUsers = () => {
+        const $button = $('button#display-affected-users');
+        const $resultContainer = $('p#affected-users');
+        $button.show();
+        $resultContainer.addClass('hidden');
+    };
 
     
     /**
@@ -840,6 +854,42 @@ class Recruiter {
             }
         }
    }
+
+    runCalculateAffectedUsers = () => {
+        const $inputSkillsList = $('input#hidden_positionSkills');
+        const $button = $('button#display-affected-users');
+        const $resultContainer = $('p#affected-users');
+
+        $('body').on('click', 'button#display-affected-users', function(e) {
+            e.preventDefault();
+
+            $button.hide();
+            $resultContainer.removeClass('hidden').find('span:last').html('<i class="fas fa-spinner fa-spin"></i>');
+
+            let skillsList = JSON.parse($inputSkillsList.val()) || {};
+
+            let token = $('body').attr('data-token');
+            let url = '/api/add_institution';
+            let data = {skills: skillsList};
+
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                data: data,
+                headers: {"X-auth-token": token},
+                url: '/api/search_affected_users',
+                success: function (data, textStatus, jqXHR) {
+                    console.log('DATA', data, data.data);
+                    $resultContainer.find('span:last').html('Number total of affected users: ' + data.data.count_all + '<br>Number of listening position users: ' + data.data.count_listening);
+                },
+                error : function(jqXHR, textStatus, errorThrown){
+                    $resultContainer.addClass('hidden');
+                    bootbox.alert('An error occured');
+                },
+                complete : function(jqXHR, textStatus ){}
+            });
+        });
+    }
     
     init = function() {
         this.runAutocompletion();
@@ -853,6 +903,7 @@ class Recruiter {
         this.runMapPosition();
         this.runMapAddPosition();
         this.runModalAddUser();
+        this.runCalculateAffectedUsers();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();

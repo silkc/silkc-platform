@@ -31,6 +31,21 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="form-group col-md-6">
+		{{ form_row(form.isListeningPosition) }}
+	</div>
+	<div class="form-group col-md-6">
+		<div class="input-group mb-3">
+			<span class="input-group-text">
+				{{ 'label.up_to_distance'|trans }}
+			</span>
+			{{ form_widget(form.upToDistance) }}
+			<span class="input-group-text">km</span>
+		</div>
+	</div>
+</div>
+
 {% if form.offsetExists('password') %}
 	<div class="row special">
 		{{ form_row(form.password) }}

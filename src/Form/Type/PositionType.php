@@ -80,6 +80,10 @@ class PositionType extends AbstractType
                 'choices' => Position::getCurrencies(TRUE),
                 'attr' => ['class' => 'custom-select']
             ])
+            ->add('isVisible', CheckboxType::class, [
+                'label'    => 'label.is_visible',
+                'required' => false,
+            ])
             ->add('startAt', DateTimeType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.start_at',

@@ -50,10 +50,14 @@ label:
     days: Days
     weeks: Weeks
     months: Months
+    is_visible: Is visible
+    listening_position: I am listening to a position
+    up_to_distance: Up to
 placeholder:
     training_price: 'Ex: 1000.00'
     duration_details: 'Ex: Mondays and Tuesdays from 8 a.m. to 10 a.m.'
     salary_price: Salary price
+    up_to_distance: 200
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learnt
@@ -311,3 +315,7 @@ złoty: złoty
 Save: Save
 Occupation: Occupation
 Invalid password: Invalid password
+Copy location: Copy location
+Copy location to cliboard: Copy location to cliboard
+Calculate the number of affected users: Calculate the number of affected users
+Results: Results

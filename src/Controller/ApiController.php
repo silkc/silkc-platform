@@ -406,4 +406,30 @@ class ApiController extends AbstractController
 
         return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
     }
+
+    /**
+     * @Route("/search_affected_users", name="search_affected_users", methods={"GET"})
+     */
+    public function search_affected_users(Request $request, UserRepository $userRepository)
+    {
+        $skills = $request->query->get('skills', null);
+
+        $defaultData = ['count_all' => 0, 'count_listening' => 0];
+
+        if (!$skills || !is_array($skills) || count($skills) == 0)
+            return $this->json(['result' => true, 'data' => $defaultData], 200, ['Access-Control-Allow-Origin' => '*']);
+
+        $result = $userRepository->searchAffectedUsers($skills);
+
+        $data = (
+            $result &&
+            is_array($result) &&
+            array_key_exists('count_all', $result) &&
+            array_key_exists('count_listening', $result)
+        ) ?
+            $result :
+            $defaultData;
+
+        return $this->json(['result' => true, 'data' => $data], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
 }

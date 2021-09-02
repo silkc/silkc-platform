@@ -144,6 +144,11 @@ class Position
     private $completion = 0;
 
     /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 1})
+     */
+    private $isVisible = 1;
+
+    /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
      */
     private $isValidated = 0;
@@ -473,6 +478,18 @@ class Position
     public function setCompletion(int $completion): self
     {
         $this->completion = $completion;
+
+        return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }
