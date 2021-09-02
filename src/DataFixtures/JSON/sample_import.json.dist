@@ -40,7 +40,7 @@
       "institution_email": "organisme2@silkc-platform.org",
       "occupation_concept_uri": "http://data.europa.eu/esco/occupation/0b1d8dcb-d941-4d79-99bf-fc10c1806c43",
       "name": "Ma formation AZERTY",
-      "location": "4 rue Saint-Martin 75003 PARIS",
+      "location": "{\"city\":\"Paris, París, Ile-de-France, Metropolitan France, France\",\"lat\":48.8566969,\"lng\":2.3514616}",
       "longitude": "-1.6673405659541642",
       "latitude": "48.109606538309016",
       "duration_value": 10,

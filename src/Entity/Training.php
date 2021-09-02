@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrainingRepository::class)
@@ -98,12 +99,20 @@ class Training
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training name cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training location cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $location;
@@ -121,7 +130,11 @@ class Training
     private $latitude;
 
     /**
-     * @ORM\Column(type="string", nullable=true, options={"comment": "Détails sur la durée"})
+     * @ORM\Column(type="string", length=255, nullable=true, options={"comment": "Détails sur la durée"})
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training duration details cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $durationDetails;
@@ -230,8 +243,9 @@ class Training
     private $toAcquireSkills;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Occupation::class)
+     * @ORM\ManyToOne(targetEntity=Occupation::class, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"training:read"})
      */
     private $occupation;
 

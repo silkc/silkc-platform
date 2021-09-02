@@ -12,6 +12,7 @@ label:
     label: Label
     name: Name
     location: Location
+    salary: Salary
     duration: Effective duration
     effective_duration: Eff. duration
     duration_value: Effective duration (from start to end Date)
@@ -52,6 +53,7 @@ label:
 placeholder:
     training_price: 'Ex: 1000.00'
     duration_details: 'Ex: Mondays and Tuesdays from 8 a.m. to 10 a.m.'
+    salary_price: Salary price
 button:
     see_related_trainings: See related trainings
     see_skills_to_be_learn: See skills to be learnt
@@ -85,7 +87,7 @@ nav:
     tasks: Tasks
     users: Users
     search_page: Go back to search page
-    vacant_positions: Vacant positions
+    vacant_positions: Vacancies
 
 notification:
     label:
@@ -162,6 +164,7 @@ login:
             username: Username
             firstname: Firstname
             institution_name: Institution name
+            company_name: Company name
             pseudo: Username
             lastname: Lastname
             email: Email
@@ -266,6 +269,7 @@ km_away: km away
 markdown_support_info: support markdown
 effective_duration_tooltip: Effective duration of training
 training_rating_tooltip: Average training score for %voters% voters
+position: position
 
 tooltip:
     remove_this_skill: Remove this skill
@@ -301,6 +305,9 @@ search_history:
         count_search: Number of searches
 
 Euro: Euro
+euro: euro
 Złoty: Złoty
+złoty: złoty
 Save: Save
 Occupation: Occupation
+Invalid password: Invalid password

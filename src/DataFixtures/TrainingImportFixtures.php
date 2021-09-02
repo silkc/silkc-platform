@@ -9,20 +9,24 @@ use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Training;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TrainingImportFixtures extends Fixture
 {
     private $_occupationRepository;
     private $_trainingRepository;
     private $_userRepository;
+    private $_validator;
 
-    public function __construct(OccupationRepository $occupationRepository, TrainingRepository $trainingRepository, UserRepository $userRepository)
+    public function __construct(OccupationRepository $occupationRepository, TrainingRepository $trainingRepository, UserRepository $userRepository, ValidatorInterface $validator)
     {
         $this->_trainingRepository = $trainingRepository;
         $this->_occupationRepository = $occupationRepository;
         $this->_userRepository = $userRepository;
+        $this->_validator = $validator;
     }
 
     public function load(ObjectManager $manager)
@@ -118,12 +122,19 @@ class TrainingImportFixtures extends Fixture
                     if (property_exists($trainingData, 'is_presential') && !empty($trainingData->is_presential))
                         $training->setIsPresential(filter_var($trainingData->is_presential, FILTER_VALIDATE_BOOLEAN));
 
+                    $errors = $this->_validator->validate($training);
+                    if (count($errors) > 0) {
+                        $errorsString = (string) $errors;
+                        print "ERROR --- An error occurred while saving the training data object :  {$errorsString}" . PHP_EOL;
+                        continue;
+                    }
+
                     $manager->persist($training);
 
                     try {
                         $manager->flush();
                     } catch(\Throwable $e) {
-                        print "ERROR --- An error occurred while saving the institution in the database :  {$e->getMessage()}" . PHP_EOL;
+                        print "ERROR --- An error occurred while saving the training in the database :  {$e->getMessage()}" . PHP_EOL;
                         $error = true;
                     }
 

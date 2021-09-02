@@ -23,7 +23,7 @@ class RecruiterType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label' => 'login.form.label.institution_name',
+                'label' => 'login.form.label.company_name',
                 'translation_domain' => 'messages',
                 'required'   => true,
             ])

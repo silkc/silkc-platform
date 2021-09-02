@@ -496,6 +496,19 @@ class Admin {
 											<span>${data.price ? data.price : 'N/A'}</span>
 										</div>
 									</div>
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">Occupation</span>
+										</div>
+										<div class="col-lg-8">
+											<span>
+                                                ${(data.occupation != undefined && data.occupation != null && data.occupation.preferredLabel) ?
+                                                    data.occupation.preferredLabel :
+                                                    'N/A'
+                                                }
+                                            </span>
+										</div>
+									</div>
 									<div class="mb-3">
                                         <span class="required-skills d-block mb-3 title">Required skills</span>
                                         <ul>

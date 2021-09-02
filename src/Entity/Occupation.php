@@ -26,7 +26,7 @@ class Occupation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"occupation:read"})
+     * @Groups({"occupation:read", "training:read"})
      */
     private $id;
 
@@ -44,7 +44,7 @@ class Occupation
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "occupation:write"})
+     * @Groups({"occupation:read", "occupation:write", "training:read"})
      */
     private $preferredLabel;
     /**
