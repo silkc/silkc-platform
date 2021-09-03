@@ -99,6 +99,7 @@ class Training
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "training name cannot be longer than {{ limit }} characters"
@@ -109,6 +110,7 @@ class Training
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "training location cannot be longer than {{ limit }} characters"
@@ -119,18 +121,29 @@ class Training
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training longitude cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training latitude cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, options={"comment": "Détails sur la durée"})
+     * @Assert\Type("string")
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "training duration details cannot be longer than {{ limit }} characters"
@@ -141,53 +154,80 @@ class Training
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true, "comment": "Valeur saisie dans l'unité indiquée"})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training duration value cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $durationValue;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"comment": "Durée convertie en secondes"})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training duration cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $durationTimeToSeconds;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false, options={"default": "hours", "comment": "Unitée de la durée indiquée"}, columnDefinition="ENUM('hours', 'days', 'weeks', 'months')")
+     * @Assert\Type("string")
+     * @Assert\Choice({"hours", "days", "weeks", "months"})
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training location cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $durationUnity;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type("string")
      * @Groups({"training:read", "training:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="float", length=255, nullable=true)
+     * @Assert\Type({"float", "integer", "numeric"})
      * @Groups({"training:read", "training:write"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false, options={"default": "euro"}, columnDefinition="ENUM('euro', 'złoty')")
+     * @Assert\Type("string")
+     * @Assert\Choice({"euro", "złoty"})
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training currency cannot be longer than {{ limit }} characters"
+     * )
      */
     private $currency = self::CURRENCY_EURO;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("datetime")
      * @Groups({"training:read", "training:write"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("datetime")
      * @Groups({"training:read", "training:write"})
      */
     private $startAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("datetime")
      * @Groups({"training:read", "training:write"})
      */
     private $endAt;
@@ -200,24 +240,32 @@ class Training
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Assert\Type("bool")
      * @Groups({"training:read", "training:write"})
      */
     private $isOnline = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Assert\Type("bool")
      * @Groups({"training:read", "training:write"})
      */
     private $isOnlineMonitored = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     * @Assert\Type("bool")
      * @Groups({"training:read", "training:write"})
      */
     private $isPresential = 0;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "training url cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training:write"})
      */
     private $url;
@@ -251,16 +299,31 @@ class Training
 
     /**
      * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training score cannot be longer than {{ limit }} characters"
+     * )
      */
     private $score = 0;
 
     /**
      * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training currency cannot be longer than {{ limit }} characters"
+     * )
      */
     private $maxScore = 0;
 
     /**
      * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training currency cannot be longer than {{ limit }} characters"
+     * )
      */
     private $completion = 0;
 
@@ -271,6 +334,11 @@ class Training
 
     /**
      * @ORM\Column(type="integer", length=10, nullable=false, options={"default": 0, "unsigned": true})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training totalMark cannot be longer than {{ limit }} characters"
+     * )
      */
     private $totalMark = 0;
 
@@ -281,6 +349,7 @@ class Training
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("datetime")
      */
     private $validatedAt;
 
@@ -291,11 +360,17 @@ class Training
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("datetime")
      */
     private $rejectedAt;
 
     /**
      * @ORM\Column(type="integer", options={"default": 0, "unsigned": true, "comment": "Champs dynamique pour calcul de pondération lors d'une recherche de formation"})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 11,
+     *      maxMessage = "training distance cannot be longer than {{ limit }} characters"
+     * )
      */
     private $distance = 0;
 

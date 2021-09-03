@@ -80,59 +80,65 @@ class TrainingImportFixtures extends Fixture
                         continue;
                     }
 
-                    $training = new Training();
-                    $training->setUser($institution);
-                    $training->setCreator($institution);
-                    $training->setOccupation($occupation);
-                    $training->setName($trainingData->name);
-                    if (property_exists($trainingData, 'location') && !empty($trainingData->location))
-                        $training->setLocation($trainingData->location);
-                    if (property_exists($trainingData, 'longitude') && !empty($trainingData->longitude))
-                        $training->setLongitude($trainingData->longitude);
-                    if (property_exists($trainingData, 'latitude') && !empty($trainingData->latitude))
-                        $training->setLatitude($trainingData->latitude);
-                    if (property_exists($trainingData, 'duration_value') && !empty($trainingData->duration_value))
-                        $training->setDurationValue($trainingData->duration_value);
-                    if (property_exists($trainingData, 'duration_unity') && !empty($trainingData->duration_unity))
-                        $training->setDurationUnity($trainingData->duration_unity);
-                    if (property_exists($trainingData, 'duration_details') && !empty($trainingData->duration_details))
-                        $training->setDurationDetails($trainingData->duration_details);
-                    if (property_exists($trainingData, 'description') && !empty($trainingData->description))
-                        $training->setDescription($trainingData->description);
-                    if (property_exists($trainingData, 'url') && !empty($trainingData->url))
-                        $training->setUrl($trainingData->url);
-                    if (property_exists($trainingData, 'price') && !empty($trainingData->price))
-                        $training->setPrice(intval($trainingData->price));
-                    if (property_exists($trainingData, 'currency') && !empty($trainingData->currency))
-                        $training->setCurrency($trainingData->currency);
-                    if (property_exists($trainingData, 'start_at') && !empty($trainingData->start_at)) {
-                        $startAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->start_at);
-                        if ($startAt && $startAt->format('Y-m-d H:i:s') === $trainingData->start_at)
-                            $training->setStartAt($startAt);
-                    }
-                    if (property_exists($trainingData, 'end_at') && !empty($trainingData->end_at)) {
-                        $endAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->end_at);
-                        if ($endAt && $endAt->format('Y-m-d H:i:s') === $trainingData->end_at)
-                            $training->setEndAt($endAt);
-                    }
-                    if (property_exists($trainingData, 'is_online') && !empty($trainingData->is_online))
-                        $training->setIsOnline(filter_var($trainingData->is_online, FILTER_VALIDATE_BOOLEAN));
-                    if (property_exists($trainingData, 'is_online_monitored') && !empty($trainingData->is_online_monitored))
-                        $training->setIsOnlineMonitored(filter_var($trainingData->is_online_monitored, FILTER_VALIDATE_BOOLEAN));
-                    if (property_exists($trainingData, 'is_presential') && !empty($trainingData->is_presential))
-                        $training->setIsPresential(filter_var($trainingData->is_presential, FILTER_VALIDATE_BOOLEAN));
-
-                    $errors = $this->_validator->validate($training);
-                    if (count($errors) > 0) {
-                        $errorsString = (string) $errors;
-                        print "ERROR --- An error occurred while saving the training data object :  {$errorsString}" . PHP_EOL;
-                        continue;
-                    }
-
-                    $manager->persist($training);
-
                     try {
+                        $training = new Training();
+                        $training->setUser($institution);
+                        $training->setCreator($institution);
+                        $training->setOccupation($occupation);
+                        $training->setName($trainingData->name);
+                        if (property_exists($trainingData, 'location') && !empty($trainingData->location))
+                            $training->setLocation($trainingData->location);
+                        if (property_exists($trainingData, 'longitude') && !empty($trainingData->longitude))
+                            $training->setLongitude($trainingData->longitude);
+                        if (property_exists($trainingData, 'latitude') && !empty($trainingData->latitude))
+                            $training->setLatitude($trainingData->latitude);
+                        if (property_exists($trainingData, 'duration_value') && !empty($trainingData->duration_value))
+                            $training->setDurationValue(intval($trainingData->duration_value));
+                        if (property_exists($trainingData, 'duration_unity') && !empty($trainingData->duration_unity))
+                            $training->setDurationUnity($trainingData->duration_unity);
+                        if (property_exists($trainingData, 'duration_details') && !empty($trainingData->duration_details))
+                            $training->setDurationDetails($trainingData->duration_details);
+                        if (property_exists($trainingData, 'description') && !empty($trainingData->description))
+                            $training->setDescription($trainingData->description);
+                        if (property_exists($trainingData, 'url') && !empty($trainingData->url))
+                            $training->setUrl($trainingData->url);
+                        if (property_exists($trainingData, 'price') && !empty($trainingData->price))
+                            $training->setPrice(intval($trainingData->price));
+                        if (property_exists($trainingData, 'currency') && !empty($trainingData->currency))
+                            $training->setCurrency($trainingData->currency);
+                        if (property_exists($trainingData, 'start_at') && !empty($trainingData->start_at)) {
+                            $startAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->start_at);
+                            if ($startAt && $startAt->format('Y-m-d H:i:s') === $trainingData->start_at)
+                                $training->setStartAt($startAt);
+                        }
+                        if (property_exists($trainingData, 'end_at') && !empty($trainingData->end_at)) {
+                            $endAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->end_at);
+                            if ($endAt && $endAt->format('Y-m-d H:i:s') === $trainingData->end_at)
+                                $training->setEndAt($endAt);
+                        }
+                        if (property_exists($trainingData, 'is_online') && !empty($trainingData->is_online))
+                            $training->setIsOnline(filter_var($trainingData->is_online, FILTER_VALIDATE_BOOLEAN));
+                        else
+                            $training->setIsOnline(false);
+                        if (property_exists($trainingData, 'is_online_monitored') && !empty($trainingData->is_online_monitored))
+                            $training->setIsOnlineMonitored(filter_var($trainingData->is_online_monitored, FILTER_VALIDATE_BOOLEAN));
+                        else
+                            $training->setIsOnlineMonitored(false);
+                        if (property_exists($trainingData, 'is_presential') && !empty($trainingData->is_presential))
+                            $training->setIsPresential(filter_var($trainingData->is_presential, FILTER_VALIDATE_BOOLEAN));
+                        else
+                            $training->setIsPresential(false);
+
+                        $errors = $this->_validator->validate($training);
+                        if ($errors && count($errors) > 0) {
+                            $errorString = (string) $errors;
+                            print "ERROR --- An error occurred while check data before saving the training :  {$errorString}" . PHP_EOL;
+                            continue;
+                        }
+
+                        $manager->persist($training);
                         $manager->flush();
+
                     } catch(\Throwable $e) {
                         print "ERROR --- An error occurred while saving the training in the database :  {$e->getMessage()}" . PHP_EOL;
                         $error = true;

@@ -57,18 +57,33 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "lastname cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training_feedback:read"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "firstname cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"training:read", "training_feedback:read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true, unique=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "username cannot be longer than {{ limit }} characters"
+     * )
      * @Groups({"user:read", "training:read", "training_feedback:read"})
      */
     private $username;
@@ -94,18 +109,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true, options={"default": "CURRENT_TIMESTAMP"})
+     * @Assert\Type("datetime")
      * @var string A "Y-m-d H:i:s" formatted value
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", columnDefinition="DATETIME on update CURRENT_TIMESTAMP")
+     * @Assert\Type("datetime")
      * @var string A "Y-m-d H:i:s" formatted value
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Type("datetime")
      * @var string A "Y-m-d H:i:s" formatted value
      */
     private $tokenCreatedAt;
@@ -124,6 +142,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "homepage cannot be longer than {{ limit }} characters"
+     * )
      */
     private $homepage;
 
@@ -135,11 +158,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "address cannot be longer than {{ limit }} characters"
+     * )
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
+     * @Assert\Type("integer")
+     * @Assert\Length(
+     *      max = 3,
+     *      maxMessage = "completion cannot be longer than {{ limit }} characters"
+     * )
      */
     private $completion = 0;
 
@@ -180,6 +213,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("datetime")
      * @var string A "Y-m-d H:i:s" formatted value
      */
     private $codeCreatedAt;

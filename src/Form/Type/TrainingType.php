@@ -11,6 +11,7 @@ use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -114,20 +115,33 @@ class TrainingType extends AbstractType
                 'required'           => false,
                 'widget'             => 'single_text',
             ])
-            ->add('isOnline', CheckboxType::class, [
+            ->add('isOnline', ChoiceType::class, [
                 'translation_domain' => 'messages',
+                'choices'  => array(
+                    'Yes' => 1,
+                    'No' => 0,
+                ),
                 'label'              => 'label.online',
-                'required'           => false,
+                'expanded' => true,
             ])
-            ->add('isOnlineMonitored', CheckboxType::class, [
+            ->add('isOnlineMonitored', ChoiceType::class, [
                 'translation_domain' => 'messages',
+                'choices'  => array(
+                    'Yes' => 1,
+                    'No' => 0,
+                ),
                 'label'              => 'label.is_online_monitored',
-                'required'           => false,
+                'expanded' => true,
             ])
-            ->add('isPresential', CheckboxType::class, [
+            ->add('isPresential', ChoiceType::class, [
+                'label_attr' => ['class' => 'form-check-inline'],
                 'translation_domain' => 'messages',
+                'choices'  => array(
+                    'Yes' => 1,
+                    'No' => 0,
+                ),
                 'label'              => 'label.is_presential',
-                'required'           => false,
+                'expanded' => true,
             ])
             ->add('occupation', EntityType::class, [
                 'attr'         => ["class" => "selectpicker"],

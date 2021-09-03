@@ -43,16 +43,6 @@ class UserType extends AbstractType
                     'label' => 'login.form.label.address',
                     'translation_domain' => 'messages',
                     'required'   => false,
-                ])
-                ->add('isListeningPosition', CheckboxType::class, [
-                    'label'    => 'label.listening_position',
-                    'required' => false,
-                ])
-                ->add('upToDistance', NumberType::class, [
-                    'translation_domain' => 'messages',
-                    'label'              => 'label.up_to_distance',
-                    'required'           => false,
-                    'attr' => ['placeholder' => 'placeholder.up_to_distance']
                 ]);
 
         if (array_key_exists('by_admin', $options) && $options['by_admin'] === true) {
@@ -63,6 +53,16 @@ class UserType extends AbstractType
                     'expanded' => true,
                     'required'   => true,
                     'choices' => User::getRolesList(),
+                ])
+                ->add('isListeningPosition', CheckboxType::class, [
+                    'label'    => 'label.listening_position',
+                    'required' => false,
+                ])
+                ->add('upToDistance', NumberType::class, [
+                    'translation_domain' => 'messages',
+                    'label'              => 'label.up_to_distance',
+                    'required'           => false,
+                    'attr' => ['placeholder' => 'placeholder.up_to_distance']
                 ]);
         }
         $currentYear = intval(date('Y'));

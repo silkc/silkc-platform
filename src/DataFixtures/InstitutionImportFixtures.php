@@ -8,16 +8,19 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class InstitutionImportFixtures extends Fixture
 {
     private $_passwordEncoder;
     private $_userRepository;
+    private $_validator;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, ValidatorInterface $validator)
     {
         $this->_passwordEncoder = $passwordEncoder;
         $this->_userRepository = $userRepository;
+        $this->_validator = $validator;
     }
 
     public function load(ObjectManager $manager)
@@ -68,27 +71,32 @@ class InstitutionImportFixtures extends Fixture
                         continue;
                     }
 
-
-                    $institution = new User();
-                    $institution->setUsername($userData->username);
-                    $institution->setEmail($userData->email);
-                    $institution->setAddress($userData->address);
-                    $institution->setHomepage($userData->homepage);
-                    if ($userData->dateOfBirth)
-                        $institution->setDateOfBirth(new \DateTime($userData->dateOfBirth));
-                    $institution->setIsValidated(true);
-                    $institution->setCode($code);
-                    $password = $this->_passwordEncoder->encodePassword($institution, 'institution');
-                    $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
-                    $institution->setTokenCreatedAt($createdAt);
-                    $institution->setCreatedAt($createdAt);
-                    $institution->setApiToken($apiToken);
-                    $institution->setRoles([User::ROLE_INSTITUTION]);
-                    $institution->setPassword($password);
-
-                    $manager->persist($institution);
-
                     try {
+                        $institution = new User();
+                        $institution->setUsername($userData->username);
+                        $institution->setEmail($userData->email);
+                        $institution->setAddress($userData->address);
+                        $institution->setHomepage($userData->homepage);
+                        if ($userData->dateOfBirth)
+                            $institution->setDateOfBirth(new \DateTime($userData->dateOfBirth));
+                        $institution->setIsValidated(true);
+                        $institution->setCode($code);
+                        $password = $this->_passwordEncoder->encodePassword($institution, 'institution');
+                        $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
+                        $institution->setTokenCreatedAt($createdAt);
+                        $institution->setCreatedAt($createdAt);
+                        $institution->setApiToken($apiToken);
+                        $institution->setRoles([User::ROLE_INSTITUTION]);
+                        $institution->setPassword($password);
+
+                        $errors = $this->_validator->validate($institution);
+                        if ($errors && count($errors) > 0) {
+                            $errorString = (string) $errors;
+                            print "ERROR --- An error occurred while check data before saving the institution :  {$errorString}" . PHP_EOL;
+                            continue;
+                        }
+
+                        $manager->persist($institution);
                         $manager->flush();
                     } catch(\Throwable $e) {
                         print "ERROR --- An error occurred while saving the institution in the database :  {$e->getMessage()}" . PHP_EOL;
