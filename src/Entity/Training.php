@@ -953,12 +953,12 @@ class Training
         return ($countMarks > 0 && $totalMarks != 0) ? $totalMarks/$countMarks : 0;
     }
 
-    public function getAvgMark(): int
+    public function getAvgMark(): ?float
     {
         return $this->avgMark;
     }
 
-    public function setAvgMark(float $avgMark): self
+    public function setAvgMark(?float $avgMark): self
     {
         $this->avgMark = $avgMark;
 
