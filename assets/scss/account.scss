@@ -316,9 +316,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
       }
     }
 
-    .see-more {
+    .see-more, .see-less {
       font-weight: 600;
-      text-decoration: underline;
       margin-top: 10px;
       display: inline-block;
     }

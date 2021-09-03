@@ -956,7 +956,7 @@ class Account {
             e.preventDefault();
 
             $('#list-following_skills').find('.card').show();
-            $(this).html('See less');
+            $(this).html('<i class="far fa-minus-square"></i> See less');
             $(this).toggleClass('see-more see-less');
         });
         
@@ -973,7 +973,7 @@ class Account {
             });
 
             $(this).toggleClass('see-less see-more');
-            $(this).html('See less');
+            $(this).html('<i class="far fa-plus-square"></i> See more');
         });
     } 
 

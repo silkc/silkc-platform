@@ -40,8 +40,8 @@
                 </div>
 			{% endfor %}
 		{% endif %}
-        {% if associatedSkills|length > 10 %}
-            <a href="#" class="see-more">{{ 'see_more'|trans }}</a>
+        {% if related_skills|length > 10 %}
+            <a href="#" class="see-more"><i class="far fa-plus-square"></i> {{ 'see_more'|trans }}</a>
         {% endif %}
 	</div>
 </fieldset>
