@@ -53,16 +53,6 @@ class UserType extends AbstractType
                     'expanded' => true,
                     'required'   => true,
                     'choices' => User::getRolesList(),
-                ])
-                ->add('isListeningPosition', CheckboxType::class, [
-                    'label'    => 'label.listening_position',
-                    'required' => false,
-                ])
-                ->add('upToDistance', NumberType::class, [
-                    'translation_domain' => 'messages',
-                    'label'              => 'label.up_to_distance',
-                    'required'           => false,
-                    'attr' => ['placeholder' => 'placeholder.up_to_distance']
                 ]);
         }
         $currentYear = intval(date('Y'));
@@ -94,6 +84,18 @@ class UserType extends AbstractType
                     'second_options'     => ['label' => 'login.form.label.password.second', 'always_empty' => true],
                     'invalid_message'    => 'login.form.not_identical_password',
                 ]);
+            } else {
+                $builder
+                    ->add('isListeningPosition', CheckboxType::class, [
+                        'label'    => 'label.listening_position',
+                        'required' => false,
+                    ])
+                    ->add('upToDistance', NumberType::class, [
+                        'translation_domain' => 'messages',
+                        'label'              => 'label.up_to_distance',
+                        'required'           => false,
+                        'attr' => ['placeholder' => 'placeholder.up_to_distance']
+                    ]);
             }
             if (array_key_exists('enable_password', $options) && $options['enable_password'] === true) {
                 $builder->add('password', RepeatedType::class, [
