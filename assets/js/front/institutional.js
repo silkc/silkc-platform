@@ -806,6 +806,7 @@ class Institutional {
         let inputHiddenLat = document.querySelector('form[name="training"] #training_latitude');
         let inputHiddenLng = document.querySelector('form[name="training"] #training_longitude');
         var map = null;
+        let statusCoords = true;
 
         if (inputHidden) {
             let coords = inputHidden.value;
@@ -818,9 +819,11 @@ class Institutional {
                     map = L.map('map').setView([coords.lat, coords.lng], 10);
                 } else {
                     map = L.map('map').setView([0, 0], 2);
+                    statusCoords = false;
                 }
             } else {
                 map = L.map('map').setView([0, 0], 2);
+                statusCoords = false;
             }
             
             let geocoder = L.Control.Geocoder.nominatim();
@@ -876,12 +879,15 @@ class Institutional {
                 }, 1000);
             });
 
-            if (coords) {
-                let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
-                marker.bindPopup(coords.city); // Bulle d'info
-
+            if (coords) { 
+                if (statusCoords) {
+                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
+                    marker.bindPopup(coords.city); // Bulle d'info
+                }
+                
                 let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
-                leafletControlGeocoderForm.value = coords.city;
+
+                leafletControlGeocoderForm.value = statusCoords ? coords.city : inputHidden.value;
             }
         }
 
