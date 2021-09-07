@@ -751,6 +751,7 @@ class HomeController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $oldSkills = $position->getSkills();
+            $newSkills = new ArrayCollection();
             if (
                 $request->request->get('hidden_positionSkills') !== NULL &&
                 @json_decode($request->request->get('hidden_positionSkills')) !== NULL
@@ -761,12 +762,13 @@ class HomeController extends AbstractController
                     if (!$skill)
                         continue;
 
+                    $newSkills->add($skill);
                     $position->addSkill($skill);
                 }
             }
 
             foreach ($oldSkills as $oldSkill) {
-                if (!$position->getSkills()->contains($oldSkill))
+                if (!$newSkills->contains($oldSkill))
                     $position->removeSkill($oldSkill);
             }
 

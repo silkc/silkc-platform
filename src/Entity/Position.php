@@ -415,7 +415,7 @@ class Position
     public function removeSkill(Skill $skill): self
     {
         if ($this->skills->contains($skill)) {
-            $this->skills->removeElement(skill);
+            $this->skills->removeElement($skill);
         }
 
         return $this;
