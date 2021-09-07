@@ -897,7 +897,7 @@ class Institutional {
                 const elem = this;
                 const locationValue = this.getAttribute('data-location');
 
-                navigator.clipboard.writeText('bien').then(function() {
+                navigator.clipboard.writeText(locationValue).then(function() {
                     bootbox.alert("Copying location to clipboard was successful: <br><br>" + locationValue);
                 }, function(err) {
                     bootbox.alert('An error occured');

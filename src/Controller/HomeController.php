@@ -399,7 +399,7 @@ class HomeController extends AbstractController
      * @Route("/recruiter/{tab}", name="recruiter")
      */
     public function recruiter(
-        $tab = 'company_informations',
+        $tab = 'personal_informations',
         Request $request,
         PositionRepository $positionRepository,
         ValidatorInterface $validator,
@@ -706,7 +706,7 @@ class HomeController extends AbstractController
                 }
             }
             foreach ($oldSkills as $oldSkill) {
-                if (!$position->contains($oldSkill))
+                if (!$position->getSkills()->contains($oldSkill))
                     $position->removeSkill($oldSkill);
             }
 
