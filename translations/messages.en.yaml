@@ -30,6 +30,7 @@ label:
     is_online_monitored: Tutored online
     is_presential: Face to face
     save: Save
+    save_and_validate: Save and validate
     create: Save
     edit_training: Save
     pseudo: Username

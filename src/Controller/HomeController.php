@@ -556,7 +556,14 @@ class HomeController extends AbstractController
      */
     public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {
-        $form = $this->createForm(TrainingType::class, $training, ['is_user' => !$this->isGranted(User::ROLE_INSTITUTION)]);
+        $form = $this->createForm(
+            TrainingType::class,
+            $training,
+            [
+                'is_user' => !$this->isGranted(User::ROLE_INSTITUTION),
+                'can_validate' => ($this->isGranted(User::ROLE_ADMIN) && $training->getIsValidated() != true),
+            ]
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -611,12 +618,24 @@ class HomeController extends AbstractController
                     $training->removeTrainingSkill($trainingSkill);
             }
 
-            $em->persist($training);
-            $em->flush();
+            if ($form->get('save_and_validate')->isClicked()) {
+                $training->setIsValidated(true);
+                $training->setValidatedAt(new \DateTime());
+                $em->persist($training);
+                $em->flush();
 
-            $this->addFlash('success', $translator->trans('The training has been updated'));
+                $this->addFlash('success', $translator->trans('The training has been updated'));
 
-            return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
+                return $this->redirectToRoute('admin_home', ['tab' => 'tasks']);
+            }
+            else {
+                $em->persist($training);
+                $em->flush();
+
+                $this->addFlash('success', $translator->trans('The training has been updated'));
+
+                return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
+            }
         }
 
         setcookie('tab_institution_silkc', 2, time() + 86400, "/");

@@ -41,7 +41,7 @@ class TrainingType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => Training::class, 'is_user' => false]);
+        $resolver->setDefaults(['data_class' => Training::class, 'is_user' => false, 'can_validate' => false]);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -177,11 +177,20 @@ class TrainingType extends AbstractType
         /*->add('trainingSkills', HiddenType::class, [
         'required' => false,
         ])*/
-        $builder->add('save', SubmitType::class, [
-            'translation_domain' => 'messages',
-            'label'              => 'label.save',
-        ])
-            ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {});
+        $builder
+            ->add('save', SubmitType::class, [
+                'translation_domain' => 'messages',
+                'label'              => 'label.save',
+            ]);
+
+        if (is_array($options) && array_key_exists('can_validate', $options) && $options['can_validate'] === true) {
+            $builder->add('save_and_validate', SubmitType::class, [
+                'translation_domain' => 'messages',
+                'label'              => 'label.save_and_validate',
+            ]);
+        }
+
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {});
 
         /*$builder->get('trainingSkills')
     ->addModelTransformer($this->transformer);*/

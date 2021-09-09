@@ -191,6 +191,9 @@
 </div>
 
 <p class="text-center mt-4">
+	{% if form.save_and_validate is defined and form.save_and_validate == true %}
+		{{ form_widget(form.save_and_validate, {'label': 'label.save_and_validate'|trans }) }}
+	{% endif %}
 	{{ form_widget(form.save, {'label': 'label.save'|trans }) }}
 </p>
 {{ form_end(form) }}
