@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Intl\Locale;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -105,11 +107,11 @@ class Skill
     /**
      * @ORM\OneToMany(targetEntity=SkillTranslation::class, mappedBy="skill", orphanRemoval=true)
      */
-    private $skillTranslations;
+    private $translations;
 
     public function __construct()
     {
-        $this->skillTranslations = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +169,18 @@ class Skill
 
     public function getPreferredLabel(): ?string
     {
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getPreferredLabel();
+
         return $this->preferredLabel;
     }
 
@@ -239,6 +253,18 @@ class Skill
 
     public function getDefinition(): ?string
     {
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getDefinition();
+
         return $this->definition;
     }
 
@@ -263,6 +289,18 @@ class Skill
 
     public function getDescription(): ?string
     {
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getDescription();
+
         return $this->description;
     }
 
@@ -276,24 +314,24 @@ class Skill
     /**
      * @return Collection|SkillTranslation[]
      */
-    public function getSkillTranslations(): Collection
+    public function getTranslations(): Collection
     {
-        return $this->skillTranslations;
+        return $this->translations;
     }
 
-    public function addSkillTranslation(SkillTranslation $skillTranslation): self
+    public function addTranslation(SkillTranslation $skillTranslation): self
     {
-        if (!$this->skillTranslations->contains($skillTranslation)) {
-            $this->skillTranslations[] = $skillTranslation;
+        if (!$this->translations->contains($skillTranslation)) {
+            $this->translations[] = $skillTranslation;
             $skillTranslation->setSkill($this);
         }
 
         return $this;
     }
 
-    public function removeSkillTranslation(SkillTranslation $skillTranslation): self
+    public function removeTranslation(SkillTranslation $skillTranslation): self
     {
-        if ($this->skillTranslations->removeElement($skillTranslation)) {
+        if ($this->translations->removeElement($skillTranslation)) {
             // set the owning side to null (unless already changed)
             if ($skillTranslation->getSkill() === $this) {
                 $skillTranslation->setSkill(null);

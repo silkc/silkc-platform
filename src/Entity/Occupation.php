@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Repository\OccupationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Intl\Locale;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationRepository::class)
@@ -117,6 +119,7 @@ class Occupation
 
     /**
      * @ORM\OneToMany(targetEntity=OccupationTranslation::class, mappedBy="occupation", orphanRemoval=true)
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $translations;
 
@@ -156,6 +159,18 @@ class Occupation
 
     public function getPreferredLabel(): ?string
     {
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getPreferredLabel();
+
         return $this->preferredLabel;
     }
 
@@ -240,6 +255,18 @@ class Occupation
 
     public function getDefinition(): ?string
     {
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getDefinition();
+
         return $this->definition;
     }
 
@@ -264,6 +291,18 @@ class Occupation
 
     public function getDescription(): ?string
     {
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getDescription();
+
         return $this->description;
     }
 
@@ -303,7 +342,11 @@ class Occupation
      */
     public function getTranslations(): Collection
     {
-        return $this->translations;
+        $locale = Locale::getDefault();
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        return $this->translations->matching($criteria);
     }
 
     public function addTranslation(OccupationTranslation $occupationTranslation): self

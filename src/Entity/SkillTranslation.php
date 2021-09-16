@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SkillTranslationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SkillTranslationRepository::class)
@@ -27,11 +28,13 @@ class SkillTranslation
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $locale;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $preferredLabel;
 
@@ -47,11 +50,13 @@ class SkillTranslation
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $definition;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $description;
 

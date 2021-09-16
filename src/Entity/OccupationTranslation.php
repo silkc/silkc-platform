@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\OccupationTranslationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationTranslationRepository::class)
@@ -27,11 +28,13 @@ class OccupationTranslation
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $locale;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $preferredLabel;
 
@@ -47,11 +50,13 @@ class OccupationTranslation
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $definition;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $description;
 

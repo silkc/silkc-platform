@@ -43,8 +43,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/{_locale<en|fr|pl|it>}/", name="home_root")
-     * @Route("/{_locale<en|fr|pl|it>}/home", name="home")
+     * @Route("/{_locale<en|fr|pl|it>?en}", name="home_root")
+     * @Route("/{_locale<en|fr|pl|it>?en}/home", name="home")
      */
     public function index(Request $request): Response
     {
@@ -52,7 +52,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/{_locale<en|fr|pl|it>}/search_results/{type}/{id}", name="search_results", requirements={"id"="\d+"})
+     * @Route("/{_locale<en|fr|pl|it>?en}/search_results/{type}/{id}", name="search_results", requirements={"id"="\d+"})
      */
     public function searchResults(
         $type = null,
