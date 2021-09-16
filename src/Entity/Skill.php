@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SkillRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -99,6 +101,16 @@ class Skill
      * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SkillTranslation::class, mappedBy="skill", orphanRemoval=true)
+     */
+    private $skillTranslations;
+
+    public function __construct()
+    {
+        $this->skillTranslations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -257,6 +269,36 @@ class Skill
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SkillTranslation[]
+     */
+    public function getSkillTranslations(): Collection
+    {
+        return $this->skillTranslations;
+    }
+
+    public function addSkillTranslation(SkillTranslation $skillTranslation): self
+    {
+        if (!$this->skillTranslations->contains($skillTranslation)) {
+            $this->skillTranslations[] = $skillTranslation;
+            $skillTranslation->setSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkillTranslation(SkillTranslation $skillTranslation): self
+    {
+        if ($this->skillTranslations->removeElement($skillTranslation)) {
+            // set the owning side to null (unless already changed)
+            if ($skillTranslation->getSkill() === $this) {
+                $skillTranslation->setSkill(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OccupationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -112,6 +114,16 @@ class Occupation
      * @Groups({"occupation:read"})
      */
     private $iscoGroup;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OccupationTranslation::class, mappedBy="occupation", orphanRemoval=true)
+     */
+    private $translations;
+
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -282,6 +294,36 @@ class Occupation
     public function setIscoGroup(?IscoGroup $iscoGroup): self
     {
         $this->iscoGroup = $iscoGroup;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OccupationTranslation[]
+     */
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(OccupationTranslation $occupationTranslation): self
+    {
+        if (!$this->translations->contains($occupationTranslation)) {
+            $this->translations[] = $occupationTranslation;
+            $occupationTranslation->setOccupation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTranslation(OccupationTranslation $occupationTranslation): self
+    {
+        if ($this->translations->removeElement($occupationTranslation)) {
+            // set the owning side to null (unless already changed)
+            if ($occupationTranslation->getOccupation() === $this) {
+                $occupationTranslation->setOccupation(null);
+            }
+        }
 
         return $this;
     }
