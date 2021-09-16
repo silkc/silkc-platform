@@ -43,16 +43,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home_root")
-     * @Route("/home", name="home")
+     * @Route("/{_locale<en|fr|pl|it>}/", name="home_root")
+     * @Route("/{_locale<en|fr|pl|it>}/home", name="home")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         return $this->render('front/home/search.html.twig');
     }
 
     /**
-     * @Route("/search_results/{type}/{id}", name="search_results", requirements={"id"="\d+"})
+     * @Route("/{_locale<en|fr|pl|it>}/search_results/{type}/{id}", name="search_results", requirements={"id"="\d+"})
      */
     public function searchResults(
         $type = null,
@@ -210,7 +210,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/account/{tab}", name="account")
+     * @Route("/{_locale<en|fr|pl|it>}/account/{tab}", name="account")
      */
     public function account(
         $tab = 'personal_informations',
@@ -312,7 +312,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/search_history", name="search_history")
+     * @Route("/{_locale<en|fr|pl|it>}/search_history", name="search_history")
      */
     public function search_history(UserSearchRepository $userSearchRepository)
     {
@@ -328,7 +328,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/institution/{tab}", name="institution")
+     * @Route("/{_locale<en|fr|pl|it>}/institution/{tab}", name="institution")
      */
     public function institution(
         $tab = 'personal_informations',
@@ -396,7 +396,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/recruiter/{tab}", name="recruiter")
+     * @Route("/{_locale<en|fr|pl|it>}/recruiter/{tab}", name="recruiter")
      */
     public function recruiter(
         $tab = 'personal_informations',
@@ -465,7 +465,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/training/create", name="training_create")
+     * @Route("/{_locale<en|fr|pl|it>}/training/create", name="training_create")
      */
     public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
@@ -552,7 +552,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/training/edit/{id}", name="training_edit")
+     * @Route("/{_locale<en|fr|pl|it>}/training/edit/{id}", name="training_edit")
      */
     public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {

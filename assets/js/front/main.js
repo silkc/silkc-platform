@@ -178,7 +178,6 @@ class Main {
     }
 
     runMarkdown = () => {
-        console.log('OK');
         const markdownElems = document.querySelectorAll('[markdown="1"]');
 
         if (markdownElems !== undefined && markdownElems.length !== undefined && markdownElems.length > 0) {

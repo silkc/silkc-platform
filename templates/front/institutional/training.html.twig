@@ -1,7 +1,7 @@
 <fieldset>
 
 	<div class="d-flex align-items-end justify-content-start">
-		<a href="{{ path('app_training_create') }}" class="btn btn-primary">Add a training</a>
+		<a href="{{ path('app_training_create') }}" class="btn btn-primary">{{ 'add_a_training'|trans }}</a>
 	</div>
 
 	<div class="accordion" id="list-trainings">
@@ -29,10 +29,10 @@
 								<div class="d-inline-flex align-items-center justify-content-end">
 									<div class="block-clone">
 										<span class="spinner-border spinner-border-sm loader" role="status" aria-hidden="true"></span>
-										<a href="{{ path('app_training_edit', {id: training.id}) }}" data-toggle="tooltip" title="Edit this training">
+										<a href="{{ path('app_training_edit', {id: training.id}) }}" data-toggle="tooltip" title="{{ 'tooltip.edit_this_training'|trans }}">
 											<i class="far fa-edit text-primary"></i>
 										</a>
-										<a href="{{ path('app_training_duplicate', { id: training.id }) }}" data-toggle="tooltip" title="Clone this training">
+										<a href="{{ path('app_training_duplicate', { id: training.id }) }}" data-toggle="tooltip" title="{{ 'tooltip.clone_this_training'|trans }}">
 											<i class="far fa-clone text-primary"></i>
 										</a>
 									</div>

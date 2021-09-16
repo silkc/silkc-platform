@@ -21,6 +21,7 @@ class Search {
 
 
     initSelectTypeSearch = () => {
+
         let checkbox = $('.checkbox-search input[name="search-by"]');
         let blcSearch = $('.blc-search-by');
         checkbox.on('change', function () {

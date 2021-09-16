@@ -5,7 +5,7 @@ const bootbox = require('bootbox/bootbox');
 import 'datatables.net';
 import 'datatables.net-select-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import 'datatables.net-select-dt/css/select.dataTables.min.css';
+import 'datatables.net-select-dt/css/select.dataTables.min.css'; 
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../scss/elements/header.scss';
@@ -49,6 +49,7 @@ class Admin {
      * Affichage des messages de mises à jour
      */
     runDatatableHome = () => {
+
         let notificationsIds = [];
         let setInputHidden = function (ids = []) {
             $('.btn-read').prop('disabled', (ids.length > 0) ? false : true);
@@ -91,7 +92,16 @@ class Admin {
             columnDefs: [
                 { targets: [0], orderable: false}
             ],
-            order: [[ 1, 'asc' ]]
+            order: [[ 1, 'asc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
 
         $('#datatable-subject').on('change', 'input.editor-active', function () {
@@ -160,7 +170,16 @@ class Admin {
             columnDefs: [
                 {targets: [4], orderable: false},
             ],
-            order: [[ 1, 'asc' ]]
+            order: [[ 1, 'asc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
     }
 
@@ -172,7 +191,16 @@ class Admin {
             columnDefs: [
                 {targets: [3], orderable: false},
             ],
-            order: [[ 1, 'asc' ]]
+            order: [[ 1, 'asc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
     }
 
@@ -184,7 +212,16 @@ class Admin {
             columnDefs: [
                 {targets: [7], orderable: false},
             ],
-            order: [[ 1, 'desc' ]]
+            order: [[ 1, 'desc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
     }
 
@@ -198,7 +235,16 @@ class Admin {
                 { width: '20px', targets: 2 }
             ],
             fixedColumns: true,
-            order: [[ 0, 'asc' ]]
+            order: [[ 0, 'asc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
     }
 
@@ -212,7 +258,16 @@ class Admin {
                 { width: '20px', targets: 2 }
             ],
             fixedColumns: true,
-            order: [[ 0, 'asc' ]]
+            order: [[ 0, 'asc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
     }
 
@@ -350,8 +405,8 @@ class Admin {
                                 htmlOptional += li;
 
                             if (k == dataSkills.length - 1) {
-                                $(`<h1>Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
-                                $(`<h1>Optional skills</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
+                                $(`<h1>${translationsJS && translationsJS.essential_skills ? translationsJS.essential_skills : 'Essential skills'}</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
+                                $(`<h1>${translationsJS && translationsJS.optional_skills ? translationsJS.optional_skills : 'Optional skills'}</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
 
                                 $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
                                 $('#common-modal').modal('show');
@@ -380,7 +435,7 @@ class Admin {
                         $modal.find('.modal-title').html(data.preferredLabel ? data.preferredLabel : '');
                         $(`<p>${data.description ? data.description : ''}</p>`).appendTo($modal.find('.modal-body'));
                         $(`<p><strong>URI :</strong> <a href="${data.conceptUri ? data.conceptUri : '#'}">${data.conceptUri ? data.conceptUri : 'NC'}</a></p>`).appendTo($modal.find('.modal-body'));
-                        $(`<p><strong>Skill type :</strong> <em>${data.skillType ? data.skillType : 'NC'}</em></p>`).appendTo($modal.find('.modal-body'));
+                        $(`<p><strong>${translationsJS && translationsJS.essential_skills ? translationsJS.essential_skills : 'Essential skills'}</strong> <em>${data.skillType ? data.skillType : 'NC'}</em></p>`).appendTo($modal.find('.modal-body'));
                         $('#common-modal').modal('show');
                     }
                 }
@@ -437,7 +492,7 @@ class Admin {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Name</span>
+											<span class="title">${translationsJS && translationsJS.name ? translationsJS.name : 'Name'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.name ? data.name : 'N/A'}</span>
@@ -446,7 +501,7 @@ class Admin {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Location</span>
+											<span class="title">${translationsJS && translationsJS.location ? translationsJS.location : 'Location'}</span>
 										</div>
 										<div class="col-lg-8">
                                             <span id="location-modal">N/A</span>
@@ -458,7 +513,7 @@ class Admin {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Duration</span>
+											<span class="title">${translationsJS && translationsJS.duration ? translationsJS.duration : 'Location'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.duration ? data.duration : 'N/A'}</span>
@@ -467,7 +522,7 @@ class Admin {
 
                                     <div class="row mb-3">
                                         <div class="col-lg-4">
-                                            <span class="title">Date</span>
+                                            <span class="title">${translationsJS && translationsJS.date ? translationsJS.date : 'Date'}</span>
                                         </div>
                                         <div class="col-lg-8">
                                             <span>From</span>
@@ -479,7 +534,7 @@ class Admin {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Description</span>
+											<span class="title">${translationsJS && translationsJS.description ? translationsJS.description : 'Description'}</span>
 										</div>
 										<div class="col-lg-8">
 											<p class="text-justify m-0">
@@ -490,7 +545,7 @@ class Admin {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Price</span>
+											<span class="title">${translationsJS && translationsJS.price ? translationsJS.price : 'Price'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.price ? data.price : 'N/A'}</span>
@@ -498,7 +553,7 @@ class Admin {
 									</div>
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Occupation</span>
+											<span class="title">${translationsJS && translationsJS.occupation ? translationsJS.occupation : 'Occupation'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>
@@ -510,14 +565,14 @@ class Admin {
 										</div>
 									</div>
 									<div class="mb-3">
-                                        <span class="required-skills d-block mb-3 title">Required skills</span>
+                                        <span class="required-skills d-block mb-3 title">${translationsJS && translationsJS.required_skills ? translationsJS.required_skills : 'Required skills'}</span>
                                         <ul>
                                             ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : 'N/A'}
                                         </ul>
 									</div>
 
 									<div class="mb-3">
-                                    <span class="required-skills d-block mb-3 title">Acquired skills</span>
+                                    <span class="required-skills d-block mb-3 title">${translationsJS && translationsJS.acquired_skills ? translationsJS.acquired_skills : 'Acquired skills'}</span>
                                         <ul>
                                             ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : 'N/A'}
                                         </ul>
@@ -528,7 +583,7 @@ class Admin {
 
                         let editHTML = `<div class="row blc-edit-training">
                                             <div class="col-md-12 text-right">
-                                                <a href="/training/edit/${id}" class="btn btn-primary">Edit</a>
+                                                <a href="/training/edit/${id}" class="btn btn-primary">${translationsJS && translationsJS.edit ? translationsJS.edit : 'Edit'}</a>
                                             </div>
                                         </div>`;
 
@@ -580,7 +635,8 @@ class Admin {
                                 }
                             }
                         } else {
-                            $('<p>No trainings</p>').appendTo($modal.find('.modal-body'));
+                            let no_trainings = translationsJS && translationsJS.no_trainings ? translationsJS.no_trainings : 'No training';
+                            $('<p>' + no_trainings + '</p>').appendTo($modal.find('.modal-body'));
                             $('#common-modal').modal('show');
                         }
                     }
@@ -614,7 +670,8 @@ class Admin {
                                 }
                             }
                         } else {
-                            $('<p>No trainings</p>').appendTo($modal.find('.modal-body'));
+                            let no_trainings = translationsJS && translationsJS.no_trainings ? translationsJS.no_trainings : 'No training';
+                            $('<p>' + no_trainings + '</p>').appendTo($modal.find('.modal-body'));
                             $('#common-modal').modal('show');
                         }
                     }
@@ -637,7 +694,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/approve_training/' + id;
-            bootbox.confirm({message : 'Are you sure you want to approve this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_approve_this_training ? translationsJS.are_you_sure_you_want_to_approve_this_training : 'Comfirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                 if (result == true) {
                     $.ajax({
                         type: "POST",
@@ -663,7 +720,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/reject_training/' + id;
-            bootbox.confirm({message : 'Do you really want to reject this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.do_you_really_want_to_reject_this_training ? translationsJS.do_you_really_want_to_reject_this_training : 'Comfirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -689,7 +746,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/delete_training/' + id;
-            bootbox.confirm({message : 'Are you sure you want to delete this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_delete_this_training ? translationsJS.are_you_sure_you_want_to_delete_this_training : 'Comfirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -720,7 +777,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/approve_user/' + id;
-            bootbox.confirm({message : 'Are you sure you want to approve this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_approve_this_user ? translationsJS.are_you_sure_you_want_to_approve_this_user : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                 if (result == true) {
                     $.ajax({
                         type: "POST",
@@ -746,7 +803,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/reject_user/' + id;
-            bootbox.confirm({message : 'Do you really want to reject this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.do_you_really_want_to_reject_this_user ? translationsJS.do_you_really_want_to_reject_this_user : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -772,7 +829,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/delete_user/' + id;
-            bootbox.confirm({message : 'Are you sure you want to delete this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_delete_this_user ? translationsJS.are_you_sure_you_want_to_delete_this_user : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -803,7 +860,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/suspend_user/' + id;
-            bootbox.confirm({message : 'Are you sure you want to suspend this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_suspend_this_user ? translationsJS.are_you_sure_you_want_to_suspend_this_user : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                 if (result == true) {
                     $.ajax({
                         type: "POST",
@@ -828,7 +885,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/unsuspend_user/' + id;
-            bootbox.confirm({message : 'Are you sure you want to unsuspend this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_unsuspend_this_user ? translationsJS.are_you_sure_you_want_to_unsuspend_this_user : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -853,7 +910,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/suspect_user/' + id;
-            bootbox.confirm({message : 'Are you sure you want to mark this user as "suspect"', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_mark_this_user_as_suspect ? translationsJS.are_you_sure_you_want_to_mark_this_user_as_suspect : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",
@@ -861,8 +918,10 @@ class Admin {
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
                                     let $td = $button.closest('tr').find('td:eq(6)');
-                                    if ($td && $td.length > 0)
+                                    if ($td && $td.length > 0) {
+                                        let yes = translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes';
                                         $td.html('<span class="text-warning">yes</span>');
+                                    }
                                     $button.removeClass('btn-warning').addClass('btn-success');
                                     $button.removeClass('suspect_user').addClass('raise_suspicion').attr('data-original-title', 'Raise suspicion');
                                 } else {
@@ -878,7 +937,7 @@ class Admin {
             let $button = $(this);
             let id = $button.attr('data-id');
             let url = '/admin/raise_suspicion/' + id;
-            bootbox.confirm({message : 'Are you sure you want to raise suspicion for this user?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_raise_suspicion_for_this_user ? translationsJS.are_you_sure_you_want_to_raise_suspicion_for_this_user : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $.ajax({
                             type: "POST",

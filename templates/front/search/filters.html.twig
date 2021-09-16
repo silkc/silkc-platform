@@ -104,7 +104,7 @@
 								</span>
 								<span id="durationValMax">
 									<span>{{ requestParams.maxDuration is defined ? requestParams.maxDuration : 100 }}</span>
-									<span style="text-transform: none !important;">{{ requestParams.unity is defined ? requestParams.unity : 'days' }}</span>
+									<span style="text-transform: none !important;">{{ requestParams.unity is defined ? requestParams.unity : 'label.days_filter'|trans }}</span>
 								</span>
 							</div>
 							<div class="d-flex flex-row align-items-center flex-nowrap">
@@ -120,10 +120,10 @@
 								/>
 								<div class="input-group-append ml-4">
 									<select id="unity" class="form-control custom-select" name="unity">
-										<option value="hours" {% if requestParams.unity is defined and requestParams.unity == "hours" %} selected="selected" {% endif %}>hours</option>
-										<option value="days" {% if requestParams.unity is not defined or requestParams.unity is null or requestParams.unity == "days" %} selected="selected" {% endif %}>days</option>
-										<option value="weeks" {% if requestParams.unity is defined and requestParams.unity == "weeks" %} selected="selected" {% endif %}>weeks</option>
-										<option value="months" {% if requestParams.unity is defined and requestParams.unity == "months" %} selected="selected" {% endif %}>months</option>
+										<option value="hours" {% if requestParams.unity is defined and requestParams.unity == "hours" %} selected="selected" {% endif %}>{{ 'label.hours_filter'|trans }}</option>
+										<option value="days" {% if requestParams.unity is not defined or requestParams.unity is null or requestParams.unity == "days" %} selected="selected" {% endif %}>{{ 'label.days_filter'|trans }}</option>
+										<option value="weeks" {% if requestParams.unity is defined and requestParams.unity == "weeks" %} selected="selected" {% endif %}>{{ 'label.weeks_filter'|trans }}</option>
+										<option value="months" {% if requestParams.unity is defined and requestParams.unity == "months" %} selected="selected" {% endif %}>{{ 'label.months_filter'|trans }}</option>
 									</select>
 								</div>
 							</div>

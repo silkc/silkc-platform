@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/{_locale<en|fr|pl|it>}/login", name="app_login")
      */
     public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
@@ -39,7 +39,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/{_locale<en|fr|pl|it>}/logout", name="app_logout")
      */
     public function logout()
     {
@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/signup/{type}", name="app_signup", defaults={"type": false}, requirements={"type": "user|institution|recruiter"})
+     * @Route("/{_locale<en|fr|pl|it>}/signup/{type}", name="app_signup", defaults={"type": false}, requirements={"type": "user|institution|recruiter"})
      */
     public function signup(
         string $type,
@@ -165,7 +165,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/validate_account/{code}", name="app_validate_account", methods={"GET"})
+     * @Route("/{_locale<en|fr|pl|it>}/validate_account/{code}", name="app_validate_account", methods={"GET"})
      */
     public function validate_account($code, Request $request, UserRepository $userRepository, TranslatorInterface $translator)
     {
@@ -191,7 +191,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/forgot_password/", name="app_forgot_password")
+     * @Route("/{_locale<en|fr|pl|it>}/forgot_password/", name="app_forgot_password")
      */
     public function forgot_password(Request $request, UserRepository $userRepository, MailerInterface $mailer, TranslatorInterface $translator)
     {
@@ -241,7 +241,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/new_password/", name="app_new_password")
+     * @Route("/{_locale<en|fr|pl|it>}/new_password/", name="app_new_password")
      */
     public function new_password(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, TranslatorInterface $translator)
     {

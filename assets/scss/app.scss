@@ -423,16 +423,26 @@ body > div.autocomplete {
 
             &.disabled {
                 opacity: 0.6;
-                cursor: not-allowed;
+                cursor: not-allowed; 
             }
         }
     }
 }
 
 #datatable-search_history td span.type {
-    font-size: 1.4rem;
+    font-size: 1.4rem; 
 }
 
 #searchmap-modal .leaflet-control-geocoder.leaflet-bar {
     display: none;
+}
+
+.switch-langue {
+    .dropdown-menu {
+        min-width: auto;
+    }
+
+    img {
+        max-width: 22px;
+    }
 }

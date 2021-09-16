@@ -31,7 +31,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/home/{tab}", name="home")
+     * @Route("/{_locale<en|fr|pl|it>}/home/{tab}", name="home")
      */
     public function index(
         $tab = 'home',
@@ -113,7 +113,7 @@ class AdminController extends AbstractController
     }
     
     /**
-     * @Route("/create_user", name="create_user", methods={"GET", "POST"})
+     * @Route("/{_locale<en|fr|pl|it>}/create_user", name="create_user", methods={"GET", "POST"})
      */
     public function create_user(
         Request $request,
@@ -162,7 +162,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/edit_user/{id}", name="edit_user", methods={"GET", "POST"})
+     * @Route("/{_locale<en|fr|pl|it>}/edit_user/{id}", name="edit_user", methods={"GET", "POST"})
      */
     public function edit_user(
         User $user,

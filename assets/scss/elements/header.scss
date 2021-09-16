@@ -71,7 +71,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
     }
     
-    .dropdown-menu a {
+    .dropdown-menu a:not(.link-langue) {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -89,6 +89,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
             color: #1d1e1f;
             text-decoration: none;
             background-color: #f7f7f9;
+        }
+    }
+    .dropdown-menu a.link-langue {        
+        &:focus, 
+        &:hover {
+            color: #fff;
+            background-color: #333366;
+        }
+
+        img {
+            max-width: 22px;
         }
     }
 }

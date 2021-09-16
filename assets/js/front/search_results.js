@@ -114,7 +114,6 @@ class SearchResults {
 
 
     runDonetraining = () => { 
-
        $('body').on('click', '#search-results #accordion .btn-done', function() {
 
             let _this = this;
@@ -124,7 +123,7 @@ class SearchResults {
             let id = $(this).attr('data-id');
             let url = '/api/done_training/' + id;
            
-            bootbox.confirm({message : 'Can you confirm that you have completed this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.can_you_confirm_that_you_have_completed_this_training ? translationsJS.can_you_confirm_that_you_have_completed_this_training : 'Confirm', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
                 if (result == true) {
                     $.ajax({
                         url: url,
@@ -163,7 +162,7 @@ class SearchResults {
            let id = $(this).attr('data-id');
            let url = '/api/undone_training/' + id;
                       
-            bootbox.confirm({message : 'Can you confirm that you did not take this training?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.can_you_confirm_that_you_did_not_take_this_training ? translationsJS.can_you_confirm_that_you_did_not_take_this_training : 'Confirm', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
                 if (result == true) {
                     $.ajax({
                         url: url,
@@ -221,7 +220,7 @@ class SearchResults {
                     
                     let control = L.Control.geocoder({
                         collapsed: false,
-                        placeholder: 'Search here...',
+                        placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
                         position: 'topleft',
                         geocoder: geocoder
                     }).addTo(map);
@@ -509,7 +508,7 @@ class SearchResults {
 
         let control = L.Control.geocoder({
             collapsed: false,
-            placeholder: 'Search here...',
+            placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
             position: 'topleft',
             geocoder: geocoder
         }).on('markgeocode', function(e) {

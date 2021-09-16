@@ -396,3 +396,31 @@ select[name="user[dateOfBirth]"].form-control:hover {
     background-position: top center;
     background-repeat: no-repeat;
 }
+
+.switch-langue-login {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    
+    .dropdown-right {
+        color: #fff;
+    }
+}
+
+.switch-langue {
+    .dropdown-menu {
+        min-width: auto;
+    }
+
+    a.link-langue {        
+        &:focus, 
+        &:hover {
+            color: #fff;
+            background-color: #333366;
+        }
+    }
+
+    img {
+        max-width: 22px;
+    }
+}

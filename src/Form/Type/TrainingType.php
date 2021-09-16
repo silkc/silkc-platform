@@ -118,8 +118,8 @@ class TrainingType extends AbstractType
             ->add('isOnline', ChoiceType::class, [
                 'translation_domain' => 'messages',
                 'choices'  => array(
-                    'Yes' => 1,
-                    'No' => 0,
+                    'yes' => 1,
+                    'no' => 0,
                 ),
                 'label'              => 'label.online',
                 'expanded' => true,
@@ -127,8 +127,8 @@ class TrainingType extends AbstractType
             ->add('isOnlineMonitored', ChoiceType::class, [
                 'translation_domain' => 'messages',
                 'choices'  => array(
-                    'Yes' => 1,
-                    'No' => 0,
+                    'yes' => 1,
+                    'no' => 0,
                 ),
                 'label'              => 'label.is_online_monitored',
                 'expanded' => true,
@@ -137,8 +137,8 @@ class TrainingType extends AbstractType
                 'label_attr' => ['class' => 'form-check-inline'],
                 'translation_domain' => 'messages',
                 'choices'  => array(
-                    'Yes' => 1,
-                    'No' => 0,
+                    'yes' => 1,
+                    'no' => 0,
                 ),
                 'label'              => 'label.is_presential',
                 'expanded' => true,

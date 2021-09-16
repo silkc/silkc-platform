@@ -14,7 +14,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "./abstracts/mixins";
 
 body {
-    padding-bottom: 50px;
+    padding-bottom: 50px; 
 }
 
 /* =============================================================================
@@ -160,5 +160,15 @@ form[name="training"] {
         .leaflet-touch .leaflet-control-geocoder {
             display: none !important;
         }
+    }
+}
+
+.switch-langue {
+    .dropdown-menu {
+        min-width: auto;
+    }
+
+    img {
+        max-width: 22px;
     }
 }

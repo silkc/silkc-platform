@@ -31,6 +31,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addStyleEntry('bootstrap_extended', './assets/css/bootstrap-extended.css')
+    //.addEntry('flag_icon_css_master', './assets/css/flag-icon-css-master/css/flag-icon.min.css')
 
     .addEntry('app', './assets/js/app.js')
     .addEntry('main', './assets/js/front/main.js')

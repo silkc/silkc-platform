@@ -67,20 +67,20 @@ class Account {
                 </a>
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
-                <a href="#" class="detail mr-2" data-toggle="tooltip" title="Number of associated skills - click for more details" 
+                <a href="#" class="detail mr-2" data-toggle="tooltip" title="${translationsJS && translationsJS.number_of_associated_skills_click_for_more_details ? translationsJS.number_of_associated_skills_click_for_more_details : 'Number of associated skills - click for more details'}" 
                         data-name="${occupation.name}" 
                         data-description="${occupation.description}" 
                         data-id="${occupation.id}">
                     <span class="badge badge-success">${occupation.skills ? occupation.skills.length : 0}</span>
                 </a>
-                <a href="#" class="text-danger item rmv" data-toggle="tooltip" title="Remove this job" 
+                <a href="#" class="text-danger item rmv" data-toggle="tooltip" title="${translationsJS && translationsJS.remove_this_job ? translationsJS.remove_this_job : 'Remove this job'}" 
                         data-name="${occupation.name}" 
                         data-type="${occupation.type}" 
                         data-id="${occupation.id}">
                     <i class="fas fa-trash-alt text-danger"></i>
                 </a>
                 ${occupation.type == 'desired' ? 
-                    `<!--<a href="#" class="search ml-2" data-toggle="tooltip" title="Search for training required for this job">
+                    `<!--<a href="#" class="search ml-2" data-toggle="tooltip" title="${translationsJS && translationsJS.search_for_training_required_for_this_job ? translationsJS.search_for_training_required_for_this_job : 'Search for training required for this job'}">
                         <i class="fas fa-search-plus text-primary"></i>
                     </a>-->` : '' }
             </div>
@@ -94,13 +94,13 @@ class Account {
                 <span>${training.name}</span>
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
-                <a href="" class="link mr-2" data-toggle="tooltip" title="Skills linked to this training">
+                <a href="" class="link mr-2" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_details_tooltip ? translationsJS.user_formation_details_tooltip : 'Skills linked to this training'}">
                     <i class="fas fa-search text-primary"></i>
                 </a>
-                <a href="" class="text-danger item rmv mr-2" data-toggle="tooltip" title="Remove this training" data-name="${training.name}" data-id="${training.id}" >
+                <a href="" class="text-danger item rmv mr-2" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_unlink_tooltip ? translationsJS.user_formation_unlink_tooltip : 'Remove this training'}" data-name="${training.name}" data-id="${training.id}" >
                     <i class="fas fa-unlink text-danger"></i>
                 </a>
-                <a href="" class="text-success feedback" data-toggle="tooltip" title="Provide feedback">
+                <a href="" class="text-success feedback" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_feedback_tooltip ? translationsJS.user_formation_feedback_tooltip : 'Provide feedback'}">
                     <i class="fas fa-plus text-primary"></i>
                 </a>
             </div>
@@ -121,7 +121,7 @@ class Account {
                         </a>
                     </div>
                     <div class="d-inline-flex align-items-center justify-content-end">
-                        <a href="" class="text-danger rmv item" data-toggle="tooltip" title="Remove this skill" data-name="${skill.name}" data-id="${skill.id}">
+                        <a href="" class="text-danger rmv item" data-toggle="tooltip" title="${translationsJS && translationsJS.remove_this_skill ? translationsJS.remove_this_skill : 'Remove this skill'}" data-name="${skill.name}" data-id="${skill.id}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -200,8 +200,8 @@ class Account {
                                         htmlOptional += li;
 
                                     if (k == dataSkills.length - 1) {
-                                        $(`<h1 style="font-size: 1rem;">Essential skills</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
-                                        $(`<h1 style="font-size: 1rem;">Optional skills</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
+                                        $(`<h1 style="font-size: 1rem;">${translationsJS && translationsJS.essential_skills ? translationsJS.essential_skills : 'Essential skills'}</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
+                                        $(`<h1 style="font-size: 1rem;">${translationsJS && translationsJS.optional_skills ? translationsJS.optional_skills : 'Optional skills'}</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
                                         $('#common-modal').find('.modal-dialog').addClass('modal-lg');
                                         $('#common-modal').modal('show');
                                         $('#common-modal [data-toggle="popover"]').popover();
@@ -777,7 +777,7 @@ class Account {
             let skillName = $(this).attr('data-name');
             let card = $(this).closest('.card');
             let div = $(this).closest('.card').find('.card-header > div > div:last-child');
-            let links = `<a href="#" data-toggle="tooltip" class="text-success back-skill item" title="Add this skill back into the list above" data-name="${skillName}" data-id="${skillId}">
+            let links = `<a href="#" data-toggle="tooltip" class="text-success back-skill item" title="${translationsJS && translationsJS.add_this_skill_back_into_the_list_above ? translationsJS.add_this_skill_back_into_the_list_above : 'Add this skill back into the list above'}" data-name="${skillName}" data-id="${skillId}">
                             <i class="fas fa-plus text-primary"></i>
                         </a>`;
 
@@ -991,13 +991,13 @@ class Account {
             let html = '';
 
             if (occupations) {
-                let occupationsHtml = '<h2 class="title-skill">Occupations</h2>'
+                let occupationsHtml = `<h2 class="title-skill">${translationsJS && translationsJS.occupations ? translationsJS.occupations : 'Occupations'}</h2>`;
                 occupationsHtml += `<p>${occupations}</p>`;
                 html += occupationsHtml;
             }
 
             if (trainings) {
-                let trainingsHtml = '<h2 class="title-skill">Trainings</h2>'
+                let trainingsHtml = `<h2 class="title-skill">${translationsJS && translationsJS.trainings ? translationsJS.trainings : 'Trainings'}</h2>`;
                 trainingsHtml += `<p>${trainings}</p>`;
                 html += trainingsHtml;
             }
@@ -1054,7 +1054,7 @@ class Account {
             
             let control = L.Control.geocoder({
                 collapsed: false,
-                placeholder: 'Search here...',
+                placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
                 position: 'topleft',
                 geocoder: geocoder
             }).on('markgeocode', function(e) {
@@ -1117,7 +1117,7 @@ class Account {
             
                 let control = L.Control.geocoder({
                     collapsed: false,
-                    placeholder: 'Search here...',
+                    placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
                     position: 'topleft',
                     geocoder: geocoder
                 }).on('markgeocode', function(e) {
@@ -1227,7 +1227,7 @@ class Account {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Name</span>
+											<span class="title">${translationsJS && translationsJS.name ? translationsJS.name : 'Name'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.name ? data.name : 'N/A'}</span>
@@ -1236,7 +1236,7 @@ class Account {
 									
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Institution name</span>
+											<span class="title">${translationsJS && translationsJS.institution_name ? translationsJS.institution_name : 'Institution name'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${institution_name}</span>
@@ -1245,7 +1245,7 @@ class Account {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Location</span>
+											<span class="title">${translationsJS && translationsJS.location ? translationsJS.location : 'Location'}</span>
 										</div>
 										<div class="col-lg-8">
                                             <span id="location-modal">N/A</span>
@@ -1257,7 +1257,7 @@ class Account {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Duration</span>
+											<span class="title">${translationsJS && translationsJS.duration ? translationsJS.duration : 'Duration'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.duration ? data.duration : 'N/A'}</span>
@@ -1266,7 +1266,7 @@ class Account {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Description</span>
+											<span class="title">${translationsJS && translationsJS.description ? translationsJS.description : 'Description'}</span>
 										</div>
 										<div class="col-lg-8">
 											<p class="text-justify m-0">
@@ -1277,7 +1277,7 @@ class Account {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Price</span>
+											<span class="title">${translationsJS && translationsJS.price ? translationsJS.price : 'Price'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.price ? data.price : 'N/A'}</span>
@@ -1285,7 +1285,7 @@ class Account {
 									</div>
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">Occupation</span>
+											<span class="title">${translationsJS && translationsJS.occupation ? translationsJS.occupation : 'Occupation'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>
@@ -1297,14 +1297,14 @@ class Account {
 										</div>
 									</div>
 									<div class="mb-3">
-                                        <span class="required-skills d-block mb-3 title">Required skills</span>
+                                        <span class="required-skills d-block mb-3 title">${translationsJS && translationsJS.required_skills ? translationsJS.required_skills : 'Required skills'}</span>
                                         <ul>
                                             ${requireSkillsHTML && requireSkillsHTML.length > 0 ? requireSkillsHTML : 'N/A'}
                                         </ul>
 									</div>
 
 									<div class="mb-3">
-                                     <span class="required-skills d-block mb-3 title">Acquired skills</span>
+                                     <span class="required-skills d-block mb-3 title">${translationsJS && translationsJS.acquired_skills ? translationsJS.acquired_skills : 'Acquired skills'}</span>
                                         <ul>
                                             ${acquireSkillsHTML && acquireSkillsHTML.length > 0 ? acquireSkillsHTML : 'N/A'}
                                         </ul>
@@ -1354,7 +1354,7 @@ class Account {
 
             let buttonSubmit = `
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary btn-submit-feedback" data-training-id="${id}" data-user-id="${user_id}">Save</button>
+                <button type="button" class="btn btn-primary btn-submit-feedback" data-training-id="${id}" data-user-id="${user_id}">${translationsJS && translationsJS.save ? translationsJS.save : 'Save'}</button>
             `;
 
             $.ajax({

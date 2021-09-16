@@ -215,6 +215,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   color: #fff;
 }
 
+.switch-langue {
+    .dropdown-menu {
+        min-width: auto;
+    }
+
+    img {
+        max-width: 22px;
+    }
+}
+
 @media (max-width: 767px) {
   #blc-search-by-skill {
     display: none;

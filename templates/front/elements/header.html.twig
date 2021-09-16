@@ -50,6 +50,20 @@
                     </div>
                 </div>
             {% endif %}
+            <div class="dropdown ml-2 switch-langue">
+                <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{asset('build/images/flags/' ~ app.request.locale ~ '.png')}}" alt=""> {{ app.request.locale|capitalize }}
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    {% set current_path = app.request.get('_route') %}
+                    {% set route_params = app.request.attributes.get('_route_params') %}
+                    <a class="dropdown-item link-langue" href="{{ path(current_path, route_params|merge({_locale: 'en'})) }}"><img src="{{asset('build/images/flags/en.png')}}" alt=""> En</a>
+                    <a class="dropdown-item link-langue" href="{{ path(current_path, route_params|merge({_locale: 'fr'})) }}"><img src="{{asset('build/images/flags/fr.png')}}" alt=""> Fr</a>
+                    <a class="dropdown-item link-langue" href="{{ path(current_path, route_params|merge({_locale: 'pl'})) }}"><img src="{{asset('build/images/flags/pl.png')}}" alt=""> Pl</a>
+                    <a class="dropdown-item link-langue" href="{{ path(current_path, route_params|merge({_locale: 'it'})) }}"><img src="{{asset('build/images/flags/it.png')}}" alt=""> It</a>
+                </div>
+            </div>
         </div>
     </div>
 </header>

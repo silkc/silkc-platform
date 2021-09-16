@@ -70,7 +70,7 @@ class Login {
             let geocoder = L.Control.Geocoder.nominatim();
             let control = L.Control.geocoder({
                 collapsed: false,
-                placeholder: (window.location.href).indexOf('institution') != -1 ? 'Address' : 'City',
+                placeholder: (window.location.href).indexOf('institution') != -1 ? translationsJS && translationsJS.address ? translationsJS.address : 'Address' : translationsJS && translationsJS.city ? translationsJS.city : 'City',
                 position: 'topleft',
                 geocoder: geocoder
             }).on('markgeocode', function(e) {

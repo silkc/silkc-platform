@@ -26,12 +26,12 @@ class Common {
                 inputRequired.addEventListener('invalid', () => {
                     if (typeInput == 'email') {
                         if (!validateEmail(inputRequired.value)) {
-                            inputRequired.setCustomValidity('The email format is incorrect!');
+                            inputRequired.setCustomValidity(translationsJS && translationsJS.are_you_sure_you_want_to_delete_this_item ? translationsJS.are_you_sure_you_want_to_delete_this_item : 'The email format is incorrect!');
                         }
                     }
 
                     if (inputRequired.value === '') {
-                        inputRequired.setCustomValidity('This field is required!');
+                        inputRequired.setCustomValidity(translationsJS && translationsJS.this_field_is_required ? translationsJS.this_field_is_required : 'This field is required!');
                     }
 
                 });

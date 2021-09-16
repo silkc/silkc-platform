@@ -7,6 +7,8 @@ parameters:
     router.request_context.scheme: '%env(SECURE_SCHEME)%'
     asset.request_context.secure: '%env(SECURE)%'
 
+    app.supported_locales: ['en', 'it', 'fr', 'pl']
+
 services:
     # default configuration for services in *this* file
     _defaults:

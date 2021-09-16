@@ -35,28 +35,28 @@ security:
                 target: app_login
 
     access_control:
-        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/home$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/signin, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/forgot_password, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/new_password, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/validate_account, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/search, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/admin/get_, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/admin, roles: [ ROLE_ADMIN, ROLE_SUPER_ADMIN ], requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/api/forgot_password$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/api/signup$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/apip/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/api/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/api/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/api/validate_account, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/api, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/account$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/institution$, roles: ROLE_INSTITUTION, requires_channel: '%router.request_context.scheme%' }
-        - { path: ^/recruiter$, roles: ROLE_RECRUITER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/home$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/signin, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/forgot_password, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/new_password, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/validate_account, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/search, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/admin/get_, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/admin, roles: [ ROLE_ADMIN, ROLE_SUPER_ADMIN ], requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/api/forgot_password$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/api/signup$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/apip/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/api/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/api/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/api/validate_account, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/api, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/account$, roles: ROLE_USER, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/institution$, roles: ROLE_INSTITUTION, requires_channel: '%router.request_context.scheme%' }
+        - { path: ^/(en|fr|pl|it)/recruiter$, roles: ROLE_RECRUITER, requires_channel: '%router.request_context.scheme%' }
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: ROLE_ADMIN

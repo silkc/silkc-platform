@@ -33,7 +33,7 @@ class History {
             data.id = id;
             data.type = type;
 
-            bootbox.confirm({message : 'Are you sure you want to delete this item?', buttons : { cancel : { label : 'Cancel'}, confirm : { label : 'Yes'}}, callback : function(result) {
+            bootbox.confirm({message : translationsJS && translationsJS.are_you_sure_you_want_to_delete_this_item ? translationsJS.are_you_sure_you_want_to_delete_this_item : 'Confirm', buttons : { cancel : { label : translationsJS && translationsJS.cancel ? translationsJS.cancel : 'Cancel'}, confirm : { label : translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}}, callback : function(result) {
                     if (result == true) {
                         $button.html('<i class="fas fa-spinner fa-spin"></i>');
                         $.ajax({
@@ -67,7 +67,16 @@ class History {
             columnDefs: [
                 {targets: [5], orderable: false},
             ],
-            order: [[ 1, 'asc' ]]
+            order: [[ 1, 'asc' ]],
+            language: {
+                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                paginate: {
+                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                }
+            }
         });
     }
 

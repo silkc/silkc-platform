@@ -260,9 +260,9 @@ class Recruiter {
                                         $('body').find('.skills-associated').hide();
                                     }
                                     if (ul.find('.add').length > 0) {
-                                        $('body').find('.skills-associated').attr('id', 'all-associated').html('All associated')
+                                        $('body').find('.skills-associated').attr('id', 'all-associated').html(translationsJS && translationsJS.all_associated ? translationsJS.all_associated : 'All associated')
                                     } else {
-                                        $('body').find('.skills-associated').attr('id', 'all-unassociated').html('All unassociated')
+                                        $('body').find('.skills-associated').attr('id', 'all-unassociated').html(translationsJS && translationsJS.all_unassociated ? translationsJS.all_unassociated : 'All unassociated')
                                     }
                                 }
                             }
@@ -302,7 +302,7 @@ class Recruiter {
                     _this.addSkillToHiddenField(skillId);
                 });
 
-                $(this).attr('id', 'all-unassociated').html('All unassociated')
+                $(this).attr('id', 'all-unassociated').html(translationsJS && translationsJS.all_unassociated ? translationsJS.all_unassociated : 'All unassociated')
             }
 
             _this.resetAffectedUsers();
@@ -327,7 +327,7 @@ class Recruiter {
                     _this.removeSkillToHiddenField(skillId);
                 });
 
-                $(this).attr('id', 'all-associated').html('All associated')
+                $(this).attr('id', 'all-associated').html(translationsJS && translationsJS.all_associated ? translationsJS.all_associated : 'All associated')
             }
 
             _this.resetAffectedUsers();
@@ -546,7 +546,7 @@ class Recruiter {
             
             let control = L.Control.geocoder({
                 collapsed: false,
-                placeholder: 'Search here...',
+                placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
                 position: 'topleft',
                 geocoder: geocoder
             }).on('markgeocode', function(e) {
@@ -601,7 +601,7 @@ class Recruiter {
         if (inputHidden) {
             let control = L.Control.geocoder({
                 collapsed: false,
-                placeholder: 'Search here...',
+                placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
                 position: 'topleft',
                 geocoder: geocoder
             }).on('markgeocode', function(e) {
@@ -643,15 +643,15 @@ class Recruiter {
             let $modal = $('#common-modal');
 
             if ($modal) {
-                $modal.find('.modal-title').html('Add institution');
-                let buttonSubmit = `<button type="button" class="btn btn-primary btn-add-user">Add</button>`;
+                $modal.find('.modal-title').html(translationsJS && translationsJS.location ? translationsJS.location :'Add institution');
+                let buttonSubmit = `<button type="button" class="btn btn-primary btn-add-user">${translationsJS && translationsJS.add ? translationsJS.add : 'Add'}</button>`;
                 let formAddUser = `<div class="form-add-user">
                                         <div class="form-group">
-                                            <label for="institution-name">Name</label>
+                                            <label for="institution-name">${translationsJS && translationsJS.name ? translationsJS.name : 'Name'}</label>
                                             <input type="text" class="form-control" id="institution-name">
                                             </div>
                                             <div class="form-group">
-                                            <label for="institution-location">Location</label>
+                                            <label for="institution-location">${translationsJS && translationsJS.location ? translationsJS.location : 'Location'}</label>
                                             <input type="hidden" class="form-control" id="institution-location">
                                             <div id="searchmap-modal"></div>
                                             <div id="map-modal"></div>
@@ -745,7 +745,7 @@ class Recruiter {
                     
                     let control = L.Control.geocoder({
                         collapsed: false,
-                        placeholder: 'Search here...',
+                        placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
                         position: 'topleft',
                         geocoder: geocoder
                     }).addTo(map);
@@ -800,7 +800,7 @@ class Recruiter {
             let geocoder = L.Control.Geocoder.nominatim();
             let control = L.Control.geocoder({
                 collapsed: false,
-                placeholder: (window.location.href).indexOf('recruiter') != -1 ? 'Address' : 'City',
+                placeholder: (window.location.href).indexOf('recruiter') != -1 ?  translationsJS && translationsJS.address ? translationsJS.address : 'Address' : translationsJS && translationsJS.city ? translationsJS.city : 'City',
                 position: 'topleft',
                 geocoder: geocoder
             }).on('markgeocode', function(e) {
