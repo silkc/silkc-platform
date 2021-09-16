@@ -648,7 +648,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/training/duplicate/{id}", name="training_duplicate")
+     * @Route("/{_locale<en|fr|pl|it>}/training/duplicate/{id}", name="training_duplicate")
      */
     public function training_duplicate(Training $training, SkillRepository $skillRepository, TrainingRepository $trainingRepository, TranslatorInterface $translator): Response
     {
@@ -693,7 +693,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/position/create", name="position_create")
+     * @Route("/{_locale<en|fr|pl|it>}/position/create", name="position_create")
      */
     public function position_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
@@ -755,7 +755,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/position/edit/{id}", name="position_edit")
+     * @Route("/{_locale<en|fr|pl|it>}/position/edit/{id}", name="position_edit")
      */
     public function edit_position(Position $position, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, PositionRepository $positionRepository):Response
     {
@@ -809,7 +809,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/position/duplicate/{id}", name="position_duplicate")
+     * @Route("/{_locale<en|fr|pl|it>}/position/duplicate/{id}", name="position_duplicate")
      */
     public function position_duplicate(Position $position, SkillRepository $skillRepository, PositionRepository $positionRepository, TranslatorInterface $translator): Response
     {
