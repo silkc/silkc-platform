@@ -179,7 +179,7 @@ class Occupation
 
     public function getPreferredLabel(): ?string
     {
-        $locale = Locale::getDefault();
+        $locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -275,7 +275,7 @@ class Occupation
 
     public function getDefinition(): ?string
     {
-        $locale = Locale::getDefault();
+        $locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -311,7 +311,7 @@ class Occupation
 
     public function getDescription(): ?string
     {
-        $locale = Locale::getDefault();
+        $locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -362,11 +362,11 @@ class Occupation
      */
     public function getTranslations(): Collection
     {
-        $locale = Locale::getDefault();
+        /*$locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->eq('locale', $locale));
+            ->andWhere(Criteria::expr()->eq('locale', $locale));*/
 
-        return $this->translations->matching($criteria);
+        return $this->translations;
     }
 
     public function addTranslation(OccupationTranslation $occupationTranslation): self

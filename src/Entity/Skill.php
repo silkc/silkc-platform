@@ -122,6 +122,7 @@ class Skill
 
     /**
      * @ORM\OneToMany(targetEntity=SkillTranslation::class, mappedBy="skill", orphanRemoval=true)
+     * @Groups({"skill:read"})
      */
     private $translations;
 
@@ -185,7 +186,7 @@ class Skill
 
     public function getPreferredLabel(): ?string
     {
-        $locale = Locale::getDefault();
+        $locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -269,7 +270,7 @@ class Skill
 
     public function getDefinition(): ?string
     {
-        $locale = Locale::getDefault();
+        $locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -305,7 +306,7 @@ class Skill
 
     public function getDescription(): ?string
     {
-        $locale = Locale::getDefault();
+        $locale = Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
