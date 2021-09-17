@@ -122,7 +122,6 @@ class Skill
 
     /**
      * @ORM\OneToMany(targetEntity=SkillTranslation::class, mappedBy="skill", orphanRemoval=true)
-     * @Groups({"skill:read"})
      */
     private $translations;
 

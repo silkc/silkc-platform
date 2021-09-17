@@ -139,7 +139,6 @@ class Occupation
 
     /**
      * @ORM\OneToMany(targetEntity=OccupationTranslation::class, mappedBy="occupation", orphanRemoval=true)
-     * @Groups({"occupation:read", "occupation:write"})
      */
     private $translations;
 
