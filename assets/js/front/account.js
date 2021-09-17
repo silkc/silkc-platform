@@ -228,6 +228,7 @@ class Account {
      runAutocompletion = () => {
         let inputs = document.getElementsByClassName('input-autocomplete');
         let datas = {};
+        let lang = $('body').attr('lang');
 
         let runAutocomplete = function (data, input) {
 
@@ -314,6 +315,7 @@ class Account {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
                 let baseUrl = input.getAttribute('data-url');
+                baseUrl = baseUrl + '/locale/' + lang;
                 let formats = input.getAttribute('data-formats') || 'json';
                 let pagination = input.getAttribute('data-pagination') || false;
                 let params = $.param({'formats': formats, 'pagination': false});
