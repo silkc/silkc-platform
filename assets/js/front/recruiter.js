@@ -397,6 +397,9 @@ class Recruiter {
                 minLength: minLength,
                 emptyMsg: 'No elements found',
                 render: function(item, currentValue) {
+                    if (item.translations) {
+                        item = item.translations[Object.keys(item.translations)[0]]
+                    }
                     let div = document.createElement('div');
                     div.dataset.id = item.id;                    
                     div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table position
