@@ -45,9 +45,9 @@ class Main {
                 minLength: minLength,
                 emptyMsg: 'No elements found',
                 render: function(item, currentValue) {
-                    if (item.translations) {
+                    /*if (item.translations) {
                         item = item.translations[Object.keys(item.translations)[0]]
-                    }
+                    }*/
                     let div = document.createElement('div');
                     div.dataset.id = item.id;                    
                     div.textContent = (item.preferredLabel != undefined) ? item.preferredLabel : (item.name != undefined) ? item.name : ''; // preferredLabel => table ESCO, name => table training
@@ -112,6 +112,7 @@ class Main {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
                 let baseUrl = input.getAttribute('data-url');
+                baseUrl = baseUrl + '/locale/' + lang;
                 let formats = input.getAttribute('data-formats') || 'json';
                 let pagination = input.getAttribute('data-pagination') || false;
                 let params = $.param({'formats': formats, 'pagination': pagination});
