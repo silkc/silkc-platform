@@ -8,13 +8,33 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Intl\Locale;
+use Symfony\Component\HttpFoundation\Request;
+use App\Controller\Apip\Occupation\OccupationGetCollectionController;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationRepository::class)
  * @ApiResource(
- *      collectionOperations={"get"},
+ *      collectionOperations={
+ *          "get",
+ *          "get_with_locale": {
+ *              "normalization_context": {"groups": "occupation:read"},
+ *              "denormalization_context": { "allow_extra_attributes": true },
+ *              "method": "GET",
+ *              "path": "/occupations/locale/{locale}",
+ *              "controller": OccupationGetCollectionController::class,
+ *              "openapi_context": {
+ *                  "summary": "Récupère les occupations avec la traductions dans la langue indiquée",
+ *                  "parameters": {},
+ *                  "filters": {},
+ *                  "pagination_enabled": false
+ *              }
+ *          }
+ *      },
  *      itemOperations={"get"},
  *      normalizationContext={"groups"={"occupation:read"}},
  *      denormalizationContext={"groups"={"occupation:write"}},

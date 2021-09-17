@@ -10,13 +10,29 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Intl\Locale;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\Apip\Skill\SkillGetCollectionController;
 
 /**
  * @ORM\Entity(repositoryClass=SkillRepository::class)
  * @ApiResource(
- *      collectionOperations={"get"},
+ *      collectionOperations={
+ *          "get",
+ *          "get_with_locale": {
+ *              "normalization_context": {"groups": "skill:read"},
+ *              "denormalization_context": { "allow_extra_attributes": true },
+ *              "method": "GET",
+ *              "path": "/skills/locale/{locale}",
+ *              "controller": SkillGetCollectionController::class,
+ *              "openapi_context": {
+ *                  "summary": "Récupère les skills avec la traductions dans la langue indiquée",
+ *                  "parameters": {},
+ *                  "filters": {},
+ *                  "pagination_enabled": false
+ *              }
+ *          }
+ *      },
  *      itemOperations={"get"},
-  *     normalizationContext={"groups"={"skill:read", "occupationSkill:read"}},
+ *      normalizationContext={"groups"={"skill:read", "occupationSkill:read"}},
  *      denormalizationContext={"groups"={"skill:write", "occupationSkill:read"}},
  *      attributes={
  *          "formats"={"json"}
