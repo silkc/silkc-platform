@@ -343,8 +343,11 @@ number_of_associated_skills_click_for_more_details: Nombre de compétences assoc
 search_for_training_required_for_this_job: Rechercher la formation requise pour ce poste
 occupations: Professions
 trainings: Formations
-datatable_search:   'Rechercher :'
-datatable_first:    'Premier'
-datatable_previous: 'Précédent'
-datatable_next:     'Suivant'
-datatable_last:     'Dernier'
+datatable_search: "Rechercher :"
+datatable_first: "Premier"
+datatable_previous: "Précédent"
+datatable_next: "Suivant"
+datatable_last: "Dernier"
+datatable_loadingRecords: Chargement...
+datatable_processing: Traitement
+datatable_zeroRecords: Aucune donnée disponible

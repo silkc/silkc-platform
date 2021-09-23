@@ -15,6 +15,8 @@ label:
   salary: Stipendio
   duration: Durata effettiva (dalla data di inizio alla data di fine)
   effective_duration: Eff. durata
+  duration_value: Durata effettiva (dalla data di inizio alla data di fine)
+  duration_details: Dettagli sulla durata
   description: Descrizione
   roles: Ruoli
   price: Prezzo
@@ -348,3 +350,6 @@ datatable_first: "Primo"
 datatable_previous: "Precedente"
 datatable_next: "Seguente"
 datatable_last: "Più recente"
+datatable_loadingRecords: Caricamento in corso...
+datatable_processing: in lavorazione
+datatable_zeroRecords: Nessun dato disponibile nella tabella

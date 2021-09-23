@@ -14,6 +14,10 @@
         {{ include('trads.html.twig') }}
     </head>
 
-    <body  lang="{{ app.request.locale|split('_')[0] }}" data-token="{{ app is defined and app is not empty and attribute(app, 'user') is defined and app.user is not empty and attribute(app.user, 'apiToken') is defined and app.user.apiToken is not empty ? app.user.apiToken : false }}" class="{% block body_class %}{% endblock %}"> {% block carousel %}{% endblock %}{% block header %}{% endblock %}{% block body %}{% endblock %}{% block javascripts %}{% endblock %}
+    <body  lang="{{ app.request.locale|split('_')[0] }}" data-token="{{ app is defined and app is not empty and attribute(app, 'user') is defined and app.user is not empty and attribute(app.user, 'apiToken') is defined and app.user.apiToken is not empty ? app.user.apiToken : false }}" class="{% block body_class %}{% endblock %}"> 
+        {% block carousel %}{% endblock %}
+        {% block header %}{% endblock %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -9,12 +9,15 @@
         </tr>
     </thead>
     <tbody>
-        {% if to_validated_trainings is defined and to_validated_trainings is iterable and to_validated_trainings|length > 0 %}
+        {#{% if to_validated_trainings is defined and to_validated_trainings is iterable and to_validated_trainings|length > 0 %}
             {% for training in to_validated_trainings %}
                 <tr>
                     <td>{{ training.name }}</td>
                     <td>{{ training.createdAt|date('Y/m/d') }}</td>
                     <td>
+                    {{ dump(training) }}
+                    {{ dump(training.user) }}
+                    {{ dump(training.user.roles) }}
                         {{ (training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles) ? training.user.username : training.user.firstname ~ ' ' ~ training.user.lastname }}
                         <i class="fas fa-info-circle" data-toggle="tooltip" title="{{ training.user.email }}"></i>
                     </td>
@@ -48,7 +51,7 @@
                     </td>
                 </tr>
             {% endfor %}
-        {% endif %}
+        {% endif %}#}
     </tbody>
 </table>
 

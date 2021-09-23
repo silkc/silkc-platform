@@ -19,7 +19,7 @@
     </tr>
     </thead>
     <tbody>
-    {% if users is defined and users is iterable and users|length > 0 %}
+    {#{% if users is defined and users is iterable and users|length > 0 %}
         {% for user in users %}
             <tr>
                 <td class="text-center">{{ user.id }}</td>
@@ -76,6 +76,6 @@
                 </td>
             </tr>
         {% endfor %}
-    {% endif %}
+    {% endif %}#}
     </tbody>
 </table>

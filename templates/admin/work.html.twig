@@ -7,7 +7,7 @@
         </tr>
     </thead>
     <tbody>
-        {% if occupations is defined and occupations is iterable and occupations|length > 0 %}
+        {#{% if occupations is defined and occupations is iterable and occupations|length > 0 %}
             {% for occupation in occupations %}
                 <tr>
                     <td>{{ occupation.preferredLabel }}</td>
@@ -20,6 +20,6 @@
                     </td>
                 </tr>
             {% endfor %} 
-        {% endif %}
+        {% endif %}#}
     </tbody>
 </table>

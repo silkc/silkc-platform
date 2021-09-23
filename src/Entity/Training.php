@@ -344,6 +344,7 @@ class Training
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     * @Groups({"training:read"})
      */
     private $isValidated = 0;
 
@@ -355,6 +356,7 @@ class Training
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     * @Groups({"training:read"})
      */
     private $isRejected = 0;
 

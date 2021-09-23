@@ -97,21 +97,187 @@ class AdminController extends AbstractController
             [
                 'user' => $user,
                 'form' => $form->createView(),
-                'notifications' => $notificationRepository->findBy(['isRead' => false]),
+                ////'notifications' => $notificationRepository->findBy(['isRead' => false]),
                 'to_validated_trainings' => $trainingRepository->findBy(['isValidated' => false, 'isRejected' => false]),
-                //'to_validated_institutions' => $userRepository->findBy(['isValidated' => false]),
-                'trainings' => $trainingRepository->findAll(),
-                'skills' => $skillRepository->findAll(),
-                'occupations' => $occupationRepository->findAll(),
+                ////'to_validated_institutions' => $userRepository->findBy(['isValidated' => false]),
+                ////'trainings' => $trainingRepository->findAll(),
+                ////'skills' => $skillRepository->findAll(),
+                ////'occupations' => $occupationRepository->findAll(),
                 'password_form' => $passwordForm->createView(),
                 //'users' => $userRepository->findByRole('ROLE_USER'),
-                'users' => $userRepository->findAll(),
+                ////'users' => $userRepository->findAll(),
                 'tab' => $tab
                 //'related_skills' => $skillRepository->getByOccupationAndTraining($user)
             ]
         );
     }
     
+    /**
+     * @Route("/users", name="users")
+     */
+    public function users(
+        UserRepository $userRepository
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_ADMIN))
+            return $this->json(
+                [
+                    'result' => false,
+                ],
+                200,
+                ['Access-Control-Allow-Origin' => '*']
+            );
+
+        $user = $this->getUser();
+
+        return $this->json(
+            [
+                'result' => true,
+                'users' => $userRepository->findAll(),
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+    
+    /**
+     * @Route("/trainings", name="trainings")
+     */
+    public function trainings(
+        TrainingRepository $trainingRepository
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_ADMIN))
+            return $this->json(
+                [
+                    'result' => false,
+                ],
+                200,
+                ['Access-Control-Allow-Origin' => '*']
+            );
+
+        $user = $this->getUser();
+
+        return $this->json(
+            [
+                'result' => true,
+                'trainings' => $trainingRepository->findAll()
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+    
+    /**
+     * @Route("/skills", name="skills")
+     */
+    public function skills(
+        SkillRepository $skillRepository
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_ADMIN))
+            return $this->json(
+                [
+                    'result' => false,
+                ],
+                200,
+                ['Access-Control-Allow-Origin' => '*']
+            );
+
+        $user = $this->getUser();
+
+        return $this->json(
+            [
+                'result' => true,
+                'skills' => $skillRepository->findAll(),
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+    
+    /**
+     * @Route("/occupations", name="occupations")
+     */
+    public function occupations(
+        OccupationRepository $occupationRepository
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_ADMIN))
+            return $this->json(
+                [
+                    'result' => false,
+                ],
+                200,
+                ['Access-Control-Allow-Origin' => '*']
+            );
+
+        $user = $this->getUser();
+
+        return $this->json(
+            [
+                'result' => true,
+                'occupations' => $occupationRepository->findAll(),
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+    
+    /**
+     * @Route("/tasks", name="tasks")
+     */
+    public function tasks(
+        TrainingRepository $trainingRepository
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_ADMIN))
+            return $this->json(
+                [
+                    'result' => false,
+                ],
+                200,
+                ['Access-Control-Allow-Origin' => '*']
+            );
+
+        $user = $this->getUser();
+
+        return $this->json(
+            [
+                'result' => true,
+                'to_validated_trainings' => $trainingRepository->findBy(['isValidated' => false, 'isRejected' => false]),
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+    
+    /**
+     * @Route("/notifications", name="notifications")
+     */
+    public function notifications(
+        NotificationRepository $notificationRepository
+    ): Response
+    {
+        if (!$this->isGranted(User::ROLE_ADMIN))
+            return $this->json(
+                [
+                    'result' => false,
+                ],
+                200,
+                ['Access-Control-Allow-Origin' => '*']
+            );
+
+        return $this->json(
+            [
+                'result' => true,
+                'notifications' => $notificationRepository->findBy(['isRead' => false]),
+            ],
+            200,
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
     /**
      * @Route("/{_locale<en|fr|pl|it>}/create_user", name="create_user", methods={"GET", "POST"})
      */

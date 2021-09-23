@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        {% if notifications is defined and notifications is iterable and notifications|length > 0 %}
+        {#{% if notifications is defined and notifications is iterable and notifications|length > 0 %}
             {% for notification in notifications %}
                 <tr class="{{ (notification.isRead == false) ? 'font-weight-bold' }}" data-id="{{ notification.id }}">
                     <td style="text-align: center;"><input type="checkbox" class="editor-active"></td>
@@ -21,6 +21,6 @@
                     <td>{{ notification.title }}</td>
                 </tr>
             {% endfor %}
-        {% endif %}
+        {% endif %}#}
     </tbody>
 </table>
