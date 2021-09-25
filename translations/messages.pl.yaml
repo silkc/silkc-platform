@@ -15,6 +15,8 @@ label:
   salary: pensja
   duration: Okres obowiązywania (od daty rozpoczęcia do daty zakończenia)
   effective_duration: Ef. Trwanie
+  duration_value: Okres obowiązywania (od daty rozpoczęcia do daty zakończenia)
+  duration_details: Szczegóły czasu trwania
   description: Opis
   roles: Role
   price: Cena
@@ -31,19 +33,19 @@ label:
   create: Zapisać
   edit_training: Zapisać
   pseudo: Nazwa użytkownika
-  close: Close
-  institution_name: Institution name
-  search: Search
-  advanced_search: Advanced search
-  date: Date
-  distance: Distance
-  refine_my_search: Refine my search
-  city: City
+  close: Blisko
+  institution_name: Nazwa instytucji
+  search: Szukaj
+  advanced_search: Zaawansowane wyszukiwanie
+  date: Data
+  distance: Dystans
+  refine_my_search: Zawęź moje wyszukiwanie
+  city: Miasto
   distance_from: Odległość od
-  exclude_training_without_a_completed_description: Exclude training without a completed description
-  without_specified_duration: Without specified duration
-  currency: Currency
-  clear: Clear
+  exclude_training_without_a_completed_description: Wyklucz szkolenie bez wypełnionego opisu
+  without_specified_duration: Bez określonego czasu trwania
+  currency: Waluta
+  clear: Jasne
   hours: godziny
   hours_filter: godziny
   days: Dni
@@ -62,42 +64,42 @@ placeholder:
   salary_price: Cena wynagrodzenia
   up_to_distance: 200
 button:
-  see_related_trainings: See related trainings
-  see_skills_to_be_learn: See skills to be learn
-  suspend: Suspend
-  unsuspend: Unsuspend
-  suspect: Mark user as "suspect"
-  raise_suspicion: Mark suspicious
-  edit: Edit
-  delete: Delete
-  approve: Approve
-  detail: Details
-  reject: Reject
+  see_related_trainings: Zobacz powiązane szkolenia
+  see_skills_to_be_learn: Zobacz umiejętności do nauczenia
+  suspend: Zawieszać
+  unsuspend: Anuluj zawieszenie
+  suspect: Oznacz użytkownika jako „podejrzanego”
+  raise_suspicion: Oznacz podejrzane
+  edit: Edytować
+  delete: Kasować
+  approve: Zatwierdzić
+  detail: Detale
+  reject: Odrzucić
 header:
-  my_institution: My institution
-  my_account: My account
-  full_search_page: Full search page
-  intro: Skills Integration in a Learning Knowledge and Career PATHway
-  search_history: Search history
+  my_institution: Moja instytucja
+  my_account: Moje konto
+  full_search_page: Pełna strona wyszukiwania
+  intro: Integracja umiejętności w drodze uczenia się wiedzy i kariery
+  search_history: Historia wyszukiwania
 
 nav:
-  dashboard: Dashboard
-  home: Home
-  personal_informations: My account
-  institutional_informations: Institutional information
-  work: Jobs
-  training: Training
-  change_password: Password
-  skills: Skills
-  tasks: Tasks
-  users: Users
-  search_page: Go back to search page
+  dashboard: Deska rozdzielcza
+  home: Dom
+  personal_informations: Moje konto
+  institutional_informations: Informacje instytucjonalne
+  work: Oferty pracy
+  training: Szkolenie
+  change_password: Hasło
+  skills: Umiejętności
+  tasks: Zadania
+  users: Użytkownicy
+  search_page: Wróć do strony wyszukiwania
 
 notification:
   label:
-    date: Date
-    subject: Subject
-  mark_selected_as_read: Mark selected as read
+    date: Data
+    subject: Podmiot
+  mark_selected_as_read: Oznacz wybrane jako przeczytane
 
 content_training:
   label:
@@ -348,3 +350,6 @@ datatable_first: "Najpierw"
 datatable_previous: "Poprzedni"
 datatable_next: "Następny"
 datatable_last: "Najnowszy"
+datatable_loadingRecords: Ładowanie...
+datatable_processing: Przetwarzanie
+datatable_zeroRecords: dane niedostępne w tabeli

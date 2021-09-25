@@ -62,7 +62,7 @@ class User implements UserInterface
      *      max = 255,
      *      maxMessage = "lastname cannot be longer than {{ limit }} characters"
      * )
-     * @Groups({"training:read", "training_feedback:read"})
+     * @Groups({"user:read", "training:read", "training_feedback:read"})
      */
     private $lastname;
 
@@ -73,7 +73,7 @@ class User implements UserInterface
      *      max = 255,
      *      maxMessage = "firstname cannot be longer than {{ limit }} characters"
      * )
-     * @Groups({"training:read", "training_feedback:read"})
+     * @Groups({"user:read", "training:read", "training_feedback:read"})
      */
     private $firstname;
 
@@ -130,6 +130,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="array")
+     * @Groups({"user:read"})
      */
     private $roles = [];
 
@@ -178,21 +179,25 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     * @Groups({"user:read"})
      */
     private $isValidated = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     * @Groups({"user:read"})
      */
     private $isSuspended = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     * @Groups({"user:read"})
      */
     private $isSuspected = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 1})
+     * @Groups({"user:read"})
      */
     private $isSearchesKept = 1;
 

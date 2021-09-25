@@ -1,4 +1,4 @@
-<table id="datatable-work" class="table table-striped table-bordered" style="width:100%">
+<table id="datatable-training" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
             <th>{{ 'content_training.label.name'|trans }}</th>
@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        {% if trainings is defined and trainings is iterable and trainings|length > 0 %}
+        {#{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
             {% for training in trainings %}
                 <tr>
                     <td>{{ training.name }}</td>
@@ -32,6 +32,6 @@
                     </td>
                 </tr>
             {% endfor %}
-        {% endif %}
+        {% endif %}#}
     </tbody>
 </table>

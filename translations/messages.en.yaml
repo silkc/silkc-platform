@@ -361,3 +361,6 @@ datatable_first: "First"
 datatable_previous: "Previous"
 datatable_next: "Following"
 datatable_last: "Latest"
+datatable_loadingRecords: Loading...
+datatable_processing: Processing
+datatable_zeroRecords: No data available in table

@@ -6,6 +6,7 @@ import 'datatables.net';
 import 'datatables.net-select-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import 'datatables.net-select-dt/css/select.dataTables.min.css'; 
+import 'datatables.net-fixedcolumns'
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../scss/elements/header.scss';
@@ -18,6 +19,7 @@ require('bootstrap-select');
 
 
 function renderDate(date, format = 'DD MMMM YYYY to HH:mm') {
+    let lang = $('body').attr('lang');
     if (
         date == undefined ||
         (typeof date != 'string' && typeof date != 'object') ||
@@ -29,15 +31,37 @@ function renderDate(date, format = 'DD MMMM YYYY to HH:mm') {
     if (oDate === null)
         return '-';
 
-    if (oDate > moment().startOf('day') && oDate < moment().endOf('day')) {
+    /*if (oDate > moment().startOf('day') && oDate < moment().endOf('day')) {
         return "Today at " + oDate.locale('en').format('HH:mm');
     }
     else if (oDate > moment().subtract(1, 'day').startOf('day') && oDate < moment().subtract(1, 'day').endOf('day')) {
         return "Yesterday at " + oDate.locale('en').format('HH:mm');
-    }
+    }*/
 
-    return oDate.locale('en').format(format);
+    return oDate.locale(lang).format(format);
 }
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+function truncate(stringToTruncate, maxLength) {
+    var trimmedString = stringToTruncate.substr(0, maxLength);
+    return trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+}
+
+let tradsDatatable = {
+    search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+    loadingRecords: translationsJS && translationsJS.datatable_loadingRecords ? translationsJS.datatable_loadingRecords : "Loading...",
+    processing: translationsJS && translationsJS.datatable_processing ? translationsJS.datatable_processing : "Processing",
+    zeroRecords: translationsJS && translationsJS.datatable_zeroRecords ? translationsJS.datatable_zeroRecords : "No data available in table",
+    paginate: {
+        first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+        previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+        next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+        last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+    }
+};
 
 class Admin {
     instanceProperty = "Admin";
@@ -89,19 +113,29 @@ class Admin {
                 style:    'multi',
                 selector: 'td:not(:first-child)' // no row selection on last column
             },
-            columnDefs: [
-                { targets: [0], orderable: false}
+            ajax: {
+                url: '/admin/notifications',
+                type: 'GET',
+                dataSrc: function (json) {
+                    return json.notifications;
+                }
+            },
+            columns: [
+                { "className": "dt-center", "orderable": false, "targets": 0, "render":
+                    function (data, type, row) {
+                        return '<input type="checkbox" class="editor-active">';
+                    },
+                },
+                { "render":
+                    function (data, type, row) {
+                        return renderDate(row.createdAt, 'YYYY-MM-DD - HH:mm');
+                    },
+                },
+
+                { data: 'title' },
             ],
             order: [[ 1, 'asc' ]],
-            language: {
-                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-                paginate: {
-                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
-                }
-            }
+            language: tradsDatatable
         });
 
         $('#datatable-subject').on('change', 'input.editor-active', function () {
@@ -167,19 +201,74 @@ class Admin {
             searching: false, 
             info: false,
             lengthChange: false,
-            columnDefs: [
-                {targets: [4], orderable: false},
-            ],
-            order: [[ 1, 'asc' ]],
-            language: {
-                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-                paginate: {
-                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+            ajax: {
+                url: '/admin/tasks',
+                type: 'GET',
+                dataSrc: function (json) {
+                    return json.to_validated_trainings;
                 }
-            }
+            },
+            initComplete: function(settings, json) {},
+            columns: [
+                { data: 'name' },
+                { "className": "space-nowrap", "render":
+                    function (data, type, row) {
+                        return renderDate(row.createdAt, 'YYYY-MM-DD - HH:mm');
+                    },
+                },
+                { "render":
+                    function (data, type, row) {
+                        let user = row.user;
+                        let html = user.roles != undefined && getKeyByValue(user.roles, 'ROLE_INSTITUTION') != undefined ? user.username : user.firstname + ' ' + user.lastname;
+                        html += `<i class="fas fa-info-circle m" data-toggle="tooltip" title="${user.email}"></i>`;
+                        return html;
+                    },
+                },
+                { "className": "space-nowrap", "render":
+                    function (data, type, row) {
+                        let html = '';
+                        if (row.isValidated == true)
+                            html += `<span class="text-warning">${translationsJS && translationsJS.approved ? translationsJS.approved : 'Approved'}</span>`;
+                        else if (row.isRejected == true)
+                            html += `<span class="text-success">${ translationsJS && translationsJS.rejected ? translationsJS.rejected : 'Rejected'}</span>`;
+                        else 
+                            html += translationsJS && translationsJS.pending ? translationsJS.pending : 'Pending'
+
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "orderable": false, "width": "0%", "render":
+                    function (data, type, row) {
+
+                        let html = '<div class="d-flex justify-content-center" style="width: 102px; margin: 0; padding: 0;">';
+
+                        if (row.isValidated == false) {
+
+                            html += `<button class="btn btn-sm btn-success approve_training" data-id="${ row.id }" data-toggle="tooltip" title="${ translationsJS && translationsJS.approve ? translationsJS.approve : 'Approve'}">
+                                        <i class="fas fa-check"></i>
+                                    </button>`;
+                        } else {
+                            html += `<button class="btn btn-sm btn-warning reject_training" data-id="${ row.id }" data-toggle="tooltip" title="${ translationsJS && translationsJS.reject ? translationsJS.reject : 'Reject'}">
+                                        <i class="fas fa-ban"></i>
+                                    </button>`;
+                        }
+
+                        html += `<button class="btn btn-sm btn-primary see-detail ml-1 mr-1" data-id="${ row.id }" data-toggle="tooltip" title="${ translationsJS && translationsJS.detail ? translationsJS.detail : 'Detail'}">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>`;
+
+                        html += `<button class="btn btn-sm btn-danger delete_training" data-id="${ row.id }" data-toggle="tooltip" title="${ translationsJS && translationsJS.delete ? translationsJS.delete : 'Delete'}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>`;
+
+                        html += '</div>';
+                        return html;
+                    },
+                },
+            ],
+            //fixedColumns: true,
+            order: [[ 1, 'asc' ]],
+            language: tradsDatatable
         });
     }
 
@@ -192,36 +281,98 @@ class Admin {
                 {targets: [3], orderable: false},
             ],
             order: [[ 1, 'asc' ]],
-            language: {
-                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-                paginate: {
-                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
-                }
-            }
+            language: tradsDatatable
         });
     }
 
      runDatatableUsers = () => {
+        let lang = $('body').attr('lang');
         let table = $('#datatable-user').DataTable({
             searching: true, 
             info: false,
             lengthChange: false,
-            columnDefs: [
-                {targets: [7], orderable: false},
+            ajax: {
+                url: '/admin/users',
+                type: 'GET',
+                dataSrc: function (json) {
+                    return json.users;
+                }
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'firstname' },
+                { data: 'lastname' },
+                { data: 'username' },
+                { "className": "dt-center", "render":
+                    function (data, type, row) {
+                        let html = `<span class="badge badge-info">`;
+
+                        if (getKeyByValue(row.roles, 'ROLE_ADMIN') != undefined) {
+                            html += translationsJS && translationsJS.user_role_admin ? translationsJS.user_role_admin : 'admin';
+                        } else if (getKeyByValue(row.roles, 'ROLE_INSTITUTION') != undefined) {
+                            html += translationsJS && translationsJS.user_role_institution ? translationsJS.user_role_institution: 'institution';
+                        } else if (getKeyByValue(row.roles, 'ROLE_USER') != undefined) {
+                            html += translationsJS && translationsJS.user_role_user ? translationsJS.user_role_user: 'user';
+                        }
+                        html += `</span>`;
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "render":
+                    function (data, type, row) {
+                        let html = '';
+                        if (row.isSuspended == true ) {
+                            html += `<span class="text-warning">${translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}</span>`;
+                        } else {
+                            html += `<span class="text-success">${translationsJS && translationsJS.no ? translationsJS.no : 'No'}</span>`;
+                        }
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "render":
+                    function (data, type, row) {
+                        let html = '';
+                        if (row.isSuspected == true ) {
+                            html += `<span class="text-warning">${translationsJS && translationsJS.yes ? translationsJS.yes : 'Yes'}</span>`;
+                        } else {
+                            html += `<span class="text-success">${translationsJS && translationsJS.no ? translationsJS.no : 'No'}</span>`;
+                        }
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "orderable": false, "render":
+                    function (data, type, row) {
+
+                        let html = `<div class="d-flex justify-content-center"><a href="/${lang}/edit_user/${ row.id }" class="btn btn-sm btn-info" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.edit ? translationsJS.edit : 'Edit'}">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>`;
+
+                        if (row.isSuspended == false) {
+                            html += `<button class="btn btn-sm btn-warning suspend_user ml-1 mr-1" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.suspend ? translationsJS.suspend : 'Suspend'}">
+                                        <i class="fas fa-ban"></i>
+                                    </button>`
+                        } else {
+                            html += `<button class="btn btn-sm btn-success unsuspend_user ml-1 mr-1" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.unsuspend ? translationsJS.unsuspend : 'Unsuspend'}">
+                                        <i class="fas fa-ban"></i>
+                                    </button>`
+                        }
+                        if (row.isSuspected == false) {
+                            html += `<button class="btn btn-sm btn-warning suspect_user" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.suspect ? translationsJS.suspect : 'Suspect'}">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </button>`
+                        } else {
+                            html += `<button class="btn btn-sm btn-success raise_suspicion" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.raise_suspicion ? translationsJS.raise_suspicion : 'Mark suspicious'} ">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </button>`
+                        }
+                        html += '</div>';
+
+                        return html;
+                    },
+                },
             ],
             order: [[ 1, 'desc' ]],
-            language: {
-                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-                paginate: {
-                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
-                }
-            }
+            language: tradsDatatable
         });
     }
 
@@ -230,21 +381,33 @@ class Admin {
             searching: true, 
             info: false,
             lengthChange: false,
-            columnDefs: [
-                { targets: [2], orderable: false},
-                { width: '20px', targets: 2 }
-            ],
-            fixedColumns: true,
-            order: [[ 0, 'asc' ]],
-            language: {
-                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-                paginate: {
-                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+            ajax: {
+                url: '/admin/occupations',
+                type: 'GET',
+                dataSrc: function (json) {
+                    return json.occupations;
                 }
-            }
+            },
+            columns: [
+                { data: 'preferredLabel' },
+                { "render":
+                    function (data, type, row) {
+                        let html = row.description && row.description.length > 0 ? truncate(row.description, 100) : '';
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "orderable": false, "render":
+                    function (data, type, row) {
+                        return `<div class="d-flex justify-content-center"><button class="btn btn-info get-info mr-1" data-id="${ row.id }"><i class="fas fa-search-plus"></i></button>
+                                <button class="btn btn-info btn-related-trainings-work" data-id="${ row.id }"><i class="fas fa-link"></i> 
+                                    ${translationsJS && translationsJS.see_related_trainings ? translationsJS.see_related_trainings : 'See related trainings'}
+                                </button></div>`;
+                    },
+                },
+            ],
+            //fixedColumns: true,
+            order: [[ 0, 'asc' ]],
+            language: tradsDatatable
         });
     }
 
@@ -253,21 +416,90 @@ class Admin {
             searching: true,
             info: false,
             lengthChange: false,
-            columnDefs: [
-                { targets: [2], orderable: false},
-                { width: '20px', targets: 2 }
-            ],
-            fixedColumns: true,
-            order: [[ 0, 'asc' ]],
-            language: {
-                search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-                paginate: {
-                    first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-                    previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-                    next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-                    last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+            ajax: {
+                url: '/admin/skills',
+                type: 'GET',
+                dataSrc: function (json) {
+                    return json.skills;
                 }
-            }
+            },
+            columns: [
+                { data: 'preferredLabel' },
+                { "render":
+                    function (data, type, row) {
+                        let html = row.description && row.description.length > 0 ? truncate(row.description, 100) : '';
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "orderable": false, "render":
+                    function (data, type, row) {
+
+                        return `<div class="d-flex justify-content-center"><button class="btn btn-info get-info mr-1" data-id="${ row.id }"><i class="fas fa-search-plus"></i></button>
+                                <button class="btn btn-info btn-related-trainings" data-id="${ row.id }"><i class="fas fa-link"></i> 
+                                    ${translationsJS && translationsJS.see_related_trainings ? translationsJS.see_related_trainings : 'See related trainings'}
+                                </button></div>`;
+                    },
+                },
+            ],
+            //fixedColumns: true,
+            order: [[ 0, 'asc' ]],
+            language: tradsDatatable
+        });
+    }
+
+    runDatatableTraining = () => {
+        let table = $('#datatable-training').DataTable({
+            searching: true,
+            info: false,
+            lengthChange: false,
+            ajax: {
+                url: '/admin/trainings',
+                type: 'GET',
+                dataSrc: function (json) {
+                    return json.trainings;
+                }
+            },
+            columns: [
+                { data: 'name' },
+                { "render":
+                    function (data, type, row) {
+                        return renderDate(row.createdAt, 'YYYY-MM-DD - HH:mm');
+                    },
+                },
+                { "render":
+                    function (data, type, row) {
+                        let user = row.user;
+                        let html = user.roles != undefined && getKeyByValue(user.roles, 'ROLE_INSTITUTION') != undefined ? user.username : user.firstname + ' ' + user.lastname;
+                        html += `<i class="fas fa-info-circle" data-toggle="tooltip" title="${user.email}"></i>`;
+                        return html;
+                    },
+                },
+                {"className": "dt-center space-nowrap",  "render":
+                    function (data, type, row) {
+                        let html = '';
+
+                        if (row.isValidated == true)
+                            html += `<span class="text-success">${translationsJS && translationsJS.approved ? translationsJS.approved : 'Approved'}</span>`;
+                        else if (row.isRejected == true)
+                            html += `<span class="text-warning">${ translationsJS && translationsJS.rejected ? translationsJS.rejected : 'Rejected'}</span>`;
+                        else 
+                            html += translationsJS && translationsJS.pending ? translationsJS.pending : 'Pending'
+
+                        return html;
+                    },
+                },
+                { "className": "dt-center", "orderable": false, "render":
+                    function (data, type, row) {
+
+                        return `<button href="#" class="btn btn-primary mt-1 mb-1 see-detail" data-id="${row.id}" data-name="${row.name}" data-description="${row.description}">
+                                    ${ translationsJS && translationsJS.trainings_see_details ? translationsJS.trainings_see_details : 'See details'}
+                                </button>`;
+                    },
+                },
+            ],
+            //fixedColumns: true,
+            order: [[ 0, 'asc' ]],
+            language: tradsDatatable
         });
     }
 
@@ -1100,6 +1332,7 @@ class Admin {
         this.runDatatableUsers();
         this.runDatatableWork();
         this.runDatatableSkill();
+        this.runDatatableTraining();
         this.seeDetailWork();
         //this.runMap();
         //this.runMapTraining();
@@ -1142,6 +1375,14 @@ class Admin {
             $('#admin [data-toggle="tab"][href="#' + hash + '"]').tab('show');
         }
         $('#admin [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+            // Ajustement des colonnes
+            $('#datatable-task').DataTable().columns.adjust().draw();
+            $('#datatable-work').DataTable().columns.adjust().draw();
+            $('#datatable-skill').DataTable().columns.adjust().draw();
+            $('#datatable-training').DataTable().columns.adjust().draw();
+            $('#datatable-user').DataTable().columns.adjust().draw();
+
             if (e.target.hash == "#content-personal_informations") {
                 _this.runMap();
             }
