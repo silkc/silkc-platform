@@ -1,0 +1,44 @@
+{
+  "user": [
+    {
+      "username": "survey-user-1",
+      "email": "survey-user-1@silkc-platform.org",
+      "dateOfBirth": null,
+      "address": null,
+      "language": null,
+      "professionalExperience": null,
+      "previousJob": null,
+      "currentJob": null,
+      "experience": null,
+      "previousTrainingInstitution": null,
+      "previousTrainingLocation": null,
+      "previousTrainingTitle": null,
+      "previousTrainingLanguage": null,
+      "previousTrainingURL": null,
+      "previousTrainingCost": null,
+      "previousTrainingYear": null,
+      "previousTrainingDuration": null,
+      "previousTrainingSkill": null
+    },
+    {
+      "username": "survey-user-2",
+      "email": "survey-user-2@silkc-platform.org",
+      "dateOfBirth": 1988,
+      "address": "Lublin, Poland",
+      "language": "pl",
+      "professionalExperience": "2-5",
+      "previousJob": "http://data.europa.eu/esco/occupation/1092dd4c-b96b-4b3f-87fe-4a9e8d1937fb",
+      "currentJob": "http://data.europa.eu/esco/occupation/1092dd4c-b96b-4b3f-87fe-4a9e8d1937fb",
+      "experience": "2-5",
+      "previousTrainingInstitution": "Uniwersytet Marii-Curie Skłodowskiej w Lublinie",
+      "previousTrainingLocation": "online",
+      "previousTrainingTitle": "Public relations i marketing medialny",
+      "previousTrainingLanguage": "pl",
+      "previousTrainingURL": "https://www.umcs.pl/pl/wyszukiwarka-studiow,118,public-relations-i-marketing-medialny,91057.chtm",
+      "previousTrainingCost": null,
+      "previousTrainingYear": 2021,
+      "previousTrainingDuration": "121+",
+      "previousTrainingSkill": "http://data.europa.eu/esco/skill/8770350e-746f-4adb-9556-18ca68104be6"
+    }
+  ]
+}
