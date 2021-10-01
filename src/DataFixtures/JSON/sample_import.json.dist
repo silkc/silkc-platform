@@ -34,7 +34,8 @@
       "is_online": null,
       "is_online_monitored": null,
       "is_presential": null,
-      "url": null
+      "url": null,
+      "language": null
     },
     {
       "institution_email": "organisme2@silkc-platform.org",
@@ -54,7 +55,8 @@
       "is_online": true,
       "is_online_monitored": true,
       "is_presential": true,
-      "url": "https://www.maformationazerty.com"
+      "url": "https://www.maformationazerty.com",
+      "language": "en"
     }
   ]
 }

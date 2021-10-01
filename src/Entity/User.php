@@ -214,6 +214,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
+    private $professionalExperience;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
+     */
     private $code;
 
     /**
@@ -712,6 +717,18 @@ class User implements UserInterface
     public function setIsListeningPosition(bool $isListeningPosition): self
     {
         $this->isListeningPosition = $isListeningPosition;
+
+        return $this;
+    }
+
+    public function getProfessionalExperience(): ?int
+    {
+        return $this->professionalExperience;
+    }
+
+    public function setProfessionalExperience(int $professionalExperience): self
+    {
+        $this->professionalExperience = $professionalExperience;
 
         return $this;
     }

@@ -29,7 +29,6 @@ class InstitutionImportFixtures extends Fixture
         $count = 0;
 
         $createdAt = new \DateTime('now');
-        $code = random_int(100000, 999999);
 
         // Bundle to manage file and directories
         $finder = new Finder();
@@ -47,6 +46,8 @@ class InstitutionImportFixtures extends Fixture
                 print  PHP_EOL . "- Start of file processing {$file->getBasename()}" . PHP_EOL;
 
                 foreach ($data->institution as $k => $userData) {
+                    $code = random_int(100000, 999999);
+
                     print "Checking the data of entry no. {$k}" . PHP_EOL;
                     if (
                         !is_object($userData) ||
