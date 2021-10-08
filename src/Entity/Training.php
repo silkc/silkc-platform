@@ -32,6 +32,11 @@ class Training
     public const CURRENCY_EURO = 'euro';
     public const CURRENCY_ZLOTY = 'złoty';
 
+    public const LANGUAGE_EN = 'en';
+    public const LANGUAGE_IT = 'it';
+    public const LANGUAGE_FR = 'fr';
+    public const LANGUAGE_PL = 'pl';
+
     public const UNITY_HOURS    = 'hours';
     public const UNITY_DAYS     = 'days';
     public const UNITY_WEEKS    = 'weeks';
@@ -40,6 +45,13 @@ class Training
     protected static $currencies = [
         self::CURRENCY_EURO     => self::CURRENCY_EURO,
         self::CURRENCY_ZLOTY    => self::CURRENCY_ZLOTY,
+    ];
+
+    protected static $languages = [
+        self::LANGUAGE_EN     => self::LANGUAGE_EN,
+        self::LANGUAGE_FR    => self::LANGUAGE_FR,
+        self::LANGUAGE_IT    => self::LANGUAGE_IT,
+        self::LANGUAGE_PL    => self::LANGUAGE_PL,
     ];
 
     protected static $unities = [
@@ -210,6 +222,17 @@ class Training
      * )
      */
     private $currency = self::CURRENCY_EURO;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=false, options={"default": "en"}, columnDefinition="ENUM('en', 'fr', 'it', 'pl')")
+     * @Assert\Type("string")
+     * @Assert\Choice({"en", "fr", "it", "pl"})
+     * @Assert\Length(
+     *      max = 5,
+     *      maxMessage = "language cannot be longer than {{ limit }} characters"
+     * )
+     */
+    private $language = self::LANGUAGE_EN;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -521,6 +544,15 @@ class Training
         return ($flip) ? array_flip(static::$unities) : static::$unities;
     }
 
+    /**
+     * @param  string $typeShortName
+     * @return string
+     */
+    public static function getLanguages(bool $flip = FALSE):array
+    {
+        return ($flip) ? array_flip(static::$languages) : static::$languages;
+    }
+
     public function getCreator(): ?User
     {
         return $this->creator;
@@ -661,6 +693,21 @@ class Training
     public function setPrice(?string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): self
+    {
+        if (!in_array($language, [self::LANGUAGE_EN, self::LANGUAGE_FR, self::LANGUAGE_IT, self::LANGUAGE_PL]))
+            throw new \InvalidArgumentException("Invalid language");
+
+        $this->language = $language;
 
         return $this;
     }

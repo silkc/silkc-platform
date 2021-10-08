@@ -56,6 +56,10 @@ Import training from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=TrainingImportFixtures --append --env dev
 
+Import user profiles from src/DataFixtures/JSON/xxx.json file
+
+    php bin/console doctrine:fixtures:load --group=UserImportFixtures --append --env dev
+
 **Install packages and generate assets**
 
     yarn install

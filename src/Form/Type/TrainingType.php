@@ -98,6 +98,12 @@ class TrainingType extends AbstractType
                 'choices' => Training::getCurrencies(TRUE),
                 'attr' => ['class' => 'custom-select']
             ])
+            ->add('language', ChoiceType::class, [
+                'label' => 'label.language',
+                'required' => true,
+                'choices' => Training::getLanguages(TRUE),
+                'attr' => ['class' => 'custom-select']
+            ])
             ->add('url', TextType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.training_info_url',
