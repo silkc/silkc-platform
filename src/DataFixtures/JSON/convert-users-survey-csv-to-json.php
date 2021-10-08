@@ -12,6 +12,7 @@ $csv = fopen($filename, 'ro');
 $i = 0;
 $titles = [];
 $users = [];
+$defaultCurrency = 'złoty';
 // Supported languages
 $languages = [
     'English' => 'en',
@@ -56,7 +57,8 @@ if(false !== $csv) {
                 'previousTrainingTitle' => _nullIfEmpty($line[$titles['previousTrainingTitle']]),
                 'previousTrainingLanguage' => $trainingLanguage,
                 'previousTrainingURL' => _nullIfEmpty($line[$titles['previousTrainingURL']]),
-                'previousTrainingCost' => _nullIfEmpty($line[$titles['previousTrainingCost']]),
+                'previousTrainingCurrency' => $defaultCurrency,
+                'previousTrainingCost' => _nullIfEmpty($line[$titles['previousTrainingCost']], true),
                 'previousTrainingYear' => _nullIfEmpty($line[$titles['previousTrainingYear']]),
                 'previousTrainingDuration' => _nullIfEmpty($line[$titles['previousTrainingDuration']]),
                 'previousTrainingSkill' => _nullIfEmpty($line[$titles['previousTrainingSkill']])
@@ -66,17 +68,20 @@ if(false !== $csv) {
     }
     fclose($csv);
 }
-//print_r($titles);
-//print_r(json_encode($users[100]));
+
 $json = json_encode(['user' => $users]);
 file_put_contents('user_import.json', $json);
 
 /**
  * Return null if the string is empty or is the *string* 'null'
  * @param $param
+ * @param bool $acceptZero Return the 0 value
  * @return string|null
  */
-function _nullIfEmpty($param) {
+function _nullIfEmpty($param, bool $acceptZero = false) {
+    if (isset($param) && (trim($param) === '0' or $param === 0)) {
+        return 0;
+    }
     if (empty(trim($param)) or 'null' == trim($param)) {
         return null;
     }
