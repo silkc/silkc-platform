@@ -203,6 +203,9 @@ class UserImportFixtures extends Fixture
                                         "price" => (property_exists($userData, 'previousTrainingCost') && !empty($userData->previousTrainingCost)) ?
                                             $userData->previousTrainingCost :
                                             null,
+                                        "currency" => (property_exists($userData, 'previousTrainingCurrency') && !empty($userData->previousTrainingCurrency)) ?
+                                            $userData->previousTrainingCost :
+                                            null,
                                         "start_at" => (property_exists($userData, 'previousTrainingYear') && !empty($userData->previousTrainingYear)) ?
                                             $userData->previousTrainingYear :
                                             null,
