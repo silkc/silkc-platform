@@ -178,7 +178,7 @@
 													<span>
 														{% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
 															{{ training.user.username|capitalize }}
-														{% elseif (training.user is defined and training.user.firstname is not empty) %}
+														{% elseif (training.user is defined and training.user is not null and training.user.firstname is defined and training.user.firstname is not empty) %}
 															{{ training.user.firstname ~ ' ' ~ training.user.lastname }}
 														{% else %}
 															{{ 'n_a'|trans }}

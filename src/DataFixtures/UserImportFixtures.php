@@ -65,6 +65,8 @@ class UserImportFixtures extends Fixture
                 print  PHP_EOL . "- Start of file processing {$file->getBasename()}" . PHP_EOL;
 
                 foreach ($data->user as $k => $userData) {
+                    if ($k != 0)
+                        continue;
                     $code = random_int(100000, 999999);
 
                     print "Checking the data of entry no. {$k}" . PHP_EOL;
@@ -122,6 +124,8 @@ class UserImportFixtures extends Fixture
                             print "ERROR --- An error occurred while check data before saving the user :  {$errorString}" . PHP_EOL;
                             continue;
                         }
+
+                        $manager->persist($user);
 
                         if (
                             property_exists($userData, 'previousJob') && !empty($userData->previousJob) ||
@@ -222,8 +226,6 @@ class UserImportFixtures extends Fixture
                                             null
                                     ]
                                 ];
-
-                            $manager->persist($user);
 
                             if ($trainings && count($trainings) > 0) {
                                 foreach ($trainings as $trainingData) {
@@ -384,7 +386,7 @@ class UserImportFixtures extends Fixture
                             }
                         }
 
-
+                        $manager->persist($user);
                         $manager->flush();
                     } catch(\Throwable $e) {
                         print "ERROR --- An error occurred while saving the institution in the database :  {$e->getMessage()}" . PHP_EOL;
