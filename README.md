@@ -37,6 +37,11 @@ Requirements
     php bin/console doctrine:schema:update --force
     mysql -u [USER_NAME] -p[PASSWORD] [DATABASE_NAME] < data.sql
 
+**Install packages and generate assets**
+
+    yarn install
+    yarn encore production
+
 **Load fixtures data**
 
 Loading fixtures will create 3 user accounts:
@@ -60,7 +65,3 @@ Import user profiles from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=UserImportFixtures --append --env dev
 
-**Install packages and generate assets**
-
-    yarn install
-    yarn encore production
