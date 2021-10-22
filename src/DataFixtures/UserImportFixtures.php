@@ -65,8 +65,6 @@ class UserImportFixtures extends Fixture
                 print  PHP_EOL . "- Start of file processing {$file->getBasename()}" . PHP_EOL;
 
                 foreach ($data->user as $k => $userData) {
-                    if ($k != 0)
-                        continue;
                     $code = random_int(100000, 999999);
 
                     print "Checking the data of entry no. {$k}" . PHP_EOL;
