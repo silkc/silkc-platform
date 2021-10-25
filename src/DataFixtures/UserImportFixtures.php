@@ -245,7 +245,7 @@ class UserImportFixtures extends Fixture
                                         try {
                                             $valid_url = preg_match('#(https?://)([\w\.]+).*?$#', $trainingData->url, $matches);
                                             if (!$valid_url) {
-                                                print "ERROR --- An error occurred while check data before saving the institution by url :  {$errorString}" . PHP_EOL;
+                                                print "ERROR --- An error occurred while check data before saving the institution by url :  {$trainingData->url}" . PHP_EOL;
                                                 continue;
                                             }
                                             $institution_email = $matches[2] . '@silkc-platform.org';
