@@ -208,6 +208,11 @@ class Main {
             selectAllText: "Select all",
             deselectAllText: "Unselect all",
         });
+
+        $('.scrolltop').on('click', function (e) {
+            e.preventDefault();
+            window.scrollTo(0, 0);
+        });
     }
 }
 
