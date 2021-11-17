@@ -8,6 +8,8 @@ use App\Entity\Training;
 use App\Entity\Position;
 use App\Entity\UserActivity;
 use App\Entity\UserSearch;
+use App\Entity\SkillTranslation;
+use App\Entity\OccupationTranslation;
 use App\Form\Type\UserType;
 use App\Form\Type\RecruiterType;
 use App\Form\Type\InstitutionType;
@@ -24,6 +26,8 @@ use App\Repository\OccupationRepository;
 use App\Repository\OccupationSkillRepository;
 use App\Repository\UserOccupationRepository;
 use App\Repository\UserSearchRepository;
+use App\Repository\SkillTranslationRepository;
+use App\Repository\OccupationTranslationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -62,32 +66,63 @@ class HomeController extends AbstractController
         TrainingRepository $trainingRepository,
         SkillRepository $skillRepository,
         UserSearchRepository $userSearchRepository,
+        SkillTranslationRepository $skillTranslationRepository,
+        OccupationTranslationRepository $occupationTranslationRepository,
         TranslatorInterface $translator
     ): Response
     {
+        $locale = $request->getLocale();
         $user = $this->getUser();
         $type_search = ($type) ? $type : $request->get('type_search'); // Type de recherche (occupation ou skill)
         $occupation_id = ($id) ? $id : $request->get('hidden_training_search_by_occupation');
         $skill_id = ($id) ? $id :$request->get('hidden_training_search_by_skill');
+
+        // Sauvegarde de la recherche dans des cookies afin de la conserver lors du changement de langue
+        // Suppression de ces cookies dans les fichiers main.js et common.js
+        if ($type_search && !empty($type_search))
+            setcookie('type_search_silkc_search', $type_search, time() + 86400, "/");
+        if ($occupation_id && !empty($occupation_id))
+            setcookie('occupation_id_silkc_search', $occupation_id, time() + 86400, "/");
+        if ($skill_id && !empty($skill_id))
+            setcookie('skill_id_silkc_search', $skill_id, time() + 86400, "/");
+
+        $type_search = (array_key_exists('type_search_silkc_search', $_COOKIE)) ? $_COOKIE['type_search_silkc_search'] : $type_search;
+        $occupation_id = (array_key_exists('occupation_id_silkc_search', $_COOKIE)) ? $_COOKIE['occupation_id_silkc_search'] : $occupation_id;
+        $skill_id = (array_key_exists('skill_id_silkc_search', $_COOKIE)) ? $_COOKIE['skill_id_silkc_search'] : $skill_id;
+
         $trainings = []; // Listes des formations
         $searchParams = []; // Parametres de recherche renvoyés à la vue
         $user = $this->getUser();
-        $advanceSearchParams = $this->_get_advance_search_params($request);
+
+        $advanceSearchParams = (array_key_exists('filters_silkc_search', $_COOKIE)) ? json_decode($_COOKIE['filters_silkc_search'], true) : $this->_get_advance_search_params($request);
+        $paramsRequestAll = (array_key_exists('params_request_all', $_COOKIE)) ? json_decode($_COOKIE['params_request_all'], true) : $request->request->all();
+        // Sauvegarde des filtres de la recherche dans un cookies afin de la conserver lors du changement de langue
+        // Suppression de ce cookie dans les fichiers main.js et common.js*/
+        if ($advanceSearchParams && !empty($advanceSearchParams))
+            setcookie('filters_silkc_search', json_encode($advanceSearchParams), time() + 86400, "/");
+        if ($paramsRequestAll && !empty($paramsRequestAll))
+            setcookie('params_request_all', json_encode($paramsRequestAll), time() + 86400, "/");
 
         if ($type_search) {
             $search = new UserSearch();
             $search->setUser($user);
             $searchParams['type_search'] = $type_search;
-            
+
             switch ($type_search) {
                 case 'occupation':
                         if ($occupation_id) {
                             $occupation = $occupationRepository->findOneBy(['id' => $occupation_id]);
+                            $occupationTranslation = $occupationTranslationRepository->findOneBy([
+                                'occupation' => $occupation_id,
+                                'locale' => $locale
+                            ]);
+
                             if (!$occupation) {
                                 $this->addFlash('error', $translator->trans('flash.search_parameters_error'));
                                 return $this->redirectToRoute('app_search_results');
                             }
-                            $searchParams['name'] = $occupation->getPreferredLabel();
+
+                            $searchParams['name'] = $occupationTranslation && !empty($occupationTranslation->getPreferredLabel()) ? $occupationTranslation->getPreferredLabel() : $occupation->getPreferredLabel();
                             $searchParams['id'] = $occupation->getId();
 
                             $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $advanceSearchParams);
@@ -98,12 +133,18 @@ class HomeController extends AbstractController
                 case 'skill':
                         if ($skill_id) {
                             $skill = $skillRepository->findOneBy(['id' => $skill_id]);
+                            $skillTranslation = $skillTranslationRepository->findOneBy([
+                                'skill' => $skill_id,
+                                'locale' => $locale
+                            ]);
+
                             if (!$skill) {
                                 $this->addFlash('error', $translator->trans('flash.search_parameters_error'));
                                 return $this->redirectToRoute('app_search_results');
                             }
-                            $searchParams['name'] = $skill->getPreferredLabel();
+                            $searchParams['name'] = $skillTranslation && !empty($skillTranslation->getPreferredLabel()) ? $skillTranslation->getPreferredLabel() : $skill->getPreferredLabel();
                             $searchParams['id'] = $skill->getId();
+
                             $trainings = $trainingRepository->searchTrainingBySkill($skill, $advanceSearchParams);
                             $search->setSkill($skill);
                             $search->setCountResults(count($trainings));
@@ -131,7 +172,7 @@ class HomeController extends AbstractController
                 'search' => $searchParams,
                 'searches' => $searches,
                 'user' => $user,
-                'requestParams' => $request->request->all(),
+                'requestParams' => $paramsRequestAll,
                 'defaultMaxPrice' => $trainingRepository->getMaxPrice()
             ]
         );

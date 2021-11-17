@@ -39,8 +39,26 @@ class Common {
         }
     }
 
+    
+    /**
+     * Supprime les cookies de la page de recherche
+     * (utilisé pour sauvegardé la recherche lors du changement de langue)
+     */
+     removeCookiePageSearch = () => {
+        let _this = this;
+        let url = window.location.href;
+        if (url.indexOf("search_results") == -1) {
+            document.cookie = "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+    };
+
     init = function() {
         this.runConstraintValidation();
+        this.removeCookiePageSearch();
     }
 }
 

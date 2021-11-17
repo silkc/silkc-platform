@@ -581,6 +581,18 @@ class SearchResults {
         this.displayFilters();
         this.runRater();
 
+
+        $('body').on('click', 'form.form-search button[type="submit"]', function(e) {
+            e.preventDefault();
+            document.cookie = "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            $(this).closest('form').submit()
+        });
+
         $('[data-toggle="tooltip"]').tooltip;
     }
 }
