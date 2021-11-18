@@ -155,6 +155,8 @@ task:
 
 login:
   form:
+    you_have_an_account: Masz konto?
+    mandatory_field_info: (*) Wymagane pola
     or: lub
     disconnect_message: "%username%, jesteś już połączony, "
     not_identical_password: Wprowadzone hasła nie są identyczne.

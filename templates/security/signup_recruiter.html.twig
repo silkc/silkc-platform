@@ -128,11 +128,15 @@
 								</div>
 							</div>
 
+							<p class="text-right mt-2 mb-0">
+								<small><em>{{ 'login.form.mandatory_field_info'|trans }}</em></small>
+							</p>
+
 							{{ form_rest(form) }}
 						</div>
 
 						<div id="new-profile">
-							You have an account?
+							{{ 'login.form.you_have_an_account'|trans }}
 							<a href="{{ path('app_login') }}">
 								{{'sign_in'|trans}}
 							</a>
