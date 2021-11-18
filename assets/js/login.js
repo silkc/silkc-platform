@@ -132,7 +132,9 @@ class Login {
      */
     displayInputRequired = () => {
         $('body.signup-form form input[required]').each(function() {
-            $(this).parent('div').addClass('required-input');
+            let placeholder = $(this).attr('placeholder');
+            placeholder = placeholder + ' *';
+            $(this).attr('placeholder', placeholder);
         });
     }
 
