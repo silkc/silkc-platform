@@ -64,6 +64,11 @@
 										</div>
 
 										<div class="form-group">
+											<label for="duration_details_{{ k }}">{{ 'label.duration_value'|trans }}</label>
+											<input type="text" class="form-control" disabled id="duration_value_{{ k }}" name="duration_value" value="{{ attribute(training, 'durationValue') is defined ? training.durationValue : '' }}">
+										</div>
+
+										<div class="form-group">
 											<label for="duration_details_{{ k }}">{{ 'label.duration_details'|trans }}</label>
 											<input type="text" class="form-control" disabled id="duration_details_{{ k }}" name="duration_details" value="{{ attribute(training, 'durationDetails') is defined ? training.durationDetails : '' }}">
 										</div>
@@ -71,6 +76,11 @@
 										<div class="form-group">
 											<label for="description_{{ k }}">{{ 'label.description'|trans }}</label>
 											<textarea class="form-control" disabled id="description_{{ k }}" name="description">{{ attribute(training, 'description') is defined  ? training.description : '' }}</textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="language_{{ k }}">{{ 'label.language'|trans }}</label>
+											<input type="text" class="form-control" disabled id="language_{{ k }}" name="language" value="{{ attribute(training, 'language') is defined ? training.language : '' }}">
 										</div>
 
 										<div class="form-group">
