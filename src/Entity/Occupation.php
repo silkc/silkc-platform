@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Intl\Locale;
 use Symfony\Component\HttpFoundation\Request;
 use App\Controller\Apip\Occupation\OccupationGetCollectionController;
+use App\Controller\Apip\Occupation\OccupationMainGetCollectionController;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationRepository::class)
@@ -27,6 +28,19 @@ use App\Controller\Apip\Occupation\OccupationGetCollectionController;
  *              "method": "GET",
  *              "path": "/occupations/locale/{locale}",
  *              "controller": OccupationGetCollectionController::class,
+ *              "openapi_context": {
+ *                  "summary": "Récupère les occupations avec la traductions dans la langue indiquée",
+ *                  "parameters": {},
+ *                  "filters": {},
+ *                  "pagination_enabled": false
+ *              }
+ *          },
+ *          "get_minimaly": {
+ *              "normalization_context": {"groups": "occupation:read:mini"},
+ *              "denormalization_context": { "allow_extra_attributes": true },
+ *              "method": "GET",
+ *              "path": "/occupations/main/locale/{locale}",
+ *              "controller": OccupationMainGetCollectionController::class,
  *              "openapi_context": {
  *                  "summary": "Récupère les occupations avec la traductions dans la langue indiquée",
  *                  "parameters": {},
@@ -62,13 +76,13 @@ class Occupation
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"occupation:read", "occupation:write"})
+     * @Groups({"occupation:read", "occupation:write", "occupation:read:mini"})
      */
     private $conceptUri;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "occupation:write", "training:read"})
+     * @Groups({"occupation:read", "occupation:write", "training:read", "occupation:read:mini"})
      */
     private $preferredLabel;
     /**
