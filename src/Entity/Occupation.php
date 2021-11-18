@@ -35,8 +35,8 @@ use App\Controller\Apip\Occupation\OccupationMainGetCollectionController;
  *                  "pagination_enabled": false
  *              }
  *          },
- *          "get_minimaly": {
- *              "normalization_context": {"groups": "occupation:read:mini"},
+ *          "get_main": {
+ *              "normalization_context": {"groups": "occupation:read:main"},
  *              "denormalization_context": { "allow_extra_attributes": true },
  *              "method": "GET",
  *              "path": "/occupations/main/locale/{locale}",
@@ -64,7 +64,7 @@ class Occupation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"occupation:read", "training:read"})
+     * @Groups({"occupation:read", "training:read", "occupation:read:main"})
      */
     private $id;
 
@@ -76,13 +76,13 @@ class Occupation
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"occupation:read", "occupation:write", "occupation:read:mini"})
+     * @Groups({"occupation:read", "occupation:write"})
      */
     private $conceptUri;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "occupation:write", "training:read", "occupation:read:mini"})
+     * @Groups({"occupation:read", "occupation:write", "training:read", "occupation:read:main"})
      */
     private $preferredLabel;
     /**

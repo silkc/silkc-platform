@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Intl\Locale;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Controller\Apip\Skill\SkillGetCollectionController;
+use App\Controller\Apip\Skill\SkillMainGetCollectionController;
 
 /**
  * @ORM\Entity(repositoryClass=SkillRepository::class)
@@ -23,6 +24,19 @@ use App\Controller\Apip\Skill\SkillGetCollectionController;
  *              "method": "GET",
  *              "path": "/skills/locale/{locale}",
  *              "controller": SkillGetCollectionController::class,
+ *              "openapi_context": {
+ *                  "summary": "Récupère les skills avec la traductions dans la langue indiquée",
+ *                  "parameters": {},
+ *                  "filters": {},
+ *                  "pagination_enabled": false
+ *              }
+ *          },
+ *          "get_main": {
+ *              "normalization_context": {"groups": "skill:read:main"},
+ *              "denormalization_context": { "allow_extra_attributes": true },
+ *              "method": "GET",
+ *              "path": "/skills/main/locale/{locale}",
+ *              "controller": SkillMainGetCollectionController::class,
  *              "openapi_context": {
  *                  "summary": "Récupère les skills avec la traductions dans la langue indiquée",
  *                  "parameters": {},
@@ -45,7 +59,7 @@ class Skill
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
+     * @Groups({"occupation:read", "skill:read", "skill:read:main", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $id;
 
@@ -75,7 +89,7 @@ class Skill
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "skill:read", "occupationSkill:read", "trainingSkill:read", "training:read"})
+     * @Groups({"occupation:read", "skill:read", "skill:read:main", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $preferredLabel;
 
