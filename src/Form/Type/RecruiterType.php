@@ -50,9 +50,9 @@ class RecruiterType extends AbstractType
         }
 
         $currentYear = intval(date('Y'));
-        for ($i = 1900; $i <= $currentYear; $i++) {
+        for ($i = $currentYear; 1900 <= $i; $i--) {
             $dateChoices[$i] = $i;
-        }
+        }   
 
         $builder
             ->add('email', EmailType::class, [
