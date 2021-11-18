@@ -73,13 +73,13 @@ class UserType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'placeholder' => 'login.form.label.year_of_birth'
-            ])
-            ->add('professionalExperience', NumberType::class, [
+            ]);
+            /*->add('professionalExperience', NumberType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.professional_experience',
                 'required'           => false,
                 'attr' => ['placeholder' => 'placeholder.professional_experience', 'type' => 'number']
-            ]);
+            ]);*/
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
                 $builder->add('password', RepeatedType::class, [

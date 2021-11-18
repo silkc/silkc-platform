@@ -9,6 +9,7 @@ title_page:
   administration: Administration
 
 label:
+  address: Address
   label: Label
   name: Name
   location: Location
@@ -93,7 +94,7 @@ nav:
   institutional_informations: Institutional information
   company_informations: Company information
   work: Jobs
-  training: Training
+  training: Trainings
   change_password: Password
   skills: Skills
   tasks: Tasks

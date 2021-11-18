@@ -11,11 +11,16 @@
 
         <div class="d-flex justify-content-end">
             <div class="dropdown mr-2">
+                    {% if app.user is defined and app.user is not null %}
+                        <i class="fas fa-user text-success"></i>
+                    {% endif %}
+
                 <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
                         {{ app.user.username }}
                     {% elseif app.user is defined and app.user is not null %}
-                        {{ app.user.firstname }} {{ app.user.lastname|lower }}
+                        {{ app.user.firstname is defined and app.user.username is not empty 
+                        and app.user.lastname is defined and app.user.lastname is not empty ? app.user.firstname ~ ' ' ~ app.user.lastname : app.user.username }} 
                     {% endif %}
                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                 </a>

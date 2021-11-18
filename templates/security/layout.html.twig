@@ -32,7 +32,7 @@
     <!-- Page Content  -->
     <div class="container-fluid px-0">
         <div id="content" style="height: 100%;">
-            {% for label, messages in app.flashes %}
+            {#{% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }} alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -42,7 +42,7 @@
                         {{ message }}
                     </div>
                 {% endfor %}
-            {% endfor %}
+            {% endfor %}#}
 
             {% block content %}{% endblock %}
         </div>

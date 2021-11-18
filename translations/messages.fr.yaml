@@ -9,6 +9,7 @@ title_page:
   administration: Administration
 
 label:
+  address: Adresse
   label: Intitulé
   name: Nom
   location: Emplacement
@@ -53,9 +54,11 @@ label:
   months: Mois
   months_filter: mois
   is_visible: Est visible
-  listening_position: J'écoute une position
+  listening_position: Je suis à l’écoute de propositions de postes
   up_to_distance: Jusqu'à
   save_and_validate: Enregistrer et valider
+  professional_experience: Expérience professionnelle
+  language: Langue
 placeholder:
   training_price: "Ex: 1000.00"
   duration_details: "Ex : les lundis et mardis de 8h à 10h."
@@ -86,7 +89,7 @@ nav:
   personal_informations: Mon compte
   institutional_informations: Information institutional
   work: Postes
-  training: Formation
+  training: Formations
   change_password: Mot de passe
   skills: Compétences
   tasks: Tâches
@@ -244,7 +247,7 @@ training: Formation
 yes: oui
 no: non
 list_of_professional_training_you_have_previously_followed: Liste des formations professionnelles que vous avez précédemment suivies
-search_by_job_placeholder: Quel est le travail de tes rêves?
+search_by_job_placeholder: Quel est le travail de vos rêves?
 search_by_skill_placeholder: Quelle compétence souhaitez-vous acquérir ?
 user_formation_details_tooltip: Compétences liées à cette formation
 user_formation_unlink_tooltip: Supprimer cette formation
@@ -352,6 +355,6 @@ datatable_loadingRecords: Chargement...
 datatable_processing: Traitement
 datatable_zeroRecords: Aucune donnée disponible
 top: Top
-disclaimer: "DISCLAIMER: This project has been funded with support from the European Commission.<br>
-				    This publication [communication] reflects the views only of the author, and the Commission 
-				    cannot be held responsible for any use which may be made of the information contained therein."
+disclaimer: "CLAUSE DE NON-RESPONSABILITÉ : Ce projet a été financé avec le soutien de la Commission européenne.<br>
+              Cette publication [communication] reflète uniquement les vues de l'auteur, et la Commission
+              ne peut être tenu responsable de l'usage qui pourrait être fait des informations qu'il contient."

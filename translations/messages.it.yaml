@@ -9,6 +9,7 @@ title_page:
   administration: Amministrazione
 
 label:
+  address: Indirizzo
   label: Etichetta
   name: Nome
   location: Posizione
@@ -58,6 +59,8 @@ label:
   listening_position: Sto ascoltando una posizione
   up_to_distance: Fino a
   save_and_validate: Salva e convalida
+  professional_experience: Esperienza professionale
+  language: Lingua
 placeholder:
   training_price: "Es: 1000.00"
   duration_details: "Es: lunedì e martedì dalle 8:00 alle 10:00"

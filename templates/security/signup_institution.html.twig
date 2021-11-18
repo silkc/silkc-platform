@@ -4,12 +4,12 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 	{{ encore_entry_link_tags('login') }}
 {% endblock %}
 
-{% block body_class %}signup-institution
+{% block body_class %}signup-institution signup-form
 {% endblock %}
 
 {% block content %}
@@ -60,11 +60,11 @@
 							</li>
 						</ul>
 
-                        {% if app.user %}
-                            <div class="mb-3">
-                                {{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }) }}
-                                <a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans }}</a>
-                                {{ 'login.form.or'|trans }}
+						{% if app.user %}
+							<div class="mb-3">
+								{{ 'login.form.disconnect_message'|trans({'%username%': app.user.username }) }}
+								<a href="{{ path('app_logout') }}">{{ 'login.form.disconnect_button'|trans }}</a>
+								{{ 'login.form.or'|trans }}
 								{% if is_granted('ROLE_ADMIN') %}
 									<a href="{{ path('admin_home') }}">{{ 'login.form.admin_access_button'|trans }}</a>
 								{% elseif is_granted('ROLE_INSTITUTION') %}
@@ -72,42 +72,54 @@
 								{% elseif is_granted('ROLE_USER') %}
 									<a href="{{ path('app_home') }}">{{ 'login.form.user_access_button'|trans }}</a>
 								{% endif %}
-                            </div>
-                        {% endif %}
+							</div>
+						{% endif %}
 
 
 						<div id="form-institution">
-                        {{ form_start(form, {attr: attr|default({})}) }}
+							{{ form_start(form, {attr: attr|default({})}) }}
 							<input type="hidden" name="is_personal" value="0"/>
 
 							<div class="form-group">
-								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.institution_name'|trans} }) }}
+								<div>
+									{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.institution_name'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-                                <div id="searchmap"></div>
-                                <div id="map"></div>
+								<div id="searchmap"></div>
+								<div id="map"></div>
 								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans} }) }}
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_creation'|trans} }) }}
+								<div>
+									{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_creation'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.homepage, {'attr' : {'placeholder': 'login.form.label.homepage'|trans} }) }}
+								<div>
+									{{ form_widget(form.homepage, {'attr' : {'placeholder': 'login.form.label.homepage'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans} }) }}
-							</div>
-				
-							<div class="form-group">
-								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans} }) }}
+								<div>
+									{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans} }) }}
+								<div>
+									{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans} }) }}
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div>
+									{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans} }) }}
+								</div>
 							</div>
 
 							<div>
@@ -133,7 +145,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 	{{ encore_entry_script_tags('login') }}
 {% endblock %}

@@ -14,8 +14,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "./abstracts/mixins";
 html,
 body {
-  min-height: 100% !important;
-  //height: 100%;
+    min-height: 100% !important;
+    //height: 100%;
 }
 body {
     background-color: #f5f5f5;
@@ -30,365 +30,365 @@ body {
 }*/
 // MAP
 #map {
-  height: 200px;
-  width: 100%;
-  z-index: 0;
+    height: 200px;
+    width: 100%;
+    z-index: 0;
 }
 
 #searchmap {
-  width: 100%;
-
-  .leaflet-control-geocoder-alternatives {
-    background: white;
     width: 100%;
-    padding: 0;
-    position: absolute;
-    border: 1px solid #ced4da;
-    top: 35px;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  }
 
-  .leaflet-control-geocoder.leaflet-bar {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: flex-start;
-    height: calc(1.5em + 0.75rem + 2px);
-    padding: 0.375rem 0.75rem 0.375rem 0.3rem;
-    font-size: 0.9375rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #7b8a8b;
-    background-color: #fff;
-    background-clip: padding-box;
-    border-bottom: 1px solid #000;
-    border-radius: 0;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    box-shadow: 0 0 0;
-    width: 100%;
-    margin-bottom: 15px;
-
-    > div {
-      flex: 1;
-
-      input[type="text"] {
+    .leaflet-control-geocoder-alternatives {
+        background: white;
         width: 100%;
+        padding: 0;
+        position: absolute;
+        border: 1px solid #ced4da;
+        top: 35px;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    .leaflet-control-geocoder.leaflet-bar {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem 0.375rem 0.3rem;
         font-size: 0.9375rem;
         font-weight: 400;
         line-height: 1.5;
         color: #7b8a8b;
-        border: 0;
-      }
+        background-color: #fff;
+        background-clip: padding-box;
+        border-bottom: 1px solid #000;
+        border-radius: 0;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        box-shadow: 0 0 0;
+        width: 100%;
+        margin-bottom: 15px;
+
+        > div {
+            flex: 1;
+
+            input[type="text"] {
+                width: 100%;
+                font-size: 0.9375rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: #7b8a8b;
+                border: 0;
+            }
+        }
     }
-  }
 }
 
 #carousel {
-  position: absolute;
-  right: 0;
-  z-index: -1;
-  left: 0;
-  min-height: 100%;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  overflow: hidden;
-
-  > div:first-child {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    position: relative;
-
-    > img {
-      display: none;
-      min-width: 100%;
-      min-height: 100%;
-      object-fit: cover;
-      object-position: top center;
-
-      &:first-child {
-        display: block;
-      }
-    }
-  }
-
-  > div:last-child {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
+    right: 0;
+    z-index: -1;
+    left: 0;
+    min-height: 100%;
+    z-index: -1;
     top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    color: #fff;
+    height: 100%;
+    overflow: hidden;
 
-    > div {
-      height: 100%;
-
-      > div {
+    > div:first-child {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
         height: 100%;
+        width: 100%;
+        position: relative;
+
+        > img {
+            display: none;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            object-position: top center;
+
+            &:first-child {
+                display: block;
+            }
+        }
+    }
+
+    > div:last-child {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #fff;
 
         > div {
-          height: 100%;
-        }
-      }
-    }
+            height: 100%;
 
-    .slogans {
-      height: 100%;
-      display: flex;
-      flex-flow: column;
-      justify-content: flex-end;
-      align-items: flex-start;
+            > div {
+                height: 100%;
 
-      > div {
-        display: none;
-        text-transform: uppercase;
-        font-size: 4rem;
-        font-weight: 900;
-        padding: 0 30px 100px;
-        box-sizing: border-box;
-        border-left: 18px solid #fff;
-        line-height: 1.1;
-
-        &:first-child {
-          display: block;
+                > div {
+                    height: 100%;
+                }
+            }
         }
 
-        @media (max-width: 1200px) {
-          font-size: 3rem;
-        }
-      }
-    }
+        .slogans {
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+            justify-content: flex-end;
+            align-items: flex-start;
 
-    @media (max-width: 992px) {
-      display: none;
+            > div {
+                display: none;
+                text-transform: uppercase;
+                font-size: 4rem;
+                font-weight: 900;
+                padding: 0 30px 100px;
+                box-sizing: border-box;
+                border-left: 18px solid #fff;
+                line-height: 1.1;
+
+                &:first-child {
+                    display: block;
+                }
+
+                @media (max-width: 1200px) {
+                    font-size: 3rem;
+                }
+            }
+        }
+
+        @media (max-width: 992px) {
+            display: none;
+        }
     }
-  }
 }
 
 body.forgot-password,
 body.signup,
 body.signup,
 body.login {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  #carousel {
-    min-height: 100%;
+    height: 100%;
+    position: absolute;
     top: 0;
     bottom: 0;
-  }
+    left: 0;
+    right: 0;
 
-  > .container {
-    height: 100%;
-  }
+    #carousel {
+        min-height: 100%;
+        top: 0;
+        bottom: 0;
+    }
 
-  > .container > div {
-    height: 100%;
-  }
+    > .container {
+        height: 100%;
+    }
+
+    > .container > div {
+        height: 100%;
+    }
 }
 
 header {
-  background-color: #2c4969;
+    background-color: #2c4969;
 }
 
 #main-loader {
-  display: none;
+    display: none;
 }
 
 .login-form {
-  font-size: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 7px;
-  background-color: #fff;
-  max-width: 540px;
-  padding: 50px;
-  box-sizing: border-box;
-  margin: 15px 0;
-  @media (max-width: 992px) {
-    margin: 15px auto;
-  }
-
-  h2 {
-    text-align: center;
-    font-weight: bold;
-    border-bottom: 1px solid #bfbfbf;
-    margin: 0;
-  }
-
-  .logo {
-    text-align: center;
-    margin: 0 0 30px;
-  }
-
-  .ico {
-    text-align: center;
-    font-weight: bold;
-    margin: 0 0 30px;
-    font-size: 1.6rem;
-  }
-
-  #new-profile {
-    margin-top: 20px;
-    padding-top: 10px;
-    font-size: 0.9rem;
-    border-top: 1px solid #bfbfbf;
-    color: #656565;
-    text-align: center;
-
-    a {
-      color: #ff3d3d;
-    }
-  }
-
-  input[type="number"],
-  input[type="date"],
-  input[type="username"],
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    padding: 5px 0;
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid #000;
-    background: none;
-    outline: none;
-    border-radius: 0;
-    outline: none;
-
-    &:hover,
-    &:focus {
-      box-shadow: 0 0 0;
-    }
-  }
-
-  button[type="submit"] {
-    color: #fff;
-    background-color: #ff3d3d;
-    width: 100%;
-    border: 0;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 4px;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    border: 0;
-    box-shadow: 0 0 0;
+    font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 7px;
+    background-color: #fff;
+    max-width: 540px;
+    padding: 50px;
     box-sizing: border-box;
-  }
+    margin: 15px 0;
+    @media (max-width: 992px) {
+        margin: 15px auto;
+    }
 
-  .tabs-signup {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    margin: 0;
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-
-    > li {
-      flex: 1;
-
-      > a {
-        height: 100%;
-        width: 100%;
+    h2 {
         text-align: center;
-        background-color: #ff3d3d;
-        display: flex;
+        font-weight: bold;
+        border-bottom: 1px solid #bfbfbf;
+        margin: 0;
+    }
+
+    .logo {
+        text-align: center;
+        margin: 0 0 30px;
+    }
+
+    .ico {
+        text-align: center;
+        font-weight: bold;
+        margin: 0 0 30px;
+        font-size: 1.6rem;
+    }
+
+    #new-profile {
+        margin-top: 20px;
+        padding-top: 10px;
+        font-size: 0.9rem;
+        border-top: 1px solid #bfbfbf;
+        color: #656565;
+        text-align: center;
+
+        a {
+            color: #ff3d3d;
+        }
+    }
+
+    input[type="number"],
+    input[type="date"],
+    input[type="username"],
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 5px 0;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #000;
+        background: none;
+        outline: none;
+        border-radius: 0;
+        outline: none;
+
+        &:hover,
+        &:focus {
+            box-shadow: 0 0 0;
+        }
+    }
+
+    button[type="submit"] {
         color: #fff;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        padding: 15px;
+        background-color: #ff3d3d;
+        width: 100%;
+        border: 0;
+        padding: 12px;
+        margin-top: 15px;
+        border-radius: 4px;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        border: 0;
+        box-shadow: 0 0 0;
         box-sizing: border-box;
-        transition: background-color 1s;
-
-        svg {
-          transition: font-size 1s;
-          font-size: 2.8rem;
-        }
-
-        > span {
-          transition: font-size 1s;
-          font-size: 1.1rem;
-          display: block;
-        }
-      }
-
-      &:first-child {
-        margin-right: 5px;
-      }
-
-      &:last-child {
-        margin-left: 5px;
-      }
     }
 
-    &.active {
-      > li {
-        > a {
-          flex-flow: row nowrap;
-          padding: 15px 5px;
+    .tabs-signup {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        margin: 0;
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
 
-          svg {
-            font-size: 1.5rem;
-            margin-right: 7px;
-          }
+        > li {
+            flex: 1;
 
-          > span {
-            font-size: 1rem;
-          }
+            > a {
+                height: 100%;
+                width: 100%;
+                text-align: center;
+                background-color: #ff3d3d;
+                display: flex;
+                color: #fff;
+                flex-flow: column;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                padding: 15px;
+                box-sizing: border-box;
+                transition: background-color 1s;
 
-          &:not(.active) {
-            background-color: #9c9c9c;
-          }
+                svg {
+                    transition: font-size 1s;
+                    font-size: 2.8rem;
+                }
+
+                > span {
+                    transition: font-size 1s;
+                    font-size: 1.1rem;
+                    display: block;
+                }
+            }
+
+            &:first-child {
+                margin-right: 5px;
+            }
+
+            &:last-child {
+                margin-left: 5px;
+            }
         }
-      }
+
+        &.active {
+            > li {
+                > a {
+                    flex-flow: row nowrap;
+                    padding: 15px 5px;
+
+                    svg {
+                        font-size: 1.5rem;
+                        margin-right: 7px;
+                    }
+
+                    > span {
+                        font-size: 1rem;
+                    }
+
+                    &:not(.active) {
+                        background-color: #9c9c9c;
+                    }
+                }
+            }
+        }
     }
-  }
 
-  .nav-pills .nav-link.active,
-  .nav-pills .show > .nav-link {
-    background-color: #ff3d3d;
-  }
-
-  .forgot-password {
-    margin-top: 7px;
-
-    a {
-      color: #ff3d3d;
-      font-size: 0.9rem;
-      cursor: pointer;
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+        background-color: #ff3d3d;
     }
-  }
+
+    .forgot-password {
+        margin-top: 7px;
+
+        a {
+            color: #ff3d3d;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+    }
 }
 
 select[name="user[dateOfBirth]"].form-control,
 select[name="user[dateOfBirth]"].form-control:active,
 select[name="user[dateOfBirth]"].form-control:focus,
 select[name="user[dateOfBirth]"].form-control:hover {
-  padding: 5px 0;
-  width: 100%;
-  border: 0;
-  border-bottom: 1px solid #000;
-  background: none;
-  outline: none !important;
-  border-radius: 0;
-  outline: none;
-  box-shadow: none !important;
+    padding: 5px 0;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #000;
+    background: none;
+    outline: none !important;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none !important;
 }
 
 #carousel-img {
@@ -401,7 +401,7 @@ select[name="user[dateOfBirth]"].form-control:hover {
     position: absolute;
     right: 15px;
     top: 10px;
-    
+
     .dropdown-right {
         color: #fff;
     }
@@ -412,8 +412,8 @@ select[name="user[dateOfBirth]"].form-control:hover {
         min-width: auto;
     }
 
-    a.link-langue {        
-        &:focus, 
+    a.link-langue {
+        &:focus,
         &:hover {
             color: #fff;
             background-color: #333366;
@@ -423,4 +423,23 @@ select[name="user[dateOfBirth]"].form-control:hover {
     img {
         max-width: 22px;
     }
+}
+
+.signup-form div.required-input {
+    position: relative;
+}
+
+.signup-form div.required-input:before {
+    content: "*";
+    position: absolute;
+    left: -12px;
+    color: #000;
+    font-size: 20px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+}
+
+.signup-form form select {
+    border: 1px solid #000;
 }

@@ -9,7 +9,7 @@
 	{{ encore_entry_link_tags('login') }}
 {% endblock %}
 
-{% block body_class %}signup-user
+{% block body_class %}signup-user signup-form
 {% endblock %}
 
 {% block content %}
@@ -80,15 +80,21 @@
 							<input type="hidden" name="is_personal" value="1"/>
 
 							<div class="form-group">
-								{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans} }) }}
+								<div>
+									{{ form_widget(form.username, {'attr' : {'placeholder': 'login.form.label.username'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans} }) }}
+								<div>
+									{{ form_widget(form.lastname, {'attr' : {'placeholder': 'login.form.label.lastname'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans} }) }}
+								<div>
+									{{ form_widget(form.firstname, {'attr' : {'placeholder': 'login.form.label.firstname'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
@@ -98,19 +104,27 @@
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans} }) }}
+								<div>
+									{{ form_widget(form.dateOfBirth, {'attr' : {'placeholder': 'login.form.label.year_of_birth'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans} }) }}
+								<div>
+									{{ form_widget(form.email, {'attr' : {'placeholder': 'login.form.label.email'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans} }) }}
+								<div>
+									{{ form_widget(form.password.first, {'attr' : {'placeholder': 'login.form.label.password.first'|trans} }) }}
+								</div>
 							</div>
 
 							<div class="form-group">
-								{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans} }) }}
+								<div>
+									{{ form_widget(form.password.second, {'attr' : {'placeholder': 'login.form.label.password.second'|trans} }) }}
+								</div>
 							</div>
 
 							<div>

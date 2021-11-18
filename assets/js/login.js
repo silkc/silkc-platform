@@ -48,7 +48,11 @@ class Login {
      */
      runMap = () => { 
 
-        let inputHidden = document.getElementById('user_address');
+        let inputUserHidden = document.getElementById('user_address');
+        let inputInstitutionHidden = document.getElementById('institution_address');
+        let inputRecruiterHidden = document.getElementById('recruiter_address');
+
+        let inputHidden = inputUserHidden ? inputUserHidden : inputInstitutionHidden ? inputInstitutionHidden : inputRecruiterHidden;
         var map = null;
 
         if (inputHidden) {
@@ -123,7 +127,17 @@ class Login {
         }
     }
 
+    /**
+     * Ajoute la class required-input sur la div parent des champs obligatoires
+     */
+    displayInputRequired = () => {
+        $('body.signup-form form input[required]').each(function() {
+            $(this).parent('div').addClass('required-input');
+        });
+    }
+
     init = function() {
+        this.displayInputRequired();
         this.runCarousel();
         this.runMap();
     }
