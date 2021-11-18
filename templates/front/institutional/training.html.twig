@@ -90,12 +90,12 @@
 
 										<div class="form-group">
 											<label for="start-date_{{ k }}">{{ 'label.start_at'|trans }}</label>
-											<input type="datetime-local" class="form-control" disabled id="start-date_{{ k }}" name="start_at" value="{{ attribute(training, 'startAt') is defined ? training.startAt|date("m/d/Y") : '' }}">
+											<input type="datetime-local" class="form-control" readonly id="start-date_{{ k }}" name="start_at" value="{{ attribute(training, 'startAt') is defined ? training.startAt|date("Y-m-d\\Th:i:s") : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="end-date_{{ k }}">{{ 'label.end_at'|trans }}</label>
-											<input type="datetime-local" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ attribute(training, 'endAt') is defined ? training.endAt|date("m/d/Y") : '' }}">
+											<input type="datetime-local" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ attribute(training, 'endAt') is defined ? training.endAt|date("Y-m-d\\Th:i:s") : '' }}">
 										</div>
 
 										<div class="form-group">

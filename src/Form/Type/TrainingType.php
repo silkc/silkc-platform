@@ -150,7 +150,7 @@ class TrainingType extends AbstractType
                 'expanded' => true,
             ])
             ->add('occupation', EntityType::class, [
-                'attr'         => ["class" => "selectpicker"],
+                'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],
                 'class'        => Occupation::class,
                 'choices'      => $this->occupationRepository->findAll(),
                 'choice_label' => 'preferredLabel',

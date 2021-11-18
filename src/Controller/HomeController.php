@@ -658,8 +658,7 @@ class HomeController extends AbstractController
                 if (!$newTrainingSkills->contains($trainingSkill))
                     $training->removeTrainingSkill($trainingSkill);
             }
-
-            if ($form->get('save_and_validate')->isClicked()) {
+            if ($form->has('save_and_validate') && $form->get('save_and_validate')->isClicked()) {
                 $training->setIsValidated(true);
                 $training->setValidatedAt(new \DateTime());
                 $em->persist($training);

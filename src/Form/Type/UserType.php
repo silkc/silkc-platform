@@ -75,12 +75,6 @@ class UserType extends AbstractType
                 'expanded' => false,
                 'placeholder' => 'login.form.label.year_of_birth'
             ]);
-            /*->add('professionalExperience', NumberType::class, [
-                'translation_domain' => 'messages',
-                'label'              => 'label.professional_experience',
-                'required'           => false,
-                'attr' => ['placeholder' => 'placeholder.professional_experience', 'type' => 'number']
-            ]);*/
 
             if (array_key_exists('require_password', $options) && $options['require_password'] === true) {
                 $builder->add('password', RepeatedType::class, [
@@ -102,6 +96,12 @@ class UserType extends AbstractType
                         'label'              => 'label.up_to_distance',
                         'required'           => false,
                         'attr' => ['placeholder' => 'placeholder.up_to_distance']
+                    ])
+                    ->add('professionalExperience', NumberType::class, [
+                        'translation_domain' => 'messages',
+                        'label'              => 'label.professional_experience',
+                        'required'           => false,
+                        'attr' => ['placeholder' => 'placeholder.professional_experience', 'type' => 'number']
                     ]);
             }
             if (array_key_exists('enable_password', $options) && $options['enable_password'] === true) {
