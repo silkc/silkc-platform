@@ -67,12 +67,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function searchAffectedUsers(array $skills)
     {
         $rsm = new ResultSetMapping();
+        $rsm->addScalarResult( 'all_user_id', 'all_user_id');
         $rsm->addScalarResult( 'count_all', 'count_all');
         $rsm->addScalarResult( 'count_listening', 'count_listening');
 
         $query = $this->getEntityManager()
             ->createNativeQuery('
                 SELECT 
+                    GROUP_CONCAT(ssq.user_id) AS all_user_id,
                     COUNT(ssq.user_id) AS count_all,
                     IFNULL(SUM(IF(u.is_listening_position = 1, 1, 0)), 0) AS count_listening
                 FROM (
@@ -106,7 +108,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                             os.skill_id
                         FROM
                             occupation_skill AS os
-                        INNER JOIN user_occupation AS uo ON uo.training_id = os.occupation_id
+                        INNER JOIN user_occupation AS uo ON uo.occupation_id = os.occupation_id
                         WHERE os.skill_id IN (:skillIDs)
                         GROUP BY uo.user_id, os.skill_id
                     ) AS sq
