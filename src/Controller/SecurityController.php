@@ -121,7 +121,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $link = 'https://silkc-platform.org/validate_account/' . $code;
+                $link = $this->generateUrl('app_validate_account', ['code' => $code]);
                 $html = $this->render('emails/send_code.html.twig', [
                     'validation_link' => $link
                 ])->getContent();
@@ -212,7 +212,7 @@ class SecurityController extends AbstractController
             $user->setCode($code);
             $user->setCodeCreatedAt($date);
 
-            $link = 'https://silkc-platform.org/new_password?id=' . $user->getId() . '&code=' . $code;
+            $link = $this->generateUrl('app_new_password', ['id' => $user->getId(), 'code' => $code]);
             $html = $this->render('emails/forgot_password.html.twig', [
                 'validation_link' => $link
             ])->getContent();
