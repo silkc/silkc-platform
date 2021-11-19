@@ -35,9 +35,9 @@ class SkillRepository extends ServiceEntityRepository
                     o.id,
                     ot.preferred_label 
                 FROM 
-                     occupation AS o
-                INNER JOIN occupation_translation AS ot ON ot.occupation_id = o.id AND locale = :locale
-                GROUP BY o.id
+                     skill AS s
+                INNER JOIN skill_translation AS st ON st.skill_id = s.id AND locale = :locale
+                GROUP BY s.id
             ', $rsm)
             ->setParameter('locale', $locale);
 
