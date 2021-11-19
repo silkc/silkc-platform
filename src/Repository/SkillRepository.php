@@ -27,7 +27,7 @@ class SkillRepository extends ServiceEntityRepository
     {
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult( 'id', 'id');
-        $rsm->addScalarResult( 'preferred_label', 'preferred_label');
+        $rsm->addScalarResult( 'preferred_label', 'preferredLabel');
 
         $query = $this->getEntityManager()
             ->createNativeQuery('
