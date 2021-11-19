@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -121,7 +122,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $link = $this->generateUrl('app_validate_account', ['code' => $code]);
+                $link = $this->generateUrl('app_validate_account', ['code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
                 $html = $this->render('emails/send_code.html.twig', [
                     'validation_link' => $link
                 ])->getContent();
@@ -212,7 +213,7 @@ class SecurityController extends AbstractController
             $user->setCode($code);
             $user->setCodeCreatedAt($date);
 
-            $link = $this->generateUrl('app_new_password', ['id' => $user->getId(), 'code' => $code]);
+            $link = $this->generateUrl('app_new_password', ['id' => $user->getId(), 'code' => $code], UrlGeneratorInterface::ABSOLUTE_URL);
             $html = $this->render('emails/forgot_password.html.twig', [
                 'validation_link' => $link
             ])->getContent();
