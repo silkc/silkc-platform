@@ -25,23 +25,20 @@
 	</div>
 </div>#}
 <div class="row">
-	<div class="form-group col-md-6">
+	<div
+		class="form-group col-md-6">
 		{# {{ form_row(form.address) }} #}
-        <label>{{ 'login.form.label.city'|trans }}</label>
+		<label>{{ 'login.form.label.city'|trans }}</label>
 		<div id="searchmap"></div>
 		<div id="map"></div>
 	</div>
 	<div class="form-group col-md-6">
 		{{ form_row(form.dateOfBirth) }}
-
 		{{ form_row(form.professionalExperience) }}
 	</div>
 </div>
 
 <div class="row">
-	<div class="form-group col-md-6">
-		{{ form_row(form.isListeningPosition) }}
-	</div>
 	<div class="form-group col-md-6">
 		<div class="input-group mb-3">
 			<span class="input-group-text">
@@ -50,6 +47,11 @@
 			{{ form_widget(form.upToDistance) }}
 			<span class="input-group-text">km</span>
 		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-6">
+		{{ form_row(form.isListeningPosition) }}
 	</div>
 </div>
 

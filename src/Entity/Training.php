@@ -231,6 +231,7 @@ class Training
      *      max = 5,
      *      maxMessage = "language cannot be longer than {{ limit }} characters"
      * )
+     * @Groups({"training:read", "training:write"})
      */
     private $language = self::LANGUAGE_EN;
 

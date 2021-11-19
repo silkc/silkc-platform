@@ -15,6 +15,8 @@ label:
   location: Emplacement
   salary: Salaire
   duration: Durée effective (de la date de début à la date de fin)
+  duration_value: Durée effective (de la date de début à la date de fin)
+  duration_details: Détails de la durée
   effective_duration: Durée effective
   description: Description
   roles: Rôles

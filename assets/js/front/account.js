@@ -173,7 +173,7 @@ class Account {
             
             if ($modal && id) {
                 
-                let url = 'api/skills_by_occupation/' + id;
+                let url = '/api/skills_by_occupation/' + id;
                 
                 $.ajax({
                     type: "GET",
@@ -1226,6 +1226,8 @@ class Account {
                                 .replace(/'/g, "&#039;") :
                             'N/A';
 
+console.log('data >> ', data)
+
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
 
@@ -1258,13 +1260,13 @@ class Account {
                                             <div id="map-modal"></div>
 										</div>
 									</div>
-
+									
 									<div class="row mb-3">
 										<div class="col-lg-4">
-											<span class="title">${translationsJS && translationsJS.duration ? translationsJS.duration : 'Duration'}</span>
+											<span class="title">${translationsJS && translationsJS.training_info_url ? translationsJS.training_info_url : 'Training info URL'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.duration ? data.duration : 'N/A'}</span>
+                                        <span>${data.url ? data.url : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -1281,12 +1283,90 @@ class Account {
 
 									<div class="row mb-3">
 										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.language ? translationsJS.language : 'Language'}</span>
+										</div>
+										<div class="col-lg-8">
+											<p class="text-justify m-0">
+                                                ${data.language ? data.language : 'N/A'}
+											</p>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
 											<span class="title">${translationsJS && translationsJS.price ? translationsJS.price : 'Price'}</span>
 										</div>
 										<div class="col-lg-8">
 											<span>${data.price ? data.price : 'N/A'}</span>
 										</div>
 									</div>
+
+
+
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.start_at ? translationsJS.start_at : 'Start date'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.endAt ? data.endAt : 'N/A'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.end_at ? translationsJS.end_at : 'End date'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.startAt ? data.startAt : 'N/A'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.duration ? translationsJS.duration : 'Duration'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.duration ? data.duration : 'N/A'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.duration_details ? translationsJS.duration_details : 'Duration details'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.durationDetails ? data.durationDetails : 'N/A'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.online ? translationsJS.online : 'Online'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.isOnline ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.is_online_monitored ? translationsJS.is_online_monitored : 'Tutored online'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.isOnlineMonitored ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.is_presential ? translationsJS.is_presential : 'Face to face'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${data.isPresential ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>'}</span>
+										</div>
+									</div>
+
 									<div class="row mb-3">
 										<div class="col-lg-4">
 											<span class="title">${translationsJS && translationsJS.occupation ? translationsJS.occupation : 'Occupation'}</span>
