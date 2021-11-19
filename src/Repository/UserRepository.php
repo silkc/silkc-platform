@@ -98,13 +98,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                         INNER JOIN user_training AS ut ON ts.training_id = ut.training_id 
                         WHERE ts.skill_id IN (:skillIDs)
                         GROUP BY ut.user_id, ts.skill_id
+                        
+                        UNION
+                
+                        SELECT
+                            uo.user_id,
+                            os.skill_id
+                        FROM
+                            occupation_skill AS os
+                        INNER JOIN user_occupation AS uo ON uo.training_id = os.occupation_id
+                        WHERE os.skill_id IN (:skillIDs)
+                        GROUP BY uo.user_id, os.skill_id
                     ) AS sq
                     GROUP BY sq.user_id
                     HAVING count_skills >= :countRequiredSkills
                 ) AS ssq
                 INNER JOIN user AS u ON u.id = ssq.user_id
             ', $rsm)
-            ->setParameter('userId', 1)
             ->setParameter('skillIDs', $skills)
             ->setParameter('countRequiredSkills', count($skills));
 
