@@ -32,8 +32,8 @@ class SkillRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()
             ->createNativeQuery('
                 SELECT 
-                    o.id,
-                    ot.preferred_label 
+                    s.id,
+                    st.preferred_label 
                 FROM 
                      skill AS s
                 INNER JOIN skill_translation AS st ON st.skill_id = s.id AND locale = :locale
