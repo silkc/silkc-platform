@@ -21,6 +21,6 @@ class OccupationMainGetCollectionController extends AbstractController
     public function __invoke(Request $request, string $locale)
     {
         Locale::setDefaultFallback($locale);
-        return $this->occupationRepository->findAll();
+        return $this->occupationRepository->findAllByLocale($locale);
     }
 }

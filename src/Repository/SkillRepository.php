@@ -23,6 +23,29 @@ class SkillRepository extends ServiceEntityRepository
         parent::__construct($registry, Skill::class);
     }
 
+    public function findAllByLocale(string $locale)
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult( 'id', 'id');
+        $rsm->addScalarResult( 'preferred_label', 'preferred_label');
+
+        $query = $this->getEntityManager()
+            ->createNativeQuery('
+                SELECT 
+                    o.id,
+                    ot.preferred_label 
+                FROM 
+                     occupation AS o
+                INNER JOIN occupation_translation AS ot ON ot.occupation_id = o.id AND locale = :locale
+                GROUP BY o.id
+            ', $rsm)
+            ->setParameter('locale', $locale);
+
+        $result = $query->getScalarResult();
+
+        return $result;
+    }
+
     public function getByOccupationAndTraining(User $user, $isValidated = true)
     {
         $rsm = new ResultSetMapping();

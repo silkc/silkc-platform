@@ -158,7 +158,11 @@
 															<li class="list-group-item">
 																<div class="d-flex flex-nowrap justify-content-between">
 																	<div>
-																		<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+																		{% if skill.translations is defined and skill.translations[app.request.locale] is defined %}
+																			<span>{{ skill.translations.locale }}</span>
+																		{% else %}
+																			<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
+																		{% endif %}
 																	</div>
 																</div>
 															</li>

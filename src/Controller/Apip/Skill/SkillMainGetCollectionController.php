@@ -21,6 +21,6 @@ class SkillMainGetCollectionController extends AbstractController
     public function __invoke(Request $request, string $locale)
     {
         Locale::setDefaultFallback($locale);
-        return $this->skillRepository->findAll();
+        return $this->skillRepository->findAllByLocale($locale);
     }
 }
