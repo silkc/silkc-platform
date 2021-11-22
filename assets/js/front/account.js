@@ -98,7 +98,7 @@ class Account {
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
                 <div class="d-flex flex-row justify-content-start align-items-center mr-4">
-                    <span class="rating" data-value="{{ training.avgMark }}"></span>
+                    <span class="rating" data-value="${training.avgMark}"></span>
                     <span
                             title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
                             data-toggle="tooltip"
@@ -574,26 +574,6 @@ class Account {
                 if (ul) {
                     let li = _this.tplTraining(training, user_id);
                     $(ul).append(li);
-
-
-                    // Score de la formation (rating)
-                    /*let token = $('body').attr('data-token');
-                    let url = '/apip/trainings/' + id;
-
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        dataType: 'json',
-                        headers: {"X-auth-token": token},
-                        success: function (data, textStatus, jqXHR) {
-
-                        },
-                        error: function () {},
-                        complete: function() {}
-                    });*/
-
-
-                    
 
                     if (ul.find('li.list-group-item').length == 0)
                         $('.no_training_result').show();
