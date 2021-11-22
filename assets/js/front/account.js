@@ -87,22 +87,36 @@ class Account {
         </li>`;
     }
 
-    tplTraining = (training) => {
+    tplTraining = (training, user_id) => {
+
+
+        console.log('training >>> ', training)
 
         return `<li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
                 <span>${training.name}</span>
             </div>
             <div class="d-inline-flex align-items-center justify-content-end">
-                <a href="" class="link mr-2" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_details_tooltip ? translationsJS.user_formation_details_tooltip : 'Skills linked to this training'}">
+                <div class="d-flex flex-row justify-content-start align-items-center mr-4">
+                    <span class="rating" data-value="{{ training.avgMark }}"></span>
+                    <span
+                            title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
+                            data-toggle="tooltip"
+                            style="font-size: 0.8rem;"
+                    >
+                        ({{ training.totalMark }})
+                    </span>
+                </div>
+
+                <button class="btn btn-link p-0 see-detail mr-2" data-id="${training.id}" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_details_tooltip ? translationsJS.user_formation_details_tooltip : 'Skills linked to this training'}">
                     <i class="fas fa-search text-primary"></i>
-                </a>
-                <a href="" class="text-danger item rmv mr-2" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_unlink_tooltip ? translationsJS.user_formation_unlink_tooltip : 'Remove this training'}" data-name="${training.name}" data-id="${training.id}" >
+                </button>
+                <button class="btn btn-link p-0 text-danger item rmv mr-2" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_unlink_tooltip ? translationsJS.user_formation_unlink_tooltip : 'Remove this training'}" data-name="${training.name}" data-id="${training.id}">
                     <i class="fas fa-unlink text-danger"></i>
-                </a>
-                <a href="" class="text-success feedback" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_feedback_tooltip ? translationsJS.user_formation_feedback_tooltip : 'Provide feedback'}">
+                </button>
+                <button class="btn btn-link p-0 text-success feedback" data-toggle="tooltip" title="${translationsJS && translationsJS.user_formation_feedback_tooltip ? translationsJS.user_formation_feedback_tooltip : 'Provide feedback'}" data-name="${training.name}" data-id="${training.id}" data-user-id="${user_id}">
                     <i class="fas fa-plus text-primary"></i>
-                </a>
+                </button>
             </div>
         </li>`;
     }
@@ -518,6 +532,7 @@ class Account {
         $('body').on('click', '#content-training .add-training button', function(e) {
             e.preventDefault();
 
+            let user_id = $('#input_user_id').val();
             let training = {};
             let inputTrainings = $('body').find('#trainings[type="hidden"]');
             let ul = $('body').find('#content-training .list-trainings .list-group');
@@ -553,13 +568,35 @@ class Account {
                 inputTrainings.val(JSON.stringify(trainingsList))
                 
                 if (ul) {
-                    let li = _this.tplTraining(training);
+                    let li = _this.tplTraining(training, user_id);
                     $(ul).append(li);
+
+
+                    // Score de la formation (rating)
+                    /*let token = $('body').attr('data-token');
+                    let url = '/apip/trainings/' + id;
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType: 'json',
+                        headers: {"X-auth-token": token},
+                        success: function (data, textStatus, jqXHR) {
+
+                        },
+                        error: function () {},
+                        complete: function() {}
+                    });*/
+
+
+                    
 
                     if (ul.find('li.list-group-item').length == 0)
                         $('.no_training_result').show();
                     else
                         $('.no_training_result').hide();
+
+                    $('[data-toggle="tooltip"]').tooltip();
                 }
             }
         });
