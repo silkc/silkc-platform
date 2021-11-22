@@ -327,6 +327,8 @@ class Account {
             for (var i = 0; i < inputs.length; i++) {
                 let input = inputs[i];
                 let baseUrl = input.getAttribute('data-url');
+                if (!baseUrl.includes("trainings"))
+                    baseUrl = baseUrl + "/main/locale/" + lang;
                 let formats = input.getAttribute('data-formats') || 'json';
                 let pagination = input.getAttribute('data-pagination') || false;
                 let params = $.param({'formats': formats, 'pagination': false});
