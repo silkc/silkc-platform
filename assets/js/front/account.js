@@ -104,7 +104,7 @@ class Account {
                             data-toggle="tooltip"
                             style="font-size: 0.8rem;"
                     >
-                        ({{ training.totalMark }})
+                        (${training.totalMark})
                     </span>
                 </div>
 
@@ -277,6 +277,8 @@ class Account {
                     if ($(item).attr('data-associated') == true) return false;
 
                     input.value = (item.preferredLabel != undefined) ? item.preferredLabel : item.name;
+                    input.dataset.totalmark = (item.totalMark != undefined) ? item.totalMark : 0;
+                    input.dataset.avgmark = (item.avgMark != undefined) ? item.avgMark : 0;
                     input.dataset.description = (item.description != undefined) ? item.description : '';
                     elemsDisabled.prop('disabled', false);
                     if (hiddenField && item.id) {
@@ -551,6 +553,8 @@ class Account {
 
                 training.id = trainingIdToAdd;
                 training.name = name;
+                training.totalMark = parseInt(inputAutocomplete.attr('data-totalmark')) || 0;
+                training.avgMark = parseInt(inputAutocomplete.attr('data-avgmark')) || 0;
 
                 if (inputTrainings && inputTrainings.val()) {
                     trainingsList = JSON.parse(inputTrainings.val());

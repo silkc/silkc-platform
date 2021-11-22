@@ -353,6 +353,7 @@ class Training
 
     /**
      * @ORM\Column(type="float", length=255, nullable=true)
+     * @Groups({"training:read"})
      */
     private $avgMark = 0;
 
@@ -363,6 +364,7 @@ class Training
      *      max = 11,
      *      maxMessage = "training totalMark cannot be longer than {{ limit }} characters"
      * )
+     * @Groups({"training:read"})
      */
     private $totalMark = 0;
 
