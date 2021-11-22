@@ -1247,8 +1247,6 @@ class Account {
                                 .replace(/'/g, "&#039;") :
                             'N/A';
 
-console.log('data >> ', data)
-
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
 
@@ -1318,7 +1316,7 @@ console.log('data >> ', data)
 											<span class="title">${translationsJS && translationsJS.price ? translationsJS.price : 'Price'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.price ? data.price : 'N/A'}</span>
+											<span>${data.price ? data.price : 'N/A'} ${data.currency ? data.currency.toUpperCase() : ''}</span>
 										</div>
 									</div>
 

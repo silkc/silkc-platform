@@ -220,6 +220,7 @@ class Training
      *      max = 255,
      *      maxMessage = "training currency cannot be longer than {{ limit }} characters"
      * )
+     * @Groups({"training:read"})
      */
     private $currency = self::CURRENCY_EURO;
 
