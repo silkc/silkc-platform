@@ -88,10 +88,6 @@ class Account {
     }
 
     tplTraining = (training, user_id) => {
-
-
-        console.log('training >>> ', training)
-
         return `<li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
                 <span>${training.name}</span>
@@ -574,6 +570,8 @@ class Account {
                 if (ul) {
                     let li = _this.tplTraining(training, user_id);
                     $(ul).append(li);
+
+                    _this.runRater();
 
                     if (ul.find('li.list-group-item').length == 0)
                         $('.no_training_result').show();
