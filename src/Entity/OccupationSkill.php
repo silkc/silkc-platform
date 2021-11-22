@@ -20,7 +20,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={"get"},
  *      itemOperations={"get"},
  *      attributes={
- *          "formats"={"json"}
+ *          "formats"={"json"},
+ *          "pagination_items_per_page": 10000,
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={
