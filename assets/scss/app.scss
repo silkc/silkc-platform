@@ -34,6 +34,12 @@ body button .spinner-border {
     height: 1rem;
 }
 
+.title-page-account {
+    font-size: 3rem;
+    padding: 0 0 30px;
+    margin: 0;
+}
+
 .blc-hide {
     display: none;
 }
@@ -458,15 +464,11 @@ body > div.autocomplete {
     }
 }
 
-.img-bottom {
-    position: relative;
-    bottom: -30px;
-}
-
 footer#footer {
     width: 100%;
     display: table-row;
-    height: 230px;
+    height: 130px;
+    background: #222222;
 }
 footer#footer > div {
     background: #222222;
@@ -508,10 +510,21 @@ footer#footer a:focus {
     text-decoration: none;
     color: #cc3333 !important;
 }
+
 footer#footer img {
     margin-bottom: 20px;
     display: block;
 }
+
+footer#footer .content-footer {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+footer#footer .content-footer > div {
+    margin-right: 15px;
+}
+
 #main-frame {
     min-height: calc(100vh - 230px);
 }

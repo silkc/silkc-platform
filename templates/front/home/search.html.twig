@@ -10,27 +10,18 @@
 
 {% block body %}
 	<div id="search">
+		<div id="loop-slider" data-autoplay="true" data-speed="10000">
+			<ul id="img-group">
+				<li class="slide" data-img="{{asset('build/images/search/01.jpg')}}"></li>
+				<li class="slide" data-img="{{asset('build/images/search/02.jpg')}}"></li>
+				<li class="slide" data-img="{{asset('build/images/search/03.jpg')}}"></li>
+				<li class="slide" data-img="{{asset('build/images/search/04.jpg')}}"></li>
+				<li class="slide" data-img="{{asset('build/images/search/05.jpg')}}"></li>
+				<li class="slide" data-img="{{asset('build/images/search/06.jpg')}}"></li>
+			</ul>
+		</div>
 
-        <div class="slider-img">
-            <div style="background-image: url({{asset('build/images/search/01.jpg')}})" ></div>
-            <div style="background-image: url({{asset('build/images/search/02.jpg')}})" ></div>
-            <div style="background-image: url({{asset('build/images/search/03.jpg')}})" ></div>
-            <div style="background-image: url({{asset('build/images/search/04.jpg')}})" ></div>
-            <div style="background-image: url({{asset('build/images/search/05.jpg')}})" ></div>
-            <div style="background-image: url({{asset('build/images/search/06.jpg')}})" ></div>
-        </div>
-
-		<div
-			class="container">
-			{#
-				<div class="info">
-					<p class="text-center">
-						{{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans }}<br />
-						{{ 'home.training_available'|trans }}<br />
-						{{ 'home.registered_jobs'|trans }}
-					</p>
-				</div>
-			#}
+		<div class="container">
 
 			<div class="search">
 				<p class="intro">

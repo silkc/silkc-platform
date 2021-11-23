@@ -12,10 +12,9 @@
 {% endblock %}
 
 {% block body %}
-	<div id="search-results">
+	<div id="search-results" class="mb-4">
 		<div class="container">
 			<form class="form-inline form-search form-results" method="POST" action="{{ path('app_search_results') }}">
-				{% include 'front/search/search.html.twig' %}
 				{% include 'front/search/results.html.twig' %}
 			</form>
 		</div>

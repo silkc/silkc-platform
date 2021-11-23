@@ -1,17 +1,23 @@
 <footer id="footer">
 	<div>
-		<div class="container p-3">
+		<div class="container">
 			<div>
-				<ul>
-					<li><a class="scrolltop" href="#page"><span class="fa fa-angle-up"></span>{{ 'top'|trans }}</a></li>
-					<li><a title="Home" href="/">{{ 'nav.home'|trans }}</a></li>
-				</ul>
+				{% set currentPath = path(app.request.attributes.get('_route'),
+                       app.request.attributes.get('_route_params')) %}
+				{% if currentPath != '/' %}
+					<ul>
+						<li><a class="scrolltop" href="#page"><span class="fa fa-angle-up"></span>{{ 'top'|trans }}</a></li>
+						<li><a title="Home" href="/">{{ 'nav.home'|trans }}</a></li>
+					</ul>
+				{% endif %}
 			</div>
 
-			<p>
-				<img src="{{asset('build/images/logo-erasmus-footer.png')}}" width="210"><br/>
-				{{ 'disclaimer'|trans|raw }}
-			</p>
+			<div class="content-footer">
+				<div>
+					<img src="{{asset('build/images/logo-erasmus-footer.png')}}" width="210">
+				</div>
+				<p>{{ 'disclaimer'|trans|raw }}</p>
+			</div>
 		</div>
 	</div>
 </footer>

@@ -1,131 +1,143 @@
-<div class="results pb-4">
-
-	<p class="font-italic mb-5">
-		{{ 'info_search_result'|trans }}
-	</p>
-
-	{# HISTORIQUE DES RECHERCHES #}
-	<div class="mb-3">
-		<div class="row">
-			<div class="col-6 col-lg-9">
-				<div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
-					{% if searches is defined and searches is iterable and searches|length > 0 %}
-						<p class="m0">
-							{{ 'front_last_searches_label'|trans }}
-							:
-							{% for s in searches %}
-								<a class="btn btn-sm btn-secondary" href="{{ path('app_search_results', (s.occupation) ? {'type': 'occupation', 'id': s.occupation.id } : {'type': 'skill', 'id': s.skill.id}) }}">
-									{{ (s.occupation) ? s.occupation.preferredLabel : s.skill.preferredLabel }}
-									<span class="badge badge-success" data-toggle="tooltip" title="{{ 'search_history_count_results_tooltip'|trans({'%count%': s.countResults}) }}">{{ s.countResults }}</span>
-								</a>
-							{% endfor %}
-						</p>
-					{% endif %}
-				</div>
-			</div>
-			<div class="col-6 col-lg-3 text-right">
-				{% if user is defined and user is not null %}
-					<div class="custom-control custom-checkbox d-inline-block">
-						<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
-						<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
-					</div>
-				{% endif %}
-			</div>
-		</div>
-		<div class="row mt-2 mb-2">
-			<div class="tags col-12">
-				<button class="btn btn-sm btn-primary btn-filters mb-1" type="button" data-toggle="tooltip" title="{{ 'label.advanced_search'|trans }}" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
-					<i class="fas fa-filter"></i>
-
-					<span>{{ 'show_panel'|trans }}</span>
-					<span>{{ 'hide_panel'|trans }}</span>
-				</button>
-
-				{% if requestParams.inputCity is defined and requestParams.inputCity is not empty %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-city">
-						{{ requestParams.inputCity}}
-						{% if requestParams.distance %}
-							{{ requestParams.distance is defined ? requestParams.distance : 0 }}km
-						{% endif %}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.minPrice is defined and requestParams.maxPrice is defined
-					and (requestParams.minPrice != 0 or requestParams.maxPrice != defaultMaxPrice) %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-price">
-						{{ requestParams.minPrice }} € - {{ requestParams.maxPrice }} €
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.startAt is defined and requestParams.startAt is not empty %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-startAt">
-						Start at
-						{{ requestParams.startAt }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.endAt is defined and requestParams.endAt is not empty %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-endAt">
-						End at
-						{{ requestParams.endAt }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.minDuration is defined and requestParams.maxDuration is defined
-					and (requestParams.minDuration != 0 or requestParams.maxDuration != 100) %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-duration">
-						{{ requestParams.minDuration }} - {{ requestParams.maxDuration }} {{ requestParams.unity is defined ? requestParams.unity : 'days' }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.isOnline is defined %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-isOnline">
-						{{ 'label.online'|trans }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.isOnlineMonitored is defined %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-isOnlineMonitored">
-						{{ 'label.is_online_monitored'|trans }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.isPresential is defined %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-isPresential">
-						{{ 'label.is_presential'|trans }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.excludeTraining is defined %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-excludeTraining">
-						{{ 'label.exclude_training_without_a_completed_description'|trans }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-
-				{% if requestParams.specifiedDuration is defined %}
-					<button type="button" class="btn btn-sm btn-light mb-1 tag-specifiedDuration">
-						{{ 'label.without_specified_duration'|trans }}
-						<span class="delete">&times;</span>
-					</button>
-				{% endif %}
-			</div>
-		</div>
-	</div>
-
+<div class="results">
 	<div class="d-flex flex-md-nowrap frame-results">
 		<div>
 			{% include 'front/search/filters.html.twig' %}
 		</div>
 		<div>
+			<a class="btn btn-primary mb-4" href="{{ path('app_home') }}">
+				<i class="fas fa-search"></i>
+				<span>{{ 'header.full_search_page'|trans }}</span>
+			</a>
+
+			{% include 'front/search/search.html.twig' %}
+
+			<p class="font-italic mb-3">
+				{{ 'info_search_result'|trans }}
+			</p>
+
+			{# HISTORIQUE DES RECHERCHES #}
+			<div class="mb-3">
+				<div class="row">
+					<div class="col-6 col-lg-9">
+						<div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
+							{% if searches is defined and searches is iterable and searches|length > 0 %}
+								<p class="m0">
+									{{ 'front_last_searches_label'|trans }}
+									:
+									{% for s in searches %}
+										<a class="btn btn-sm btn-secondary" href="{{ path('app_search_results', (s.occupation) ? {'type': 'occupation', 'id': s.occupation.id } : {'type': 'skill', 'id': s.skill.id}) }}">
+											{{ (s.occupation) ? s.occupation.preferredLabel : s.skill.preferredLabel }}
+											<span class="badge badge-success" data-toggle="tooltip" title="{{ 'search_history_count_results_tooltip'|trans({'%count%': s.countResults}) }}">{{ s.countResults }}</span>
+										</a>
+									{% endfor %}
+								</p>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-6 col-lg-3 text-right">
+						{% if user is defined and user is not null %}
+							<div class="custom-control custom-checkbox d-inline-block">
+								<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
+								<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row mt-2 mb-2">
+					<div class="tags col-12">
+						<button class="btn btn-sm btn-primary btn-filters mb-1" type="button" data-toggle="tooltip" title="{{ 'label.advanced_search'|trans }}" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
+							<i class="fas fa-filter"></i>
+
+							<span>{{ 'hide_panel'|trans }}</span>
+							<span>{{ 'show_panel'|trans }}</span>
+						</button>
+
+						{% if requestParams.inputCity is defined and requestParams.inputCity is not empty %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-city">
+								{{ requestParams.inputCity}}
+								{% if requestParams.distance %}
+									{{ requestParams.distance is defined ? requestParams.distance : 0 }}km
+								{% endif %}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.minPrice is defined and requestParams.maxPrice is defined
+					and (requestParams.minPrice != 0 or requestParams.maxPrice != defaultMaxPrice) %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-price">
+								{{ requestParams.minPrice }}
+								€ -
+								{{ requestParams.maxPrice }}
+								€
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.startAt is defined and requestParams.startAt is not empty %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-startAt">
+								Start at
+								{{ requestParams.startAt }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.endAt is defined and requestParams.endAt is not empty %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-endAt">
+								End at
+								{{ requestParams.endAt }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.minDuration is defined and requestParams.maxDuration is defined
+					and (requestParams.minDuration != 0 or requestParams.maxDuration != 100) %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-duration">
+								{{ requestParams.minDuration }}
+								-
+								{{ requestParams.maxDuration }}
+								{{ requestParams.unity is defined ? requestParams.unity : 'days' }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.isOnline is defined %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-isOnline">
+								{{ 'label.online'|trans }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.isOnlineMonitored is defined %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-isOnlineMonitored">
+								{{ 'label.is_online_monitored'|trans }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.isPresential is defined %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-isPresential">
+								{{ 'label.is_presential'|trans }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.excludeTraining is defined %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-excludeTraining">
+								{{ 'label.exclude_training_without_a_completed_description'|trans }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+
+						{% if requestParams.specifiedDuration is defined %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-specifiedDuration">
+								{{ 'label.without_specified_duration'|trans }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
 			<div id="accordion">
 				{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
 					{% for training in trainings %}
@@ -143,11 +155,7 @@
 									</button>
 									<div class="d-flex flex-row justify-content-start align-items-center mr-2">
 										<span class="rating" data-value="{{ training.avgMark }}"></span>
-										<span
-											title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
-											data-toggle="tooltip"
-											style="font-size: 0.8rem;"
-										>
+										<span title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}" data-toggle="tooltip" style="font-size: 0.8rem;">
 											({{ training.totalMark }})
 										</span>
 									</div>
@@ -155,7 +163,7 @@
 										({{ loop.index }}
 										of
 										{{ trainings|length }}
-                                        {{ 'training'|trans }}
+										{{ 'training'|trans }}
 										{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
 											-
 											<a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>
@@ -203,7 +211,8 @@
 													{% endif %}
 
 													{% if training.distance is defined and training.distance is not empty and training.distance > 0 %}
-														<span class="badge bg-secondary">{{ training.distance }} {{ 'km away'|trans }}</span>
+														<span class="badge bg-secondary">{{ training.distance }}
+															{{ 'km away'|trans }}</span>
 													{% endif %}
 												</div>
 											</div>

@@ -58,7 +58,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     #advanced-search {
         width: 100%;
         max-width: 280px;
-        display: none;
+        display: block;
         margin-right: 15px;
         font-size: 0.9rem;
         margin-bottom: 30px;
@@ -66,7 +66,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         > div {
             width: 100%;
             border: 1px solid #ddd;
-            margin-top: 0.25rem;
             padding: 15px 0;
             box-sizing: border-box;
         }
@@ -103,7 +102,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
 
         &.active {
-            display: block;
+            display: none;
         }
 
         .blc-btn {
@@ -120,7 +119,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     .results {
-        margin-top: 40px;
 
         h5 {
             margin: 0;

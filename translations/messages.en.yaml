@@ -83,14 +83,14 @@ button:
 header:
   my_institution: My institution
   my_account: My account
-  full_search_page: Full search page
+  full_search_page: Home
   intro: Skills Integration in a Learning Knowledge and Career PATHway
   search_history: Search history
 
 nav:
   dashboard: Dashboard
   home: Home
-  personal_informations: My account
+  personal_informations: My profile
   institutional_informations: Institution information
   company_informations: Company information
   work: Jobs

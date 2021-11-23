@@ -1,9 +1,14 @@
+{% if search is defined and attribute(search, 'name') is defined and search.name is not empty %}
+	<h1 class="title-page-account">
+		{{ search.name }}
+	</h1>
+{% endif %}
 
-<label for="input-search">{{ 'training_opportunities_to_land_your_dream_job_as'|trans  }}:</label>
+<label class="d-flex justify-content-start mb-3" for="input-search">{{ 'training_opportunities_to_land_your_dream_job_as'|trans  }}:</label>
 
-<div class="form-search-occupation"  
-    style="display: {{ search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' ? 'none' : 'block' }}">
-    {% include 'front/elements/input_search.html.twig'
+<div class="d-flex mb-4">
+	<div class="form-search-occupation" style="display: {{ search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' ? 'none' : 'block' }}">
+		{% include 'front/elements/input_search.html.twig'
         with {
             'id': 'input-search-occupation',
             'url': '/apip/occupations',
@@ -16,13 +21,12 @@
             'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
         }
     %}
-</div>
+	</div>
 
-<div class="form-search-skill" 
-    style="display: {{ (search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation') 
-                            or (search is defined and search is empty) 
-                            or (search is not defined) ? 'none' : 'block' }}"}>
-    {% include 'front/elements/input_search.html.twig'
+	<div class="form-search-skill" style="display: {{ (search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation')
+		                            or (search is defined and search is empty)
+		                            or (search is not defined) ? 'none' : 'block' }}" }>
+		{% include 'front/elements/input_search.html.twig'
         with {
             'id': 'input-search-skill',
             'url': '/apip/skills',
@@ -35,11 +39,12 @@
             'id_input_hidden': search is defined and attribute(search, 'id') is defined and search.id is not empty ? search.id : ''
         }
     %}
+	</div>
+
+	<select class="form-control" name="type_search">
+		<option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>{{ 'home.search_by_occupation'|trans }}</option>
+		<option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>{{ 'home.search_by_skill'|trans  }}</option>
+	</select>
+
+	<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>{{ 'label.search'|trans }}</button>
 </div>
-
-<select class="form-control" name="type_search">
-    <option value="occupation" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'occupation' %} selected {% endif %}>{{ 'home.search_by_occupation'|trans }}</option>
-    <option value="skill" {% if search is defined and attribute(search, 'type_search') is defined and search.type_search == 'skill' %} selected {% endif %}>{{ 'home.search_by_skill'|trans  }}</option>
-</select>
-
-<button type="submit" class="btn btn-primary ml-2 mr-2 disabled-search" {% if search is not defined or (search is defined and search is empty) %} disabled {% endif %}>{{ 'label.search'|trans }}</button>
