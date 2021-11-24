@@ -16,7 +16,7 @@
 			</p>
 
 			{# HISTORIQUE DES RECHERCHES #}
-			<div class="mb-3">
+			<div class="mb-4">
 				<div>
 					<div id="history-search" style="display: {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept == 1 ? '' : 'none' }};">
 						{% if searches is defined and searches is iterable and searches|length > 0 %}
