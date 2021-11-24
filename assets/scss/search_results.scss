@@ -133,11 +133,24 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 border: 0;
             }
 
-            button {
+            .title {
                 flex: 1;
+                display: flex;
+                flex-flow: column;
+
+                > span {
+                    &:last-child {
+                        
+                    }
+                }
+            }
+
+            button {
                 text-align: left;
                 outline: none;
                 border: 0;
+                width: 180px;
+                text-align: center;
 
                 &:focus,
                 &:hover {
@@ -212,6 +225,17 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         white-space: -pre-wrap;      /* Opera 4-6 */
         white-space: -o-pre-wrap;    /* Opera 7 */
         word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    }
+
+    #accordion {
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            border-top: 2px solid #ddd;
+            padding-bottom: 40px;
+            margin-top: 10px;
+        }
     }
 }
 

@@ -1320,9 +1320,6 @@ class Account {
 										</div>
 									</div>
 
-
-
-
 									<div class="row mb-3">
 										<div class="col-lg-4">
 											<span class="title">${translationsJS && translationsJS.start_at ? translationsJS.start_at : 'Start date'}</span>

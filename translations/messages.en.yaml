@@ -375,3 +375,9 @@ top: Top
 disclaimer: "DISCLAIMER: This project has been funded with support from the European Commission.<br>
 				    This publication [communication] reflects the views only of the author, and the Commission 
 				    cannot be held responsible for any use which may be made of the information contained therein."
+hide_info: Hide info
+show_info: Show info
+language_fr: French
+language_en: English
+language_it: Italian
+language_pl: Polish

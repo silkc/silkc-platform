@@ -570,6 +570,15 @@ class SearchResults {
         });
      }
 
+    /**
+     * Affiche/masque un resultat
+     */
+     btnShowResult = () => {
+        $('body').on('click', '#search-results .results h5 button', function() {
+            $(this).find('span').toggleClass('hide show');
+        });
+     }
+
     init = function() {
         this.runTypeSearch();
         this.setScore();
@@ -580,7 +589,9 @@ class SearchResults {
         this.runMapFilter();
         this.displayFilters();
         this.runRater();
+        this.btnShowResult();
 
+        
 
         $('body').on('click', 'form.form-search button[type="submit"]', function(e) {
             e.preventDefault();
