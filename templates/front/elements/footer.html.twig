@@ -5,7 +5,7 @@
 				{% set currentPath = path(app.request.attributes.get('_route'),
                        app.request.attributes.get('_route_params')) %}
 				{% if currentPath != '/' %}
-					<ul>
+					<ul class="text-right">
 						<li><a class="scrolltop" href="#page"><span class="fa fa-angle-up"></span>{{ 'top'|trans }}</a></li>
 						<li><a title="Home" href="/">{{ 'nav.home'|trans }}</a></li>
 					</ul>

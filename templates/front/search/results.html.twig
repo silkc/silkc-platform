@@ -139,13 +139,18 @@
 
 			<div id="accordion">
 				{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
-					{% for training in trainings %}
 
+                    <h3 class="mb-4">
+                        {{ trainings|length }}
+                        {{ trainings|length > 1 ? 'trainings_found'|trans : 'training_found'|trans  }}
+                    </h3>
+
+					{% for training in trainings %}
 						{% set maxScore = (training.maxScore is defined and training.maxScore > 0) ? training.maxScore : 1 %}
 						{% set score = (training.score is defined and training.score > 0) ? max(1, (training.score / maxScore) * 100)|number_format : 0 %}
 						<div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
 							<div class="card-header" id="heading{{ loop.index0 }}">
-								<h5 class="d-flex justify-content-between align-items-center">
+								<h4 class="d-flex justify-content-between align-items-center">
 									<div class="title">
 										<span>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}</span>
 										{% set classScore = 'text-danger' %}
@@ -180,7 +185,7 @@
 										<span class="collapse show">{{ 'show_info'|trans  }}</span>
 										<span class="collapse hide">{{ 'hide_info'|trans  }}</span>
 									</button>
-								</h5>
+								</h4>
 							</div>
 
 							<div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="heading{{ loop.index0 }}" data-parent="#accordion">
@@ -370,7 +375,7 @@
 						</div>
 					{% endfor %}
 				{% elseif trainings is defined and trainings is iterable and trainings|length == 0 %}
-					<p style="font-size: 1.2rem;">{{ 'no_result_found'|trans  }}</p>
+					<h3>{{ 'no_result_found'|trans  }}</h3>
 				{% endif %}
 			</div>
 		</div>
