@@ -266,7 +266,7 @@ class Account {
                 },
                 fetch: function(text, callback) {
                     text = text.toLowerCase();
-                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : (n.name != undefined) ? n.name.toLowerCase().startsWith(text) : '' );
+                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().includes(text) : (n.name != undefined) ? n.name.toLowerCase().includes(text) : '' );
                     callback(suggestions);
                 },
                 onSelect: function(item) {
@@ -310,7 +310,7 @@ class Account {
                     return true;
 
                 let search = this.value.toLowerCase();
-                let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(search) : n.name.toLowerCase().startsWith(search));
+                let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().includes(search) : n.name.toLowerCase().includes(search));
                 if (suggestions && suggestions.length > 0 && search.length > 0) {
                     let suggestion = suggestions[0];
                     input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';

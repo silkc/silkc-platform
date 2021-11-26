@@ -63,9 +63,9 @@ class Main {
                     text = text.toLowerCase();
                     let suggestions = data.filter((n) =>
                         n.preferredLabel != undefined
-                            ? n.preferredLabel.toLowerCase().startsWith(text)
+                            ? n.preferredLabel.toLowerCase().includes(text)
                             : n.name != undefined
-                            ? n.name.toLowerCase().startsWith(text)
+                            ? n.name.toLowerCase().includes(text)
                             : ""
                     );
                     callback(suggestions);
@@ -103,8 +103,8 @@ class Main {
                 let search = this.value.toLowerCase();
                 let suggestions = data.filter((n) =>
                     n.preferredLabel != undefined
-                        ? n.preferredLabel.toLowerCase().startsWith(search)
-                        : n.name.toLowerCase().startsWith(search)
+                        ? n.preferredLabel.toLowerCase().includes(search)
+                        : n.name.toLowerCase().includes(search)
                 );
                 if (
                     suggestions &&

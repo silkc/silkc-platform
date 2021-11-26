@@ -409,7 +409,7 @@ class Recruiter {
                 },
                 fetch: function(text, callback) {
                     text = text.toLowerCase();
-                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(text) : (n.name != undefined) ? n.name.toLowerCase().startsWith(text) : '' );
+                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().includes(text) : (n.name != undefined) ? n.name.toLowerCase().includes(text) : '' );
                     callback(suggestions);
                 },
                 onSelect: function(item) {
