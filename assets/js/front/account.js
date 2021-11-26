@@ -300,6 +300,15 @@ class Account {
             /* Si on sort du champs de recherche sans avoir sélectionner un item, on sélectionne la première proposition
             Si il n'y a pas de propositions, on vide le champs */
             input.addEventListener('focusout', function() {
+                if (
+                    hiddenField && hiddenField.value != undefined &&
+                    (
+                        (typeof hiddenField.value == 'string' && hiddenField.value.length > 0) ||
+                        (typeof hiddenField.value == 'number' && hiddenField.value > 0)
+                    )
+                )
+                    return true;
+
                 let search = this.value.toLowerCase();
                 let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().startsWith(search) : n.name.toLowerCase().startsWith(search));
                 if (suggestions && suggestions.length > 0 && search.length > 0) {
@@ -1343,7 +1352,10 @@ class Account {
 											<span class="title">${translationsJS && translationsJS.duration ? translationsJS.duration : 'Duration'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.duration ? data.duration : 'N/A'}</span>
+											<span>
+                                                ${data.durationValue ? data.durationValue : 'N/A'}
+                                                ${(data.durationUnity && translationsJS && translationsJS[data.durationUnity]) ? translationsJS[data.durationUnity].toUpperCase() : ''}
+                                            </span>
 										</div>
 									</div>
 

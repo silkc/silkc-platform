@@ -286,7 +286,10 @@
 													<span class="title">{{ 'label.duration'|trans  }}</span>
 												</div>
 												<div class="col-lg-8">
-													<span>{{ attribute(training, 'durationValue') is defined and training.durationValue is not empty ? training.durationValue : 'n_a'|trans }}</span>
+													<span>
+														{{ attribute(training, 'durationValue') is defined and training.durationValue is not empty ? training.durationValue : 'n_a'|trans }}
+														{{ attribute(training, 'durationValue') is defined and training.durationValue is not empty and training.durationUnity is defined ? ('label.' ~ training.durationUnity)|trans|upper : ''}}
+													</span>
 												</div>
 											</div>
 

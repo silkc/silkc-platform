@@ -44,6 +44,11 @@ body button .spinner-border {
     display: none;
 }
 
+.rating-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .blc-rating {
     fieldset,
     label {
