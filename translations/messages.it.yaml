@@ -371,3 +371,12 @@ language_it: italiano
 language_pl: polacco
 training_found: formazione trovata
 trainings_found: formazioni trovate
+passage_conditions: Condizioni di passaggio
+additional_criteria: Criteri aggiuntivi
+sort_by: Ordina per
+by_ascending_title: titolo ascendente
+by_descending_title: titolo discendente
+by_increasing_score: punteggio crescente
+by_decreasing_score: punteggio decrescente
+by_increasing_rating: nota crescente
+by_decreasing_rating: nota decrescente

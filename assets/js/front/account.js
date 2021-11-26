@@ -28,12 +28,12 @@ function renderDate(date, format = 'DD MMMM YYYY to HH:mm') {
     if (oDate === null)
         return '-';
 
-    if (oDate > moment().startOf('day') && oDate < moment().endOf('day')) {
+    /*if (oDate > moment().startOf('day') && oDate < moment().endOf('day')) {
         return "Today at " + oDate.locale('en').format('HH:mm');
     }
     else if (oDate > moment().subtract(1, 'day').startOf('day') && oDate < moment().subtract(1, 'day').endOf('day')) {
         return "Yesterday at " + oDate.locale('en').format('HH:mm');
-    }
+    }*/
 
     return oDate.locale('en').format(format);
 }
@@ -367,6 +367,7 @@ class Account {
                         $.ajax({
                             type: "GET",
                             url: url,
+                            //async: false,
                             success: function (data, textStatus, jqXHR) {
                                 if (url.includes("skills"))
                                     datas.skills = JSON.stringify(data);
@@ -1256,6 +1257,12 @@ class Account {
                                 .replace(/'/g, "&#039;") :
                             'N/A';
 
+                        let language = '-';
+                        let localeTraining = data.language ? data.language : language;
+                        if (localeTraining != '-') {
+                            language = translationsJS && translationsJS['language_' + localeTraining] ? translationsJS['language_' + localeTraining] : '-'
+                        }
+
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
 
@@ -1315,7 +1322,7 @@ class Account {
 										</div>
 										<div class="col-lg-8">
 											<p class="text-justify m-0">
-                                                ${data.language ? data.language : 'N/A'}
+                                                ${language ? language : 'N/A'}
 											</p>
 										</div>
 									</div>
@@ -1334,7 +1341,7 @@ class Account {
 											<span class="title">${translationsJS && translationsJS.start_at ? translationsJS.start_at : 'Start date'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.endAt ? data.endAt : 'N/A'}</span>
+											<span>${data.startAt ? renderDate(data.startAt, 'YYYY/MM/DD - HH:mm') : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -1343,7 +1350,7 @@ class Account {
 											<span class="title">${translationsJS && translationsJS.end_at ? translationsJS.end_at : 'End date'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.startAt ? data.startAt : 'N/A'}</span>
+											<span>${data.endAt ? renderDate(data.endAt, 'YYYY/MM/DD - HH:mm') : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -1486,7 +1493,7 @@ class Account {
                             if (data[k].user.id == user_id) {
                                 statusFeedback = true;
                             }
-                            let date = renderDate(data[k].createdAt);
+                            let date = renderDate(data[k].createdAt, 'YYYY/MM/DD - HH:mm');
                             feedbacksHTML += `<li>
                                                 <p class="author"><span class="date">${date}</span> - ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${data[k].mark}"/>
@@ -1589,7 +1596,7 @@ class Account {
 
                     let feedbacksHTML = ``;
 
-                    let date = renderDate(data.createdAt);
+                    let date = renderDate(data.createdAt, 'YYYY/MM/DD - HH:mm');
 
                     if($('.ul-trainings-feedback').length == 0) {
                         $('#common-modal .not-ratings').remove();

@@ -371,3 +371,12 @@ language_it: Włoski
 language_pl: Polskie
 training_found: znaleziono szkolenie
 trainings_found: znalezione formacje
+passage_conditions: Warunki przejścia
+additional_criteria: Dodatkowe kryteria
+sort_by: Sortuj według
+by_ascending_title: tytuł rosnąco
+by_descending_title: tytuł malejący
+by_increasing_score: rosnący wynik
+by_decreasing_score: malejący wynik
+by_increasing_rating: rosnąca nuta
+by_decreasing_rating: malejąca nuta

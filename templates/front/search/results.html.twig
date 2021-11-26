@@ -11,8 +11,12 @@
 
 			{% include 'front/search/search.html.twig' %}
 
-			<p class="font-italic mb-3">
-				{{ 'info_search_result'|trans }}
+			<p class="font-italic mb-3 info-results">
+				{% set infoSearch =  'info_search_result'|trans %}
+				{% set showText = infoSearch|slice(0, 200) %}
+				{% set hideText = infoSearch|slice(200, infoSearch|length) %}
+				<span>{{ showText }}</span><span class="hide">{{ hideText }}</span><span class="see-more">…
+                <span>{{ 'see_more'|trans }}</span></span>
 			</p>
 
 			{# HISTORIQUE DES RECHERCHES #}
@@ -45,11 +49,11 @@
 					<div
 						class="tags col-12">
 						{#<button class="btn btn-sm btn-primary btn-filters mb-1" type="button" data-toggle="tooltip" title="{{ 'label.advanced_search'|trans }}" {% if is_granted('IS_AUTHENTICATED_FULLY') == false %} disabled {% endif %}>
-																									<i class="fas fa-filter"></i>
-																		
-																									<span>{{ 'hide_panel'|trans }}</span>
-																									<span>{{ 'show_panel'|trans }}</span>
-																								</button>#}
+																															<i class="fas fa-filter"></i>
+																								
+																															<span>{{ 'hide_panel'|trans }}</span>
+																															<span>{{ 'show_panel'|trans }}</span>
+																														</button>#}
 
 						{% if requestParams.inputCity is defined and requestParams.inputCity is not empty %}
 							<button type="button" class="btn btn-sm btn-light mb-1 tag-city">
@@ -140,243 +144,289 @@
 			<div id="accordion">
 				{% if trainings is defined and trainings is iterable and trainings|length > 0 %}
 
-                    <h3 class="mb-4">
-                        {{ trainings|length }}
-                        {{ trainings|length > 1 ? 'trainings_found'|trans : 'training_found'|trans  }}
-                    </h3>
+					<h3 class="mb-4">
+						{{ trainings|length }}
+						{{ trainings|length > 1 ? 'trainings_found'|trans : 'training_found'|trans  }}
+					</h3>
+                    <div class="d-flex flex-row align-items-cente justify-content-between mb-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="sort-by">{{ 'sort_by'|trans }}</label>
+                            </div>
+                            <select class="custom-select" id="sort-by">
+                                <option value="asc" data-col="name">{{ 'by_ascending_title'|trans }}</option>
+                                <option value="desc" data-col="name">{{ 'by_descending_title'|trans }}</option>
+                                <option value="asc" data-col="score">{{ 'by_increasing_score'|trans }}</option>
+                                <option value="desc" data-col="score">{{ 'by_decreasing_score'|trans }}</option>
+                                <option value="asc" data-col="rating">{{ 'by_increasing_rating'|trans }}</option>
+                                <option value="desc" data-col="rating">{{ 'by_decreasing_rating'|trans }}</option>
+                            </select>
+                        </div>
 
-					{% for training in trainings %}
-						{% set maxScore = (training.maxScore is defined and training.maxScore > 0) ? training.maxScore : 1 %}
-						{% set score = (training.score is defined and training.score > 0) ? max(1, (training.score / maxScore) * 100)|number_format : 0 %}
-						<div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
-							<div class="card-header" id="heading{{ loop.index0 }}">
-								<h4 class="d-flex justify-content-between align-items-center">
-									<div class="title">
-										<span>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}</span>
-										{% set classScore = 'text-danger' %}
-										{% if score > 30 %}
-											{% set classScore = 'text-warning' %}
-										{% endif %}
-										{% if score > 49 %}
-											{% set classScore = 'text-success' %}
-										{% endif %}
-										<span class="{{ classScore }} font-weight-normal">{{ score }}%
-											{{ 'match'|trans  }}</span>
-									</div>
-									<div class="d-flex flex-row justify-content-start align-items-center mr-2">
-										<span class="rating" data-value="{{ training.avgMark }}"></span>
-										<span title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}" data-toggle="tooltip" style="font-size: 0.8rem;">
-											({{ training.totalMark }})
-										</span>
-									</div>
-									<div
-										class="count mr-1">
-										{#({{ loop.index }}
-																														of
-																														{{ trainings|length }}
-																														{{ 'training'|trans }}#}
-										{% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
-											-
-											<a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>
-										{% endif %}
-										{#})#}
-									</div>
-									<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
-										<span class="collapse show">{{ 'show_info'|trans  }}</span>
-										<span class="collapse hide">{{ 'hide_info'|trans  }}</span>
-									</button>
-								</h4>
-							</div>
+                        <div class="form-group">
+                            <label for="input-search-datatatable" class="mr-1">{{ 'search'|trans|capitalize }}</label>
+                            <input type="text" id="input-search-datatatable" class="form-control">
+                        </div>
+                    </div>
 
-							<div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="heading{{ loop.index0 }}" data-parent="#accordion">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-12">
+                    <table id="datatable-results" class="display">
+                        <thead>
+                            <tr>
+                                <th>Column 1</th>
+                                <th data-colname="name">name</th>
+                                <th data-colname="score">score</th>
+                                <th data-colname="rating">rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for training in trainings %}
+                                <tr>
+                                    <td>
+                                        {% set maxScore = (training.maxScore is defined and training.maxScore > 0) ? training.maxScore : 1 %}
+                                        {% set score = (training.score is defined and training.score > 0) ? max(1, (training.score / maxScore) * 100)|number_format : 0 %}
+                                        <div class="card mt-1" data-name="{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}" data-id="{{ attribute(training, 'id') is defined and training.id is not empty ? training.id : '' }}">
+                                            <div class="card-header" id="heading{{ loop.index0 }}">
+                                                <h4 class="d-flex justify-content-between align-items-center">
+                                                    <div class="title">
+                                                        <span>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}</span>
+                                                        {% set classScore = 'text-danger' %}
+                                                        {% if score > 30 %}
+                                                            {% set classScore = 'text-warning' %}
+                                                        {% endif %}
+                                                        {% if score > 49 %}
+                                                            {% set classScore = 'text-success' %}
+                                                        {% endif %}
+                                                        <span class="{{ classScore }} font-weight-normal">{{ score }}%
+                                                            {{ 'match'|trans  }}</span>
+                                                    </div>
+                                                    <div class="d-flex flex-row justify-content-start align-items-center mr-2">
+                                                        <span class="rating" data-value="{{ training.avgMark }}"></span>
+                                                        <span title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}" data-toggle="tooltip" style="font-size: 0.8rem;">
+                                                            ({{ training.totalMark }})
+                                                        </span>
+                                                    </div>
+                                                    <div
+                                                        class="count mr-1">
+                                                        {#({{ loop.index }}
+                                                                                                                                                                                of
+                                                                                                                                                                                {{ trainings|length }}
+                                                                                                                                                                                {{ 'training'|trans }}#}
+                                                        {% if is_granted('IS_AUTHENTICATED_FULLY') == false %}
+                                                            -
+                                                            <a href="{{ path('app_login') }}">{{ 'login_to_finetune'|trans  }}</a>
+                                                        {% endif %}
+                                                        {#})#}
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}">
+                                                        <span class="collapse show">{{ 'show_info'|trans  }}</span>
+                                                        <span class="collapse hide">{{ 'hide_info'|trans  }}</span>
+                                                    </button>
+                                                </h4>
+                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.institution_name'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>
-														{% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
-															{{ training.user.username|capitalize }}
-														{% elseif (training.user is defined and training.user is not null and training.user.firstname is defined and training.user.firstname is not empty) %}
-															{{ training.user.firstname ~ ' ' ~ training.user.lastname }}
-														{% else %}
-															{{ 'n_a'|trans }}
-														{% endif %}
-													</span>
-												</div>
-											</div>
+                                            <div id="collapse{{ loop.index0 }}" class="collapse" aria-labelledby="heading{{ loop.index0 }}" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12">
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.location'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													{% if training.location is defined and training.location is not empty %}
-														<div class="blc-map">
-															<span class="training_address"></span>
-															<input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
-															<div class="map"></div>
-														</div>
-													{% else %}
-														<span>{{ 'n_a'|trans }}</span>
-													{% endif %}
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.institution_name'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>
+                                                                        {% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
+                                                                            {{ training.user.username|capitalize }}
+                                                                        {% elseif (training.user is defined and training.user is not null and training.user.firstname is defined and training.user.firstname is not empty) %}
+                                                                            {{ training.user.firstname ~ ' ' ~ training.user.lastname }}
+                                                                        {% else %}
+                                                                            {{ 'n_a'|trans }}
+                                                                        {% endif %}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
 
-													{% if training.distance is defined and training.distance is not empty and training.distance > 0 %}
-														<span class="badge bg-secondary">{{ training.distance }}
-															{{ 'km away'|trans }}</span>
-													{% endif %}
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.location'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    {% if training.location is defined and training.location is not empty %}
+                                                                        <div class="blc-map">
+                                                                            <span class="training_address"></span>
+                                                                            <input type="hidden" class="training_address_hidden" value="{{ training.location is defined and training.location is not empty ? training.location : '' }}"/>
+                                                                            <div class="map"></div>
+                                                                        </div>
+                                                                    {% else %}
+                                                                        <span>{{ 'n_a'|trans }}</span>
+                                                                    {% endif %}
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.description'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<p class="text-justify m-0" markdown="1">
-														{{ attribute(training, 'description') is defined and training.description is not empty ? training.description : 'n_a'|trans }}
-													</p>
-												</div>
-											</div>
+                                                                    {% if training.distance is defined and training.distance is not empty and training.distance > 0 %}
+                                                                        <span class="badge bg-secondary">{{ training.distance }}
+                                                                            {{ 'km away'|trans }}</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.language'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<p class="d-flex text-justify m-0 align-items-center">
-														{% set language = attribute(training, 'language') is defined and training.language is not empty ?  'language_' ~ training.language : 'n_a' %}
-														{{ language|trans }}&nbsp;
-														{% if attribute(training, 'language') is defined and training.language is not empty %}
-															<img src="/build/images/flags/{{ training.language }}.png" alt="" width="22">
-														{% endif %}
-													</p>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.description'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <p class="text-justify m-0" markdown="1">
+                                                                        {{ attribute(training, 'description') is defined and training.description is not empty ? training.description : 'n_a'|trans }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.price'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>
-														{{ attribute(training, 'price') is defined and training.price is not empty ? training.price : 'n_a'|trans }}
-														{{ attribute(training, 'price') is defined and training.price is not empty and training.currency is defined ? training.currency|upper : ''}}
-													</span>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.language'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <p class="d-flex text-justify m-0 align-items-center">
+                                                                        {% set language = attribute(training, 'language') is defined and training.language is not empty ?  'language_' ~ training.language : 'n_a' %}
+                                                                        {{ language|trans }}&nbsp;
+                                                                        {% if attribute(training, 'language') is defined and training.language is not empty %}
+                                                                            <img src="/build/images/flags/{{ training.language }}.png" alt="" width="22">
+                                                                        {% endif %}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.date'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>{{ training.startAt is defined and training.startAt is not empty ? training.startAt|date('Y/m/d') : 'n_a'|trans }}</span>
-													<span>{{ 'to'|trans }}</span>
-													<span>{{ training.endAt is defined and training.endAt is not empty ? training.endAt|date('Y/m/d') : 'n_a'|trans }}</span>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.price'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>
+                                                                        {{ attribute(training, 'price') is defined and training.price is not empty ? training.price : 'n_a'|trans }}
+                                                                        {{ attribute(training, 'price') is defined and training.price is not empty and training.currency is defined ? training.currency|upper : ''}}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.duration'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>
-														{{ attribute(training, 'durationValue') is defined and training.durationValue is not empty ? training.durationValue : 'n_a'|trans }}
-														{{ attribute(training, 'durationValue') is defined and training.durationValue is not empty and training.durationUnity is defined ? ('label.' ~ training.durationUnity)|trans|upper : ''}}
-													</span>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.start_at'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>{{ training.startAt is defined and training.startAt is not empty ? training.startAt|date('Y/m/d - h:m') : 'n_a'|trans }}</span>
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.duration_details'|trans  }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>{{ attribute(training, 'durationDetails') is defined and training.durationDetails is not empty ? training.durationDetails : 'n_a'|trans }}</span>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.end_at'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>{{ training.endAt is defined and training.endAt is not empty ? training.endAt|date('Y/m/d - h:m') : 'n_a'|trans }}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.duration'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>
+                                                                        {{ attribute(training, 'durationValue') is defined and training.durationValue is not empty ? training.durationValue : 'n_a'|trans }}
+                                                                        {{ attribute(training, 'durationValue') is defined and training.durationValue is not empty and training.durationUnity is defined ? ('label.' ~ training.durationUnity)|trans|upper : ''}}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.duration_details'|trans  }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>{{ attribute(training, 'durationDetails') is defined and training.durationDetails is not empty ? training.durationDetails : 'n_a'|trans }}</span>
+                                                                </div>
+                                                            </div>
 
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.online'|trans }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>{{ attribute(training, 'isOnline') is defined and training.isOnline is not empty ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>' }}</span>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.online'|trans }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>{{ attribute(training, 'isOnline') is defined and training.isOnline is not empty ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>' }}</span>
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.is_online_monitored'|trans }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>{{ attribute(training, 'isOnlineMonitored') is defined and training.isOnlineMonitored is not empty ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>' }}</span>
-												</div>
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.is_online_monitored'|trans }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>{{ attribute(training, 'isOnlineMonitored') is defined and training.isOnlineMonitored is not empty ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>' }}</span>
+                                                                </div>
+                                                            </div>
 
-											<div class="row mb-3">
-												<div class="col-lg-4">
-													<span class="title">{{ 'label.is_presential'|trans }}</span>
-												</div>
-												<div class="col-lg-8">
-													<span>{{ attribute(training, 'isPresential') is defined and training.isPresential is not empty ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>' }}</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="mb-3">
-												{% if attribute(training, 'requiredSkills') is defined and training.requiredSkills is not empty and training.requiredSkills is iterable %}
-													<span class="required-skills d-block mb-3 title">{{ 'required_skills'|trans  }}</span>
-													<ul class="list-group">
-														{% for trainingSkill in training.requiredSkills %}
-															{% set skill = trainingSkill.skill %}
-															<li class="list-group-item d-flex justify-content-between align-items-center">
-																{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
-															</li>
-														{% endfor %}
-													</ul>
-												{% endif %}
-											</div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-lg-4">
+                                                                    <span class="title">{{ 'label.is_presential'|trans }}</span>
+                                                                </div>
+                                                                <div class="col-lg-8">
+                                                                    <span>{{ attribute(training, 'isPresential') is defined and training.isPresential is not empty ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>' }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="mb-3">
+                                                                {% if attribute(training, 'requiredSkills') is defined and training.requiredSkills is not empty and training.requiredSkills is iterable %}
+                                                                    <span class="required-skills d-block mb-3 title">{{ 'required_skills'|trans  }}</span>
+                                                                    <ul class="list-group">
+                                                                        {% for trainingSkill in training.requiredSkills %}
+                                                                            {% set skill = trainingSkill.skill %}
+                                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                {{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                {% endif %}
+                                                            </div>
 
-											<div class="mb-3">
-												{% if attribute(training, 'toAcquireSkills') is defined and training.toAcquireSkills is not empty  and training.toAcquireSkills is iterable %}
-													<span class="required-skills d-block mb-3 title">{{ 'skills_you_can_acquire'|trans  }}</span>
-													<ul class="list-group">
-														{% for trainingSkill in training.toAcquireSkills %}
-															{% set skill = trainingSkill.skill %}
-															<li class="list-group-item d-flex justify-content-between align-items-center">
-																{{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
-															</li>
-														{% endfor %}
-													</ul>
-												{% endif %}
-											</div>
-										</div>
-									</div>
+                                                            <div class="mb-3">
+                                                                {% if attribute(training, 'toAcquireSkills') is defined and training.toAcquireSkills is not empty  and training.toAcquireSkills is iterable %}
+                                                                    <span class="required-skills d-block mb-3 title">{{ 'skills_you_can_acquire'|trans  }}</span>
+                                                                    <ul class="list-group">
+                                                                        {% for trainingSkill in training.toAcquireSkills %}
+                                                                            {% set skill = trainingSkill.skill %}
+                                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                {{ attribute(skill, 'preferredLabel') is defined and skill.preferredLabel is not empty ? skill.preferredLabel : 'n_a'|trans }}
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-									<div class="text-right">
-										{% if training.url is defined and training.url is not empty %}
-											<a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
-										{% endif %}
-										{% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
-											{% if training in user.trainings %}
-												<button type="button" class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
-											{% else %}
-												<button type="button" class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
-											{% endif %}
-										{% endif %}
-									</div>
-								</div>
-							</div>
-						</div>
-					{% endfor %}
+                                                    <div class="text-right">
+                                                        {% if training.url is defined and training.url is not empty %}
+                                                            <a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
+                                                        {% endif %}
+                                                        {% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
+                                                            {% if training in user.trainings %}
+                                                                <button type="button" class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
+                                                            {% else %}
+                                                                <button type="button" class="btn btn-success btn-done" data-id="{{ training.id }}">{{ 'user_had_done_this_training_btn'|trans }}</button>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ attribute(training, 'name') is defined and training.name is not empty ? training.name : '' }}</td>
+                                    <td>{{ training.avgMark }}</td>
+                                    <td>{{ score }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 				{% elseif trainings is defined and trainings is iterable and trainings|length == 0 %}
 					<h3>{{ 'no_result_found'|trans  }}</h3>
 				{% endif %}

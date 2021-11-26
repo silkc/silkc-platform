@@ -44,14 +44,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     button[data-target="#advanced-search"][aria-expanded="true"]::before {
-        font-family: "Font Awesome 5 Free"; font-weight: 900;
-        content: '\f078';
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f078";
         display: inline-block;
     }
-    
+
     button[data-target="#advanced-search"][aria-expanded="false"]::before {
-        font-family: "Font Awesome 5 Free"; font-weight: 900;
-        content: '\f054';
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f054";
         display: inline-block;
     }
 
@@ -119,7 +121,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     .results {
-
         h4 {
             margin: 0;
             font-size: 1.1rem;
@@ -140,7 +141,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
                 > span {
                     &:last-child {
-                        
                     }
                 }
             }
@@ -167,12 +167,20 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         }
 
         button.btn-filters {
-            span:first-of-type { display: inline; }
-            span:last-of-type { display: none; }
+            span:first-of-type {
+                display: inline;
+            }
+            span:last-of-type {
+                display: none;
+            }
 
             &.active {
-                span:first-of-type { display: none; }
-                span:last-of-type { display: inline; }
+                span:first-of-type {
+                    display: none;
+                }
+                span:last-of-type {
+                    display: inline;
+                }
             }
         }
 
@@ -193,7 +201,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         margin-right: 1rem;
     }
 
-
     .form-search-skill {
         display: none;
     }
@@ -201,7 +208,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     .frame-results {
         > div {
             &:first-child {
-                
             }
             &:last-child {
                 flex: 1;
@@ -210,7 +216,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     @media (max-width: 992px) {
-        
         .form-search-occupation,
         .form-search-skill {
             margin-right: 0;
@@ -220,11 +225,11 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     pre {
-        white-space: pre-wrap;       /* Since CSS 2.1 */
-        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-        white-space: -pre-wrap;      /* Opera 4-6 */
-        white-space: -o-pre-wrap;    /* Opera 7 */
-        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        white-space: pre-wrap; /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
     }
 
     #accordion {
@@ -247,4 +252,52 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     img {
         max-width: 22px;
     }
+}
+
+.info-results {
+    .hide {
+        display: none;
+    }
+
+    .see-more span {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+#datatable-results {
+    td {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+    }
+
+    td,
+    th {
+        display: none;
+
+        &:first-child {
+            display: table-cell;
+        }
+    }
+
+    thead {
+        display: none;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        height: 0 !important;
+        width: 0 !important;
+        opacity: 0 !important;
+    }
+}
+
+#datatable-results_filter {
+    display: none;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
 }

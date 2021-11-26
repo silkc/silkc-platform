@@ -214,7 +214,7 @@ home:
   find_out_how_to_get_there: Découvrez comment vous y rendre !
   search_by_occupation: Recherche par profession
   search_by_skill: Recherche par compétence
-  training_available: formation disponible
+  training_available: formations disponibles
   people_have_found_a_trining_through_the_silkc_path: personnes ont trouvé une formation via la plateforme SILKC
   registered_job: emplois enregistrés
 
@@ -371,3 +371,12 @@ language_it: Italien
 language_pl: Polonais
 training_found: formation trouvée
 trainings_found: formations trouvées 
+passage_conditions: Conditions de passage
+additional_criteria: Critères supplémentaires
+sort_by: Trier par
+by_ascending_title: titre croissant
+by_descending_title: titre décroissant
+by_increasing_score: score croissant
+by_decreasing_score: score décroissant
+by_increasing_rating: note croissante
+by_decreasing_rating: note décroissante
