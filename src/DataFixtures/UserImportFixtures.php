@@ -137,7 +137,7 @@ class UserImportFixtures extends Fixture
                                 foreach ($previousOccupations as $concept_uri) {
                                     $occupation = $this->_occupationRepository->findOneBy(['conceptUri' => $concept_uri]);
                                     if (!$occupation) {
-                                        print "ERROR --- An error occurred while associating the previous job {$concept_uri} :  {$e->getMessage()}" . PHP_EOL;
+                                        print "ERROR --- An error occurred while associating the previous job {$concept_uri}" . PHP_EOL;
                                         continue;
                                     }
 
@@ -209,7 +209,10 @@ class UserImportFixtures extends Fixture
                                             $userData->previousTrainingCost :
                                             null,
                                         "start_at" => (property_exists($userData, 'previousTrainingYear') && !empty($userData->previousTrainingYear)) ?
-                                            $userData->previousTrainingYear :
+                                            $userData->previousTrainingYear . '-01-01 00:00:00' :
+                                            null,
+                                        "end_at" => (property_exists($userData, 'previousTrainingYear') && !empty($userData->previousTrainingYear)) ?
+                                            $userData->previousTrainingYear . '-12-31 23:59:59' :
                                             null,
                                         "duration_value" => (
                                             property_exists($userData, 'previousTrainingDuration') &&
@@ -313,10 +316,11 @@ class UserImportFixtures extends Fixture
                                             $training->setLanguage($trainingData->language);
                                         if (property_exists($trainingData, 'currency') && !empty($trainingData->currency))
                                             $training->setCurrency($trainingData->currency);
-                                        if (property_exists($trainingData, 'start_at') && !empty($trainingData->start_at)) {
+                                        if (property_exists($trainingData, 'start_at') && $trainingData->start_at !== null && !empty($trainingData->start_at)) {
                                             $startAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->start_at);
                                             if ($startAt && $startAt->format('Y-m-d H:i:s') === $trainingData->start_at)
                                                 $training->setStartAt($startAt);
+
                                         }
                                         if (property_exists($trainingData, 'end_at') && !empty($trainingData->end_at)) {
                                             $endAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->end_at);
@@ -352,7 +356,8 @@ class UserImportFixtures extends Fixture
                                                     $trainingSkill = new TrainingSkill();
                                                     $trainingSkill->setTraining($training);
                                                     $trainingSkill->setSkill($skill);
-                                                    $trainingSkill->setIsRequired(true);
+                                                    $trainingSkill->setIsRequired(false);
+                                                    $trainingSkill->setIsToAcquire(true);
                                                     $training->addTrainingSkill($trainingSkill);
 
                                                     $manager->persist($trainingSkill);
@@ -372,7 +377,7 @@ class UserImportFixtures extends Fixture
                                         $user->addTraining($training);
 
                                     } catch(\Throwable $e) {
-                                        print "ERROR --- An error occurred while saving the training in the database :  {$e->getMessage()}" . PHP_EOL;
+                                        print "ERROR A --- An error occurred while saving the training in the database :  {$e->getMessage()}" . PHP_EOL;
                                         $error = true;
                                     }
 
@@ -387,7 +392,8 @@ class UserImportFixtures extends Fixture
                         $manager->persist($user);
                         $manager->flush();
                     } catch(\Throwable $e) {
-                        print "ERROR --- An error occurred while saving the institution in the database :  {$e->getMessage()}" . PHP_EOL;
+                        dump($e);
+                        print "ERROR B --- An error occurred while saving the institution in the database :  {$e->getMessage()}" . PHP_EOL;
                         $error = true;
                     }
 
