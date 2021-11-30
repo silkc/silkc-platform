@@ -769,7 +769,7 @@ class SearchResults {
 
     init = function () {
         this.runTypeSearch();
-        this.setScore();
+        //this.setScore();
         this.runDonetraining();
         this.runMap();
         this.runKeepSearch();

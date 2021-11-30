@@ -223,8 +223,7 @@ class Main {
         ) {
             markdownElems.forEach((elem) => {
                 const elemHTML = elem.innerHTML;
-
-                elem.innerHTML = marked(elemHTML);
+                elem.innerHTML = marked(elemHTML.trim());
             });
         }
     };
