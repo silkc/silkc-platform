@@ -643,54 +643,53 @@ class Account {
         $('body').on('click', '#content-work button[type="submit"]', function(e) {
             e.preventDefault();
 
+            let inputProfessionalExperience = $('body').find('input[name="professional_experience"]');
             let inputOccupation = $('body').find('#jobs[type="hidden"]');
             let token = $('body').attr('data-token');
-            
-            if (inputOccupation && inputOccupation.val()) {
-            
-                
-                let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>`;
-                $(loader).prependTo('#content-work button[type="submit"]');
-                
-                let occupations = JSON.parse(inputOccupation.val());
-                let url = `/api/user_occupation`;
 
-                $.each(occupations, function (k, occupation) {
-                    if (!occupation || Object.size(occupation) == 0) {
-                        occupations[k] = [null];
-                    }
-                });
+            let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>`;
+            $(loader).prependTo('#content-work button[type="submit"]');
+            
+            let occupations = JSON.parse(inputOccupation.val());
+            let url = `/api/user_occupation`;
 
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: 'json',
-                    data: occupations,
-                    headers: {"X-auth-token": token},
-                    success: function (data, textStatus, jqXHR) {
-                        let html = _this.tplMessageFlash();
-                        
-                        $(html).prependTo('#account');
-                        $('#content-work button[type="submit"]').find('.spinner-button').remove();
-                        let check = `<i class="fas fa-check mr-1"></i>`;
-                        $(check).prependTo('#content-work button[type="submit"]');
-                        setTimeout(function() {
-                            $('#content-work button[type="submit"]').find('svg').remove();
-                        }, 1500);
-                    },
-                    error: function () {
-                        let html = _this.tplMessageFlash(false);
-                        $(html).prependTo('#account');
-                        $('#content-work button[type="submit"]').find('.spinner-button').remove();
-                    },
-                    complete: function() {
-                        $('html, body').animate({scrollTop:0},500);
-                        _this.displayMessage();
-                    }
-                });
-            }
+            $.each(occupations, function (k, occupation) {
+                if (!occupation || Object.size(occupation) == 0) {
+                    occupations[k] = [null];
+                }
+            });
+
+            occupations['userProfessionalExperience'] = inputProfessionalExperience.val();
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json',
+                data: occupations,
+                headers: {"X-auth-token": token},
+                success: function (data, textStatus, jqXHR) {
+                    let html = _this.tplMessageFlash();
+                    
+                    $(html).prependTo('#account');
+                    $('#content-work button[type="submit"]').find('.spinner-button').remove();
+                    let check = `<i class="fas fa-check mr-1"></i>`;
+                    $(check).prependTo('#content-work button[type="submit"]');
+                    setTimeout(function() {
+                        $('#content-work button[type="submit"]').find('svg').remove();
+                    }, 1500);
+                },
+                error: function () {
+                    let html = _this.tplMessageFlash(false);
+                    $(html).prependTo('#account');
+                    $('#content-work button[type="submit"]').find('.spinner-button').remove();
+                },
+                complete: function() {
+                    $('html, body').animate({scrollTop:0},500);
+                    _this.displayMessage();
+                }
+            });
         });
     }
 
