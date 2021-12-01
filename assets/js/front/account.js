@@ -155,7 +155,7 @@ class Account {
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    Updated data
+                    ${translationsJS && translationsJS.updated_data ? translationsJS.updated_data : 'Updated data'}
                 </div>
             </div>`;
         } else {
@@ -164,7 +164,7 @@ class Account {
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    Update failed
+                    ${translationsJS && translationsJS.update_failed ? translationsJS.update_failed : 'Update failed'}
                 </div>
             </div>`;
         }
