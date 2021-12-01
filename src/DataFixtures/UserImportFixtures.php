@@ -206,7 +206,7 @@ class UserImportFixtures extends Fixture
                                             $userData->previousTrainingCost :
                                             null,
                                         "currency" => (property_exists($userData, 'previousTrainingCurrency') && !empty($userData->previousTrainingCurrency)) ?
-                                            $userData->previousTrainingCost :
+                                            $userData->previousTrainingCurrency :
                                             null,
                                         "start_at" => (property_exists($userData, 'previousTrainingYear') && !empty($userData->previousTrainingYear)) ?
                                             $userData->previousTrainingYear . '-01-01 00:00:00' :
@@ -246,6 +246,10 @@ class UserImportFixtures extends Fixture
                                     $institution = $this->_userRepository->findOneByEmailOrUsername($trainingData->institution_email);
                                     if (!$institution && !empty($trainingData->url)) {
                                         try {
+                                            // Préfix si pas https ou http
+                                            if (!preg_match('#(https?://)([\w\.]+).*?$#', $trainingData->url, $m))
+                                                $trainingData->url = 'https://' . $trainingData->url;
+
                                             $valid_url = preg_match('#(https?://)([\w\.]+).*?$#', $trainingData->url, $matches);
                                             if (!$valid_url) {
                                                 print "ERROR --- An error occurred while check data before saving the institution by url :  {$trainingData->url}" . PHP_EOL;

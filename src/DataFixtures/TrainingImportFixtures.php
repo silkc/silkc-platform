@@ -88,8 +88,8 @@ class TrainingImportFixtures extends Fixture
                         $training->setName($trainingData->name);
                         if (property_exists($trainingData, 'location') && !empty($trainingData->location))
                             $training->setLocation($trainingData->location);
-                        (property_exists($trainingData, 'language') && !empty($trainingData->language) && in_array(strtolower($trainingData->language), Training::getLanguages())) ?
-                            $training->setLanguage(strtolower($trainingData->location)) :
+                        (property_exists($trainingData, 'language') && !empty($trainingData->language) && in_array(trim(strtolower($trainingData->language)), Training::getLanguages())) ?
+                            $training->setLanguage(trim(strtolower($trainingData->language))) :
                             $training->setLanguage(Training::LANGUAGE_EN);
                         if (property_exists($trainingData, 'longitude') && !empty($trainingData->longitude))
                             $training->setLongitude($trainingData->longitude);

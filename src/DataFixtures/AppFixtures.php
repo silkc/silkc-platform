@@ -53,6 +53,20 @@ class AppFixtures extends Fixture
         $institution->setPassword($password);
 
         // INSTITUTION
+        $recruiter = new User();
+        $recruiter->setUsername('recruiter');
+        $recruiter->setEmail('recruiter@silk-platform.org');
+        $recruiter->setIsValidated(true);
+        $recruiter->setCode($code);
+        $password = $this->_passwordEncoder->encodePassword($recruiter, 'recruiter');
+        $apiToken = base64_encode(sha1($createdAt->format('Y-m-d H:i:s').$password, true));
+        $recruiter->setTokenCreatedAt($createdAt);
+        $recruiter->setCreatedAt($createdAt);
+        $recruiter->setApiToken($apiToken);
+        $recruiter->setRoles([User::ROLE_RECRUITER]);
+        $recruiter->setPassword($password);
+
+        // ADMIN
         $admin = new User();
         $admin->setFirstname('Brad');
         $admin->setLastname('Doe');
@@ -70,6 +84,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
         $manager->persist($institution);
+        $manager->persist($recruiter);
         $manager->persist($admin);
         $manager->flush();
 

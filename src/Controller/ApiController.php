@@ -64,6 +64,10 @@ class ApiController extends AbstractController
         )
             return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
 
+        // Sauvegarde expérience utilisateur
+        if (array_key_exists('userProfessionalExperience', $params))
+            $user->setProfessionalExperience(intval($params['userProfessionalExperience']));
+
         $previousIds = (is_array($params['previousOccupations'])) ? array_filter($params['previousOccupations'], 'is_numeric'): null;
         $currentIds = (is_array($params['currentOccupations'])) ? array_filter($params['currentOccupations'], 'is_numeric') : null;
         $desiredIds = (is_array($params['desiredOccupations'])) ? array_filter($params['desiredOccupations'], 'is_numeric') : null;

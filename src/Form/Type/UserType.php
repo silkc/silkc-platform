@@ -96,8 +96,9 @@ class UserType extends AbstractType
                         'label'              => 'label.up_to_distance',
                         'required'           => false,
                         'attr' => ['placeholder' => 'placeholder.up_to_distance']
-                    ])
-                    ->add('professionalExperience', NumberType::class, [
+                    ]);
+                if (array_key_exists('from_front', $options) && $options['from_front'] === false)
+                    $builder->add('professionalExperience', NumberType::class, [
                         'translation_domain' => 'messages',
                         'label'              => 'label.professional_experience',
                         'required'           => false,
@@ -150,6 +151,7 @@ class UserType extends AbstractType
             'require_password' => false,
             'is_personal' => false,
             'by_admin' => false,
+            'from_front' => false,
             'csrf_protection' => false, // Possibilité de créer un compte en API
         ]);
     }

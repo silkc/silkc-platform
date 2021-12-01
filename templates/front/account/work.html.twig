@@ -1,6 +1,18 @@
 <fieldset>
 	{# Current job #}
 	<div class="info">
+		{{ 'please_indicate_your_experience'|trans }}
+	</div>
+
+	<div class="form-group d-inline-flex align-items-end">
+		<label>{{ 'label.professional_experience'|trans }}</label>
+		<input class="form-control" type="text" name="professional_experience" />
+	</div>
+</fieldset>
+
+<fieldset>
+	{# Current job #}
+	<div class="info">
 		{{ 'please_indicate_your_current_job'|trans }}
 	</div>
 
@@ -25,11 +37,18 @@
 				{% for k, row in currentOccupations %}
 					{% set occupation = row.occupation %}
 					{% set skills = row.skills is defined and row.skills is not empty ? row.skills : false %}
-
+					{% set curTranslation = {'preferredLabel': occupation.preferredLabel, 'description': occupation.description } %}
+					{% if app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty %}
+						{% for t in occupation.translations %}
+							{% if t.locale == app.request.locale %}
+								{% set curTranslation = {'preferredLabel': t.preferredLabel, 'description': t.description } %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 						<div>
-							<a href="#" class="detail" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
-								<span>{{ occupation.preferredLabel }}</span>
+							<a href="#" class="detail" data-name="{{ curTranslation.preferredLabel }}" data-description="{{ curTranslation.description }}" data-id="{{ occupation.id }}">
+								<span>{{ curTranslation.preferredLabel }}</span>
 								<i class="fas fa-question-circle text-primary"></i>
 							</a>
 						</div>
@@ -37,15 +56,15 @@
 							<a
 								href="#"
 								class="detail mr-2"
-								data-name="{{ occupation.preferredLabel }}"
-								data-description="{{ occupation.description }}"
+								data-name="{{ curTranslation.preferredLabel }}"
+								data-description="{{ curTranslation.description }}"
 								data-id="{{ occupation.id }}"
 								data-toggle="tooltip"
 								title="{{ 'front_account_work_skills_tooltip'|trans }}"
 							>
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="currentOccupations">
+							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ curTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="currentOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
 						</div>
@@ -83,23 +102,31 @@
 				{% for k, row in previousOccupations %}
 					{% set occupation = row.occupation %}
 					{% set skills = row.skills is defined and row.skills is not empty ? row.skills : false %}
+					{% set prevTranslation = {'preferredLabel': occupation.preferredLabel, 'description': occupation.description } %}
+					{% if app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty %}
+						{% for t in occupation.translations %}
+							{% if t.locale == app.request.locale %}
+								{% set prevTranslation = {'preferredLabel': t.preferredLabel, 'description': t.description } %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 						<div>
-							<a href="#" class="detail" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
-								<span>{{ occupation.preferredLabel }}</span>
+							<a href="#" class="detail" data-name="{{ prevTranslation.preferredLabel }}" data-description="{{ prevTranslation.description }}" data-id="{{ occupation.id }}">
+								<span>{{ prevTranslation.preferredLabel }}</span>
 								<i class="fas fa-question-circle text-primary"></i>
 							</a>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
 							<a href="#" class="detail mr-2" 
-                                data-name="{{ occupation.preferredLabel }}" 
-                                data-description="{{ occupation.description }}" 
+                                data-name="{{ prevTranslation.preferredLabel }}"
+                                data-description="{{ prevTranslation.description }}"
                                 data-id="{{ occupation.id }}"
                                 data-toggle="tooltip"
 								title="{{ 'front_account_work_skills_tooltip'|trans }}">
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ occupation.preferredLabel }}" data-type="previousOccupations" data-id="{{ occupation.id }}">
+							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ prevTranslation.preferredLabel }}" data-type="previousOccupations" data-id="{{ occupation.id }}">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
 						</div>
@@ -138,20 +165,28 @@
 				{% for k, row in desiredOccupations %}
 					{% set occupation = row.occupation %}
 					{% set skills = row.skills is defined and row.skills is not empty ? row.skills : false %}
+					{% set desTranslation = {'preferredLabel': occupation.preferredLabel, 'description': occupation.description } %}
+					{% if app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty %}
+						{% for t in occupation.translations %}
+							{% if t.locale == app.request.locale %}
+								{% set desTranslation = {'preferredLabel': t.preferredLabel, 'description': t.description } %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 						<div>
-							<a href="#" class="detail" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
-								<span>{{ occupation.preferredLabel }}</span>
+							<a href="#" class="detail" data-name="{{ desTranslation.preferredLabel }}" data-description="{{ desTranslation.description }}" data-id="{{ occupation.id }}">
+								<span>{{ desTranslation.preferredLabel }}</span>
 								<i class="fas fa-question-circle text-primary"></i>
 							</a>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="#" class="detail mr-2" data-name="{{ occupation.preferredLabel }}" data-description="{{ occupation.description }}" data-id="{{ occupation.id }}">
+							<a href="#" class="detail mr-2" data-name="{{ desTranslation.preferredLabel }}" data-description="{{ desTranslation.description }}" data-id="{{ occupation.id }}">
 								<span class="badge badge-success"
                                 data-toggle="tooltip"
 								title="{{ 'front_account_work_skills_tooltip'|trans }}">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ occupation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
+							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ desTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
 							<!--<a href="" class="search" title="Search for training required for this job">

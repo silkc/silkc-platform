@@ -269,7 +269,7 @@ class HomeController extends AbstractController
 
         $user = $this->getUser();
 
-        $form = $this->createForm(UserType::class, $user, ['is_personal' => true]);
+        $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'from_front' => true]);
         $passwordForm = $this->createForm(UserPasswordType::class, $user);
 
         $form->handleRequest($request);
@@ -284,9 +284,9 @@ class HomeController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            
+
             $this->addFlash('success', $translator->trans('Updated data'));
-            
+
             return $this->redirectToRoute('app_account');
         } else if ($passwordForm->isSubmitted()) {
             if (!$passwordForm->isValid()) {
