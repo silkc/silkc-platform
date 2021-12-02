@@ -175,3 +175,9 @@ form[name="training"] {
         max-width: 22px;
     }
 }
+
+.dataTables_wrapper .dataTables_processing {
+    background-color: transparent;
+    background: transparent;
+    top: 57%;
+}

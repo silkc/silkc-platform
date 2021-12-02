@@ -25,40 +25,16 @@ require("chart.js");
 require("@fortawesome/fontawesome-free/js/all.min");
 
 let tradsDatatable = {
-    search:
-        translationsJS && translationsJS.datatable_search
-            ? translationsJS.datatable_search
-            : "Search:",
-    loadingRecords:
-        translationsJS && translationsJS.datatable_loadingRecords
-            ? translationsJS.datatable_loadingRecords
-            : "Loading...",
-    processing:
-        translationsJS && translationsJS.datatable_processing
-            ? translationsJS.datatable_processing
-            : "Processing",
-    zeroRecords:
-        translationsJS && translationsJS.datatable_zeroRecords
-            ? translationsJS.datatable_zeroRecords
-            : "No data available in table",
+    search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+    loadingRecords:  "&nbsp;",
+    processing: '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>',
+    zeroRecords: "&nbsp;",
     paginate: {
-        first:
-            translationsJS && translationsJS.datatable_first
-                ? translationsJS.datatable_first
-                : "First:",
-        previous:
-            translationsJS && translationsJS.datatable_previous
-                ? translationsJS.datatable_previous
-                : "Previous:",
-        next:
-            translationsJS && translationsJS.datatable_next
-                ? translationsJS.datatable_next
-                : "Next:",
-        last:
-            translationsJS && translationsJS.datatable_last
-                ? translationsJS.datatable_last
-                : "Last:",
-    },
+        first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+        previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+        next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+        last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+    }
 };
 
 class SearchResults {

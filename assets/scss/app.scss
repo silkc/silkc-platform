@@ -533,3 +533,9 @@ footer#footer .content-footer > div {
 #main-frame {
     min-height: calc(100vh - 230px);
 }
+
+.dataTables_wrapper .dataTables_processing {
+    background-color: transparent;
+    background: transparent;
+    top: 57%;
+}

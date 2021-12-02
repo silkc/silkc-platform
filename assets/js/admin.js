@@ -52,9 +52,9 @@ function truncate(stringToTruncate, maxLength) {
 
 let tradsDatatable = {
     search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-    loadingRecords: translationsJS && translationsJS.datatable_loadingRecords ? translationsJS.datatable_loadingRecords : "Loading...",
-    processing: translationsJS && translationsJS.datatable_processing ? translationsJS.datatable_processing : "Processing",
-    zeroRecords: translationsJS && translationsJS.datatable_zeroRecords ? translationsJS.datatable_zeroRecords : "No data available in table",
+    loadingRecords:  "&nbsp;",
+    processing: '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>',
+    zeroRecords: "&nbsp;",
     paginate: {
         first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
         previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
@@ -69,10 +69,19 @@ class Admin {
         return this.instanceProperty;
     }
 
+
+    runDataTableEmpty = (table, $table) => {
+        if (table.data().count() == 0) {
+            $table.find('.dataTables_empty').text(translationsJS && translationsJS.datatable_zeroRecords ? translationsJS.datatable_zeroRecords : "No data available in table");
+        }
+    }
+
     /**
      * Affichage des messages de mises à jour
      */
     runDatatableHome = () => {
+
+        let that = this;
 
         let notificationsIds = [];
         let setInputHidden = function (ids = []) {
@@ -120,6 +129,10 @@ class Admin {
                     return json.notifications;
                 }
             },
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(tableNotification, $('#datatable-subject'));
+            },
+            processing: true,
             columns: [
                 { "className": "dt-center", "orderable": false, "targets": 0, "render":
                     function (data, type, row) {
@@ -197,6 +210,9 @@ class Admin {
     }
 
      runDatatableTask = () => {
+
+        let that = this;
+
         let table = $('#datatable-task').DataTable({
             searching: false, 
             info: false,
@@ -208,7 +224,10 @@ class Admin {
                     return json.to_validated_trainings;
                 }
             },
-            initComplete: function(settings, json) {},
+            processing: true,
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(table, $('#datatable-task'));
+            },
             columns: [
                 { data: 'name' },
                 { "className": "space-nowrap", "render":
@@ -277,6 +296,9 @@ class Admin {
     }
 
      runDatatableInstitution = () => {
+
+        let that = this;
+
         let table = $('#datatable-institution').DataTable({
             searching: false, 
             info: false,
@@ -284,12 +306,18 @@ class Admin {
             columnDefs: [
                 {targets: [3], orderable: false},
             ],
+            processing: true,
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(table, $('#datatable-institution'));
+            },
             order: [[ 1, 'asc' ]],
             language: tradsDatatable
         });
     }
 
      runDatatableUsers = () => {
+        let that = this;
+
         let lang = $('body').attr('lang');
         let table = $('#datatable-user').DataTable({
             searching: true, 
@@ -301,6 +329,10 @@ class Admin {
                 dataSrc: function (json) {
                     return json.users;
                 }
+            },
+            processing: true,
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(table, $('#datatable-user'));
             },
             columns: [
                 { data: 'id' },
@@ -381,6 +413,8 @@ class Admin {
     }
 
      runDatatableWork = () => {
+        let that = this;
+
         let table = $('#datatable-work').DataTable({
             searching: true, 
             info: false,
@@ -391,6 +425,10 @@ class Admin {
                 dataSrc: function (json) {
                     return json.occupations;
                 }
+            },
+            processing: true,
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(table, $('#datatable-work'));
             },
             columns: [
                 { data: 'preferredLabel' },
@@ -416,6 +454,7 @@ class Admin {
     }
 
     runDatatableSkill = () => {
+        let that = this;
         let table = $('#datatable-skill').DataTable({
             searching: true,
             info: false,
@@ -426,6 +465,10 @@ class Admin {
                 dataSrc: function (json) {
                     return json.skills;
                 }
+            },
+            processing: true,
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(table, $('#datatable-skill'));
             },
             columns: [
                 { data: 'preferredLabel' },
@@ -452,6 +495,7 @@ class Admin {
     }
 
     runDatatableTraining = () => {
+        let that = this;
         let table = $('#datatable-training').DataTable({
             searching: true,
             info: false,
@@ -462,6 +506,10 @@ class Admin {
                 dataSrc: function (json) {
                     return json.trainings;
                 }
+            },
+            processing: true,
+            initComplete: function(settings, json) {
+                that.runDataTableEmpty(table, $('#datatable-training'));
             },
             columns: [
                 { data: 'name' },
@@ -609,56 +657,62 @@ class Admin {
         initMap();
     }
 
+    getModalDetailsWork = (id, $modal) => {
+        let url = '/api/skills_by_occupation/' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data, textStatus, jqXHR) {
+                let dataOccupation =  data && data.occupation != undefined ? data.occupation : false;
+                let dataSkills =  data && data.skills != undefined && data.skills.length > 0 ? data.skills : [];
+
+                if (dataOccupation) {
+                    $modal.find('.modal-title').html(dataOccupation.preferredLabel ? dataOccupation.preferredLabel : '');
+                    $(`<p>${dataOccupation.description ? dataOccupation.description : ''}</p>`).appendTo($modal.find('.modal-body'));  
+                }
+
+                let htmlEssential = '';
+                let htmlOptional = '';
+
+                if (dataSkills && dataSkills.length > 0 && $modal) {
+                    for (let k = 0; k < dataSkills.length; k++) { 
+                        let li = `<li>
+                                    <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="${dataSkills[k].skill.preferredLabel}" data-content="${dataSkills[k].skill.description}">
+                                        ${dataSkills[k].skill.preferredLabel}
+                                    </span>
+                                </li>`;
+                        if (dataSkills[k].relationType == 'essential')
+                            htmlEssential += li;
+                        if (dataSkills[k].relationType == 'optional')
+                            htmlOptional += li;
+
+                        if (k == dataSkills.length - 1) {
+                            $(`<h1>${translationsJS && translationsJS.essential_skills ? translationsJS.essential_skills : 'Essential skills'}</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
+                            $(`<h1>${translationsJS && translationsJS.optional_skills ? translationsJS.optional_skills : 'Optional skills'}</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
+
+                            $modal.find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
+                            $modal.modal('show');
+
+                            $modal.find('.modal-content-work [data-toggle="popover"]').popover();
+                        }
+                    }
+                } else {
+                    $modal.find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
+                    $modal.modal('show');
+                }
+            }
+        });
+    }
+
     getDetails = () => {
 
-        $('body').on('click', '#content-work .get-info', function() {
+        let that = this;
 
+        $('body').on('click', '#content-work .get-info', function() {
             let $modal = $('#common-modal');
             let id = $(this).attr('data-id');
-            let url = '/api/skills_by_occupation/' + id;
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function (data, textStatus, jqXHR) {
-                    let dataOccupation =  data && data.occupation != undefined ? data.occupation : false;
-                    let dataSkills =  data && data.skills != undefined && data.skills.length > 0 ? data.skills : [];
-
-                    if (dataOccupation) {
-                        $modal.find('.modal-title').html(dataOccupation.preferredLabel ? dataOccupation.preferredLabel : '');
-                        $(`<p>${dataOccupation.description ? dataOccupation.description : ''}</p>`).appendTo($modal.find('.modal-body'));  
-                    }
-
-                    let htmlEssential = '';
-                    let htmlOptional = '';
-
-                    if (dataSkills && dataSkills.length > 0 && $modal) {
-                        for (let k = 0; k < dataSkills.length; k++) { 
-                            let li = `<li>
-                                        <span class="link-description" tabindex="${k}" data-toggle="popover" data-trigger="focus" title="${dataSkills[k].skill.preferredLabel}" data-content="${dataSkills[k].skill.description}">
-                                            ${dataSkills[k].skill.preferredLabel}
-                                        </span>
-                                    </li>`;
-                            if (dataSkills[k].relationType == 'essential')
-                                htmlEssential += li;
-                            if (dataSkills[k].relationType == 'optional')
-                                htmlOptional += li;
-
-                            if (k == dataSkills.length - 1) {
-                                $(`<h1>${translationsJS && translationsJS.essential_skills ? translationsJS.essential_skills : 'Essential skills'}</h1><ul>${htmlEssential}</ul>`).appendTo($modal.find('.modal-body'));
-                                $(`<h1>${translationsJS && translationsJS.optional_skills ? translationsJS.optional_skills : 'Optional skills'}</h1><ul>${htmlOptional}</ul>`).appendTo($modal.find('.modal-body'));
-
-                                $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
-                                $('#common-modal').modal('show');
-
-                                $('#common-modal .modal-content-work [data-toggle="popover"]').popover();
-                            }
-                        }
-                    } else {
-                        $('#common-modal').find('.modal-dialog').addClass('modal-lg').addClass('modal-content-work');
-                        $('#common-modal').modal('show');
-                    }
-                }
-            });
+            if (!id) return false;
+            that.getModalDetailsWork(id, $modal);
         });
 
         $('body').on('click', '#content-skill .get-info', function() {
@@ -690,6 +744,9 @@ class Admin {
                 url: url,
                 success: function (data, textStatus, jqXHR) {
                     if (data) {
+
+
+                        console.log('data >>>> ', data)
 
                         let requireSkillsHTML = '';
                         let acquireSkillsHTML = '';
@@ -726,6 +783,9 @@ class Admin {
                         let dateStart = data.startAt ? renderDate(data.startAt) : false;
                         let dateEnd = data.endAt ? renderDate(data.endAt) : false;
 
+                        let institutionName = data.user && data.user.username ? data.user.username : false;
+                        let occupationId = data.occupation && data.occupation.id ? data.occupation.id : false;
+
                         let modalBodyHTML = `<div class="row">
 								<div class="col-md-12 detail-training">
 
@@ -735,6 +795,15 @@ class Admin {
 										</div>
 										<div class="col-lg-8">
 											<span>${data.name ? data.name : 'N/A'}</span>
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-lg-4">
+											<span class="title">${translationsJS && translationsJS.institution_name ? translationsJS.institution_name : 'Institution name'}</span>
+										</div>
+										<div class="col-lg-8">
+											<span>${institutionName ? institutionName : 'N/A'}</span>
 										</div>
 									</div>
 
@@ -795,12 +864,12 @@ class Admin {
 											<span class="title">${translationsJS && translationsJS.occupation ? translationsJS.occupation : 'Occupation'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>
+											<a href="#" class="lk-open-work" data-id="${occupationId ? occupationId : ''}">
                                                 ${(data.occupation != undefined && data.occupation != null && data.occupation.preferredLabel) ?
                                                     data.occupation.preferredLabel :
                                                     'N/A'
                                                 }
-                                            </span>
+                                            </a>
 										</div>
 									</div>
 									<div class="mb-3">
@@ -838,6 +907,7 @@ class Admin {
                 }
             });
         }
+
         $('body').on('click', '#content-training .see-detail', function() {
             let $modal = $('#common-modal');
             getModalTrainings(this, $modal);
@@ -865,10 +935,12 @@ class Admin {
                         if (dataTrainings && dataTrainings.length > 0) {
                             let trainingsHTML = '<ul>'
                             for (let k in dataTrainings) {
-                                trainingsHTML += `<li><span class="lk-open-training" data-id="${dataTrainings[k].id ? dataTrainings[k].id : ''}">${dataTrainings[k].name ? dataTrainings[k].name : ''}</span></li>`;
+                                let institutionName = dataTrainings[k].user && dataTrainings[k].user.username ? dataTrainings[k].user.username : false;
+                                trainingsHTML += `<li class="mb-2"><span class="lk-open-training" data-id="${dataTrainings[k].id ? dataTrainings[k].id : ''}">${dataTrainings[k].name ? dataTrainings[k].name : ''} ${institutionName ? '(' + institutionName + ')' : ''}</span></li>`;
                                 
                                 if (k == dataTrainings.length - 1) {
                                     trainingsHTML += '</ul>'
+                                    $('#common-modal').find('.modal-dialog').addClass('modal-lg');
                                     $(trainingsHTML).appendTo($modal.find('.modal-body'));
                                     $('#common-modal').modal('show');
                                 }
@@ -922,6 +994,15 @@ class Admin {
             let $modal = $('#common-modal-2');
             getModalTrainings(this, $modal);
         })
+
+        /* ouvre detail job a partir de la modal de formation */
+        $('body').on('click', '#common-modal .detail-training .lk-open-work, #common-modal-2 .detail-training .lk-open-work', function(e) {
+            e.preventDefault();
+            let $modal = $('#common-modal-3');
+            let id = $(this).attr('data-id');
+            if (!id) return false;
+            that.getModalDetailsWork(id, $modal);
+        });
     }
 
     /**
@@ -1367,6 +1448,10 @@ class Admin {
             $(this).find('.modal-body').children().remove();
             $(this).find('.modal-footer').find('.blc-edit-training').remove();
             $(this).find('.modal-dialog').removeClass('modal-lg');
+
+            if ($('.modal.show').length > 0) {
+                $('body').addClass('modal-open');
+            }
         });
         
         $('#common-modal-2').on('hidden.bs.modal', function (e) {
@@ -1374,6 +1459,21 @@ class Admin {
             $(this).find('.modal-body').children().remove();
             $(this).find('.modal-footer').find('.blc-edit-training').remove();
             $(this).find('.modal-dialog').removeClass('modal-lg');
+
+            if ($('.modal.show').length > 0) {
+                $('body').addClass('modal-open');
+            }
+        });
+        
+        $('#common-modal-3').on('hidden.bs.modal', function (e) {
+            $(this).find('.modal-title').children().remove();
+            $(this).find('.modal-body').children().remove();
+            $(this).find('.modal-footer').find('.blc-edit-training').remove();
+            $(this).find('.modal-dialog').removeClass('modal-lg');
+
+            if ($('.modal.show').length > 0) {
+                $('body').addClass('modal-open');
+            }
         });
 
         // TABS
