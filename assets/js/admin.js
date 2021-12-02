@@ -219,8 +219,12 @@ class Admin {
                 { "render":
                     function (data, type, row) {
                         let user = row.user;
-                        let html = user.roles != undefined && getKeyByValue(user.roles, 'ROLE_INSTITUTION') != undefined ? user.username : user.firstname + ' ' + user.lastname;
-                        html += `<i class="fas fa-info-circle m" data-toggle="tooltip" title="${user.email}"></i>`;
+                        let html = '-';
+                        if (user !== null) {
+                            html = user.roles != undefined && getKeyByValue(user.roles, 'ROLE_INSTITUTION') != undefined ? user.username : user.firstname + ' ' + user.lastname;
+                            html += `<i class="fas fa-info-circle m" data-toggle="tooltip" title="${user.email}"></i>`;
+                         }
+
                         return html;
                     },
                 },
@@ -469,8 +473,11 @@ class Admin {
                 { "render":
                     function (data, type, row) {
                         let user = row.user;
-                        let html = user.roles != undefined && getKeyByValue(user.roles, 'ROLE_INSTITUTION') != undefined ? user.username : user.firstname + ' ' + user.lastname;
-                        html += `<i class="fas fa-info-circle" data-toggle="tooltip" title="${user.email}"></i>`;
+                        let html = '-';
+                        if (user !== null) {
+                            html = user.roles != undefined && getKeyByValue(user.roles, 'ROLE_INSTITUTION') != undefined ? user.username : user.firstname + ' ' + user.lastname;
+                            html += `<i class="fas fa-info-circle" data-toggle="tooltip" title="${user.email}"></i>`;
+                        }
                         return html;
                     },
                 },
