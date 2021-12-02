@@ -210,10 +210,10 @@ class UserImportFixtures extends Fixture
                                             null,
                                         "start_at" => (property_exists($userData, 'previousTrainingYear') && !empty($userData->previousTrainingYear)) ?
                                             $userData->previousTrainingYear . '-01-01 00:00:00' :
-                                            null,
+                                            date('Y').'-01-01 00:00:00',
                                         "end_at" => (property_exists($userData, 'previousTrainingYear') && !empty($userData->previousTrainingYear)) ?
                                             $userData->previousTrainingYear . '-12-31 23:59:59' :
-                                            null,
+                                            date('Y').'-12-31 23:59:59',
                                         "duration_value" => (
                                             property_exists($userData, 'previousTrainingDuration') &&
                                             !empty($userData->previousTrainingDuration) &&
@@ -244,18 +244,23 @@ class UserImportFixtures extends Fixture
                                     $error = false;
 
                                     $institution = $this->_userRepository->findOneByEmailOrUsername($trainingData->institution_email);
-                                    if (!$institution && !empty($trainingData->url)) {
+                                    if (!$institution && (!empty($trainingData->url) || !empty($trainingData->institution_email))) {
                                         try {
                                             // Préfix si pas https ou http
                                             if (!preg_match('#(https?://)([\w\.]+).*?$#', $trainingData->url, $m))
                                                 $trainingData->url = 'https://' . $trainingData->url;
 
                                             $valid_url = preg_match('#(https?://)([\w\.]+).*?$#', $trainingData->url, $matches);
-                                            if (!$valid_url) {
+
+                                            if ($valid_url) {
+                                                $institution_email = $matches[2] . '@silkc-platform.org';
+                                            } else if (!empty($trainingData->institution_email)) {
+                                                $institution_email = urlencode($trainingData->institution_email) . '@silkc-platform.org';
+                                            } else {
                                                 print "ERROR --- An error occurred while check data before saving the institution by url :  {$trainingData->url}" . PHP_EOL;
                                                 continue;
                                             }
-                                            $institution_email = $matches[2] . '@silkc-platform.org';
+
                                             $institution = $this->_userRepository->findOneByEmailOrUsername($institution_email);
                                             if (!$institution) {
                                                 $code = random_int(100000, 999999);
