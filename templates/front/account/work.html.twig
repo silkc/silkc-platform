@@ -1,5 +1,4 @@
-<fieldset>
-	{# Current job #}
+{#<fieldset>
 	<div class="info">
 		{{ 'please_indicate_your_experience'|trans }}
 	</div>
@@ -8,7 +7,7 @@
 		<label>{{ 'label.professional_experience'|trans }}</label>
 		<input class="form-control" type="text" name="professional_experience" placeholder="{{ 'ex_year_experience'|trans }}" value="{{ user.professionalExperience }}" />
 	</div>
-</fieldset>
+</fieldset>#}
 
 <fieldset>
 	{# Current job #}
@@ -182,16 +181,16 @@
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
 							<a href="#" class="detail mr-2" data-name="{{ desTranslation.preferredLabel }}" data-description="{{ desTranslation.description }}" data-id="{{ occupation.id }}">
-								<span class="badge badge-success"
+								<span class="badge badge-success d-block"
                                 data-toggle="tooltip"
 								title="{{ 'front_account_work_skills_tooltip'|trans }}">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
-							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ desTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
+							<a href="#" class="text-danger item rmv mr-2" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ desTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
-							<!--<a href="" class="search" title="Search for training required for this job">
-														                                <i class="fas fa-search-plus text-primary"></i>
-														                            </a>-->
+                            <a href="#" class="search-training" data-toggle="tooltip" title="{{ 'search_for_training_required_for_this_job'|trans }}">
+                                <i class="fas fa-search-plus text-primary"></i>
+                            </a>
 						</div>
 					</li>
 				{% endfor %}

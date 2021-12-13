@@ -443,13 +443,14 @@ class SearchResults {
             _this.sliderDistance = new Slider("#formControlRangeDistance", {
                 formatter: function (value) {
                     return value + " km";
-                },
+                }
             });
             _this.sliderDistance.on("change", function (obj) {
                 $("#distanceVal").text(obj.newValue + "km");
                 $("#distance").val(obj.newValue);
             });
-            if ($('#city').val().length == 0 && $('#input-city').val().length == 0 )
+        
+            if (!$('#city').val() && !$('#input-city').val())
                 _this.sliderDistance.disable();
         };
 

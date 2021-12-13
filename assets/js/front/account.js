@@ -79,10 +79,10 @@ class Account {
                         data-id="${occupation.id}">
                     <i class="fas fa-trash-alt text-danger"></i>
                 </a>
-                ${occupation.type == 'desired' ? 
-                    `<!--<a href="#" class="search ml-2" data-toggle="tooltip" title="${translationsJS && translationsJS.search_for_training_required_for_this_job ? translationsJS.search_for_training_required_for_this_job : 'Search for training required for this job'}">
+                ${occupation.type == 'desiredOccupations' ? 
+                    `<a href="#" class="search-training ml-2" data-toggle="tooltip" title="${translationsJS && translationsJS.search_for_training_required_for_this_job ? translationsJS.search_for_training_required_for_this_job : 'Search for training required for this job'}">
                         <i class="fas fa-search-plus text-primary"></i>
-                    </a>-->` : '' }
+                    </a>` : '' }
             </div>
         </li>`;
     }
@@ -145,39 +145,6 @@ class Account {
             </div>
         </div>`;
     }
-
-    tplSuggestSkill = (skill, occupation) => {
-
-        return `<div class="card" data-key'="${skill.k}">
-            <div class="card-header" id="heading_${skill.k}">
-                <div class="d-flex flex-nowrap justify-content-between">
-                    <div class="d-flex flex-nowrap align-items-center" data-toggle="collapse" data-target="#collapse_other_skills_${skill.k}" aria-expanded="false" aria-controls="collapse_other_skills_${skill.k}">
-                        <a class="text-primary icon mr-2" data-toggle="collapse" href="#skills_other_${skill.k}">
-                            <i class="fas fa-chevron-circle-right"></i>
-                        </a>
-                        <a data-toggle="collapse" href="#skills_other_${skill.k}">
-                            <span>${skill.name}</span>
-                        </a>
-                    </div>
-                    <div class="d-inline-flex align-items-center justify-content-end">
-                        <a href="#" class="more mr-2" data-name="${skill.name}" data-occupations="${occupation.name}">
-                            <i class="fas fa-question-circle text-primary"></i>
-                        </a>
-                        <a href="" class="text-danger rmv item" data-toggle="tooltip" title="${translationsJS && translationsJS.remove_this_skill ? translationsJS.remove_this_skill : 'Remove this skill'}" data-name="${skill.name}" data-id="${skill.id}">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div id="collapse_other_skills_${skill.k}" class="collapse" aria-labelledby="heading_${skill.k}" data-parent="#list-other_skills">
-                <div class="card-body">
-                    ${skill.description}
-                </div>
-            </div>
-        </div>`;
-    }
-
 
     tplMessageFlash = (status = true) => {
 
@@ -711,6 +678,10 @@ class Account {
                     setTimeout(function() {
                         $('#content-work button[type="submit"]').find('svg').remove();
                     }, 1500);
+                    
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 },
                 error: function () {
                     let html = _this.tplMessageFlash(false);

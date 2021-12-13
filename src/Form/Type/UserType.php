@@ -97,13 +97,13 @@ class UserType extends AbstractType
                         'required'           => false,
                         'attr' => ['placeholder' => 'placeholder.up_to_distance']
                     ]);
-                if (array_key_exists('from_front', $options) && $options['from_front'] === false)
+                /*if (array_key_exists('from_front', $options) && $options['from_front'] === false)
                     $builder->add('professionalExperience', NumberType::class, [
                         'translation_domain' => 'messages',
                         'label'              => 'label.professional_experience',
                         'required'           => false,
                         'attr' => ['placeholder' => 'placeholder.professional_experience', 'type' => 'number']
-                    ]);
+                    ]);*/
             }
             if (array_key_exists('enable_password', $options) && $options['enable_password'] === true) {
                 $builder->add('password', RepeatedType::class, [
