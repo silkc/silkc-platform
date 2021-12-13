@@ -885,8 +885,11 @@ class Recruiter {
                 headers: {"X-auth-token": token},
                 url: '/api/search_affected_users',
                 success: function (data, textStatus, jqXHR) {
-                    console.log('DATA', data, data.data);
-                    $resultContainer.find('span:last').html('Number total of affected users: ' + data.data.count_all + '<br>Number of listening position users: ' + data.data.count_listening);
+                    $resultContainer.find('span:last').html(`<span data-toggle="tooltip" title="${translationsJS.number_total_of_affected_users_tuto}" style="cursor: help;">
+                                                            ${translationsJS && translationsJS.number_total_of_affected_users ? translationsJS.number_total_of_affected_users : 'Number total of affected users:'} ${data.data.count_all}</span><br>
+                                                            <span data-toggle="tooltip" title="${translationsJS.number_of_interested_users_tuto}" style="cursor: help;">
+                                                            ${translationsJS && translationsJS.number_of_interested_users ? translationsJS.number_of_interested_users : 'Number of interested users:'} ${data.data.count_listening}</span>`);
+                    $('[data-toggle="tooltip"]').tooltip();
                 },
                 error : function(jqXHR, textStatus, errorThrown){
                     $resultContainer.addClass('hidden');

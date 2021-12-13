@@ -188,7 +188,8 @@
 							<a href="#" class="text-danger item rmv mr-2" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ desTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
-                            <a href="#" class="search-training" data-toggle="tooltip" title="{{ 'search_for_training_required_for_this_job'|trans }}">
+                            {% set localCurrent = app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty ? app.request.locale : 'en' %}
+                            <a href="/{{ localCurrent }}/search_results/occupation/{{ occupation.id }}" class="search-training" data-toggle="tooltip" title="{{ 'search_for_training_required_for_this_job'|trans }}">
                                 <i class="fas fa-search-plus text-primary"></i>
                             </a>
 						</div>

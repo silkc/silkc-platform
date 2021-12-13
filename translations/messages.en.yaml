@@ -334,7 +334,6 @@ Invalid password: Invalid password
 Copy location: Copy location
 Copy location to cliboard: Copy location to cliboard
 Calculate the number of affected users: Calculate the number of affected users
-Results: Results
 
 no_trainings: No trainings
 optional_skills: Optional skills
@@ -404,3 +403,9 @@ email_or_username_could_not_be_found: Email or username could not be found.
 suspended_account: Suspended account.
 invalid_password: Invalid password
 invalid_account: Invalid account
+number_total_of_affected_users: "Number total of affected users:"
+number_of_interested_users: "Number of interested users:"
+calculate_the_number_of_affected_users: Calculate the number of affected users
+Results: Results
+number_total_of_affected_users_tuto: Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer 
+number_of_interested_users_tuto: Option congue nihil imperdiet doming id quod mazim placerat facer 

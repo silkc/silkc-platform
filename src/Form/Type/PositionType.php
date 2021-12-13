@@ -97,7 +97,7 @@ class PositionType extends AbstractType
                 'widget'             => 'single_text',
             ])
             ->add('occupation', EntityType::class, [
-                'attr'         => ["class" => "selectpicker"],
+                'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],
                 'class'        => Occupation::class,
                 'choices'      => $this->occupationRepository->findAll(),
                 'choice_label' => 'preferredLabel',

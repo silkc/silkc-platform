@@ -137,6 +137,13 @@
 								<span class="delete">&times;</span>
 							</button>
 						{% endif %}
+
+						{% if requestParams.isCertified is defined %}
+							<button type="button" class="btn btn-sm btn-light mb-1 tag-isCertified">
+								{{ 'label.is_certified'|trans }}
+								<span class="delete">&times;</span>
+							</button>
+						{% endif %}
 					</div>
 				</div>
 			</div>

@@ -394,7 +394,7 @@ class SearchResults {
             });
 
             // free training
-            $("body").on("click", "#free_training", function () {
+            $("body").on("click", "#isFree", function () {
                 if($(this).is(':checked') ){
                     _this.sliderPrice.disable();
                     $('#currency').attr('disabled', true);
@@ -404,12 +404,15 @@ class SearchResults {
                     _this.sliderPrice.enable();
                     $('#currency').attr('disabled', false);
                     $("#minPrice").val($('#bckMinPrice').val());  
-                    $("#maxPrice").val($('#bckMaxPrice').val());  
+                    $("#maxPrice").val($('#bckMaxPrice').val()); 
+                    $("#priceValMin > span:first-child").text($('#bckMinPrice').val());
+                    $("#priceValMax > span:first-child").text($('#bckMaxPrice').val());
+                    _this.sliderPrice.setValue([parseInt($('#bckMinPrice').val()), parseInt($('#bckMaxPrice').val())]);
                 }
             });
 
-            if ($("body #free_training").is(':checked') ) {
-                _this.sliderPrice.enable();
+            if ($("body #isFree").is(':checked') ) {
+                _this.sliderPrice.disable();
                 $('#currency').attr('disabled', true);
                 $("#minPrice").val($('#bckMinPrice').val());  
                 $("#maxPrice").val($('#bckMaxPrice').val());  
@@ -486,6 +489,9 @@ class SearchResults {
 
         // Clear filter
         $("body").on("click", "button.btn-clear", function () {
+
+            _this.removeCookiesParamsSearch();
+
             _this.sliderDistance.setValue(0);
             _this.sliderPrice.setValue([0, 5000]);
 
@@ -521,26 +527,27 @@ class SearchResults {
 
         // Remove tags filters
         $("body").on("click", "button.tag-city", function () {
+            _this.removeCookiesParamsSearch();
             _this.sliderDistance.setValue(0);
             $("#city").val("");
             $("#inputCity").val("");
             $("#distanceVal").text("0km");
             $("#distance").val(0);
-            $(
-                "#advanced-search .leaflet-control-geocoder-form input[type=text]"
-            ).val("");
+            $("#advanced-search .leaflet-control-geocoder-form input[type=text]").val("");
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
             }, 500);
         });
         $("body").on("click", "button.tag-price", function () {
+            _this.removeCookiesParamsSearch();
             _this.sliderPrice.setValue([0, 5000]);
             let max = _this.sliderPrice.element.dataset.sliderMax;
             $("#priceValMin > span:first-child").text(0);
             $("#priceValMax > span:first-child").text(max);
             $("#minPrice").val(0);
             $("#maxPrice").val(max);
+            $("#isFree").prop('checked', false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -548,7 +555,8 @@ class SearchResults {
         });
 
         $("body").on("click", "button.tag-duration", function () {
-            _this.sliderPrice.setValue([0, 100]);
+            _this.removeCookiesParamsSearch();
+            _this.sliderDuration.setValue([0, 100]);
             let max = _this.sliderDuration.element.dataset.sliderMax;
             $("#durationValMin > span:first-child").text(0);
             $("#durationValMax > span:first-child").text(max);
@@ -560,6 +568,7 @@ class SearchResults {
             }, 500);
         });
         $("body").on("click", "button.tag-startAt", function () {
+            _this.removeCookiesParamsSearch();
             $("#advanced-search #startAt").val("");
             $(this).remove();
             setTimeout(function () {
@@ -567,6 +576,7 @@ class SearchResults {
             }, 500);
         });
         $("body").on("click", "button.tag-endAt", function () {
+            _this.removeCookiesParamsSearch();
             $("#advanced-search #endAt").val("");
             $(this).remove();
             setTimeout(function () {
@@ -574,14 +584,16 @@ class SearchResults {
             }, 500);
         });
         $("body").on("click", "button.tag-isOnline", function () {
-            $('input[type="checkbox"].isOnline').prop("checked", false);
+            _this.removeCookiesParamsSearch();
+            $('#isOnline').prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
             }, 500);
         });
         $("body").on("click", "button.tag-isOnlineMonitored", function () {
-            $('input[type="checkbox"].isOnlineMonitored').prop(
+            _this.removeCookiesParamsSearch();
+            $('#isOnlineMonitored').prop(
                 "checked",
                 false
             );
@@ -591,21 +603,35 @@ class SearchResults {
             }, 500);
         });
         $("body").on("click", "button.tag-isPresential", function () {
-            $('input[type="checkbox"].isPresential').prop("checked", false);
+            _this.removeCookiesParamsSearch();
+            $('#isPresential').prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
             }, 500);
         });
         $("body").on("click", "button.tag-excludeTraining", function () {
-            $('input[type="checkbox"].excludeTraining').prop("checked", false);
+            _this.removeCookiesParamsSearch();
+            $('#exclude-training-without-completed-description').prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
             }, 500);
         });
         $("body").on("click", "button.tag-specifiedDuration", function () {
-            $('input[type="checkbox"].specifiedDuration').prop(
+            _this.removeCookiesParamsSearch();
+            $('#without-specified-duration').prop(
+                "checked",
+                false
+            );
+            $(this).remove();
+            setTimeout(function () {
+                $(".form-results").submit();
+            }, 500);
+        });
+        $("body").on("click", "button.tag-isCertified", function () {
+            _this.removeCookiesParamsSearch();
+            $('#isCertified').prop(
                 "checked",
                 false
             );
@@ -770,6 +796,19 @@ class SearchResults {
             tableResults.order([idxCol, direction ? direction : "asc"]).draw();
         });
     };
+
+    removeCookiesParamsSearch () {
+        document.cookie =
+            "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+            "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+            "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+            "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+        "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
 
     init = function () {
         this.runTypeSearch();

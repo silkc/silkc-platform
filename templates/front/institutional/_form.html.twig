@@ -72,9 +72,10 @@
 				{{ form_row(form.isFree) }}
 
 				<div class="input-group mb-3 pl-3">
-					{{ form_widget(form.price) }}
+                    {% set priceDisabled = training.isFree is defined and training.isFree == true ? 'disabled="disabled"' : '' %}
+					{{ form_widget(form.price, { 'attr':{'disabled': priceDisabled} }) }}
 					<div class="input-group-append">
-						{{ form_widget(form.currency) }}
+						{{ form_widget(form.currency, { 'attr':{'disabled': priceDisabled} }) }}
 					</div>
 				</div>
 			</div>

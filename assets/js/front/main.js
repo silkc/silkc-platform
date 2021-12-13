@@ -244,11 +244,28 @@ class Main {
         }
     };
 
+
+     initInputPrice = () => {
+        let _this = this;
+        $('body').on('click', '#training_isFree', function(e) {
+            let inputPrice = $('#training_price');
+            let inputCurrency = $('#training_currency');
+            if($(this).is(':checked') ){
+                inputCurrency.prop('disabled', true);
+                inputPrice.prop('disabled', true);
+            } else {
+                inputCurrency.prop('disabled', false);
+                inputPrice.prop('disabled', false);
+            }
+        });
+    };
+
     init = function () {
         this.runAutocompletion();
         this.tabsSignup();
         this.runMarkdown();
         this.removeCookiePageSearch();
+        this.initInputPrice();
 
         $("select.selectpicker").selectpicker({
             liveSearch: true,

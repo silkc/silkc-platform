@@ -56,6 +56,8 @@ class Account {
 
     tplJob = (occupation) => {
 
+        let lang = $('body').attr('lang');
+
         return `<li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
                 <a href="#" class="detail" 
@@ -80,7 +82,10 @@ class Account {
                     <i class="fas fa-trash-alt text-danger"></i>
                 </a>
                 ${occupation.type == 'desiredOccupations' ? 
-                    `<a href="#" class="search-training ml-2" data-toggle="tooltip" title="${translationsJS && translationsJS.search_for_training_required_for_this_job ? translationsJS.search_for_training_required_for_this_job : 'Search for training required for this job'}">
+                    `<a href="/${lang ? lang : 'en'}/search_results/occupation/${occupation.id}" 
+                        class="search-training ml-2" 
+                        data-toggle="tooltip" 
+                        title="${translationsJS && translationsJS.search_for_training_required_for_this_job ? translationsJS.search_for_training_required_for_this_job : 'Search for training required for this job'}">
                         <i class="fas fa-search-plus text-primary"></i>
                     </a>` : '' }
             </div>
