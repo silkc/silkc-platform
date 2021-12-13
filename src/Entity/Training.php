@@ -410,6 +410,16 @@ class Training
      */
     private $trainingFeedback;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isFree;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isCertified;
+
     public function __construct()
     {
         $this->requiredSkills = new ArrayCollection();
@@ -1104,6 +1114,30 @@ class Training
                 $trainingFeedback->setTraining(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsFree(): ?bool
+    {
+        return $this->isFree;
+    }
+
+    public function setIsFree(bool $isFree): self
+    {
+        $this->isFree = $isFree;
+
+        return $this;
+    }
+
+    public function getIsCertified(): ?bool
+    {
+        return $this->isCertified;
+    }
+
+    public function setIsCertified(bool $isCertified): self
+    {
+        $this->isCertified = $isCertified;
 
         return $this;
     }
