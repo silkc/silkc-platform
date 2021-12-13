@@ -61,6 +61,8 @@ label:
   save_and_validate: Zapisz i zatwierdź
   professional_experience: Doświadcz profesji
   language: Język
+  is_certified: Posiada certyfikat
+  is_free: Jest wolny
 placeholder:
   training_price: "Np.: 1000.00"
   duration_details: "Np.: poniedziałki i wtorki od 8:00 do 10:00"
@@ -386,3 +388,7 @@ update_failed: Aktualizacja nieudana
 please_indicate_your_experience: Proszę podać swoje doświadczenie zawodowe
 ex_year_experience: "ex: 10 lat doświadczenia"
 free_training: Darmowy trening
+email_or_username_could_not_be_found: Nie znaleziono adresu e-mail lub nazwy użytkownika.
+suspended_account: Konto zawieszone.
+invalid_password: Nieprawidłowe hasło
+invalid_account: Nieważne konto

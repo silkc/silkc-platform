@@ -92,6 +92,24 @@ class TrainingType extends AbstractType
                 'required'           => false,
                 'attr' => ['placeholder' => 'placeholder.training_price']
             ])
+            ->add('isFree', CheckboxType::class, [
+                'translation_domain' => 'messages',
+                /*'row_attr' => ['class' => 'switch-custom'],
+                'attr' => ['class' => 'custom-control-input'],*/
+                'label'              => 'label.is_free',
+                'label_attr' => [
+                    'class' => 'switch-custom',
+                ],
+            ])
+            ->add('isCertified', ChoiceType::class, [
+                'translation_domain' => 'messages',
+                'choices'  => array(
+                    'yes' => 1,
+                    'no' => 0,
+                ),
+                'label'              => 'label.is_certified',
+                'expanded' => true,
+            ])
             ->add('currency', ChoiceType::class, [
                 'label' => 'label.currency',
                 'required' => true,

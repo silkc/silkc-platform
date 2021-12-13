@@ -411,14 +411,14 @@ class Training
     private $trainingFeedback;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
      */
-    private $isFree;
+    private $isFree = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
      */
-    private $isCertified;
+    private $isCertified = 0;
 
     public function __construct()
     {
@@ -440,6 +440,10 @@ class Training
             return;
 
         $training = $args->getObject();
+        // Si la formation est gratuite, on supprime le prix
+        if ($training->getIsFree() === true)
+            $training->setPrice(null);
+
         $this->_defineCompletion($training);
     }
 
@@ -452,6 +456,10 @@ class Training
             return;
 
         $training = $args->getObject();
+        // Si la formation est gratuite, on supprime le prix
+        if ($training->getIsFree() === true)
+            $training->setPrice(null);
+
         $this->_defineCompletion($training);
     }
 

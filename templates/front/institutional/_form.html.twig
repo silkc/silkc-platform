@@ -62,11 +62,21 @@
 			{{ form_widget(form.description) }}
 		</div>
 		{{ form_row(form.language) }}
-		{{ form_label(form.price) }}
-		<div class="input-group mb-3">
-			{{ form_widget(form.price) }}
-			<div class="input-group-append">
-				{{ form_widget(form.currency) }}
+		<div class="row">
+			<div class="col-12">
+				{{ form_label(form.price) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 d-flex align-items-center">
+				{{ form_row(form.isFree) }}
+
+				<div class="input-group mb-3 pl-3">
+					{{ form_widget(form.price) }}
+					<div class="input-group-append">
+						{{ form_widget(form.currency) }}
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -85,6 +95,7 @@
 		{{ form_row(form.isOnline) }}
 		{{ form_row(form.isOnlineMonitored) }}
 		{{ form_row(form.isPresential) }}
+		{{ form_row(form.isCertified) }}
 	</div>
 
 	<div class="col-6">
@@ -97,16 +108,16 @@
 			<div class="mb-3 add-skill" data-type="required">
 				<input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
 				{% include 'front/elements/input_add_search.html.twig'
-                        with {
-                            'id': 'skill-name-required',
-                            'url': '/apip/skills',
-                            'autocomplete': true,
-                            'formats': 'json',
-                            'pagination': 'false',
-                            'name': 'skill-name-required',
-                            'placeholder': "Add skill"
-                        }
-                    %}
+					with {
+						'id': 'skill-name-required',
+						'url': '/apip/skills',
+						'autocomplete': true,
+						'formats': 'json',
+						'pagination': 'false',
+						'name': 'skill-name-required',
+						'placeholder': "Add skill"
+					}
+				%}
 				<div class="content-list-skill mt-4">
 					<ul class="list-group ul-skills" id="skills-required">
 						{% if training is defined %}
