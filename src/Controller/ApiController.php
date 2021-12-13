@@ -26,6 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @Route("/api", name="api_")
@@ -435,5 +436,46 @@ class ApiController extends AbstractController
             $defaultData;
 
         return $this->json(['result' => true, 'data' => $data], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/cron/fetch_lat_and_long", name="fetch_lat_and_long", methods={"GET"})
+     */
+    public function fetch_lat_and_long(HttpClientInterface $client, TrainingRepository $trainingRepository)
+    {
+        $trainings = $trainingRepository->findWithoutLatitudeAndLongitude();
+        if (!$trainings)
+            return $this->json(['result' => false, 'error' => 'Aucune formation sans latitude ni longitude trouvée.'], 200, ['Access-Control-Allow-Origin' => '*']);
+
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($trainings as $training) {
+            try {
+                $response = $client->request(
+                    'GET',
+                    'http://api.positionstack.com/v1/forward?access_key=f0dca21d14ea7051bd831f9e9a2808dd&query=' . $training->getLocation()
+                );
+
+                $data = $response->toArray();
+
+                if (!is_array($data) && array_key_exists('data', $data) && !empty($data['data']))
+                    continue;
+
+                $row = current($data['data']);
+                if (!is_array($row) || !array_key_exists('latitude', $row) || !array_key_exists('longitude', $row))
+                    continue;
+
+                $training->setLatitude($row['latitude']);
+                $training->setLongitude($row['longitude']);
+
+                $em->persist($training);
+                $em->flush();
+            }
+            catch (\Throwable $e) {
+
+            }
+        }
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }

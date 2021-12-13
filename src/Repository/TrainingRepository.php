@@ -479,4 +479,24 @@ class TrainingRepository extends ServiceEntityRepository
             $having
         ];
     }
+
+    /**
+     * Retourne la liste des formations avec une adresse mais sans lattitude ni longitude
+     */
+    public function findWithoutLatitudeAndLongitude()
+    {
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMappingBuilder($entityManager);
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Training', 't');
+
+        $query = $this->getEntityManager()->createNativeQuery(" 
+            SELECT 
+                t.*
+            FROM training AS t
+            WHERE t.location IS NOT NULL AND t.latitude IS NULL AND t.longitude IS NULL
+            ORDER BY id DESC
+            ", $rsm);
+
+        return $query->getResult();
+    }
 }
