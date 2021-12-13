@@ -61,6 +61,9 @@ Import training from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=TrainingImportFixtures --append --env dev
 
+To fetch or generate latitude and longitude for trainings with only location, run this url :
+    https://mydomain.ext/api/cron/fetch_lat_and_long
+
 Import user profiles from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=UserImportFixtures --append --env dev
