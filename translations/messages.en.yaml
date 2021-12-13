@@ -56,7 +56,7 @@ label:
   months: Months
   months_filter: months
   is_visible: Is visible
-  listening_position: I am listening to a position
+  listening_position: I'm open to a position
   up_to_distance: Up to
   save_and_validate: Save and validate
   professional_experience: Professional experience
@@ -283,7 +283,7 @@ hide_panel: Hide panel
 km_away: km away
 markdown_support_info: support markdown
 effective_duration_tooltip: Effective duration of training
-training_rating_tooltip: Average training score for %voters% voters
+training_rating_tooltip: Average training ranking for %voters% voters
 position: position
 add_a_training: Add a training
 
@@ -383,17 +383,18 @@ language_it: Italian
 language_pl: Polish
 training_found: training found
 trainings_found: trainings found
-passage_conditions: Passage conditions
+passage_conditions: Training modality
 additional_criteria: Additional criteria
 sort_by: Sort by
 by_ascending_title: ascending title
 by_descending_title: descending title
-by_increasing_score: increasing score
-by_decreasing_score: decreasing score
-by_increasing_rating: increasing note
-by_decreasing_rating: decreasing note
+by_increasing_score: increasing ranking
+by_decreasing_score: decreasing ranking
+by_increasing_rating: increasing matching
+by_decreasing_rating: decreasing matching
 intro_home: SILKC helps you find the best training to fit your needs.
 updated_data: Updated data
 update_failed: Update failed
 please_indicate_your_experience: Please indicate your experience
 ex_year_experience: "ex: 10 years of experience"
+free_training: Free training

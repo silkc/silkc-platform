@@ -389,8 +389,33 @@ class SearchResults {
                 $("#priceValMax > span:last-child").text(currencyAcronym);
                 $("#minPrice").val(min);
                 $("#maxPrice").val(max);
+                $("#bckMinPrice").val(min);
+                $("#bckMaxPrice").val(max);
             });
+
+            // free training
+            $("body").on("click", "#free_training", function () {
+                if($(this).is(':checked') ){
+                    _this.sliderPrice.disable();
+                    $('#currency').attr('disabled', true);
+                    $("#minPrice").val(0);
+                    $("#maxPrice").val(0); 
+                } else {
+                    _this.sliderPrice.enable();
+                    $('#currency').attr('disabled', false);
+                    $("#minPrice").val($('#bckMinPrice').val());  
+                    $("#maxPrice").val($('#bckMaxPrice').val());  
+                }
+            });
+
+            if ($("body #free_training").is(':checked') ) {
+                _this.sliderPrice.enable();
+                $('#currency').attr('disabled', true);
+                $("#minPrice").val($('#bckMinPrice').val());  
+                $("#maxPrice").val($('#bckMaxPrice').val());  
+            }
         };
+        
         // DURATION
         let initSliderDuration = function () {
             _this.sliderDuration = new Slider("#formControlRangeDuration", {
@@ -424,7 +449,8 @@ class SearchResults {
                 $("#distanceVal").text(obj.newValue + "km");
                 $("#distance").val(obj.newValue);
             });
-            _this.sliderDistance.disable();
+            if ($('#city').val().length == 0 && $('#input-city').val().length == 0 )
+                _this.sliderDistance.disable();
         };
 
         $("#currency").on("change", function () {
@@ -519,6 +545,7 @@ class SearchResults {
                 $(".form-results").submit();
             }, 500);
         });
+
         $("body").on("click", "button.tag-duration", function () {
             _this.sliderPrice.setValue([0, 100]);
             let max = _this.sliderDuration.element.dataset.sliderMax;
@@ -713,7 +740,7 @@ class SearchResults {
             info: false,
             lengthChange: false,
             order: [[1, "asc"]],
-            language: tradsDatatable,
+            language: tradsDatatable, 
             columnDefs: [
                 {
                     targets: [0],

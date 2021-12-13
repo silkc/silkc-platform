@@ -856,7 +856,7 @@ class Admin {
 											<span class="title">${translationsJS && translationsJS.price ? translationsJS.price : 'Price'}</span>
 										</div>
 										<div class="col-lg-8">
-											<span>${data.price ? data.price : 'N/A'}</span>
+                                        <span>${data.price ? data.price : 'N/A'} ${data.currency && data.price ? data.currency.toUpperCase() : ''}</span>
 										</div>
 									</div>
 									<div class="row mb-3">
@@ -864,12 +864,13 @@ class Admin {
 											<span class="title">${translationsJS && translationsJS.occupation ? translationsJS.occupation : 'Occupation'}</span>
 										</div>
 										<div class="col-lg-8">
-											<a href="#" class="lk-open-work" data-id="${occupationId ? occupationId : ''}">
+                                            ${(data.occupation != undefined && data.occupation != null && data.occupation.preferredLabel) ?
+											`<a href="#" class="lk-open-work" data-id="${occupationId ? occupationId : ''}">
                                                 ${(data.occupation != undefined && data.occupation != null && data.occupation.preferredLabel) ?
                                                     data.occupation.preferredLabel :
                                                     'N/A'
                                                 }
-                                            </a>
+                                            </a>` : 'N/A'}
 										</div>
 									</div>
 									<div class="mb-3">

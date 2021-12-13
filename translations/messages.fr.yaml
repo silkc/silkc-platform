@@ -378,10 +378,11 @@ by_ascending_title: titre croissant
 by_descending_title: titre décroissant
 by_increasing_score: score croissant
 by_decreasing_score: score décroissant
-by_increasing_rating: note croissante
-by_decreasing_rating: note décroissante
+by_increasing_rating: match croissant
+by_decreasing_rating: match décroissant
 intro_home: SILKC vous aide à trouver la meilleure formation pour répondre à vos besoins.
 updated_data: Données mises à jour
 update_failed: Mise à jour échouée
 please_indicate_your_experience: Merci d'indiquer votre expérience professionnelle
 ex_year_experience: "ex: 10 années d'expérience"
+free_training: Formation gratuite

@@ -61,8 +61,19 @@
 								</div>
 							</div>
 						</div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="free_training" class="form-check-input" {{ requestParams.freeTraining is defined and requestParams.freeTraining == true ? 'checked="cheked"' : '' }}>
+                                <label class="form-check-label" for="free_training">{{ 'free_training'|trans }}</label>
+                            </div>
+                        </div>
+    
 						<input type="hidden" id="minPrice" name="minPrice" value="{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }}">
 						<input type="hidden" id="maxPrice" name="maxPrice" value="{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}">
+
+						<input type="hidden" id="bckMinPrice" value="{{ 0 }}">
+						<input type="hidden" id="bckMaxPrice" value="{{ defaultMaxPrice }}">
 					</div>
 				</div>
 			</div>

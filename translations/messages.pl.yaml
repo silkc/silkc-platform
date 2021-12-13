@@ -56,7 +56,7 @@ label:
   months: Miesiące
   months_filter: miesiące
   is_visible: Jest widoczny
-  listening_position: słucham pozycji
+  listening_position: Jestem otwarty na stanowisko
   up_to_distance: Aż do
   save_and_validate: Zapisz i zatwierdź
   professional_experience: Doświadcz profesji
@@ -278,7 +278,7 @@ hide_panel: Ukryj panel
 km_away: km dalej
 markdown_support_info: wsparcie przeceny
 effective_duration_tooltip: Efektywny czas trwania szkolenia
-training_rating_tooltip: Średni wynik szkolenia dla %voters% głosujących
+training_rating_tooltip: Średni ranking szkoleń dla 5 głosujących
 position: pozycja
 add_a_training: Dodaj szkolenie
 
@@ -376,12 +376,13 @@ additional_criteria: Dodatkowe kryteria
 sort_by: Sortuj według
 by_ascending_title: tytuł rosnąco
 by_descending_title: tytuł malejący
-by_increasing_score: rosnący wynik
-by_decreasing_score: malejący wynik
-by_increasing_rating: rosnąca nuta
-by_decreasing_rating: malejąca nuta
+by_increasing_score: rosnący ranking
+by_decreasing_score: malejący ranking
+by_increasing_rating: rosnące dopasowanie
+by_decreasing_rating: malejące dopasowanie
 intro_home: SILKC pomoże Ci znaleźć najlepszy trening odpowiadający Twoim potrzebom.
 updated_data: Zaktualizowane dane
 update_failed: Aktualizacja nieudana
 please_indicate_your_experience: Proszę podać swoje doświadczenie zawodowe
 ex_year_experience: "ex: 10 lat doświadczenia"
+free_training: Darmowy trening

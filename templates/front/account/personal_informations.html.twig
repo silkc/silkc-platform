@@ -39,6 +39,11 @@
 
 <div class="row">
 	<div class="form-group col-md-6">
+		{{ form_row(form.isListeningPosition) }}
+	</div>
+</div>
+<div class="row">
+	<div class="form-group col-md-6">
 		<div class="input-group mb-3">
 			<span class="input-group-text">
 				{{ 'label.up_to_distance'|trans }}
@@ -46,11 +51,6 @@
 			{{ form_widget(form.upToDistance) }}
 			<span class="input-group-text">km</span>
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="form-group col-md-6">
-		{{ form_row(form.isListeningPosition) }}
 	</div>
 </div>
 
