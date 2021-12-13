@@ -64,7 +64,7 @@
 
                         <div class="form-group">
                             <div class="form-check">
-                                <input type="checkbox" id="free_training" class="form-check-input" {{ requestParams.freeTraining is defined and requestParams.freeTraining == true ? 'checked="cheked"' : '' }}>
+                                <input type="checkbox" id="free_training" class="form-check-input" {{ requestParams.isFree is defined and requestParams.isFree == true ? 'checked="cheked"' : '' }}>
                                 <label class="form-check-label" for="free_training">{{ 'free_training'|trans }}</label>
                             </div>
                         </div>
@@ -204,6 +204,16 @@
 						<div class="form-check">
 							<input type="checkbox" name="specifiedDuration" id="without-specified-duration" class="form-check-input" {{ requestParams.specifiedDuration is defined ? 'checked="cheked"' : '' }}>
 							<label class="form-check-label" for="without-specified-duration">{{ 'label.without_specified_duration'|trans }}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="form-group">
+						<div class="form-check">
+							<input type="checkbox" name="isCertified" id="isCertified" class="form-check-input" {{ requestParams.isCertified is defined ? 'checked="cheked"' : '' }}>
+							<label class="form-check-label" for="isCertified">{{ 'label.is_presential'|trans }}</label>
 						</div>
 					</div>
 				</div>

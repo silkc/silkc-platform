@@ -230,11 +230,17 @@ class HomeController extends AbstractController
         if (array_key_exists('isOnline', $rp) && !empty($rp['isOnline']))
             $params['isOnline'] = (bool) ($rp['isOnline'] === true || $rp['isOnline'] === 'on');
 
+        if (array_key_exists('isFree', $rp) && !empty($rp['isFree']))
+            $params['isFree'] = (bool) ($rp['isFree'] === true || $rp['isFree'] === 'on');
+
         if (array_key_exists('isOnlineMonitored', $rp) && !empty($rp['isOnlineMonitored']))
             $params['isOnlineMonitored'] = (bool) ($rp['isOnlineMonitored'] === true || $rp['isOnlineMonitored'] === 'on');
 
         if (array_key_exists('isPresential', $rp) && !empty($rp['isPresential']))
             $params['isPresential'] = (bool) ($rp['isPresential'] === true || $rp['isPresential'] === 'on');
+
+        if (array_key_exists('isCertified', $rp) && !empty($rp['isCertified']))
+            $params['isCertified'] = (bool) ($rp['isCertified'] === true || $rp['isCertified'] === 'on');
 
         if (array_key_exists('excludeTraining', $rp) && !empty($rp['excludeTraining']))
             $params['excludeWithoutDescription'] = (bool) ($rp['excludeTraining'] === true || $rp['excludeTraining'] === 'on');
