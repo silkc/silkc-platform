@@ -453,9 +453,15 @@ class ApiController extends AbstractController
 
         $defaultData = ['count_all' => 0, 'count_listening' => 0];
         
-        if (!$skills || !is_array($skills) || count($skills) == 0)
-        return new JsonResponse(['message' => $translator->trans('No skills found for this position')], Response::HTTP_BAD_REQUEST);
-        
+        if (!$skills || !is_array($skills) || count($skills) == 0 || !$position_id)
+            return new JsonResponse(['message' => $translator->trans('No skills found for this position')], Response::HTTP_BAD_REQUEST);
+
+        $position = $positionRepository->find($position_id);
+        if (!$position)
+            return new JsonResponse(['message' => $translator->trans('No position found')], Response::HTTP_BAD_REQUEST);
+
+        $now = new \DateTimeImmutable();
+
         $result = $userRepository->fetchAffectedUsers($skills);
 
         $recipients = ($result) ? new ArrayCollection($result) : null;
@@ -463,37 +469,36 @@ class ApiController extends AbstractController
         $countUsers = 0;
         $countErrors = 0;
 
+        $em = $this->getDoctrine()->getManager();
+
         if ($recipients && $recipients->count() > 0) {
-            $em = $this->getDoctrine()->getManager();
+            foreach ($recipients as $user) {
+                $html = $this->render(
+                    'emails/position.html.twig',
+                    [
+                        'position' => $position,
+                    ])->getContent();
 
-            if ($position_id) {
-                $position = $positionRepository->find($position_id);
- 
-                $now = new \DateTimeImmutable();
+                $email = (new Email())
+                    ->from('contact@silkc-platform.org')
+                    ->to($user->getEmail())
+                    ->subject($translator->trans('position_offer'))
+                    ->text($translator->trans('position_offer'))
+                    ->html($html);
 
-                foreach ($recipients as $user) {
-                    $html = $this->render(
-                        'emails/position.html.twig',
-                        [
-                            'position' => $position,
-                        ])->getContent();
-
-                    $email = (new Email())
-                        ->from('contact@silkc-platform.org')
-                        ->to($user->getEmail())
-                        ->subject($translator->trans('position_offer'))
-                        ->text($translator->trans('position_offer'))
-                        ->html($html);
-
-                    try {
-                        $mailer->send($email);
-                        $countUsers++;
-                    } catch (TransportExceptionInterface $exception) {
-                        $countErrors++;
-                    }
+                try {
+                    $mailer->send($email);
+                    $countUsers++;
+                } catch (TransportExceptionInterface $exception) {
+                    $countErrors++;
                 }
             }
         }
+
+        $position->setSentToAffectedUsersAt($now);
+        $position->setIsSentToAffectedUsers(true);
+        $em->persist($position);
+        $em->flush();
 
         return $this->json(['result' => true, 'countUsers' => $countUsers, 'countErrors' => $countErrors], 200, ['Access-Control-Allow-Origin' => '*']);
     }
