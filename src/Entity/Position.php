@@ -564,12 +564,12 @@ class Position
         return $this;
     }
 
-    public function getSentToAffectedUsersAt(): ?\DateTimeImmutable
+    public function getSentToAffectedUsersAt(): ?\DateTimeInterface
     {
         return $this->sentToAffectedUsersAt;
     }
 
-    public function setSentToAffectedUsersAt(\DateTimeImmutable $sentToAffectedUsersAt): self
+    public function setSentToAffectedUsersAt(\DateTimeInterface $sentToAffectedUsersAt): self
     {
         $this->sentToAffectedUsersAt = $sentToAffectedUsersAt;
 

@@ -411,3 +411,9 @@ number_total_of_affected_users_tuto: Number of users with the required skills li
 number_of_interested_users_tuto: Number of users with the required skills listed above and who have indicated that they are listening to a post.
 add_skill: Add skill
 no_item_selected: No item selected
+send_an_email_to_the_affected_users: Send an email to the affected users
+no_email_has_been_sent: No email has been sent
+an_email_was_sent_on: An email was sent on
+an_email_has_been_sent: Email has been sent
+you_have_received_a_job_offer: You have received a job offer
+position_offer: Job offer

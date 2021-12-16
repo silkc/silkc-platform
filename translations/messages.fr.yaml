@@ -400,3 +400,9 @@ number_total_of_affected_users_tuto: Nombre d'utilisateurs possédant les compé
 number_of_interested_users_tuto: Nombre d'utilisateurs possédant les compétences requises listées di-dessus et ayant indiqué être à l'écoute d'un poste.
 add_skill: Ajouter une compétence
 no_item_selected: Aucun item sélectionné
+send_an_email_to_the_affected_users: Envoyer un mail aux utilisateurs concernés
+no_email_has_been_sent: Aucun e-mail n'a été envoyé
+an_email_was_sent_on: Un e-mail a été envoyé le
+an_email_has_been_sent: L'email a bien été envoyé
+you_have_received_a_job_offer: Vous avez reçu une offre d'emploi
+position_offer: Offre d'emploi

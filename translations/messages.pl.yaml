@@ -400,3 +400,9 @@ number_total_of_affected_users_tuto: Liczba użytkowników z wymaganymi umiejęt
 number_of_interested_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej i którzy wskazali, że słuchają wpisu.
 add_skill: Dodaj umiejętność
 no_item_selected: Nie wybrano żadnego elementu
+send_an_email_to_the_affected_users: Wyślij wiadomość e-mail do dotkniętych użytkowników
+no_email_has_been_sent: Nie wysłano żadnego e-maila
+an_email_was_sent_on: E-mail został wysłany w dniu
+an_email_has_been_sent: Email został wysłany
+you_have_received_a_job_offer: Otrzymałeś ofertę pracy
+position_offer: Oferta pracy

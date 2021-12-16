@@ -7,6 +7,7 @@ use App\Entity\Training;
 use App\Entity\User;
 use App\Entity\UserOccupation;
 use App\Entity\OccupationSkill;
+use App\Entity\Position;
 use App\Repository\UserRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
@@ -14,6 +15,7 @@ use App\Repository\TrainingFeedbackRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\OccupationSkillRepository;
 use App\Repository\UserSearchRepository;
+use App\Repository\PositionRepository;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -443,17 +445,17 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/send_position_to_affected_users", name="send_position_to_affected_users", methods={"GET"})
+     * @Route("/send_position_to_affected_users/{position_id}", name="send_position_to_affected_users", methods={"GET"})
      */
-    public function send_position_to_affected_users(Request $request, UserRepository $userRepository, TranslatorInterface $translator, MailerInterface $mailer)
+    public function send_position_to_affected_users($position_id, Request $request, UserRepository $userRepository, PositionRepository $positionRepository, TranslatorInterface $translator, MailerInterface $mailer)
     {
         $skills = $request->query->get('skills', [1]);
 
         $defaultData = ['count_all' => 0, 'count_listening' => 0];
-
+        
         if (!$skills || !is_array($skills) || count($skills) == 0)
-            return new JsonResponse(['message' => $translator->trans('No skills found for this position')], Response::HTTP_BAD_REQUEST);
-
+        return new JsonResponse(['message' => $translator->trans('No skills found for this position')], Response::HTTP_BAD_REQUEST);
+        
         $result = $userRepository->fetchAffectedUsers($skills);
 
         $recipients = ($result) ? new ArrayCollection($result) : null;
@@ -463,27 +465,32 @@ class ApiController extends AbstractController
 
         if ($recipients && $recipients->count() > 0) {
             $em = $this->getDoctrine()->getManager();
-            $now = new \DateTimeImmutable();
 
-            foreach ($recipients as $user) {
-                $html = $this->render(
-                    'emails/position.html.twig',
-                    [
-                        'content' => 'test',
-                    ])->getContent();
+            if ($position_id) {
+                $position = $positionRepository->find($position_id);
+ 
+                $now = new \DateTimeImmutable();
 
-                $email = (new Email())
-                    ->from('contact@silkc-platform.org')
-                    ->to($user->getEmail())
-                    ->subject($translator->trans('email.position_offer'))
-                    ->text($translator->trans('email.position_offer'))
-                    ->html($html);
+                foreach ($recipients as $user) {
+                    $html = $this->render(
+                        'emails/position.html.twig',
+                        [
+                            'position' => $position,
+                        ])->getContent();
 
-                try {
-                    $mailer->send($email);
-                    $countUsers++;
-                } catch (TransportExceptionInterface $exception) {
-                    $countErrors++;
+                    $email = (new Email())
+                        ->from('contact@silkc-platform.org')
+                        ->to($user->getEmail())
+                        ->subject($translator->trans('position_offer'))
+                        ->text($translator->trans('position_offer'))
+                        ->html($html);
+
+                    try {
+                        $mailer->send($email);
+                        $countUsers++;
+                    } catch (TransportExceptionInterface $exception) {
+                        $countErrors++;
+                    }
                 }
             }
         }

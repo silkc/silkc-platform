@@ -856,6 +856,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'form' => $form->createView(),
             'position' => $position,
+            'edit' => true,
         ]);
     }
 

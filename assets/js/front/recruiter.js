@@ -911,7 +911,66 @@ class Recruiter {
             });
         });
     }
+
+    sendEmailPosition = () => {
+        let _this = this;
+
+        $('body').on('click', '#send-email-position', function() {
+            let token = $('body').attr('data-token');
+            function formatDate(date, format) {
+                const map = {
+                    mm: date.getMonth() + 1,
+                    dd: date.getDate(),
+                    yyyy: date.getFullYear()
+                }
+                
+                return format.replace(/mm|dd|yyyy/gi, matched => map[matched])
+            }
+            
+            let positionId = $('#position_id').val().length > 0 ? $('#position_id').val() : ''
+            if (!positionId) return false;
+            let url = '/api/send_position_to_affected_users/' + positionId;
+
+
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                headers: {"X-auth-token": token},
+                url: url,
+                success: function (data, textStatus, jqXHR) {
+                    let tplMessage = `<div class="container message-flash">
+                                        <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            ${translationsJS && translationsJS.an_email_has_been_sent ? translationsJS.an_email_has_been_sent : 'Email has been sent'}
+                                        </div>
+                                    </div>`
+                    $(tplMessage).insertAfter('#main-header');
+
+                    $('html, body').animate({scrollTop:0},200);
+                    _this.displayMessage();
+
+                    $('#no-send-email-position-info').hide();
+                    $('#send-email-position-info').show().find('span').text(formatDate(new Date(), 'yyyy/mm/dd'));
+                },
+                error : function(jqXHR, textStatus, errorThrown){
+                    bootbox.alert('An error occured');
+                },
+                complete : function(jqXHR, textStatus ){}
+            });
+        });
+    }
     
+
+    displayMessage = () => {
+        if ($('.message-flash').children().length > 0) {
+            setTimeout(function() {
+                $('.message-flash').children().remove();
+            }, 2000);
+        }
+    }
+
     init = function() {
         this.runAutocompletion();
         this.duplicatePosition();
@@ -925,6 +984,7 @@ class Recruiter {
         this.runMapAddPosition();
         this.runModalAddUser();
         this.runCalculateAffectedUsers();
+        this.sendEmailPosition();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();

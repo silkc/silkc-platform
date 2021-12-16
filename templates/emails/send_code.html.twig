@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Code d'accès - Application SILKC</title>
+    <title>{{ 'position_offer'|trans }} - Application SILKC</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css">
@@ -62,7 +62,7 @@
                                         <tr>
                                             <td style="width: 580px;" width="580" align="center">
                                                 <h2 style="font-family: 'FreightSans Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; text-align: center; color:rgb(23, 24, 26); font-size:26px; font-weight: 400; padding-top:12px;">
-                                                    {{ 'email.validate_your_account'|trans }}
+                                                    {{ 'you_have_received_a_job_offer'|trans }}
                                                 </h2>
                                             </td>
                                         </tr>
@@ -95,13 +95,23 @@
                                             <td style="width: 580px;" width="580" align="left">
                                                 <div align="left" class="article-content">
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        {{ 'email.to_finalize_your_account_creation'|trans }}  : <a href="{{ validation_link }}">{{ validation_link }}</a>
+                                                        <span>{{ 'label.name'|trans }}</span> <span style="font-weight: bold;">{{ position.name is defined ? position.name : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        {{ 'email.this_link_is_valid_for_minutes'|trans }}
+                                                        <span>{{ 'label.location'|trans }}</span> <span style="font-weight: bold;">{{ position.location is defined ? position.location : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        {{ 'email.if_you_receive_this_email'|trans }}
+                                                        <span>{{ 'label.description'|trans }}</span><br />
+                                                        <span style="font-weight: bold;">{{ position.description is defined ? position.description : 'N/A'}}</span>
+                                                    </p>
+                                                    <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
+                                                        <span>{{ 'label.salary'|trans }}</span> <span style="font-weight: bold;">{{ position.salary }}</span><span>{{ position.currency }}</span>
+                                                    </p>
+                                                    <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
+                                                        <span>{{ 'label.start_at'|trans }}</span> <span style="font-weight: bold;">{{ position.startAt is defined ? position.startAt : 'N/A'}}</span>
+                                                    </p>
+                                                    <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
+                                                        <span>{{ 'label.end_at'|trans }}</span> <span style="font-weight: bold;">{{ position.endAt is defined ? position.endAt : 'N/A'}}</span>
                                                     </p>
                                                 </div>
                                             </td>
