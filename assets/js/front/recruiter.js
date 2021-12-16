@@ -272,6 +272,8 @@ class Recruiter {
                 error : function(jqXHR, textStatus, errorThrown){},
                 complete : function(jqXHR, textStatus ){}
             });
+
+            _this.resetAffectedUsers();
         });
 
         let idOccupation = $('.occupations-select select').val();
@@ -885,11 +887,21 @@ class Recruiter {
                 headers: {"X-auth-token": token},
                 url: '/api/search_affected_users',
                 success: function (data, textStatus, jqXHR) {
-                    $resultContainer.find('span:last').html(`<span data-toggle="tooltip" title="${translationsJS.number_total_of_affected_users_tuto}" style="cursor: help;">
-                                                            ${translationsJS && translationsJS.number_total_of_affected_users ? translationsJS.number_total_of_affected_users : 'Number total of affected users:'} ${data.data.count_all}</span><br>
-                                                            <span data-toggle="tooltip" title="${translationsJS.number_of_interested_users_tuto}" style="cursor: help;">
-                                                            ${translationsJS && translationsJS.number_of_interested_users ? translationsJS.number_of_interested_users : 'Number of interested users:'} ${data.data.count_listening}</span>`);
-                    $('[data-toggle="tooltip"]').tooltip();
+                    $resultContainer
+                        .find('span:not([data-toggle=tooltip]):last')
+                        .html(`
+                            ${translationsJS && translationsJS.number_total_of_affected_users ? translationsJS.number_total_of_affected_users : 'Number total of affected users:'} <strong class="ml-1 mr-1">${data.data.count_all}</strong>
+                            <span data-toggle="tooltip" title="${translationsJS.number_total_of_affected_users_tuto}" style="cursor: help;">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                            <br>
+                            ${translationsJS && translationsJS.number_of_interested_users ? translationsJS.number_of_interested_users : 'Number of interested users:'} <strong class="ml-1 mr-1">${data.data.count_listening}</strong>
+                            <span data-toggle="tooltip" title="${translationsJS.number_of_interested_users_tuto}" style="cursor: help;">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                        `);
+
+                    $resultContainer.find('[data-toggle="tooltip"]').tooltip();
                 },
                 error : function(jqXHR, textStatus, errorThrown){
                     $resultContainer.addClass('hidden');

@@ -407,5 +407,5 @@ number_total_of_affected_users: "Number total of affected users:"
 number_of_interested_users: "Number of interested users:"
 calculate_the_number_of_affected_users: Calculate the number of affected users
 Results: Results
-number_total_of_affected_users_tuto: Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer 
-number_of_interested_users_tuto: Option congue nihil imperdiet doming id quod mazim placerat facer 
+number_total_of_affected_users_tuto: Number of users with the required skills listed above.
+number_of_interested_users_tuto: Number of users with the required skills listed above and who have indicated that they are listening to a post.
