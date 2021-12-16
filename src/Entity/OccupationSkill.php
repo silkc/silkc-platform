@@ -12,12 +12,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\Apip\OccupationSkill\OccupationSkillGetCollectionController;
 
 /**
  * @ORM\Entity(repositoryClass=OccupationSkillRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"occupationSkill:read"}},
- *      collectionOperations={"get"},
+ *      collectionOperations={
+ *          "get",
+ *     },
  *      itemOperations={"get"},
  *      attributes={
  *          "formats"={"json"},

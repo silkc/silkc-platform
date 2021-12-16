@@ -199,6 +199,7 @@ class Institutional {
     getSkillsFromOccupation = () => {
 
         let _this = this;
+        let lang = $('body').attr('lang');
 
         $('body').on('change', '.occupations-select select', function () {
             let select = $(this);

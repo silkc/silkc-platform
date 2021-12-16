@@ -190,9 +190,9 @@ class Occupation
         return $this;
     }
 
-    public function getPreferredLabel(): ?string
+    public function getPreferredLabel(string $locale = null): ?string
     {
-        $locale = Locale::getDefaultFallback();
+        $locale = $locale ?? Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -322,9 +322,9 @@ class Occupation
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(string $locale = null): ?string
     {
-        $locale = Locale::getDefaultFallback();
+        $locale = $locale ?? Locale::getDefaultFallback();
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 

@@ -516,10 +516,12 @@ class HomeController extends AbstractController
      */
     public function training_create(Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository): Response
     {
+        $locale = $request->getLocale();
+
         $user = $this->getUser();
         $training = new Training();
 
-        $form = $this->createForm(TrainingType::class, $training, ['is_user' => !$this->isGranted(User::ROLE_INSTITUTION)]);
+        $form = $this->createForm(TrainingType::class, $training, ['is_user' => !$this->isGranted(User::ROLE_INSTITUTION), 'locale' => $locale]);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -603,12 +605,15 @@ class HomeController extends AbstractController
      */
     public function edit(Training $training, Request $request, ValidatorInterface $validator, TranslatorInterface $translator, SkillRepository $skillRepository, TrainingRepository $trainingRepository):Response
     {
+        $locale = $request->getLocale();
+
         $form = $this->createForm(
             TrainingType::class,
             $training,
             [
                 'is_user' => !$this->isGranted(User::ROLE_INSTITUTION),
                 'can_validate' => ($this->isGranted(User::ROLE_ADMIN) && $training->getIsValidated() != true),
+                'locale' => $locale
             ]
         );
         $form->handleRequest($request);

@@ -92,7 +92,7 @@ class OccupationRepository extends ServiceEntityRepository
             ->setParameter('locale', $locale);
 
         return $query->getResult();
-    }*/
+    }
 
     public function findAllByLocale3(string $locale)
     {
@@ -107,5 +107,5 @@ class OccupationRepository extends ServiceEntityRepository
         $query = $queryBuilder->getQuery();
 
         return $query->execute();
-    }
+    }*/
 }

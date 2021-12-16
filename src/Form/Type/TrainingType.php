@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Intl\Locale;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrainingType extends AbstractType
@@ -41,13 +42,14 @@ class TrainingType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => Training::class, 'is_user' => false, 'can_validate' => false]);
+        $resolver->setDefaults(['data_class' => Training::class, 'is_user' => false, 'can_validate' => false, 'locale' => null]);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        $occupationsTranslations = $this->occupationRepository->findAllNotNativeByLocale('fr');
+        $locale = (is_array($options) && array_key_exists('locale', $options) && !empty($options['locale'])) ?
+            $options['locale'] :
+            null;
 
         $builder
             ->add('name', TextType::class, [
@@ -172,22 +174,22 @@ class TrainingType extends AbstractType
                 'expanded' => true,
             ])
             ->add('occupation', EntityType::class, [
-                /*'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],*/
+                'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],
                 'class'        => Occupation::class,
                 'choices'      => $this->occupationRepository->findAllNotNativeByLocale('fr'),
                 'choice_label' => 'preferredLabel',
-                /*'choice_label' => function ($occupationsTranslations) {
-                    return $occupationsTranslations->getPreferredLabel();
+                'choice_label' => function ($occupationsTranslations) use ($locale) {
+                    return $occupationsTranslations->getPreferredLabel($locale);
                 },
                 'multiple'     => false,
                 'expanded'     => false,
                 'required'     => false,
                 'by_reference' => true,
                 'placeholder'  => '',
-                'choice_attr' => function($choice, $key, $value) {
+                'choice_attr' => function($choice, $key, $value) use($locale) {
                     // adds a class like attending_yes, attending_no, etc
-                    return ['data-description' => $choice->getDescription()];
-                },*/
+                    return ['data-description' => $choice->getDescription($locale)];
+                },
             ]);
 
         if (is_array($options) && array_key_exists('is_user', $options) && $options['is_user'] === true) {
