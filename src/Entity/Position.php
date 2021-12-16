@@ -175,6 +175,16 @@ class Position
 
     private $prePersisted = false;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true, "comment": "Est-ce que le recruteur a déjà envoyé un email à tous les utilisateurs concernés par ce poste"})
+     */
+    private $isSentToAffectedUsers = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $sentToAffectedUsersAt;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -538,6 +548,30 @@ class Position
     public function setRejectedAt(?\DateTimeInterface $rejectedAt): self
     {
         $this->rejectedAt = $rejectedAt;
+
+        return $this;
+    }
+
+    public function getIsSentToAffectedUsers(): ?bool
+    {
+        return $this->isSentToAffectedUsers;
+    }
+
+    public function setIsSentToAffectedUsers(bool $isSentToAffectedUsers): self
+    {
+        $this->isSentToAffectedUsers = $isSentToAffectedUsers;
+
+        return $this;
+    }
+
+    public function getSentToAffectedUsersAt(): ?\DateTimeImmutable
+    {
+        return $this->sentToAffectedUsersAt;
+    }
+
+    public function setSentToAffectedUsersAt(\DateTimeImmutable $sentToAffectedUsersAt): self
+    {
+        $this->sentToAffectedUsersAt = $sentToAffectedUsersAt;
 
         return $this;
     }

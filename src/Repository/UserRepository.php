@@ -124,4 +124,62 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $result;
     }
+
+    public function fetchAffectedUsers(array $skills)
+    {
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMappingBuilder($entityManager);
+        $rsm->addRootEntityFromClassMetadata('App\Entity\User', 'u');
+
+        $query = $this->getEntityManager()
+            ->createNativeQuery('
+                SELECT 
+                    u.*
+                FROM (
+                    SELECT 
+                        sq.user_id,
+                        COUNT(DISTINCT(sq.skill_id)) AS count_skills
+                    FROM (
+                        SELECT
+                            us.user_id,
+                            us.skill_id
+                        FROM
+                            user_skill AS us
+                        WHERE
+                            us.skill_id IN(:skillIDs) AND us.is_selected = 1
+                
+                        UNION
+                
+                        SELECT
+                            ut.user_id,
+                            ts.skill_id
+                        FROM
+                            training_skill AS ts
+                        INNER JOIN user_training AS ut ON ts.training_id = ut.training_id 
+                        WHERE ts.skill_id IN (:skillIDs)
+                        GROUP BY ut.user_id, ts.skill_id
+                        
+                        UNION
+                
+                        SELECT
+                            uo.user_id,
+                            os.skill_id
+                        FROM
+                            occupation_skill AS os
+                        INNER JOIN user_occupation AS uo ON uo.occupation_id = os.occupation_id
+                        WHERE os.skill_id IN (:skillIDs)
+                        GROUP BY uo.user_id, os.skill_id
+                    ) AS sq
+                    GROUP BY sq.user_id
+                    HAVING count_skills >= :countRequiredSkills
+                ) AS ssq
+                INNER JOIN user AS u ON u.id = ssq.user_id
+            ', $rsm)
+            ->setParameter('skillIDs', $skills)
+            ->setParameter('countRequiredSkills', count($skills));
+
+        $result = $query->getResult();
+
+        return $result;
+    }
 }

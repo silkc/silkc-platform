@@ -14,6 +14,9 @@ use App\Repository\TrainingFeedbackRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\OccupationSkillRepository;
 use App\Repository\UserSearchRepository;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use App\Repository\UserOccupationRepository;
@@ -27,6 +30,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/api", name="api_")
@@ -436,6 +440,55 @@ class ApiController extends AbstractController
             $defaultData;
 
         return $this->json(['result' => true, 'data' => $data], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/send_position_to_affected_users", name="send_position_to_affected_users", methods={"GET"})
+     */
+    public function send_position_to_affected_users(Request $request, UserRepository $userRepository, TranslatorInterface $translator, MailerInterface $mailer)
+    {
+        $skills = $request->query->get('skills', [1]);
+
+        $defaultData = ['count_all' => 0, 'count_listening' => 0];
+
+        if (!$skills || !is_array($skills) || count($skills) == 0)
+            return new JsonResponse(['message' => $translator->trans('No skills found for this position')], Response::HTTP_BAD_REQUEST);
+
+        $result = $userRepository->fetchAffectedUsers($skills);
+
+        $recipients = ($result) ? new ArrayCollection($result) : null;
+
+        $countUsers = 0;
+        $countErrors = 0;
+
+        if ($recipients && $recipients->count() > 0) {
+            $em = $this->getDoctrine()->getManager();
+            $now = new \DateTimeImmutable();
+
+            foreach ($recipients as $user) {
+                $html = $this->render(
+                    'emails/position.html.twig',
+                    [
+                        'content' => 'test',
+                    ])->getContent();
+
+                $email = (new Email())
+                    ->from('contact@silkc-platform.org')
+                    ->to($user->getEmail())
+                    ->subject($translator->trans('email.position_offer'))
+                    ->text($translator->trans('email.position_offer'))
+                    ->html($html);
+
+                try {
+                    $mailer->send($email);
+                    $countUsers++;
+                } catch (TransportExceptionInterface $exception) {
+                    $countErrors++;
+                }
+            }
+        }
+
+        return $this->json(['result' => true, 'countUsers' => $countUsers, 'countErrors' => $countErrors], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 
     /**
