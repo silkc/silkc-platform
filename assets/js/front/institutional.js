@@ -424,6 +424,7 @@ class Institutional {
                 minLength: minLength,
                 emptyMsg: 'No elements found',
                 render: function(item, currentValue) {
+
                     /*if (item.translations) {
                         item = item.translations[Object.keys(item.translations)[0]]
                     }*/

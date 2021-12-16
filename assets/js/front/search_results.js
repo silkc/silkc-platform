@@ -667,6 +667,7 @@ class SearchResults {
         })
             .on("markgeocode", function (e) {
                 if (e.geocode && e.geocode.center) {
+
                     let lat = e.geocode.center.lat;
                     let lng = e.geocode.center.lng;
                     let name = e.geocode.name;

@@ -31,12 +31,14 @@ class OccupationRepository extends ServiceEntityRepository
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult( 'id', 'id');
         $rsm->addScalarResult( 'preferred_label', 'preferredLabel');
+        $rsm->addScalarResult( 'description', 'description');
 
         $query = $this->getEntityManager()
             ->createNativeQuery('
                 SELECT 
                     o.id,
-                    ot.preferred_label 
+                    ot.preferred_label,
+                    ot.description 
                 FROM 
                      occupation AS o
                 INNER JOIN occupation_translation AS ot ON ot.occupation_id = o.id AND locale = :locale
@@ -47,6 +49,30 @@ class OccupationRepository extends ServiceEntityRepository
         $result = $query->getScalarResult();
 
         return $result;
+    }
+
+    public function findAllNotNativeByLocale(string $locale)
+    {
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMappingBuilder($entityManager);
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Occupation', 'o');
+        $query = $entityManager
+            ->createNativeQuery("
+                SELECT
+                    o.id,
+                    ot.preferred_label,
+                    ot.description
+                FROM occupation AS o
+                LEFT JOIN occupation_translation AS ot 
+                ON ot.occupation_id = o.id AND ot.locale = :locale
+                GROUP BY o.id
+            ", $rsm)
+            ->setParameter('locale', $locale);
+
+        $result = $query->getResult();
+
+        return $result;
+
     }
 
     /*public function findAllByLocale2(string $locale)
@@ -66,19 +92,20 @@ class OccupationRepository extends ServiceEntityRepository
             ->setParameter('locale', $locale);
 
         return $query->getResult();
-    }
+    }*/
 
     public function findAllByLocale3(string $locale)
     {
         $queryBuilder = $this->createQueryBuilder('o')
             ->addSelect('o.id')
             ->addSelect('ot.preferredLabel')
+            ->addSelect('ot.description')
             ->leftJoin('o.translations', 'ot', 'WITH', 'ot.locale=:locale')
             ->groupBy('o.id')
             ->setParameter('locale', $locale);
 
         $query = $queryBuilder->getQuery();
 
-        return $query->getResult();
-    }*/
+        return $query->execute();
+    }
 }

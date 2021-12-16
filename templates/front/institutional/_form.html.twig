@@ -72,11 +72,17 @@
 				{{ form_row(form.isFree) }}
 
 				<div class="input-group mb-3 pl-3">
-                    {% set priceDisabled = training.isFree is defined and training.isFree == true ? 'disabled="disabled"' : '' %}
-					{{ form_widget(form.price, { 'attr':{'disabled': priceDisabled} }) }}
-					<div class="input-group-append">
-						{{ form_widget(form.currency, { 'attr':{'disabled': priceDisabled} }) }}
-					</div>
+                    {% if training.isFree is defined and training.isFree == true %}
+					    {{ form_widget(form.price, { 'attr':{'disabled': 'disabled'} }) }}
+                        <div class="input-group-append blc-currency disabled">
+                            {{ form_widget(form.currency) }}
+                        </div>
+                    {% else %}
+					    {{ form_widget(form.price) }}
+                        <div class="input-group-append blc-currency">
+                            {{ form_widget(form.currency) }}
+                        </div>
+                    {% endif %}
 				</div>
 			</div>
 		</div>

@@ -46,6 +46,9 @@ class TrainingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        $occupationsTranslations = $this->occupationRepository->findAllNotNativeByLocale('fr');
+
         $builder
             ->add('name', TextType::class, [
                 'attr'               => ['autofocus' => true],
@@ -100,6 +103,7 @@ class TrainingType extends AbstractType
                 'label_attr' => [
                     'class' => 'switch-custom',
                 ],
+                'required' => false
             ])
             ->add('isCertified', ChoiceType::class, [
                 'translation_domain' => 'messages',
@@ -168,10 +172,13 @@ class TrainingType extends AbstractType
                 'expanded' => true,
             ])
             ->add('occupation', EntityType::class, [
-                'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],
+                /*'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],*/
                 'class'        => Occupation::class,
-                'choices'      => $this->occupationRepository->findAll(),
+                'choices'      => $this->occupationRepository->findAllNotNativeByLocale('fr'),
                 'choice_label' => 'preferredLabel',
+                /*'choice_label' => function ($occupationsTranslations) {
+                    return $occupationsTranslations->getPreferredLabel();
+                },
                 'multiple'     => false,
                 'expanded'     => false,
                 'required'     => false,
@@ -180,7 +187,7 @@ class TrainingType extends AbstractType
                 'choice_attr' => function($choice, $key, $value) {
                     // adds a class like attending_yes, attending_no, etc
                     return ['data-description' => $choice->getDescription()];
-                },
+                },*/
             ]);
 
         if (is_array($options) && array_key_exists('is_user', $options) && $options['is_user'] === true) {

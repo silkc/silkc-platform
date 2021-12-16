@@ -251,10 +251,10 @@ class Main {
             let inputPrice = $('#training_price');
             let inputCurrency = $('#training_currency');
             if($(this).is(':checked') ){
-                inputCurrency.prop('disabled', true);
+                inputCurrency.parent().addClass('disabled');
                 inputPrice.prop('disabled', true);
             } else {
-                inputCurrency.prop('disabled', false);
+                inputCurrency.parent().removeClass('disabled');
                 inputPrice.prop('disabled', false);
             }
         });
