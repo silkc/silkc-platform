@@ -185,7 +185,8 @@ class TrainingType extends AbstractType
                 'expanded'     => false,
                 'required'     => false,
                 'by_reference' => true,
-                'placeholder'  => '',
+                'translation_domain' => 'messages',
+                'placeholder'  => 'no_item_selected',
                 'choice_attr' => function($choice, $key, $value) use($locale) {
                     // adds a class like attending_yes, attending_no, etc
                     return ['data-description' => $choice->getDescription($locale)];
