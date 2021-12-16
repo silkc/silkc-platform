@@ -938,18 +938,28 @@ class Recruiter {
                 headers: {"X-auth-token": token},
                 url: url,
                 success: function (data, textStatus, jqXHR) {
-                    let tplMessage = `<div class="container message-flash">
-                                        <div class=" mt-5 mb-5 alert alert-success alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            ${translationsJS && translationsJS.an_email_has_been_sent ? translationsJS.an_email_has_been_sent : 'Email has been sent'}
-                                        </div>
-                                    </div>`
-                    $(tplMessage).insertAfter('#main-header');
+                    if (data && data.result) {
+                        let $modal = $('#common-modal');
 
-                    $('html, body').animate({scrollTop:0},200);
-                    _this.displayMessage();
+                        let sendSuccess = translationsJS && translationsJS.sendSuccess ? translationsJS.sendSuccess : 'email sent successfully';
+                        let sendError = translationsJS && translationsJS.sendError ? translationsJS.sendError : 'error';
+                        let sendsSuccess = translationsJS && translationsJS.sendsSuccess ? translationsJS.sendsSuccess : 'emails sent successfully';
+                        let sendsError = translationsJS && translationsJS.sendsError ? translationsJS.sendsError : 'error';
+
+                        let msgSuccess = data.countUsers > 1 ? sendsSuccess : sendSuccess;
+                        let msgError = data.countUsers > 1 ? sendsSuccess : sendError;
+
+                        if ($modal) {
+                            $modal.find('.modal-title').html(translationsJS && translationsJS.summary ? translationsJS.summary : 'Summary');
+                            let contentHTML = `<div class="send-mail-modal">
+                            <p style="font-size: 1.1rem;" class="text-success"><span>${data.countUsers}</span> <span>${msgSuccess}</span></p>
+                            <p style="font-size: 1.1rem;" class="text-danger"><span>${data.countErrors}</span> <span>${msgError}</span></p>
+                            </div>`;
+                            $(contentHTML).appendTo($modal.find('.modal-body'));
+                            $('#common-modal').modal('show');
+                        }
+                    }
+
 
                     $('#no-send-email-position-info').hide();
                     $('#send-email-position-info').show().find('span').text(formatDate(new Date(), 'yyyy/mm/dd'));

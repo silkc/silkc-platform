@@ -402,6 +402,10 @@ no_item_selected: Nessun elemento selezionato
 send_an_email_to_the_affected_users: Invia un'e-mail agli utenti interessati
 no_email_has_been_sent: Nessuna email è stata inviata
 an_email_was_sent_on: È stata inviata un'e-mail il
-an_email_has_been_sent: L'email è stata inviata
+summary: Riepilogo
 you_have_received_a_job_offer: Hai ricevuto un'offerta di lavoro
 position_offer: Offerta di lavoro
+sendsSuccess: email inviate con successo
+sendsError: errori
+sendSuccess: email inviata correttamente
+sendError: errore

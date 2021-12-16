@@ -403,6 +403,10 @@ no_item_selected: Nie wybrano żadnego elementu
 send_an_email_to_the_affected_users: Wyślij wiadomość e-mail do dotkniętych użytkowników
 no_email_has_been_sent: Nie wysłano żadnego e-maila
 an_email_was_sent_on: E-mail został wysłany w dniu
-an_email_has_been_sent: Email został wysłany
+summary: Streszczenie
 you_have_received_a_job_offer: Otrzymałeś ofertę pracy
 position_offer: Oferta pracy
+sendsSuccess: e-maile wysłane pomyślnie
+sendsError: błędy
+sendSuccess: e-mail wysłany pomyślnie
+sendError: błąd
