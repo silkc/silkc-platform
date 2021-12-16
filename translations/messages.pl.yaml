@@ -398,3 +398,5 @@ calculate_the_number_of_affected_users: Oblicz liczbę dotkniętych użytkownik�
 Results: Wyniki
 number_total_of_affected_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej.
 number_of_interested_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej i którzy wskazali, że słuchają wpisu.
+add_skill: Dodaj umiejętność
+no_item_selected: Nie wybrano żadnego elementu

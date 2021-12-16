@@ -398,3 +398,5 @@ calculate_the_number_of_affected_users: Calculer le nombre d'utilisateurs concer
 Results: Résultats
 number_total_of_affected_users_tuto: Nombre d'utilisateurs possédant les compétences requises listées ci-dessus.
 number_of_interested_users_tuto: Nombre d'utilisateurs possédant les compétences requises listées di-dessus et ayant indiqué être à l'écoute d'un poste.
+add_skill: Ajouter une compétence
+no_item_selected: Aucun item sélectionné
