@@ -495,6 +495,7 @@ class ApiController extends AbstractController
             }
         }
 
+
         $position->setSentToAffectedUsersAt($now);
         $position->setIsSentToAffectedUsers(true);
         $em->persist($position);
@@ -506,41 +507,100 @@ class ApiController extends AbstractController
     /**
      * @Route("/cron/fetch_lat_and_long", name="fetch_lat_and_long", methods={"GET"})
      */
-    public function fetch_lat_and_long(HttpClientInterface $client, TrainingRepository $trainingRepository)
+    public function fetch_lat_and_long(HttpClientInterface $client, TrainingRepository $trainingRepository, UserRepository $userRepository)
     {
         $trainings = $trainingRepository->findWithoutLatitudeAndLongitude();
-        if (!$trainings)
-            return $this->json(['result' => false, 'error' => 'Aucune formation sans latitude ni longitude trouvée.'], 200, ['Access-Control-Allow-Origin' => '*']);
+        $users = $userRepository->findWithoutLatitudeAndLongitude();
 
         $em = $this->getDoctrine()->getManager();
 
-        foreach ($trainings as $training) {
-            try {
-                $response = $client->request(
-                    'GET',
-                    'http://api.positionstack.com/v1/forward?access_key=f0dca21d14ea7051bd831f9e9a2808dd&query=' . $training->getLocation()
-                );
+        if ($trainings) {
+            foreach ($trainings as $training) {
+                try {
+                    $response = $client->request(
+                        'GET',
+                        'http://api.positionstack.com/v1/forward?access_key=f0dca21d14ea7051bd831f9e9a2808dd&query=' . $training->getLocation()
+                    );
 
-                $data = $response->toArray();
+                    $data = $response->toArray();
 
-                if (!is_array($data) && array_key_exists('data', $data) && !empty($data['data']))
-                    continue;
+                    if (!is_array($data) && array_key_exists('data', $data) && !empty($data['data']))
+                        continue;
 
-                $row = current($data['data']);
-                if (!is_array($row) || !array_key_exists('latitude', $row) || !array_key_exists('longitude', $row))
-                    continue;
+                    $row = current($data['data']);
+                    if (!is_array($row) || !array_key_exists('latitude', $row) || !array_key_exists('longitude', $row))
+                        continue;
 
-                $training->setLatitude($row['latitude']);
-                $training->setLongitude($row['longitude']);
+                    $training->setLatitude($row['latitude']);
+                    $training->setLongitude($row['longitude']);
 
-                $em->persist($training);
-                $em->flush();
+                    $em->persist($training);
+                    $em->flush();
+                } catch (\Throwable $e) {
+
+                }
             }
-            catch (\Throwable $e) {
+        }
 
+        if ($users) {
+            foreach ($users as $user) {
+                try {
+                    $response = $client->request(
+                        'GET',
+                        'http://api.positionstack.com/v1/forward?access_key=f0dca21d14ea7051bd831f9e9a2808dd&query=' . $user->getAddress()
+                    );
+
+                    $data = $response->toArray();
+
+                    if (!is_array($data) && array_key_exists('data', $data) && !empty($data['data']))
+                        continue;
+
+                    $row = current($data['data']);
+                    if (!is_array($row) || !array_key_exists('latitude', $row) || !array_key_exists('longitude', $row))
+                        continue;
+
+                    $user->setLatitude($row['latitude']);
+                    $user->setLongitude($row['longitude']);
+
+                    $em->persist($user);
+                    $em->flush();
+                } catch (\Throwable $e) {
+
+                }
             }
         }
 
         return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/cron/convert_euro_zloty", name="convert_euro_zloty", methods={"GET"})
+     */
+    public function convert_euro_zloty(HttpClientInterface $client)
+    {
+        try {
+            $response = $client->request(
+                'GET',
+                'http://api.nbp.pl/api/exchangerates/rates/a/eur?format=json'
+            );
+
+            $data = $response->toArray();
+
+            if (!$data || !is_array($data) || !array_key_exists('rates', $data) || !is_array($data['rates']))
+                throw new \Exception('Get currency rate error');
+
+            $current = current($data['rates']);
+            $rate = (is_array($current) && array_key_exists('mid', $current)) ?
+                $current['mid'] :
+                null;
+
+            if (!$rate)
+                throw new \Exception('Currency rate empty');
+
+            dd($rate);
+        } catch(\Throwable $e) {
+            dd($e->getMessage());
+        }
+
     }
 }

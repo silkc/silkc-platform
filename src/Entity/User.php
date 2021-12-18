@@ -168,6 +168,28 @@ class User implements UserInterface
     private $address;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "user longitude cannot be longer than {{ limit }} characters"
+     * )
+     * @Groups({"user:read"})
+     */
+    private $longitude;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "user latitude cannot be longer than {{ limit }} characters"
+     * )
+     * @Groups({"user:read"})
+     */
+    private $latitude;
+
+    /**
      * @ORM\Column(type="integer", length=3, nullable=false, options={"default": 0, "unsigned": true})
      * @Assert\Type("integer")
      * @Assert\Length(
@@ -522,6 +544,30 @@ class User implements UserInterface
     public function setAddress(?string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?string $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?string $latitude): self
+    {
+        $this->latitude = $latitude;
 
         return $this;
     }

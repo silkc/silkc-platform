@@ -182,4 +182,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $result;
     }
+
+    /**
+     * Retourne la liste des utilisateurs avec une adresse mais sans lattitude ni longitude
+     */
+    public function findWithoutLatitudeAndLongitude()
+    {
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMappingBuilder($entityManager);
+        $rsm->addRootEntityFromClassMetadata('App\Entity\User', 'u');
+
+        $query = $this->getEntityManager()->createNativeQuery(" 
+            SELECT 
+                u.*
+            FROM user AS u
+            WHERE u.address IS NOT NULL AND u.latitude IS NULL AND u.longitude IS NULL
+            ORDER BY id DESC
+            ", $rsm);
+
+        return $query->getResult();
+    }
 }
