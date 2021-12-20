@@ -410,3 +410,5 @@ sendsSuccess: e-maile wysłane pomyślnie
 sendsError: błędy
 sendSuccess: e-mail wysłany pomyślnie
 sendError: błąd
+training_rating_tooltip_js: Średni ranking szkoleń dla
+training_rating_voters_tooltip_js: głosujących

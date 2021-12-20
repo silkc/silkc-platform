@@ -421,3 +421,5 @@ sendsSuccess: emails sent successfully
 sendsError: errors
 sendSuccess: email sent successfully
 sendError: error
+training_rating_tooltip_js: Average training ranking for
+training_rating_voters_tooltip_js: voters

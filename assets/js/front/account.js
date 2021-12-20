@@ -101,7 +101,7 @@ class Account {
                 <div class="d-flex flex-row justify-content-start align-items-center mr-4">
                     <span class="rating" data-value="${training.avgMark}"></span>
                     <span
-                            title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
+                            title="${translationsJS ? translationsJS.training_rating_tooltip_js + ' ' +  training.totalMark + ' ' + translationsJS.training_rating_voters_tooltip_js : ''}"
                             data-toggle="tooltip"
                             style="font-size: 0.8rem;"
                     >

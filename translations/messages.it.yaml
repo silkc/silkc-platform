@@ -409,3 +409,5 @@ sendsSuccess: email inviate con successo
 sendsError: errori
 sendSuccess: email inviata correttamente
 sendError: errore
+training_rating_tooltip_js: Punteggio medio di formazione per
+training_rating_voters_tooltip_js: votanti

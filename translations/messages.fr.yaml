@@ -410,3 +410,5 @@ sendsSuccess: emails envoyés avec succès
 sendsError: erreurs 
 sendSuccess: email envoyé avec succés
 sendError: erreur
+training_rating_tooltip_js: Score moyen de formation pour
+training_rating_voters_tooltip_js: votants
