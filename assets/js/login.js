@@ -42,7 +42,10 @@ class Login {
     /**
      * Affichage carte
      */
-    runMap = () => {
+    runMap = () => {       
+        let inputHiddenLat = document.querySelector('form input[type="hidden"].user_lat');
+        let inputHiddenLng = document.querySelector('form input[type="hidden"].user_lng');
+
         let inputUserHidden = document.getElementById("user_address");
         let inputInstitutionHidden = document.getElementById(
             "institution_address"
@@ -111,19 +114,22 @@ class Login {
                         let lat = e.geocode.center.lat;
                         let lng = e.geocode.center.lng;
                         let name = e.geocode.name;
-
+                        
                         let newCoords = {
-                            city: name,
-                            lat: lat,
-                            lng: lng,
+                            "city": name,
+                            "lat": lat, 
+                            "lng": lng
                         };
                         newCoords = JSON.stringify(newCoords);
-
+                        
                         let leafletControlGeocoderForm = document.querySelector(
                             ".leaflet-control-geocoder-form input"
                         );
                         leafletControlGeocoderForm.value = name;
                         inputHidden.value = newCoords;
+                        
+                        inputHiddenLat.value = lat;
+                        inputHiddenLng.value = lng;
 
                         $("#map").removeClass("not-allowed");
 

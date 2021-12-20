@@ -532,6 +532,8 @@ class Recruiter {
      runMap = () => {
 
         let inputHidden = document.getElementById('recruiter_address');
+        let inputHiddenLat = document.querySelector('form input[type="hidden"].user_lat');
+        let inputHiddenLng = document.querySelector('form input[type="hidden"].user_lng');
         var map = null;
 
         if (inputHidden) {
@@ -569,6 +571,9 @@ class Recruiter {
                         "lng": lng
                     };
                     newCoords = JSON.stringify(newCoords);
+
+                    inputHiddenLat.value = lat;
+                    inputHiddenLng.value = lng;
                     
                     let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
                     leafletControlGeocoderForm.value = name;

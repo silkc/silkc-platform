@@ -36,6 +36,14 @@ class RecruiterType extends AbstractType
                 'label'              => 'login.form.label.address',
                 'translation_domain' => 'messages',
                 'required'           => false,
+            ])
+            ->add('longitude', HiddenType::class, [
+                'attr'               => ["class" => "user_lng"],
+                'required'           => false,
+            ])
+            ->add('latitude', HiddenType::class, [
+                'attr'               => ["class" => "user_lat"],
+                'required'           => false,
             ]);
 
         if (array_key_exists('by_admin', $options) && $options['by_admin'] === true) {

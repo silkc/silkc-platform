@@ -559,6 +559,8 @@ class Institutional {
 
         let inputHidden = document.getElementById('institution_address');
         var map = null;
+        let inputHiddenLat = document.querySelector('form input[type="hidden"].user_lat');
+        let inputHiddenLng = document.querySelector('form input[type="hidden"].user_lng');
 
         if (inputHidden) {
             let coords = inputHidden.value;
@@ -595,6 +597,9 @@ class Institutional {
                         "lng": lng
                     };
                     newCoords = JSON.stringify(newCoords);
+
+                    inputHiddenLat.value = lat;
+                    inputHiddenLng.value = lng;
                     
                     let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
                     leafletControlGeocoderForm.value = name;
