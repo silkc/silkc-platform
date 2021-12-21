@@ -213,6 +213,12 @@ class Training
     private $price;
 
     /**
+     * @ORM\Column(type="float", length=255, nullable=true, options={"comment": "Champs de prix universel avec conversion automatique à l'import"})
+     * @Assert\Type({"float", "integer", "numeric"})
+     */
+    private $euroPrice;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=false, options={"default": "euro"}, columnDefinition="ENUM('euro', 'złoty')")
      * @Assert\Type("string")
      * @Assert\Choice({"euro", "złoty"})
@@ -715,6 +721,18 @@ class Training
     public function setPrice(?string $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getEuroPrice(): ?string
+    {
+        return $this->euroPrice;
+    }
+
+    public function setEuroPrice(?string $euroPrice): self
+    {
+        $this->euroPrice = $euroPrice;
 
         return $this;
     }

@@ -15,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class UserImportFixtures extends Fixture
 {
@@ -24,6 +25,7 @@ class UserImportFixtures extends Fixture
     private $_skillRepository;
     private $_occupationRepository;
     private $_validator;
+    private $_client;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -31,7 +33,8 @@ class UserImportFixtures extends Fixture
         TrainingRepository $trainingRepository,
         SkillRepository $skillRepository,
         OccupationRepository $occupationRepository,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        HttpClientInterface $client
     )
     {
         $this->_passwordEncoder = $passwordEncoder;
@@ -40,6 +43,7 @@ class UserImportFixtures extends Fixture
         $this->_skillRepository = $skillRepository;
         $this->_occupationRepository = $occupationRepository;
         $this->_validator = $validator;
+        $this->_client = $client;
     }
 
     public function load(ObjectManager $manager)
@@ -55,6 +59,8 @@ class UserImportFixtures extends Fixture
         $finder->name('*.json');
         $finder->files();
         $finder->sortByName();
+
+        $rate = $this->_get_rate();
 
         foreach( $finder as $file ){
             $jsonData = $file->getContents();
@@ -331,6 +337,11 @@ class UserImportFixtures extends Fixture
                                                 $training->setStartAt($startAt);
 
                                         }
+                                        if ($rate && $training->getPrice() !== null && $training->getPrice() > 0 && $training->getCurrency() === Training::CURRENCY_ZLOTY) {
+                                            $training->setEuroPrice(number_format($training->getPrice() / $rate, 2));
+                                        } else if ($training->getCurrency() === Training::CURRENCY_EURO) {
+                                            $training->setEuroPrice($training->getPrice());
+                                        }
                                         if (property_exists($trainingData, 'end_at') && !empty($trainingData->end_at)) {
                                             $endAt = \DateTime::createFromFormat('Y-m-d H:i:s', $trainingData->end_at);
                                             if ($endAt && $endAt->format('Y-m-d H:i:s') === $trainingData->end_at)
@@ -414,5 +425,34 @@ class UserImportFixtures extends Fixture
 
         if ($count === 0)
             print "No data file containing the key 'user' was found" . PHP_EOL;
+    }
+
+    protected function _get_rate():float
+    {
+        $rate = null;
+
+        try {
+            $response = $this->_client->request(
+                'GET',
+                'http://api.nbp.pl/api/exchangerates/rates/a/eur?format=json'
+            );
+
+            $data = $response->toArray();
+
+            if (!$data || !is_array($data) || !array_key_exists('rates', $data) || !is_array($data['rates']))
+                throw new \Exception('Get currency rate error');
+
+            $current = current($data['rates']);
+            $rate = (is_array($current) && array_key_exists('mid', $current)) ?
+                $current['mid'] :
+                null;
+
+            if (!$rate)
+                throw new \Exception('Currency rate empty');
+        } catch(\Throwable $e) {
+
+        }
+
+        return $rate;
     }
 }
