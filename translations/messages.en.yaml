@@ -423,3 +423,5 @@ sendSuccess: email sent successfully
 sendError: error
 training_rating_tooltip_js: Average training ranking for
 training_rating_voters_tooltip_js: voters
+skills_acquired_occupation_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+skills_acquired_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.

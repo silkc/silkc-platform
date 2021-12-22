@@ -412,3 +412,5 @@ sendSuccess: email envoyé avec succés
 sendError: erreur
 training_rating_tooltip_js: Score moyen de formation pour
 training_rating_voters_tooltip_js: votants
+skills_acquired_occupation_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+skills_acquired_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.

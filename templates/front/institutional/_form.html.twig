@@ -169,12 +169,12 @@
 			</div>
 		</div>
 
-		<p class="title mb-0">{{ 'acquired_skills'|trans  }}</p>
+		<p class="title mb-0">{{ 'acquired_skills'|trans }}</p>
 		<div class="p-4 content-skills">
 			<div class="mb-3 add-skill-gp" data-type="acquired">
 				<div class="content-list-skill">
 					<div class="mb-4">
-						<div class="pb-3 title-blc-skills">{{ 'esco'|trans }}</div>
+						<div class="pb-3 title-blc-skills">{{ 'esco'|trans }} <span title="{{ 'skills_acquired_occupation_info'|trans }}" data-toggle="tooltip"><i class="fas fa-info-circle"></i></span></div>
 						<div class="occupation">
 							<ul class="list-group ul-skills" id="skills-occupations-acquired"></ul>
 							<a href="#" class="skills-associated" id="all-associated">All associated</a>
@@ -192,7 +192,7 @@
                         }
                         %}
 					<div class="mt-4 mb-4">
-						<div class="pb-3 title-blc-skills">{{ 'no_esco'|trans }}</div>
+						<div class="pb-3 title-blc-skills">{{ 'no_esco'|trans }} <span title="{{ 'skills_acquired_info'|trans }}" data-toggle="tooltip"><i class="fas fa-info-circle"></i></span></div>
 						<div class="not-occupation">
 							<ul class="list-group ul-skills" id="skills-not-occupations-acquired">
 								{% if training is defined %}
