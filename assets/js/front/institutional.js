@@ -308,7 +308,7 @@ class Institutional {
 
                                     // Affichage "tout associer/tout desassocier"
                                     if (ul.find('li').length > 0) {
-                                        $('body').find('.skills-associated').show();
+                                        $('body').find('.skills-associated').css('display', 'inline-block');
                                     } else {
                                         $('body').find('.skills-associated').hide();
                                     }
