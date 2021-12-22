@@ -192,7 +192,10 @@ class Occupation
 
     public function getPreferredLabel(string $locale = null): ?string
     {
-        $locale = $locale ?? Locale::getDefaultFallback();
+        $locale = Locale::getDefaultFallback();
+        if(isset($GLOBALS['request']) && $GLOBALS['request']) {
+            $locale = $GLOBALS['request']->getLocale();    
+        }
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -289,6 +292,9 @@ class Occupation
     public function getDefinition(): ?string
     {
         $locale = Locale::getDefaultFallback();
+        if(isset($GLOBALS['request']) && $GLOBALS['request']) {
+            $locale = $GLOBALS['request']->getLocale();    
+        }
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 
@@ -324,7 +330,10 @@ class Occupation
 
     public function getDescription(string $locale = null): ?string
     {
-        $locale = $locale ?? Locale::getDefaultFallback();
+        $locale = Locale::getDefaultFallback();
+        if(isset($GLOBALS['request']) && $GLOBALS['request']) {
+            $locale = $GLOBALS['request']->getLocale();    
+        }
         $criteria = Criteria::create()
             ->andWhere(Criteria::expr()->eq('locale', $locale));
 

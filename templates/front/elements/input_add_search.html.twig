@@ -1,9 +1,4 @@
 <div class="input-group group-add-search">
-    <div class="loader-search loader mr-2" id="{{ name is defined ? 'loader_' ~ name : '' }}">
-        <div class="spinner-border spinner-border-sm" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
 	<input 
 		type="text" disabled="disabled" class="form-control {{ autocomplete is defined and autocomplete == true ? 'input-autocomplete' : '' }}" 
 		name="{{ name is defined ? name : '' }}" 
@@ -15,9 +10,14 @@
 		data-pagination="{{ pagination is defined ? pagination : 'false' }}" 
 		{% if value is defined and value is not empty %}value="{{ value }}" {% endif %} 
 	>
+    <div class="loader-search loader mr-2" id="{{ name is defined ? 'loader_' ~ name : '' }}">
+        <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <input type="hidden" name="{{ name is defined ? 'hidden_' ~ name : '' }}" id="{{ name is defined ? 'hidden_' ~ name : '' }}" value="{{ id_input_hidden is defined ? id_input_hidden : '' }}" />
 	<div class="input-group-append">
-        <button type="button">
+        <button type="button" class="btn btn-primary">
             <i class="fas fa-plus"></i>
         </button>
 	</div>

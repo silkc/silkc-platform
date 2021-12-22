@@ -27,15 +27,29 @@ class Institutional {
 
     tplSkill = (skill, type, rmv = false, associated = false) => {
 
-        return `<li class="list-group-item">
+        let lang = $('body').attr('lang');
+        let id = skill.id;
+        if (skill.translations) {
+            let skills = skill.translations;
+            skills.forEach(sk => {
+                if (lang == sk.locale) skill = sk;
+            });
+        }
+
+        return `<li class="list-group-item ${!associated ? 'no-linked' : ''}">
             <div class="d-flex flex-nowrap justify-content-between">
                 <div>
                     <span>${skill.preferredLabel}</span>
                 </div>
                 <div>
-                    <a href="#" class="${associated ? 'associated' : ''} ${rmv ? 'rmv' : 'add'}" data-id="${skill.id}" data-name="${skill.preferredLabel}" data-type="${type}">
-                        <i class="fas ${rmv ? 'fa-minus' : 'fa-plus'}"></i>
-                    </a>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input ${associated ? 'associated' : ''} ${rmv ? 'rmv-skill' : 'add-skill'}" 
+                                            id="skill_id-${id}" data-id="${id}" 
+                                            data-name="${skill.preferredLabel}" 
+                                            data-type="${type}" value="1" 
+                                            ${associated ? 'checked="checked"' : ''}>
+                        <label class="switch-custom custom-control-label" for="skill_id-${id}"></label>
+                    </div>
                 </div>
             </div>
         </li>`;
@@ -58,11 +72,11 @@ class Institutional {
 
         let _this = this; 
 
-        $('body').on('click', '.add-skill button', function() {
+        $('body').on('click', '.add-skill-gp button', function() {
 
             let status = true;
-            let type = $(this).closest('.add-skill').attr('data-type');
-            let skillNameInput = $(this).closest('.add-skill').find('.input-autocomplete');
+            let type = $(this).closest('.add-skill-gp').attr('data-type');
+            let skillNameInput = $(this).closest('.add-skill-gp').find('.input-autocomplete');
             let skillIdInput = skillNameInput.siblings('input[type="hidden"]');
             let skillName = skillNameInput.val();
             let skillId = skillIdInput.val();
@@ -97,7 +111,7 @@ class Institutional {
 
             if (!statusAppend) return false;
             let data = {id: skillId, preferredLabel: skillName};
-            let html = _this.tplSkill(data, type, true);
+            let html = _this.tplSkill(data, type, true, true);
             $(html).appendTo(ul);
         });
     }
@@ -183,7 +197,7 @@ class Institutional {
 
         let _this = this;
 
-        $('body').on('click', '.ul-skills:not(#skills-occupations-acquired) .rmv', function(e) {
+        $('body').on('click', '.ul-skills:not(#skills-occupations-acquired) .rmv-skill', function(e) {
             e.preventDefault();
             
             let type = $(this).attr('data-type');
@@ -282,8 +296,8 @@ class Institutional {
                                 // on les deplace dans la partie liée au metier
                                 if ('acquired' in skillsList
                                     && skillsList.acquired.includes(data[i].skill.id)) {
-                                    if (ulNotOccupation.find('.rmv[data-id="' + data[i].skill.id + '"]').length > 0) {
-                                        ulNotOccupation.find('.rmv[data-id="' + data[i].skill.id + '"]').closest('.list-group-item').remove();
+                                    if (ulNotOccupation.find('.rmv-skill[data-id="' + data[i].skill.id + '"]').length > 0) {
+                                        ulNotOccupation.find('.rmv-skill[data-id="' + data[i].skill.id + '"]').closest('.list-group-item').remove();
                                     }
                                     html += _this.tplSkill(data[i].skill, "acquired", true, true);
                                 } else {
@@ -298,7 +312,7 @@ class Institutional {
                                     } else {
                                         $('body').find('.skills-associated').hide();
                                     }
-                                    if (ul.find('.add').length > 0) {
+                                    if (ul.find('.add-skill').length > 0) {
                                         $('body').find('.skills-associated').attr('id', 'all-associated').html(translationsJS && translationsJS.all_associated ? translationsJS.all_associated : 'All associated')
                                     } else {
                                         $('body').find('.skills-associated').attr('id', 'all-unassociated').html(translationsJS && translationsJS.all_unassociated ? translationsJS.all_unassociated : 'All unassociated')
@@ -329,15 +343,14 @@ class Institutional {
             let ul = $('#skills-occupations-acquired');
             if (ul.find('li').length > 0) {
                 ul.find('li').each(function(k) {
-                    let skill = $(this).find('a.add');
+                    $(this).removeClass('no-linked');
+                    let skill = $(this).find('input[type="checkbox"].add-skill');
+                    skill.prop('checked', true);
                     let skillId = skill.attr('data-id');
                     let type = skill.attr('data-type');
                     
                     skill.addClass('associated');
-                    
-                    skill.toggleClass('add rmv');
-                    skill.children().remove();
-                    skill.append('<i class="fas fa-minus"></i>');
+                    skill.toggleClass('add-skill rmv-skill');
                     
                     _this.addSkillToHiddenField(type, skillId);
                 });
@@ -352,15 +365,14 @@ class Institutional {
             let ul = $('#skills-occupations-acquired');
             if (ul.find('li').length > 0) {
                 ul.find('li').each(function(k) {
-                    let skill = $(this).find('a.rmv');
+                    $(this).addClass('no-linked');
+                    let skill = $(this).find('input[type="checkbox"].rmv-skill');
+                    skill.prop('checked', false);
                     let skillId = skill.attr('data-id');
                     let type = skill.attr('data-type');
             
                     skill.removeClass('associated');
-
-                    skill.toggleClass('rmv add');
-                    skill.children().remove();
-                    skill.append('<i class="fas fa-plus"></i>');
+                    skill.toggleClass('rmv-skill add-skill');
                     
                     _this.removeSkillToHiddenField(type, skillId);
                 });
@@ -369,32 +381,29 @@ class Institutional {
             }
         });
 
-        $('body').on('click', '#skills-occupations-acquired .add', function(e) {
-            e.preventDefault();
+        $('body').on('click', '#skills-occupations-acquired .add-skill', function(e) {
+
+            $(this).closest('li').removeClass('no-linked');
 
             let skillId = $(this).attr('data-id');
             let type = $(this).attr('data-type');
             
             $(this).addClass('associated');
-            
-            $(this).toggleClass('add rmv');
-            $(this).children().remove();
-            $(this).append('<i class="fas fa-minus"></i>');
+            $(this).toggleClass('add-skill rmv-skill');
             
             _this.addSkillToHiddenField(type, skillId);
         });
         
-        $('body').on('click', '#skills-occupations-acquired .rmv', function(e) {
-            e.preventDefault();
+        $('body').on('click', '#skills-occupations-acquired .rmv-skill', function(e) {
+            
+            $(this).closest('li').addClass('no-linked');
             
             let skillId = $(this).attr('data-id');
             let type = $(this).attr('data-type');
             
             $(this).removeClass('associated');
 
-            $(this).toggleClass('rmv add');
-            $(this).children().remove();
-            $(this).append('<i class="fas fa-plus"></i>');
+            $(this).toggleClass('rmv-skill add-skill');
 
             _this.removeSkillToHiddenField(type, skillId);
         });

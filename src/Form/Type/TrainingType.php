@@ -113,7 +113,7 @@ class TrainingType extends AbstractType
                     'yes' => 1,
                     'no' => 0,
                 ),
-                'label'              => 'label.is_certified',
+                'label'              => false,
                 'expanded' => true,
             ])
             ->add('currency', ChoiceType::class, [
@@ -151,7 +151,7 @@ class TrainingType extends AbstractType
                     'yes' => 1,
                     'no' => 0,
                 ),
-                'label'              => 'label.online',
+                'label'              => false,
                 'expanded' => true,
             ])
             ->add('isOnlineMonitored', ChoiceType::class, [
@@ -160,17 +160,16 @@ class TrainingType extends AbstractType
                     'yes' => 1,
                     'no' => 0,
                 ),
-                'label'              => 'label.is_online_monitored',
+                'label'              => false,
                 'expanded' => true,
             ])
             ->add('isPresential', ChoiceType::class, [
-                'label_attr' => ['class' => 'form-check-inline'],
                 'translation_domain' => 'messages',
                 'choices'  => array(
                     'yes' => 1,
                     'no' => 0,
                 ),
-                'label'              => 'label.is_presential',
+                'label'              => false,
                 'expanded' => true,
             ])
             ->add('occupation', EntityType::class, [

@@ -99,10 +99,22 @@
 		</div>
 		{{ form_row(form.durationDetails) }}
 
-		{{ form_row(form.isOnline) }}
-		{{ form_row(form.isOnlineMonitored) }}
-		{{ form_row(form.isPresential) }}
-		{{ form_row(form.isCertified) }}
+        <div class="chk-custom-inline mt-4">
+            <label>{{ 'label.online'|trans }}</label>
+		    {{ form_row(form.isOnline) }}
+        </div>
+        <div class="chk-custom-inline">
+            <label>{{ 'label.is_online_monitored'|trans }}</label>
+		    {{ form_row(form.isOnlineMonitored) }}
+        </div>
+        <div class="chk-custom-inline">
+            <label>{{ 'label.is_presential'|trans }}</label>
+		    {{ form_row(form.isPresential) }}
+        </div>
+        <div class="chk-custom-inline">
+            <label>{{ 'label.is_certified'|trans }}</label>
+		    {{ form_row(form.isCertified) }}
+        </div>
 	</div>
 
 	<div class="col-6">
@@ -112,7 +124,7 @@
 
 		<p class="title mb-0">{{ 'required_skills'|trans  }}</p>
 		<div class="p-4 content-skills">
-			<div class="mb-3 add-skill" data-type="required">
+			<div class="mb-3 add-skill-gp" data-type="required">
 				<input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
 				{% include 'front/elements/input_add_search.html.twig'
 					with {
@@ -138,9 +150,13 @@
 													<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
 												</div>
 												<div>
-													<a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="required" title="Remove this skill">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input rmv-skill" id="skill_id-{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-name="{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}" data-type="required" value="1" checked="checked">
+                                                        <label class="switch-custom custom-control-label" for="skill_id-{{ attribute(skill, 'id') is defined ? skill.id : '' }}"></label>
+                                                    </div>
+													<!--<a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="required" title="Remove this skill">
 														<i class="fas fa-minus"></i>
-													</a>
+													</a>-->
 												</div>
 											</div>
 										</li>
@@ -155,10 +171,10 @@
 
 		<p class="title mb-0">{{ 'acquired_skills'|trans  }}</p>
 		<div class="p-4 content-skills">
-			<div class="mb-3 add-skill" data-type="acquired">
+			<div class="mb-3 add-skill-gp" data-type="acquired">
 				<div class="content-list-skill">
-					<div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-secondary">
-						<div class="pl-2 pr-2 pb-2">{{ 'esco'|trans }}</div>
+					<div class="mb-4">
+						<div class="pb-3 title-blc-skills">{{ 'esco'|trans }}</div>
 						<div class="occupation">
 							<ul class="list-group ul-skills" id="skills-occupations-acquired"></ul>
 							<a href="#" class="skills-associated" id="all-associated">All associated</a>
@@ -175,8 +191,8 @@
                             'placeholder': 'add_skill'|trans
                         }
                         %}
-					<div class="mt-4 mb-4 pl-4 pr-4 pb-4 pt-2 bg-light">
-						<div class="pl-2 pr-2 pb-2">{{ 'no_esco'|trans }}</div>
+					<div class="mt-4 mb-4">
+						<div class="pb-3 title-blc-skills">{{ 'no_esco'|trans }}</div>
 						<div class="not-occupation">
 							<ul class="list-group ul-skills" id="skills-not-occupations-acquired">
 								{% if training is defined %}
@@ -190,9 +206,10 @@
 															<span>{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}</span>
 														</div>
 														<div>
-															<a href="#" class="rmv" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-type="acquired" title="Remove this skill">
-																<i class="fas fa-minus"></i>
-															</a>
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input rmv-skill" id="skill_id-{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-id="{{ attribute(skill, 'id') is defined ? skill.id : '' }}" data-name="{{ attribute(skill, 'preferredLabel') is defined ? skill.preferredLabel : '' }}" data-type="acquired" value="1" checked="checked">
+                                                                <label class="switch-custom custom-control-label" for="skill_id-{{ attribute(skill, 'id') is defined ? skill.id : '' }}"></label>
+                                                            </div>
 														</div>
 													</div>
 												</li>

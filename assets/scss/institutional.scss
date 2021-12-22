@@ -24,7 +24,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     position: relative;
 }
 .blc-currency.disabled:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -34,131 +34,131 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 #institutional {
-  margin-top: 60px;
-
-  .form-block {
     margin-top: 60px;
-  }
 
-  .button-group {
-    margin-top: 30px;
-  }
-
-  /* TAB TRAINING */
-  #content-training {
-    label {
-      white-space: nowrap;
-      text-align: left;
-      display: block;
-      font-weight: 500;
+    .form-block {
+        margin-top: 60px;
     }
 
-    .info {
-      font-weight: bold;
-      margin: 15px 0 30px;
-    }
-
-    fieldset {
-      text-align: center;
-      margin: 15px 0;
-    }
-
-    #training-input {
-      flex: 0 0 300px;
-    }
-
-    #list-trainings {
-      margin-top: 60px;
-
-      .block-clone {
-        .loader {
-          display: none;
-        }
-      }
-
-      .icon[data-toggle="collapse"] {
-        line-height: 1;
-      }
-
-      .skill {
-        .content-collapse {
-          padding: 7px 0 8px;
-        }
-      }
-
-      .rmv,
-      .more {
-        line-height: 1;
-      }
-
-      .feedback {
-        line-height: 1;
-      }
-
-      .title {
-        text-align: left;
-        font-weight: 500;
-        background-color: rgba(0, 0, 0, 0.03);
-        padding: 10px;
-        box-sizing: border-box;
+    .button-group {
         margin-top: 30px;
-      }
+    }
 
-      .skill {
-        .card-block {
-          font-style: italic;
-          font-size: 0.9rem;
-          border: 0;
-          background: rgba(0, 0, 0, 0.03);
+    /* TAB TRAINING */
+    #content-training {
+        label {
+            white-space: nowrap;
+            text-align: left;
+            display: block;
+            font-weight: 500;
         }
-      }
-    }
 
-    .blc-map {
-      .map {
-        width: 100%;
-        height: 200px;
-        margin-top: 15px;
-      }
+        .info {
+            font-weight: bold;
+            margin: 15px 0 30px;
+        }
 
-      .leaflet-touch .leaflet-control-geocoder {
-        display: none !important;
-      }
+        fieldset {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        #training-input {
+            flex: 0 0 300px;
+        }
+
+        #list-trainings {
+            margin-top: 60px;
+
+            .block-clone {
+                .loader {
+                    display: none;
+                }
+            }
+
+            .icon[data-toggle="collapse"] {
+                line-height: 1;
+            }
+
+            .skill {
+                .content-collapse {
+                    padding: 7px 0 8px;
+                }
+            }
+
+            .rmv,
+            .more {
+                line-height: 1;
+            }
+
+            .feedback {
+                line-height: 1;
+            }
+
+            .title {
+                text-align: left;
+                font-weight: 500;
+                background-color: rgba(0, 0, 0, 0.03);
+                padding: 10px;
+                box-sizing: border-box;
+                margin-top: 30px;
+            }
+
+            .skill {
+                .card-block {
+                    font-style: italic;
+                    font-size: 0.9rem;
+                    border: 0;
+                    background: rgba(0, 0, 0, 0.03);
+                }
+            }
+        }
+
+        .blc-map {
+            .map {
+                width: 100%;
+                height: 200px;
+                margin-top: 15px;
+            }
+
+            .leaflet-touch .leaflet-control-geocoder {
+                display: none !important;
+            }
+        }
     }
-  }
 }
 
 form[name="training"] {
-  padding-top: 30px;
+    padding-top: 30px;
 
-  .content-list-skill {
-    > .skill {
-      margin: 10px 0;
+    .content-list-skill {
+        > .skill {
+            margin: 10px 0;
+        }
     }
-  }
 
-  label {
-    white-space: nowrap;
-    text-align: left;
-    display: block;
-    font-weight: 500;
-  }
+    label {
+        white-space: nowrap;
+        text-align: left;
+        display: block;
+        font-weight: 500;
+    }
 
-  .title {
-    text-align: left;
-    font-weight: 500;
-    background-color: #2c4969;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-top: 30px;
-    color: #fff;
-  }
+    .title {
+        text-align: left;
+        font-weight: 500;
+        background-color: #2c4969;
+        padding: 10px;
+        box-sizing: border-box;
+        margin-top: 30px;
+        color: #fff;
+    }
 
-  .content-skills {
-    border: 2px solid #eee;
-    border-top: 0;
+    .content-skills {
+        border: 2px solid #eee;
+        border-top: 0;
 
-    .rmv,
+        /*.rmv,
     .add {
       color: #fff;
       padding: 2px;
@@ -173,43 +173,53 @@ form[name="training"] {
 
     .add {
       background-color: #28a745;
+    }*/
     }
-  }
 }
 
 #modal_skills {
-  .check-all {
-    margin-bottom: 15px;
-  }
+    .check-all {
+        margin-bottom: 15px;
+    }
 }
 
 #list-trainings .form-check-input {
-  position: absolute;
-  left: 1.25rem;
+    position: absolute;
+    left: 1.25rem;
 }
 
 #all-associated {
-  display: none;
+    display: none;
+    font-style: italic;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 0.9rem;
+}
+
+#all-unassociated {
+    font-style: italic;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 0.9rem;
 }
 
 .skills-associated {
-  color: #fff !important;
-  font-weight: 600;
-  margin-top: 15px;
+    font-weight: 600;
+    margin-top: 15px;
 }
 
 form[name="training"] {
-  .blc-map {
-    .map {
-      width: 100%;
-      height: 200px;
-      margin-top: 15px;
-    }
+    .blc-map {
+        .map {
+            width: 100%;
+            height: 200px;
+            margin-top: 15px;
+        }
 
-    .leaflet-touch .leaflet-control-geocoder {
-      display: none !important;
+        .leaflet-touch .leaflet-control-geocoder {
+            display: none !important;
+        }
     }
-  }
 }
 
 .switch-langue {
@@ -219,5 +229,76 @@ form[name="training"] {
 
     img {
         max-width: 22px;
+    }
+}
+
+.title-blc-skills {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+form[name="training"] .list-group {
+    border-radius: 0;
+
+    .list-group-item {
+        border-right: 0;
+        border-left: 0;
+        border-top: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        padding-left: 0;
+        padding-right: 0;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &.no-linked {
+            color: #6c6c6c;
+        }
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #0075ff;
+        background-color: #0075ff;
+    }
+}
+
+.chk-custom-inline {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .form-group > div {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    fieldset,
+    label {
+        margin: 0;
+    }
+
+    > label {
+        display: flex !important;
+        align-items: center;
+        flex-flow: row nowrap;
+        flex: 1;
+
+        &:after {
+            content: "";
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            margin-left: 15px;
+        }
+    }
+
+    .form-check {
+        margin-left: 15px;
     }
 }

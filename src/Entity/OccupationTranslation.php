@@ -28,13 +28,13 @@ class OccupationTranslation
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"occupation:read", "occupation:write"})
+     * @Groups({"occupation:read", "occupation:write", "occupationSkill:read"})
      */
     private $locale;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "occupation:write"})
+     * @Groups({"occupation:read", "occupation:write", "occupationSkill:read"})
      */
     private $preferredLabel;
 
@@ -50,13 +50,13 @@ class OccupationTranslation
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"occupation:read", "occupation:write"})
+     * @Groups({"occupation:read", "occupation:write", "occupationSkill:read"})
      */
     private $definition;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"occupation:read", "occupation:write"})
+     * @Groups({"occupation:read", "occupation:write", "occupationSkill:read"})
      */
     private $description;
 
