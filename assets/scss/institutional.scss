@@ -172,7 +172,7 @@ form[name="training"] {
     }
 
     .add {
-      background-color: #28a745;
+      background-color: #28a745;  
     }*/
     }
 }
@@ -237,29 +237,36 @@ form[name="training"] {
     font-size: 1.2rem;
 }
 
-form[name="training"] .list-group {
-    border-radius: 0;
+form[name="training"] {
+    .list-group {
+        border-radius: 0;
 
-    .list-group-item {
-        border-right: 0;
-        border-left: 0;
-        border-top: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-        padding-left: 0;
-        padding-right: 0;
+        .list-group-item {
+            border-right: 0;
+            border-left: 0;
+            border-top: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            padding-left: 0;
+            padding-right: 0;
 
-        &:last-child {
-            border-bottom: 0;
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &.no-linked {
+                color: #6c6c6c;
+            }
         }
 
-        &.no-linked {
-            color: #6c6c6c;
+        .custom-control-input:checked ~ .custom-control-label::before {
+            border-color: #2c97ff;
+            background-color: #2c97ff;
         }
     }
 
-    .custom-control-input:checked ~ .custom-control-label::before {
-        border-color: #0075ff;
-        background-color: #0075ff;
+    .custom-control-input:checked ~ .custom-control-label:before {
+        border-color: #2c97ff;
+        background-color: #2c97ff;
     }
 }
 
