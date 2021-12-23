@@ -278,7 +278,7 @@ front_account_work_skills_tooltip: Nombre de compétences associées - cliquez p
 show_panel: Afficher
 hide_panel: Masquer
 km_away: km
-markdown_support_info: prise en charge de la démarque
+markdown_support_info: prise en charge du markdown
 effective_duration_tooltip: Durée effective de la formation
 training_rating_tooltip: Score moyen de formation pour %voters% votants
 position: position
