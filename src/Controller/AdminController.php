@@ -69,7 +69,7 @@ class AdminController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('updated_data'));
 
             //return $this->redirectToRoute('admin_home');
         } else if ($passwordForm->isSubmitted()) {
@@ -89,7 +89,7 @@ class AdminController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('updated_data'));
         }
 
         return $this->render(
@@ -314,7 +314,7 @@ class AdminController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('updated_data'));
             return $this->redirectToRoute('admin_edit_user', ['id' => $user->getId()]);
         }
 
@@ -353,7 +353,7 @@ class AdminController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data', [], 'admin'));
+            $this->addFlash('success', $translator->trans('updated_data'));
         }
 
         return $this->render(

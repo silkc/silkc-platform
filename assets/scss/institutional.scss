@@ -270,7 +270,7 @@ form[name="training"] {
     }
 }
 
-.chk-custom-inline {
+.chk-custom-inline { 
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -307,4 +307,10 @@ form[name="training"] {
     .form-check {
         margin-left: 15px;
     }
+}
+
+.subinfotitle {
+    font-size: 0.9rem;
+    font-style: italic;
+    display: block;
 }

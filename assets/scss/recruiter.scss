@@ -171,14 +171,24 @@ form[name="position"] {
   left: 1.25rem;
 }
 
+
 #all-associated {
-  display: none;
+    font-style: italic;
+    margin-top: 10px;
+    display: none;
+    font-size: 0.9rem;
+}
+
+#all-unassociated {
+    font-style: italic;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 0.9rem;
 }
 
 .skills-associated {
-  color: #fff !important;
-  font-weight: 600;
-  margin-top: 15px;
+    font-weight: 600;
+    margin-top: 15px;
 }
 
 form[name="position"] {
@@ -206,5 +216,44 @@ form[name="position"] {
 
     img {
         max-width: 22px;
+    }
+}
+
+.title-blc-skills {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+form[name="position"] {
+    .list-group {
+        border-radius: 0;
+
+        .list-group-item {
+            border-right: 0;
+            border-left: 0;
+            border-top: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            padding-left: 0;
+            padding-right: 0;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &.no-linked {
+                color: #6c6c6c;
+            }
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            border-color: #2c97ff;
+            background-color: #2c97ff;
+        }
+    }
+
+    .custom-control-input:checked ~ .custom-control-label:before {
+        border-color: #2c97ff;
+        background-color: #2c97ff;
     }
 }

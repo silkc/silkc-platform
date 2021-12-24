@@ -43,7 +43,7 @@ label:
   refine_my_search: Refine my search
   city: City
   distance_from: Distance from
-  exclude_training_without_a_completed_description: Exclude training without a completed description
+  exclude_training_without_a_completed_description: Exclude training without a complete description
   without_specified_duration: Exclude training without specified duration
   currency: Currency
   clear: Clear
@@ -192,7 +192,7 @@ login:
       year_of_birth: Year of birth
       year_of_creation: Year of creation
       date_of_birth: Date of birth
-      send_password_reset_email: Send password reset email
+      send_password_reset_email: Reset password
       password:
         current_password: Current password
         new_password: New password
@@ -230,13 +230,13 @@ required_skills: Required skills
 acquired_skills: Acquired skills
 skills_you_can_acquire: Skills you can acquire
 no_item: No element
-esco: In ESCO for this occupation
-no_esco: Not in ESCO for this occupation
+esco: Sélectionnez les compétences dans la liste ci-dessous
+no_esco: Add more skills
 
 the_following_skills_have_been_calculated_based: The following skills list has been compiled based on your work experience and training history
 see_more: See more
-other_skills: Other skills
-previously_unselected: Previously unselected
+other_skills: Add other skills that you feel are missing in the above list.
+previously_unselected: Previously removed skills from the lists.
 please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
 don_t_find_your_training: Can't find your training? Add it here!
 don_t_find_your_institution: Can't find your institution? Add it here!
@@ -261,7 +261,7 @@ no: no
 list_of_professional_training_you_have_previously_followed: List of professional training you have previously followed
 search_by_job_placeholder: What is your dream job?
 search_by_skill_placeholder: What skill do you want to acquire?
-user_formation_details_tooltip: Skills linked to this training
+user_formation_details_tooltip: Training description
 user_formation_unlink_tooltip: Remove this training
 user_formation_feedback_tooltip: Provide feedback
 user_had_done_this_training_btn: I've followed this training
@@ -283,7 +283,7 @@ front_account_work_skills_tooltip: Number of associated skills - click for more 
 show_panel: Show panel
 hide_panel: Hide panel
 km_away: km away
-markdown_support_info: support markdown
+markdown_support_info: This field is markdown compliant
 effective_duration_tooltip: Effective duration of training
 training_rating_tooltip: Average training ranking for %voters% voters
 position: position
@@ -318,7 +318,7 @@ flash:
 
 search_history:
   label:
-    name: Name
+    name: Item
     type: Type
     date: Last search date
     count_result: Last search results
@@ -353,7 +353,7 @@ are_you_sure_you_want_to_raise_suspicion_for_this_user: Are you sure you want to
 can_you_confirm_that_you_have_completed_this_training: Can you confirm that you have completed this training?
 can_you_confirm_that_you_did_not_take_this_training: Can you confirm that you did not take this training?
 search_here: Search here...
-all_associated: All associated
+all_associated: Associate all skills
 all_unassociated: All unassociated
 add: Add
 add_institution: Add institution
@@ -408,7 +408,7 @@ number_of_interested_users: "Number of interested users:"
 calculate_the_number_of_affected_users: Calculate the number of affected users
 Results: Results
 number_total_of_affected_users_tuto: Number of users with the required skills listed above.
-number_of_interested_users_tuto: Number of users with the required skills listed above and who have indicated that they are listening to a post.
+number_of_interested_users_tuto: Number of users with the required skills listed above and who are job seekers.
 add_skill: Add skill
 no_item_selected: No item selected
 send_an_email_to_the_affected_users: Send an email to the affected users
@@ -423,5 +423,17 @@ sendSuccess: email sent successfully
 sendError: error
 training_rating_tooltip_js: Average training ranking for
 training_rating_voters_tooltip_js: voters
-skills_acquired_occupation_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
-skills_acquired_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+skills_acquired_occupation_info: These skills are suggested by the ESCO framework
+skills_acquired_info: Add skills that are not suggested by the ESCO framework on the above list.
+training_certified: Training certified
+jobs_and_skills_are_based_on_the_ESCO_framework: "Jobs and skills are based on the ESCO framework :"
+occupation_related_to_the_training: Occupation related to the training
+required_skills_for_this_training: Required skills for this training
+skills_acquired_through_this_training: Skills acquired through this training
+the_training_was_created: The training was created
+the_position_was_created: The position was created
+position_duplicate_suffix: " - (duplicate)"
+duplicate_position_success: The position has been duplicated successfully
+no_skills_found_for_this_position: No skills found for this position
+no_position_found: No position found
+published_for_job_seekers: Published for job seekers

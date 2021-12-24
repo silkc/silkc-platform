@@ -176,7 +176,7 @@ class TrainingType extends AbstractType
                 'attr'         => ["class" => "selectpicker", "data-live-search" => "true"],
                 'class'        => Occupation::class,
                 'choices'      => $this->occupationRepository->findAllNotNativeByLocale('fr'),
-                'choice_label' => 'preferredLabel',
+                //'choice_label' => 'preferredLabel',
                 'choice_label' => function ($occupationsTranslations) use ($locale) {
                     return $occupationsTranslations->getPreferredLabel($locale);
                 },
@@ -185,6 +185,7 @@ class TrainingType extends AbstractType
                 'required'     => false,
                 'by_reference' => true,
                 'translation_domain' => 'messages',
+                'label' => 'occupation_related_to_the_training',
                 'placeholder'  => 'no_item_selected',
                 'choice_attr' => function($choice, $key, $value) use($locale) {
                     // adds a class like attending_yes, attending_no, etc

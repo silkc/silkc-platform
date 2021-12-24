@@ -187,7 +187,7 @@ login:
       year_of_birth: Rok urodzenia
       year_of_creation: Rok powstania
       date_of_birth: Data urodzenia
-      send_password_reset_email: Wyślij e-mail dotyczący resetowania hasła
+      send_password_reset_email: Zresetuj hasło
       password:
         current_password: Aktualne hasło
         new_password: Nowe hasło
@@ -225,13 +225,13 @@ required_skills: Wymagane umiejętności
 acquired_skills: Nabyte umiejętności
 skills_you_can_acquire: Umiejętności, które możesz zdobyć
 no_item: Brak elementu
-esco: W ESCO dla tego zawodu
-no_esco: Nie w ESCO dla tego zawodu
+esco: Wybierz umiejętności z poniższej listy
+no_esco: Dodaj więcej umiejętności
 
 the_following_skills_have_been_calculated_based: Poniższa lista umiejętności została opracowana na podstawie Twojego doświadczenia zawodowego i historii szkoleń
 see_more: Zobacz więcej
-other_skills: Inne umiejętności
-previously_unselected: Wcześniej niezaznaczone
+other_skills: Dodaj inne umiejętności, których Twoim zdaniem brakuje na powyższej liście.
+previously_unselected: Wcześniej usunięte umiejętności z list.
 please_indicate_any_professional_training: Proszę wskazać wszelkie szkolenia zawodowe, które odbyłeś w ciągu ostatnich 5 lat
 don_t_find_your_training: Nie możesz znaleźć swojego szkolenia? Dodaj to tutaj!
 don_t_find_your_institution: Nie możesz znaleźć swojej instytucji? Dodaj to tutaj!
@@ -256,7 +256,7 @@ no: nie
 list_of_professional_training_you_have_previously_followed: Lista odbytych szkoleń zawodowych
 search_by_job_placeholder: Jaka jest twoja wymarzona praca?
 search_by_skill_placeholder: Jakie umiejętności chcesz zdobyć?
-user_formation_details_tooltip: Umiejętności związane z tym szkoleniem
+user_formation_details_tooltip: Opis szkolenia
 user_formation_unlink_tooltip: Usuń to szkolenie
 user_formation_feedback_tooltip: Przekazać opinię
 user_had_done_this_training_btn: Przeszedłem to szkolenie
@@ -278,7 +278,7 @@ front_account_work_skills_tooltip: Liczba powiązanych umiejętności - kliknij,
 show_panel: Pokaż panel
 hide_panel: Ukryj panel
 km_away: km dalej
-markdown_support_info: wsparcie przeceny
+markdown_support_info: To pole jest zgodne z przecenami
 effective_duration_tooltip: Efektywny czas trwania szkolenia
 training_rating_tooltip: Średni ranking szkoleń dla 5 głosujących
 position: pozycja
@@ -313,7 +313,7 @@ flash:
 
 search_history:
   label:
-    name: Nazwa
+    name: Przedmiot
     type: Rodzaj
     date: Data ostatniego wyszukiwania
     count_result: Wyniki ostatniego wyszukiwania
@@ -342,7 +342,7 @@ are_you_sure_you_want_to_raise_suspicion_for_this_user: Czy na pewno chcesz wzbu
 can_you_confirm_that_you_have_completed_this_training: Czy możesz potwierdzić, że ukończyłeś to szkolenie?
 can_you_confirm_that_you_did_not_take_this_training: Czy możesz potwierdzić, że nie uczestniczyłeś w tym szkoleniu?
 search_here: Szukaj tutaj...
-all_associated: Wszystkie powiązane
+all_associated: Powiąż wszystkie umiejętności
 all_unassociated: Wszyscy nieskojarzeni
 add: Dodać
 add_institution: Dodaj instytucję
@@ -397,7 +397,7 @@ number_of_interested_users: "Liczba zainteresowanych użytkowników:"
 calculate_the_number_of_affected_users: Oblicz liczbę dotkniętych użytkowników
 Results: Wyniki
 number_total_of_affected_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej.
-number_of_interested_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej i którzy wskazali, że słuchają wpisu.
+number_of_interested_users_tuto: Liczba użytkowników posiadających wymagane umiejętności wymienione powyżej i poszukujących pracy.
 add_skill: Dodaj umiejętność
 no_item_selected: Nie wybrano żadnego elementu
 send_an_email_to_the_affected_users: Wyślij wiadomość e-mail do dotkniętych użytkowników
@@ -412,5 +412,17 @@ sendSuccess: e-mail wysłany pomyślnie
 sendError: błąd
 training_rating_tooltip_js: Średni ranking szkoleń dla
 training_rating_voters_tooltip_js: głosujących
-skills_acquired_occupation_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
-skills_acquired_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+skills_acquired_occupation_info: Te umiejętności są sugerowane przez ramy ESCO
+skills_acquired_info: Dodaj umiejętności, które nie są sugerowane przez ramy ESCO na powyższej liście.
+training_certified: Certyfikowane szkolenie
+jobs_and_skills_are_based_on_the_ESCO_framework: "Oferty pracy i umiejętności są oparte na ramach ESCO:"
+occupation_related_to_the_training: Zawód związany ze szkoleniem
+required_skills_for_this_training: Umiejętności wymagane do tego szkolenia
+skills_acquired_through_this_training: Umiejętności nabyte podczas tego szkolenia
+the_training_was_created: Szkolenie powstało
+the_position_was_created: Stanowisko zostało utworzone
+position_duplicate_suffix: " - (duplikat)"
+duplicate_position_success: Pozycja została pomyślnie zduplikowana
+no_skills_found_for_this_position: Nie znaleziono umiejętności na tym stanowisku
+no_position_found: Nie znaleziono pozycji
+published_for_job_seekers: Opublikowane dla osób poszukujących pracy

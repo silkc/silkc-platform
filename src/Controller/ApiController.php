@@ -454,11 +454,11 @@ class ApiController extends AbstractController
         $defaultData = ['count_all' => 0, 'count_listening' => 0];
         
         if (!$skills || !is_array($skills) || count($skills) == 0 || !$position_id)
-            return new JsonResponse(['message' => $translator->trans('No skills found for this position')], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['message' => $translator->trans('no_skills_found_for_this_position')], Response::HTTP_BAD_REQUEST);
 
         $position = $positionRepository->find($position_id);
         if (!$position)
-            return new JsonResponse(['message' => $translator->trans('No position found')], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['message' => $translator->trans('no_position_found')], Response::HTTP_BAD_REQUEST);
 
         $now = new \DateTimeImmutable();
 

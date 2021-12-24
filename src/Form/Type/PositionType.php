@@ -81,7 +81,7 @@ class PositionType extends AbstractType
                 'attr' => ['class' => 'custom-select']
             ])
             ->add('isVisible', CheckboxType::class, [
-                'label'    => 'label.is_visible',
+                'label'    => 'published_for_job_seekers',
                 'required' => false,
             ])
             ->add('startAt', DateTimeType::class, [

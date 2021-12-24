@@ -119,10 +119,12 @@
 
 	<div class="col-6">
 		<div class="occupations-select">
-			{{ form_row(form.occupation) }}
+			{{ form_label(form.occupation) }}
+            <span class="subinfotitle">{{ 'jobs_and_skills_are_based_on_the_ESCO_framework'|trans }} <a href="https://ec.europa.eu/esco/portal" target="blank">https://ec.europa.eu/esco/portal</a></span>
+			{{ form_widget(form.occupation) }}
 		</div>
 
-		<p class="title mb-0">{{ 'required_skills'|trans  }}</p>
+		<p class="title mb-0">{{ 'required_skills_for_this_training'|trans  }}</p>
 		<div class="p-4 content-skills">
 			<div class="mb-3 add-skill-gp" data-type="required">
 				<input type="hidden" name="hidden_trainingSkills" id="hidden_trainingSkills" value="{{ skillsHidden is defined ? skillsHidden|json_encode : '' }}"/>
@@ -169,7 +171,7 @@
 			</div>
 		</div>
 
-		<p class="title mb-0">{{ 'acquired_skills'|trans }}</p>
+		<p class="title mb-0">{{ 'skills_acquired_through_this_training'|trans }}</p>
 		<div class="p-4 content-skills">
 			<div class="mb-3 add-skill-gp" data-type="acquired">
 				<div class="content-list-skill">
@@ -177,9 +179,10 @@
 						<div class="pb-3 title-blc-skills">{{ 'esco'|trans }} <span title="{{ 'skills_acquired_occupation_info'|trans }}" data-toggle="tooltip"><i class="fas fa-info-circle"></i></span></div>
 						<div class="occupation">
 							<ul class="list-group ul-skills" id="skills-occupations-acquired"></ul>
-							<a href="#" class="skills-associated" id="all-associated">All associated</a>
+							<a href="#" class="skills-associated" id="all-associated">{{ 'all_associated'|trans }}</a>
 						</div>
 					</div>
+					<div class="pb-3 title-blc-skills">{{ 'no_esco'|trans }} <span title="{{ 'skills_acquired_info'|trans }}" data-toggle="tooltip"><i class="fas fa-info-circle"></i></span></div>
 					{% include 'front/elements/input_add_search.html.twig'
                             with {
                             'id': 'skill-name-acquired',
@@ -192,7 +195,6 @@
                         }
                         %}
 					<div class="mt-4 mb-4">
-						<div class="pb-3 title-blc-skills">{{ 'no_esco'|trans }} <span title="{{ 'skills_acquired_info'|trans }}" data-toggle="tooltip"><i class="fas fa-info-circle"></i></span></div>
 						<div class="not-occupation">
 							<ul class="list-group ul-skills" id="skills-not-occupations-acquired">
 								{% if training is defined %}

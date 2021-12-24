@@ -187,7 +187,7 @@ login:
       year_of_birth: Année de naissance
       year_of_creation: Année de création
       date_of_birth: Date de naissance
-      send_password_reset_email: Envoyer un e-mail de réinitialisation de mot de passe
+      send_password_reset_email: Réinitialiser le mot de passe
       password:
         current_password: Mot de passe actuel
         new_password: Nouveau mot de passe
@@ -226,12 +226,12 @@ acquired_skills: Compétences acquises
 skills_you_can_acquire: Compétences que vous pouvez acquérir
 no_item: Aucun élément
 esco: En ESCO pour ce métier
-no_esco: Pas dans ESCO pour cette profession
+no_esco: Ajouter plus de compétences
 
 the_following_skills_have_been_calculated_based: La liste de compétences suivante a été compilée sur la base de votre expérience professionnelle et de votre historique de formation
 see_more: Voir plus
-other_skills: Autres compétences
-previously_unselected: Précédemment non sélectionné
+other_skills: Ajoutez d'autres compétences qui vous manquent dans la liste ci-dessus.
+previously_unselected: Compétences précédemment supprimées des listes.
 please_indicate_any_professional_training: Veuillez indiquer toute formation professionnelle que vous avez suivie au cours des 5 dernières années
 don_t_find_your_training: Vous ne trouvez pas votre formation ? Ajoutez-la ici !
 don_t_find_your_institution: Vous ne trouvez pas votre établissement ? Ajoutez-le ici !
@@ -256,7 +256,7 @@ no: non
 list_of_professional_training_you_have_previously_followed: Liste des formations professionnelles que vous avez précédemment suivies
 search_by_job_placeholder: Quel est le travail de vos rêves?
 search_by_skill_placeholder: Quelle compétence souhaitez-vous acquérir ?
-user_formation_details_tooltip: Compétences liées à cette formation
+user_formation_details_tooltip: Descriptif de la formation
 user_formation_unlink_tooltip: Supprimer cette formation
 user_formation_feedback_tooltip: Fournir une réponse
 user_had_done_this_training_btn: J'ai suivi cette formation
@@ -278,7 +278,7 @@ front_account_work_skills_tooltip: Nombre de compétences associées - cliquez p
 show_panel: Afficher
 hide_panel: Masquer
 km_away: km
-markdown_support_info: prise en charge du markdown
+markdown_support_info: Ce champ est conforme à la démarque
 effective_duration_tooltip: Durée effective de la formation
 training_rating_tooltip: Score moyen de formation pour %voters% votants
 position: position
@@ -313,7 +313,7 @@ flash:
 
 search_history:
   label:
-    name: Nom
+    name: Item
     type: Type
     date: Date de la dernière recherche
     count_result: Derniers résultats de recherche
@@ -342,7 +342,7 @@ are_you_sure_you_want_to_raise_suspicion_for_this_user: Voulez-vous vraiment év
 can_you_confirm_that_you_have_completed_this_training: Pouvez-vous confirmer que vous avez suivi cette formation ?
 can_you_confirm_that_you_did_not_take_this_training: Pouvez-vous confirmer que vous n'avez pas suivi cette formation ?
 search_here: Cherche ici...
-all_associated: Tous associés
+all_associated: Associer toutes les compétences
 all_unassociated: Tous non associés
 add: Ajouter
 add_institution: Ajouter une institution
@@ -397,7 +397,7 @@ number_of_interested_users: "Nombre d'utilisateurs intéressés :"
 calculate_the_number_of_affected_users: Calculer le nombre d'utilisateurs concernés
 Results: Résultats
 number_total_of_affected_users_tuto: Nombre d'utilisateurs possédant les compétences requises listées ci-dessus.
-number_of_interested_users_tuto: Nombre d'utilisateurs possédant les compétences requises listées di-dessus et ayant indiqué être à l'écoute d'un poste.
+number_of_interested_users_tuto: Nombre d'utilisateurs possédant les compétences requises listées ci-dessus et qui sont des demandeurs d'emploi.
 add_skill: Ajouter une compétence
 no_item_selected: Aucun item sélectionné
 send_an_email_to_the_affected_users: Envoyer un mail aux utilisateurs concernés
@@ -412,5 +412,17 @@ sendSuccess: email envoyé avec succés
 sendError: erreur
 training_rating_tooltip_js: Score moyen de formation pour
 training_rating_voters_tooltip_js: votants
-skills_acquired_occupation_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
-skills_acquired_info: Lorem ipsum dolor sit amet, consetetur sadipscing elitr.
+skills_acquired_occupation_info: Ces compétences sont suggérées par le cadre ESCO
+skills_acquired_info: Ajoutez des compétences qui ne sont pas suggérées par le cadre ESCO sur la liste ci-dessus.
+training_certified: Formation certifiée
+jobs_and_skills_are_based_on_the_ESCO_framework: "Les métiers et les compétences sont basés sur le référentiel ESCO :"
+occupation_related_to_the_training: Profession liée à la formation
+required_skills_for_this_training: Compétences requises pour cette formation
+skills_acquired_through_this_training: Compétences acquises grâce à cette formation
+the_training_was_created: La formation a été créée
+the_position_was_created: Le poste a été créé
+position_duplicate_suffix: " - (dupliquer)"
+duplicate_position_success: La position a été dupliquée avec succès
+no_skills_found_for_this_position: Aucune compétence trouvée pour ce poste
+no_position_found: Aucun poste trouvé
+published_for_job_seekers: Publié pour les demandeurs d'emploi

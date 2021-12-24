@@ -291,7 +291,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data'));
+            $this->addFlash('success', $translator->trans('updated_data'));
 
             return $this->redirectToRoute('app_account');
         } else if ($passwordForm->isSubmitted()) {
@@ -310,7 +310,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data'));
+            $this->addFlash('success', $translator->trans('updated_data'));
         }
 
         $currentOccupations = $user->getCurrentOccupations();
@@ -407,7 +407,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data'));
+            $this->addFlash('success', $translator->trans('updated_data'));
 
             return $this->redirectToRoute('app_institution');
             
@@ -425,7 +425,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data'));
+            $this->addFlash('success', $translator->trans('updated_data'));
         }
 
         $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : ($tab ? $tab : false);
@@ -475,7 +475,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data'));
+            $this->addFlash('success', $translator->trans('updated_data'));
 
             return $this->redirectToRoute('app_recruiter');
 
@@ -493,7 +493,7 @@ class HomeController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('Updated data'));
+            $this->addFlash('success', $translator->trans('updated_data'));
         }
 
         $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : ($tab ? $tab : false);
@@ -587,7 +587,7 @@ class HomeController extends AbstractController
             $em->persist($training);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('The training was created'));
+            $this->addFlash('success', $translator->trans('the_training_was_created'));
 
             return $this->redirectToRoute('app_training_edit', array('id' => $training->getId()));
         }
@@ -675,7 +675,7 @@ class HomeController extends AbstractController
                 $em->persist($training);
                 $em->flush();
 
-                $this->addFlash('success', $translator->trans('The training has been updated'));
+                $this->addFlash('success', $translator->trans('updated_data'));
 
                 return $this->redirectToRoute('admin_home', ['tab' => 'tasks']);
             }
@@ -683,7 +683,7 @@ class HomeController extends AbstractController
                 $em->persist($training);
                 $em->flush();
 
-                $this->addFlash('success', $translator->trans('The training has been updated'));
+                $this->addFlash('success', $translator->trans('updated_data'));
 
                 return $this->redirectToRoute('app_training_edit', ['id' => $training->getId()]);
             }
@@ -792,7 +792,7 @@ class HomeController extends AbstractController
             $em->persist($position);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('The position was created'));
+            $this->addFlash('success', $translator->trans('the_position_was_created'));
 
             return $this->redirectToRoute('app_position_edit', array('id' => $position->getId()));
         }
@@ -845,7 +845,7 @@ class HomeController extends AbstractController
             $em->persist($position);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('The position has been updated'));
+            $this->addFlash('success', $translator->trans('updated_data'));
 
             return $this->redirectToRoute('app_position_edit', ['id' => $position->getId()]);
         }

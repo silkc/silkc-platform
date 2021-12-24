@@ -430,7 +430,8 @@ class Account {
                     jobsList = JSON.parse(inputJobs.val());
                 }
                 
-                if (div.hasClass('add-current-job')) {
+                // ajouter plusieurs current job
+                /*if (div.hasClass('add-current-job')) {
                     if ('currentOccupations' in jobsList) {
                         if (Object.size(jobsList.currentOccupations) == 0) {
                             jobsList.currentOccupations = [jobIdToAdd];
@@ -443,6 +444,10 @@ class Account {
                     } else {
                         jobsList.currentOccupations = [jobIdToAdd];
                     }
+                }*/
+                // ajouter un seul current job
+                if (div.hasClass('add-current-job')) {
+                    jobsList.currentOccupations = [jobIdToAdd];
                 }
                 
                 if (div.hasClass('add-previous-job')) {
@@ -488,7 +493,12 @@ class Account {
                                 occupation.type = div.hasClass('add-desired-job') ? 'desiredOccupations' : div.hasClass('add-current-job') ? 'currentOccupations' : div.hasClass('add-previous-job') ? 'previousOccupations' : '';
                                 occupation.skills = data.skills != undefined ? data.skills : false;
                                 let li = _this.tplJob(occupation);
-                                $(ulJobs).append(li);
+                                
+                                if (div.hasClass('add-current-job')) {
+                                    $(ulJobs).html(li);
+                                } else {
+                                    $(ulJobs).append(li);
+                                }
                             }
 
                             $('[data-toggle="tooltip"]').tooltip();
@@ -1506,7 +1516,7 @@ class Account {
                                 statusFeedback = true;
                             }
                             let date = renderDate(data[k].createdAt, 'YYYY/MM/DD - HH:mm');
-                            feedbacksHTML += `<li>
+                            feedbacksHTML += `<li>ffff
                                                 <p class="author"><span class="date">${date}</span> - ${data[k].user.username ? data[k].user.username : data[k].user.firstname ? data[k].user.firstname : ''}</p>
                                                 <input class="rating-readonly-training rating " data-max="5" data-min="0" name="rating" type="number" value="${data[k].mark}"/>
                                                 <p class="comment">${data[k].comment}</p>
@@ -1526,7 +1536,7 @@ class Account {
                                     filledStar: '<i class="fas fa-star"></i>',
                                     emptyStar: '<i class="far fa-star"></i>',
                                     showCaption: false,
-                                    size: 'xs',
+                                    size: 'md',
                                     step: 1,
                                     readonly: true
                                 });
@@ -1645,6 +1655,8 @@ class Account {
                     });
 
                     $('#common-modal').animate({ scrollTop: $('#common-modal .modal-dialog').height() }, "slow");
+
+                    location.reload();
                 },
                 error : function(resultat, statut, erreur){
                     $(_this).find('.spinner-button').remove();

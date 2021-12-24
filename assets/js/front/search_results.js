@@ -484,7 +484,7 @@ class SearchResults {
             $("#minDuration").val(0);
             $("#maxDuration").val(max);
 
-            _this.sliderDuration.setValue([0, 5000]);
+            _this.sliderDuration.setValue([0, 100]);
         });
 
         // Clear filter
@@ -515,6 +515,7 @@ class SearchResults {
 
             $("#minDuration").val(0);
             $("#maxDuration").val(100);
+            _this.sliderDuration.setValue([0, 100]);
 
             // Input text, date ...
             $(

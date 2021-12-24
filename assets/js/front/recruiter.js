@@ -27,15 +27,30 @@ class Recruiter {
 
     tplSkill = (skill, rmv = false, associated = false) => {
 
-        return `<li class="list-group-item">
+        
+        let lang = $('body').attr('lang');
+        let id = skill.id;
+        if (skill.translations) {
+            let skills = skill.translations;
+            skills.forEach(sk => {
+                if (lang == sk.locale) skill = sk;
+            });
+        }
+
+        return `<li class="list-group-item ${!associated ? 'no-linked' : ''}">
             <div class="d-flex flex-nowrap justify-content-between">
                 <div>
                     <span>${skill.preferredLabel}</span>
                 </div>
                 <div>
-                    <a href="#" class="${associated ? 'associated' : ''} ${rmv ? 'rmv' : 'add'}" data-id="${skill.id}" data-name="${skill.preferredLabel}">
-                        <i class="fas ${rmv ? 'fa-minus' : 'fa-plus'}"></i>
-                    </a>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input ${associated ? 'associated' : ''} ${rmv ? 'rmv-skill' : 'add-skill'}" 
+                                            id="skill_id-${id}" data-id="${id}" 
+                                            data-name="${skill.preferredLabel}" 
+                                            value="1" 
+                                            ${associated ? 'checked="checked"' : ''}>
+                        <label class="switch-custom custom-control-label" for="skill_id-${id}"></label>
+                    </div>
                 </div>
             </div>
         </li>`;
@@ -97,7 +112,7 @@ class Recruiter {
 
             if (!statusAppend) return false;
             let data = {id: skillId, preferredLabel: skillName};
-            let html = _this.tplSkill(data, true);
+            let html = _this.tplSkill(data, true, true);
             $(html).appendTo(ul);
 
             _this.resetAffectedUsers();
@@ -147,7 +162,7 @@ class Recruiter {
 
         let _this = this;
 
-        $('body').on('click', '.ul-skills:not(#skills-occupations) .rmv', function(e) {
+        $('body').on('click', '.ul-skills:not(#skills-occupations) .rmv-skill', function(e) {
             e.preventDefault();
 
             let skillId = $(this).attr('data-id');
@@ -242,8 +257,8 @@ class Recruiter {
                         if (data && data.length > 0) {
                             for (let i = 0; i < data.length; i++) {
                                 if (skillsList.includes(data[i].skill.id)) {
-                                    if (ulNotOccupation.find('.rmv[data-id="' + data[i].skill.id + '"]').length > 0) {
-                                        ulNotOccupation.find('.rmv[data-id="' + data[i].skill.id + '"]').closest('.list-group-item').remove();
+                                    if (ulNotOccupation.find('.rmv-skill[data-id="' + data[i].skill.id + '"]').length > 0) {
+                                        ulNotOccupation.find('.rmv-skill[data-id="' + data[i].skill.id + '"]').closest('.list-group-item').remove();
                                     }
 
                                     html += _this.tplSkill(data[i].skill, true, true);
@@ -259,7 +274,7 @@ class Recruiter {
                                     } else {
                                         $('body').find('.skills-associated').hide();
                                     }
-                                    if (ul.find('.add').length > 0) {
+                                    if (ul.find('.add-skill').length > 0) {
                                         $('body').find('.skills-associated').attr('id', 'all-associated').html(translationsJS && translationsJS.all_associated ? translationsJS.all_associated : 'All associated')
                                     } else {
                                         $('body').find('.skills-associated').attr('id', 'all-unassociated').html(translationsJS && translationsJS.all_unassociated ? translationsJS.all_unassociated : 'All unassociated')
@@ -288,18 +303,17 @@ class Recruiter {
 
         $('body').on('click', '#all-associated', function(e) {
             e.preventDefault();
-
+            
             let ul = $('#skills-occupations');
             if (ul.find('li').length > 0) {
                 ul.find('li').each(function(k) {
-                    let skill = $(this).find('a.add');
+                    $(this).removeClass('no-linked');
+                    let skill = $(this).find('input[type="checkbox"].add-skill');
+                    skill.prop('checked', true);
                     let skillId = skill.attr('data-id');
                     
                     skill.addClass('associated');
-                    
-                    skill.toggleClass('add rmv');
-                    skill.children().remove();
-                    skill.append('<i class="fas fa-minus"></i>');
+                    skill.toggleClass('add-skill rmv-skill');
                     
                     _this.addSkillToHiddenField(skillId);
                 });
@@ -316,15 +330,13 @@ class Recruiter {
             let ul = $('#skills-occupations');
             if (ul.find('li').length > 0) {
                 ul.find('li').each(function(k) {
-                    let skill = $(this).find('a.rmv');
+                    $(this).addClass('no-linked');
+                    let skill = $(this).find('input[type="checkbox"].rmv-skill');
+                    skill.prop('checked', false);
                     let skillId = skill.attr('data-id');
-                    let type = skill.attr('data-type');
             
                     skill.removeClass('associated');
-
-                    skill.toggleClass('rmv add');
-                    skill.children().remove();
-                    skill.append('<i class="fas fa-plus"></i>');
+                    skill.toggleClass('rmv-skill add-skill');
                     
                     _this.removeSkillToHiddenField(skillId);
                 });
@@ -335,33 +347,27 @@ class Recruiter {
             _this.resetAffectedUsers();
         });
 
-        $('body').on('click', '#skills-occupations .add', function(e) {
-            e.preventDefault();
+        $('body').on('click', '#skills-occupations .add-skill', function(e) {
+
+            $(this).closest('li').removeClass('no-linked');
 
             let skillId = $(this).attr('data-id');
-            let type = $(this).attr('data-type');
             
             $(this).addClass('associated');
-            
-            $(this).toggleClass('add rmv');
-            $(this).children().remove();
-            $(this).append('<i class="fas fa-minus"></i>');
+            $(this).toggleClass('add-skill rmv-skill');
             
             _this.addSkillToHiddenField(skillId);
             _this.resetAffectedUsers();
         });
         
-        $('body').on('click', '#skills-occupations .rmv', function(e) {
-            e.preventDefault();
+        $('body').on('click', '#skills-occupations .rmv-skill', function(e) {
+            $(this).closest('li').addClass('no-linked');
             
             let skillId = $(this).attr('data-id');
-            let type = $(this).attr('data-type');
             
             $(this).removeClass('associated');
 
-            $(this).toggleClass('rmv add');
-            $(this).children().remove();
-            $(this).append('<i class="fas fa-plus"></i>');
+            $(this).toggleClass('rmv-skill add-skill');
 
             _this.removeSkillToHiddenField(skillId);
             _this.resetAffectedUsers();
@@ -921,6 +927,7 @@ class Recruiter {
         let _this = this;
 
         $('body').on('click', '#send-email-position', function() {
+            $(this).attr('disabled', 'disabled');
             let token = $('body').attr('data-token');
             function formatDate(date, format) {
                 const map = {
@@ -1006,6 +1013,7 @@ class Recruiter {
             $(this).find('.modal-body').children().remove();
             $(this).find('.modal-footer').find('.btn-add-user').remove();
             $(this).find('.modal-dialog').removeClass('modal-lg');
+            $('#send-email-position').removeAttr('disabled');
         });
         
         $('#common-modal-2').on('hidden.bs.modal', function (e) {
