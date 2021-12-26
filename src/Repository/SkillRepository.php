@@ -101,7 +101,7 @@ class SkillRepository extends ServiceEntityRepository
                         NULL AS o_ids,
                         NULL AS o_preferred_labels
                     FROM skill s
-                    INNER JOIN training_skill ts ON ts.skill_id = s.id AND ts.is_required = 1
+                    INNER JOIN training_skill ts ON ts.skill_id = s.id 
                     INNER JOIN user_training ut ON ut.user_id = :user AND ut.training_id = ts.training_id
                     INNER JOIN training t ON t.id = ut.training_id
                     GROUP BY s.id

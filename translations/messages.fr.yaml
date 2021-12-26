@@ -63,6 +63,7 @@ label:
   language: Langue
   is_certified: Certifié
   is_free: Gratuit
+  position_occupation: Profession liée au poste
 placeholder:
   training_price: "Ex: 1000.00"
   duration_details: "Ex : les lundis et mardis de 8h à 10h."
@@ -225,12 +226,13 @@ required_skills: Compétences requises
 acquired_skills: Compétences acquises
 skills_you_can_acquire: Compétences que vous pouvez acquérir
 no_item: Aucun élément
-esco: En ESCO pour ce métier
+esco: Sélectionnez les compétences dans la liste ci-dessous
 no_esco: Ajouter plus de compétences
 
 the_following_skills_have_been_calculated_based: La liste de compétences suivante a été compilée sur la base de votre expérience professionnelle et de votre historique de formation
 see_more: Voir plus
 other_skills: Ajoutez d'autres compétences qui vous manquent dans la liste ci-dessus.
+other_skills_label: Sélectionnez une compétence
 previously_unselected: Compétences précédemment supprimées des listes.
 please_indicate_any_professional_training: Veuillez indiquer toute formation professionnelle que vous avez suivie au cours des 5 dernières années
 don_t_find_your_training: Vous ne trouvez pas votre formation ? Ajoutez-la ici !
@@ -426,3 +428,4 @@ duplicate_position_success: La position a été dupliquée avec succès
 no_skills_found_for_this_position: Aucune compétence trouvée pour ce poste
 no_position_found: Aucun poste trouvé
 published_for_job_seekers: Publié pour les demandeurs d'emploi
+required_skills_for_this_occupation: Compétences requises pour ce métier

@@ -63,6 +63,7 @@ label:
   language: Lingua
   is_certified: è certificato
   is_free: È libero
+  position_occupation: Professione legata alla posizione
 placeholder:
   training_price: "Es: 1000.00"
   duration_details: "Es: lunedì e martedì dalle 8:00 alle 10:00"
@@ -231,6 +232,7 @@ no_esco: Aggiungi più abilità
 the_following_skills_have_been_calculated_based: Il seguente elenco di competenze è stato compilato in base alla tua esperienza lavorativa e alla tua storia di formazione
 see_more: Vedi altro
 other_skills: Aggiungi altre abilità che ritieni manchino nell'elenco sopra.
+other_skills_label: Seleziona abilità
 previously_unselected: Abilità precedentemente rimosse dagli elenchi.
 please_indicate_any_professional_training: Si prega di indicare l'eventuale formazione professionale che ha seguito negli ultimi 5 anni
 don_t_find_your_training: Non trovi la tua formazione? Aggiungilo qui!
@@ -425,3 +427,4 @@ duplicate_position_success: La posizione è stata duplicata con successo
 no_skills_found_for_this_position: Nessuna competenza trovata per questa posizione
 no_position_found: Nessuna posizione trovata
 published_for_job_seekers: Pubblicato per chi cerca lavoro
+required_skills_for_this_occupation: Competenze richieste per questa occupazione

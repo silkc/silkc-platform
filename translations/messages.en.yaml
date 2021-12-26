@@ -63,6 +63,7 @@ label:
   language: Language
   is_certified: Is certified
   is_free: Is free
+  position_occupation: Occupation related to the position
 placeholder:
   training_price: "Ex: 1000.00"
   duration_details: "Ex: Mondays and Tuesdays from 8 a.m. to 10 a.m."
@@ -230,12 +231,13 @@ required_skills: Required skills
 acquired_skills: Acquired skills
 skills_you_can_acquire: Skills you can acquire
 no_item: No element
-esco: Sélectionnez les compétences dans la liste ci-dessous
+esco: Select skills from the list below
 no_esco: Add more skills
 
 the_following_skills_have_been_calculated_based: The following skills list has been compiled based on your work experience and training history
 see_more: See more
 other_skills: Add other skills that you feel are missing in the above list.
+other_skills_label: Select skill
 previously_unselected: Previously removed skills from the lists.
 please_indicate_any_professional_training: Please indicate any professional training that you have followed in the last 5 years
 don_t_find_your_training: Can't find your training? Add it here!
@@ -437,3 +439,4 @@ duplicate_position_success: The position has been duplicated successfully
 no_skills_found_for_this_position: No skills found for this position
 no_position_found: No position found
 published_for_job_seekers: Published for job seekers
+required_skills_for_this_occupation: Required skills for this occupation

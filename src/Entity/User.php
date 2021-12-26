@@ -748,7 +748,7 @@ class User implements UserInterface
         return $this->upToDistance;
     }
 
-    public function setUpToDistance(bool $upToDistance): self
+    public function setUpToDistance(int $upToDistance): self
     {
         $this->upToDistance = $upToDistance;
 

@@ -63,6 +63,7 @@ label:
   language: Język
   is_certified: Posiada certyfikat
   is_free: Jest wolny
+  position_occupation: Zawód związany ze stanowiskiem
 placeholder:
   training_price: "Np.: 1000.00"
   duration_details: "Np.: poniedziałki i wtorki od 8:00 do 10:00"
@@ -231,6 +232,7 @@ no_esco: Dodaj więcej umiejętności
 the_following_skills_have_been_calculated_based: Poniższa lista umiejętności została opracowana na podstawie Twojego doświadczenia zawodowego i historii szkoleń
 see_more: Zobacz więcej
 other_skills: Dodaj inne umiejętności, których Twoim zdaniem brakuje na powyższej liście.
+other_skills_label: Wybierz umiejętność
 previously_unselected: Wcześniej usunięte umiejętności z list.
 please_indicate_any_professional_training: Proszę wskazać wszelkie szkolenia zawodowe, które odbyłeś w ciągu ostatnich 5 lat
 don_t_find_your_training: Nie możesz znaleźć swojego szkolenia? Dodaj to tutaj!
@@ -426,3 +428,4 @@ duplicate_position_success: Pozycja została pomyślnie zduplikowana
 no_skills_found_for_this_position: Nie znaleziono umiejętności na tym stanowisku
 no_position_found: Nie znaleziono pozycji
 published_for_job_seekers: Opublikowane dla osób poszukujących pracy
+required_skills_for_this_occupation: Wymagane umiejętności do tego zawodu

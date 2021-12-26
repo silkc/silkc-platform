@@ -707,6 +707,7 @@ class Admin {
     getDetails = () => {
 
         let that = this;
+        let lang = $('body').attr('lang');
 
         $('body').on('click', '#content-work .get-info', function() {
             let $modal = $('#common-modal');
@@ -892,7 +893,7 @@ class Admin {
 
                         let editHTML = `<div class="row blc-edit-training">
                                             <div class="col-md-12 text-right">
-                                                <a href="/training/edit/${id}" class="btn btn-primary">${translationsJS && translationsJS.edit ? translationsJS.edit : 'Edit'}</a>
+                                                <a href="/${lang}/training/edit/${id}" class="btn btn-primary">${translationsJS && translationsJS.edit ? translationsJS.edit : 'Edit'}</a>
                                             </div>
                                         </div>`;
 

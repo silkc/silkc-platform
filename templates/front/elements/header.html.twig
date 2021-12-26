@@ -14,7 +14,13 @@
                 <div class="dropdown mr-2">
 
                     {% if app.user is defined and app.user is not null %}
-                        <i class="fas fa-user text-success"></i>
+                        {% if is_granted('ROLE_RECRUITER') %}
+                            <i class="fas fa-industry text-success"></i>
+                        {% elseif is_granted('ROLE_INSTITUTION') %}
+                            <i class="fas fa-school text-success"></i>
+                        {% else %}
+                            <i class="fas fa-user text-success"></i>
+                        {% endif %}
                     {% endif %}
 
                     <a class="dropdown-right" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,7 +39,7 @@
                         {% if app.user is defined and app.user is not null and is_granted('ROLE_ADMIN') %}
                             <a class="dropdown-item" href="{{ path('admin_home') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
                         {% elseif app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') %}
-                            <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-user-alt"></i><span>{{ 'header.my_account'|trans }}</span></a>
+                            <a class="dropdown-item" href="{{ path('app_institution') }}"><i class="fas fa-school"></i><span>{{ 'header.my_account'|trans }}</span></a>
                         {% elseif app.user is defined and app.user is not null and is_granted('ROLE_RECRUITER') %}
                             <a class="dropdown-item" href="{{ path('app_recruiter') }}"><i class="fas fa-industry"></i><span>{{ 'header.my_account'|trans }}</span></a>
                         {% else %}

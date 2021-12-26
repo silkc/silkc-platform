@@ -119,8 +119,8 @@
 
 	<div class="col-6">
 		<div class="occupations-select">
-			{{ form_label(form.occupation) }}
-            <span class="subinfotitle">{{ 'jobs_and_skills_are_based_on_the_ESCO_framework'|trans }} <a href="https://ec.europa.eu/esco/portal" target="blank">https://ec.europa.eu/esco/portal</a></span>
+			{{ form_label(form.occupation, null, { label_attr: { style: 'margin-bottom: 0;' }}) }}
+            <span class="subinfotitle mb-2">{{ 'jobs_and_skills_are_based_on_the_ESCO_framework'|trans }} <a href="https://ec.europa.eu/esco/portal" target="blank">https://ec.europa.eu/esco/portal</a></span>
 			{{ form_widget(form.occupation) }}
 		</div>
 

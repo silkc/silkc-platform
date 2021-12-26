@@ -101,6 +101,7 @@ class PositionType extends AbstractType
                 'class'        => Occupation::class,
                 'choices'      => $this->occupationRepository->findAll(),
                 'choice_label' => 'preferredLabel',
+                'label'        => 'label.position_occupation',
                 'multiple'     => false,
                 'expanded'     => false,
                 'required'     => false,
