@@ -925,9 +925,14 @@ class Recruiter {
 
     sendEmailPosition = () => {
         let _this = this;
+        const $inputSkillsList = $('input#hidden_positionSkills');
 
         $('body').on('click', '#send-email-position', function() {
-            $(this).attr('disabled', 'disabled');
+            let $button = $(this);
+
+            $button.attr('disabled', 'disabled').find('span.loader').remove();
+            $button.append('<span class="loader">&nbsp;<i class="fas fa-spinner fa-spin"></i></span>');
+            
             let token = $('body').attr('data-token');
             function formatDate(date, format) {
                 const map = {
@@ -938,18 +943,23 @@ class Recruiter {
                 
                 return format.replace(/mm|dd|yyyy/gi, matched => map[matched])
             }
-            
+
+            let skillsList = JSON.parse($inputSkillsList.val()) || {};
             let positionId = $('#position_id').val().length > 0 ? $('#position_id').val() : ''
             if (!positionId) return false;
+            let data = {skills: skillsList};
             let url = '/api/send_position_to_affected_users/' + positionId;
 
 
             $.ajax({
                 type: "GET",
                 dataType: 'json',
+                data: data,
                 headers: {"X-auth-token": token},
                 url: url,
                 success: function (data, textStatus, jqXHR) {
+                    $button.find('span.loader').remove();
+
                     if (data && data.result) {
                         let $modal = $('#common-modal');
 
@@ -978,6 +988,7 @@ class Recruiter {
                 },
                 error : function(jqXHR, textStatus, errorThrown){
                     bootbox.alert('An error occured');
+                    $button.find('span.loader').remove();
                 },
                 complete : function(jqXHR, textStatus ){}
             });

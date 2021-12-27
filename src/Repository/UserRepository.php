@@ -174,6 +174,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                     HAVING count_skills >= :countRequiredSkills
                 ) AS ssq
                 INNER JOIN user AS u ON u.id = ssq.user_id
+                WHERE u.is_listening_position = 1
             ', $rsm)
             ->setParameter('skillIDs', $skills)
             ->setParameter('countRequiredSkills', count($skills));

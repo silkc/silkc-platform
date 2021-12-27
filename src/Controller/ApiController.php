@@ -449,10 +449,8 @@ class ApiController extends AbstractController
      */
     public function send_position_to_affected_users($position_id, Request $request, UserRepository $userRepository, PositionRepository $positionRepository, TranslatorInterface $translator, MailerInterface $mailer)
     {
-        $skills = $request->query->get('skills', [1]);
+        $skills = $request->query->get('skills', null);
 
-        $defaultData = ['count_all' => 0, 'count_listening' => 0];
-        
         if (!$skills || !is_array($skills) || count($skills) == 0 || !$position_id)
             return new JsonResponse(['message' => $translator->trans('no_skills_found_for_this_position')], Response::HTTP_BAD_REQUEST);
 
