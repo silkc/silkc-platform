@@ -399,6 +399,13 @@ class Account {
         $('body').on('click', '.add-job button', function(e) {
             e.preventDefault();
 
+            let btn = this;
+            $(btn).attr('disabled', 'disabled');
+            let loader = `<div class="spinner-border text-light spinner-button mr-1" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>`;
+            $(btn).html(loader);
+            
             let occupation = {};
             let inputJobs = $('body').find('#jobs[type="hidden"]');
             let div = $(this).closest('.add-job');
@@ -413,11 +420,11 @@ class Account {
             jobsList.previousOccupations = [];
             jobsList.desiredOccupations = [];
 
+            inputAutocomplete.attr('disabled', 'disabled');
+
             if (inputJobToAdd && inputJobToAdd.val()) {
                 let jobIdToAdd = inputJobToAdd.val();
 
-                inputAutocomplete.val('');
-                inputAutocomplete.removeAttr('data-description');
                 inputJobToAdd.val();
                 
                 if (!jobIdToAdd) return false;
@@ -504,7 +511,13 @@ class Account {
                             $('[data-toggle="tooltip"]').tooltip();
                         },
                         error : function(resultat, statut, erreur){},
-                        complete : function(resultat, statut, erreur){}
+                        complete : function(resultat, statut, erreur){
+                            $(btn).html('<i class="fas fa-plus"></i>');
+                            $(btn).removeAttr('disabled');
+                            inputAutocomplete.removeAttr('disabled');
+                            inputAutocomplete.val('');
+                            inputAutocomplete.removeAttr('data-description');
+                        }
                     });
                 }
             }
