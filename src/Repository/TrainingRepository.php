@@ -61,7 +61,6 @@ class TrainingRepository extends ServiceEntityRepository
         ?int $distance = null,
         ?float $latitude = null,
         ?float $longitude = null*/
-
         list ($select, $filter, $having) = $this->getFiltersValues($params);
 
         $query = $this->getEntityManager()->createNativeQuery(" 
@@ -386,22 +385,26 @@ class TrainingRepository extends ServiceEntityRepository
     }
     */
 
-    public function getMaxPrice(): ?int
+    public function getMaxPrice(): ?array
     {
         $rsm = new ResultSetMapping();
-        $rsm->addScalarResult( 'max_price', 'max_price');
+        $rsm->addScalarResult( 'euro', 'euro');
+        $rsm->addScalarResult( 'zloty', 'zloty');
 
         $result = $this->getEntityManager()
             ->createNativeQuery('
                 SELECT 
-                    MAX(t.price) as max_price 
+                    MAX(IF(t.currency = :euro, t.price, 0)) as euro,
+                    MAX(IF(t.currency = :zloty, t.price, 0)) as zloty
                 FROM training t 
                 WHERE t.price IS NOT NULL
             ', $rsm)
+            ->setParameter('euro', Training::CURRENCY_EURO)
+            ->setParameter('zloty', Training::CURRENCY_ZLOTY)
             ->getOneOrNullResult()
         ;
 
-        return ($result) ? intval($result['max_price']) : 0;
+        return $result;
     }
 
     protected function getFiltersValues(array $params = []): array
@@ -456,13 +459,22 @@ class TrainingRepository extends ServiceEntityRepository
                 $filterParams[] = "t.is_online_monitored = " . intval($params['isOnlineMonitored']);
             if (array_key_exists('isPresential', $params) && is_bool($params['isPresential']) && $params['isPresential'] === true)
                 $filterParams[] = "t.is_presential = " . intval($params['isPresential']);
-            if (
-                array_key_exists('minPrice', $params) && !empty($params['minPrice']) && $params['minPrice'] !== null &&
-                array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null &&
-                array_key_exists('currency', $params)
-            )
-                $filterParams[] = "(t.price > " . floatval($params['minPrice']) . " AND t.price < " . floatval($params['maxPrice']) . " AND t.currency = '" . $params['currency'] . "')";
+            if (array_key_exists('priceType', $params) && !empty($params['priceType']) && $params['priceType'] !== null) {
+                if ($params['priceType'] === 'range') {
+                    if (
+                        array_key_exists('minPrice', $params) && !empty($params['minPrice']) && $params['minPrice'] !== null &&
+                        array_key_exists('maxPrice', $params) && !empty($params['maxPrice']) && $params['minPrice'] !== null
+                    )
+                        $filterParams[] = "(t.price >= " . floatval($params['minPrice']) . " AND t.price <= " . floatval($params['maxPrice']) . ")";
 
+                    if (array_key_exists('currency', $params))
+                        $filterParams[] = "t.currency = '" . $params['currency'] . "'";
+                }
+                else if ($params['priceType'] === 'free') {
+                    $filterParams[] = "t.is_free=1";
+                }
+
+            }
             if (array_key_exists('minDuration', $params) && !empty($params['minDuration']) && $params['minDuration'] !== null)
                 $filterParams[] = "t.duration_value >= " . intval($params['minDuration']);
             if (array_key_exists('maxDuration', $params) && !empty($params['maxDuration']) && $params['maxDuration'] !== null)

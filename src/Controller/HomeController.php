@@ -230,8 +230,8 @@ class HomeController extends AbstractController
         if (array_key_exists('isOnline', $rp) && !empty($rp['isOnline']))
             $params['isOnline'] = (bool) ($rp['isOnline'] === true || $rp['isOnline'] === 'on');
 
-        if (array_key_exists('isFree', $rp) && !empty($rp['isFree']))
-            $params['isFree'] = (bool) ($rp['isFree'] === true || $rp['isFree'] === 'on');
+        if (array_key_exists('priceType', $rp) && !empty($rp['priceType']))
+            $params['priceType'] = $rp['priceType'];
 
         if (array_key_exists('isOnlineMonitored', $rp) && !empty($rp['isOnlineMonitored']))
             $params['isOnlineMonitored'] = (bool) ($rp['isOnlineMonitored'] === true || $rp['isOnlineMonitored'] === 'on');

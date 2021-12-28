@@ -932,7 +932,7 @@ class Recruiter {
 
             $button.attr('disabled', 'disabled').find('span.loader').remove();
             $button.append('<span class="loader">&nbsp;<i class="fas fa-spinner fa-spin"></i></span>');
-            
+
             let token = $('body').attr('data-token');
             function formatDate(date, format) {
                 const map = {

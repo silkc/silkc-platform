@@ -63,10 +63,18 @@
 						</div>
 
                         <div class="form-group">
+							<div class="form-check">
+								<input type="radio" name="priceType" value="range" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'range' ? 'checked="cheked"' : '' }}>
+								<label class="form-check-label" for="priceType">{{ 'in_range_and_currendy_training'|trans }}</label>
+							</div>
                             <div class="form-check">
-                                <input type="checkbox" id="isFree" name="isFree" class="form-check-input" {{ requestParams.isFree is defined and requestParams.isFree == true ? 'checked="cheked"' : '' }}>
-                                <label class="form-check-label" for="isFree">{{ 'free_training'|trans }}</label>
+                                <input type="radio" name="priceType" value="free" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'free' ? 'checked="cheked"' : '' }}>
+                                <label class="form-check-label" for="priceType">{{ 'free_training'|trans }}</label>
                             </div>
+							<div class="form-check">
+								<input type="radio" name="priceType" value="all" class="form-check-input" {{ requestParams.priceType is not defined or requestParams.priceType == 'all' ? 'checked="cheked"' : '' }}>
+								<label class="form-check-label" for="priceType">{{ 'all_prices_training'|trans }}</label>
+							</div>
                         </div>
     
 						<input type="hidden" id="minPrice" name="minPrice" value="{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }}">
