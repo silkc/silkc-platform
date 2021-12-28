@@ -385,7 +385,6 @@ class SearchResults {
 
                 $("#priceValMin > span:first-child").text(min);
                 $("#priceValMax > span:first-child").text(max);
-                //$("#priceValMin > span:last-child").text(currencyAcronym);
                 $("#priceValMax > span:last-child").text(currencyAcronym);
                 $("#minPrice").val(min);
                 $("#maxPrice").val(max);
@@ -393,32 +392,50 @@ class SearchResults {
                 $("#bckMaxPrice").val(max);
             });
 
-            // free training
-            $("body").on("click", "#isFree", function () {
+            // Range
+            $("body").on("click", "#priceTypeRange", function () {
                 if($(this).is(':checked') ){
-                    _this.sliderPrice.disable();
-                    $('#currency').attr('disabled', true);
-                    $("#minPrice").val(0);
-                    $("#maxPrice").val(0); 
-                } else {
                     _this.sliderPrice.enable();
                     $('#currency').attr('disabled', false);
-                    $("#minPrice").val($('#bckMinPrice').val());  
-                    $("#maxPrice").val($('#bckMaxPrice').val()); 
-                    $("#priceValMin > span:first-child").text($('#bckMinPrice').val());
-                    $("#priceValMax > span:first-child").text($('#bckMaxPrice').val());
-                    _this.sliderPrice.setValue([parseInt($('#bckMinPrice').val()), parseInt($('#bckMaxPrice').val())]);
                 }
             });
-
-            if ($("body #isFree").is(':checked') ) {
+            // free training
+            $("body").on("click", "#priceTypeFree", function () {
                 _this.sliderPrice.disable();
                 $('#currency').attr('disabled', true);
-                $("#minPrice").val($('#bckMinPrice').val());  
-                $("#maxPrice").val($('#bckMaxPrice').val());  
+            });
+            $("body").on("click", "#priceTypeAll", function () {
+                _this.sliderPrice.disable();
+                $('#currency').attr('disabled', true);
+            });
+
+            if ($('input#priceTypeFree').is(':checked') || $('input#priceTypeAll').is(':checked')) {
+                _this.sliderPrice.disable();
+                $('#currency').attr('disabled', true);
             }
         };
         
+        $("#currency").on("change", function () {
+            $("#priceValMax > span:last-child").text(
+                $(this).find("option:selected").attr("data-acronym")
+            );
+
+            let maxPrice = $(this).find("option:selected").attr('data-max-price');
+
+            $("#minPrice").val(0);
+            $("#maxPrice").val(maxPrice);
+
+            $("#priceValMin > span:first-child").text(0);
+            $("#priceValMax > span:first-child").text(maxPrice);
+
+            $("#minPrice").val(0);
+            $("#maxPrice").val(maxPrice);
+
+            _this.sliderPrice.setAttribute('max', parseInt(maxPrice));
+            _this.sliderPrice.setValue([0, parseInt(maxPrice)]);
+
+        });
+
         // DURATION
         let initSliderDuration = function () {
             _this.sliderDuration = new Slider("#formControlRangeDuration", {
@@ -457,21 +474,6 @@ class SearchResults {
                 _this.sliderDistance.disable();
         };
 
-        $("#currency").on("change", function () {
-            $("#priceValMax > span:last-child").text(
-                $(this).find("option:selected").attr("data-acronym")
-            );
-
-            let max = _this.sliderPrice.element.dataset.sliderMax;
-            $("#priceValMin > span:first-child").text(0);
-            $("#priceValMax > span:first-child").text(max);
-
-            $("#minPrice").val(0);
-            $("#maxPrice").val(max);
-
-            _this.sliderPrice.setValue([0, 5000]);
-        });
-
         $("#unity").on("change", function () {
             $("#durationValMax > span:last-child").text(
                 $(this).find("option:selected").val()
@@ -508,6 +510,7 @@ class SearchResults {
 
             $("#minPrice").val(0);
             $("#maxPrice").val(max);
+            $("#priceTypeAll").trigger("click");
 
             // Duration
             $("#durationValMin > span:first-child").text(0);
@@ -542,12 +545,13 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-price", function () {
             _this.removeCookiesParamsSearch();
-            _this.sliderPrice.setValue([0, 5000]);
-            let max = _this.sliderPrice.element.dataset.sliderMax;
+            let maxPrice = $("#currency").find("option:selected").attr('data-max-price');
+            _this.sliderPrice.setValue([0, parseInt(maxPrice)]);
+            $("#priceTypeAll").trigger("click");
             $("#priceValMin > span:first-child").text(0);
-            $("#priceValMax > span:first-child").text(max);
+            $("#priceValMax > span:first-child").text(maxPrice);
             $("#minPrice").val(0);
-            $("#maxPrice").val(max);
+            $("#maxPrice").val(maxPrice);
             $("#isFree").prop('checked', false);
             $(this).remove();
             setTimeout(function () {

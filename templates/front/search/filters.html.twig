@@ -38,7 +38,7 @@
 									-
 								</span>
 								<span id="priceValMax">
-									<span>{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}</span>
+									<span>{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice.euro }}</span>
 									<span>{{ requestParams.currency is defined ? requestParams.currency : '€' }}</span>
 								</span>
 							</div>
@@ -49,39 +49,42 @@
 									class="form-control"
 									value=""
 									data-slider-min="0"
-									data-slider-max="{{ defaultMaxPrice }}"
+									data-slider-max="{{ requestParams.currency is defined and requestParams.currency == "złoty" ? defaultMaxPrice.zloty : defaultMaxPrice.euro }}"
 									data-slider-step="5"
-									data-slider-value="[{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }},{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}]"
+									data-slider-value="[{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }},{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice.euro }}]"
 								/>
 								<div class="input-group-append ml-4">
 									<select id="currency" class="form-control custom-select" name="currency">
-										<option data-acronym="€" value="euro" {% if requestParams.currency is defined and requestParams.currency == "euro" %} selected="selected" {% endif %}>Euro</option>
-										<option data-acronym="zł" value="złoty" {% if requestParams.currency is defined and requestParams.currency == "złoty" %} selected="selected" {% endif %}>Złoty</option>
+										<option data-acronym="€" value="euro" data-max-price="{{ defaultMaxPrice.euro }}" {% if requestParams.currency is defined and requestParams.currency == "euro" %} selected="selected" {% endif %}>Euro</option>
+										<option data-acronym="zł" value="złoty" data-max-price="{{ defaultMaxPrice.zloty }}" {% if requestParams.currency is defined and requestParams.currency == "złoty" %} selected="selected" {% endif %}>Złoty</option>
 									</select>
 								</div>
 							</div>
 						</div>
 
-                        <div class="form-group">
+                        <div class="form-group flex-column align-items-start">
 							<div class="form-check">
-								<input type="radio" name="priceType" value="range" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'range' ? 'checked="cheked"' : '' }}>
-								<label class="form-check-label" for="priceType">{{ 'in_range_and_currendy_training'|trans }}</label>
+								<input type="radio" name="priceType" id="priceTypeRange" value="range" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'range' ? 'checked="cheked"' : '' }}>
+								<label class="form-check-label" for="priceTypeRange">{{ 'in_range_and_currendy_training'|trans }}</label>
 							</div>
                             <div class="form-check">
-                                <input type="radio" name="priceType" value="free" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'free' ? 'checked="cheked"' : '' }}>
-                                <label class="form-check-label" for="priceType">{{ 'free_training'|trans }}</label>
+                                <input type="radio" name="priceType" id="priceTypeFree" value="free" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'free' ? 'checked="cheked"' : '' }}>
+                                <label class="form-check-label" for="priceTypeFree">{{ 'free_training'|trans }}</label>
                             </div>
 							<div class="form-check">
-								<input type="radio" name="priceType" value="all" class="form-check-input" {{ requestParams.priceType is not defined or requestParams.priceType == 'all' ? 'checked="cheked"' : '' }}>
-								<label class="form-check-label" for="priceType">{{ 'all_prices_training'|trans }}</label>
+								<input type="radio" name="priceType" id="priceTypeAll" value="all" class="form-check-input" {{ requestParams.priceType is not defined or requestParams.priceType == 'all' ? 'checked="cheked"' : '' }}>
+								<label class="form-check-label" for="priceTypeAll">{{ 'all_prices_training'|trans }}</label>
 							</div>
                         </div>
     
 						<input type="hidden" id="minPrice" name="minPrice" value="{{ requestParams.minPrice is defined ? requestParams.minPrice : 0 }}">
-						<input type="hidden" id="maxPrice" name="maxPrice" value="{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice }}">
+						<input type="hidden" id="maxPrice" name="maxPrice" value="{{ requestParams.maxPrice is defined ? requestParams.maxPrice : defaultMaxPrice.euro }}">
+
+						{#<input type="hidden" id="maxPrice_euro" value="{{ defaultMaxPrice.euro }}">
+						<input type="hidden" id="maxPrice_złoty" value="{{ defaultMaxPrice.zloty }}">
 
 						<input type="hidden" id="bckMinPrice" value="{{ 0 }}">
-						<input type="hidden" id="bckMaxPrice" value="{{ defaultMaxPrice }}">
+						<input type="hidden" id="bckMaxPrice" value="{{ defaultMaxPrice.euro }}">#}
 
                         <p class="mt-2 mb-0 font-italic">{{ 'info_filters_by_price'|trans }}</p>
 					</div>

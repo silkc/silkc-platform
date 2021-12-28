@@ -65,13 +65,19 @@
 							</button>
 						{% endif %}
 
-						{% if requestParams.minPrice is defined and requestParams.maxPrice is defined
-					and (requestParams.minPrice != 0 or requestParams.maxPrice != defaultMaxPrice) %}
+						{% if (requestParams.minPrice is defined and requestParams.maxPrice is defined
+					        and (requestParams.minPrice != 0 or requestParams.maxPrice != defaultMaxPrice) and requestParams.priceType != "all")
+                                or (requestParams.priceType is defined and requestParams.priceType != "all") 
+                            %}
 							<button type="button" class="btn btn-sm btn-light mb-1 tag-price">
-								{{ requestParams.minPrice }}
-								€ -
-								{{ requestParams.maxPrice }}
-								€
+                                {% if requestParams.priceType == "free" %}
+                                    {{ 'free_training'|trans }}
+                                {% elseif requestParams.priceType == "range" %}
+                                    {{ requestParams.minPrice }}
+                                    € -
+                                    {{ requestParams.maxPrice }}
+                                    €
+                                {% endif %}
 								<span class="delete">&times;</span>
 							</button>
 						{% endif %}
