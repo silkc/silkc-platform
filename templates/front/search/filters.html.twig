@@ -42,7 +42,7 @@
 									<span>{{ requestParams.currency is defined ? requestParams.currency : '€' }}</span>
 								</span>
 							</div>
-							<div class="d-flex flex-row align-items-center flex-nowrap">
+							<div class="d-flex flex-row align-items-center flex-nowrap mb-2">
 								<input
 									id="formControlRangePrice"
 									type="text"
@@ -65,7 +65,12 @@
                         <div class="form-group flex-column align-items-start">
 							<div class="form-check">
 								<input type="radio" name="priceType" id="priceTypeRange" value="range" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'range' ? 'checked="cheked"' : '' }}>
-								<label class="form-check-label" for="priceTypeRange">{{ 'in_range_and_currendy_training'|trans }}</label>
+								<label class="form-check-label" for="priceTypeRange">
+									{{ 'in_range_and_currendy_training'|trans }}
+									<span data-toggle="tooltip" title="{{ 'info_filters_by_price'|trans }}">
+										&nbsp;<i class="fas fa-info-circle"></i>
+									</span>
+								</label>
 							</div>
                             <div class="form-check">
                                 <input type="radio" name="priceType" id="priceTypeFree" value="free" class="form-check-input" {{ requestParams.priceType is defined and requestParams.priceType == 'free' ? 'checked="cheked"' : '' }}>
@@ -86,7 +91,7 @@
 						<input type="hidden" id="bckMinPrice" value="{{ 0 }}">
 						<input type="hidden" id="bckMaxPrice" value="{{ defaultMaxPrice.euro }}">#}
 
-                        <p class="mt-2 mb-0 font-italic">{{ 'info_filters_by_price'|trans }}</p>
+                        {# <p class="mt-2 mb-0 font-italic">{{ 'info_filters_by_price'|trans }}</p>--> #}
 					</div>
 				</div>
 			</div>
