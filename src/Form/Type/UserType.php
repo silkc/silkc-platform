@@ -40,6 +40,7 @@ class UserType extends AbstractType
                     'required'   => false,
                 ])
                 ->add('address', HiddenType::class, [
+                    'attr'               => ["class" => "input_user_address"],
                     'label' => 'login.form.label.address',
                     'translation_domain' => 'messages',
                     'required'   => false,

@@ -1,8 +1,6 @@
 {% extends 'front/layout.html.twig' %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 	{{ encore_entry_link_tags('app') }}
 	{{ encore_entry_link_tags('recruiter') }}
 {% endblock %}
@@ -42,8 +40,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
-	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 	{{ encore_entry_script_tags('main') }}
 	{{ encore_entry_script_tags('recruiter') }}
+	{{ encore_entry_script_tags('map') }}
 {% endblock %}

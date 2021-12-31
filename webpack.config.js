@@ -47,6 +47,7 @@ Encore
     .addEntry('institutional', './assets/js/front/institutional.js')
     .addEntry('recruiter', './assets/js/front/recruiter.js')
     .addEntry('history', './assets/js/front/history.js')
+    .addEntry('map', './assets/js/map.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

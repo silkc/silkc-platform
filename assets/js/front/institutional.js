@@ -634,55 +634,7 @@ class Institutional {
                 leafletControlGeocoderForm.value = coords.city;
             }
         }
-    }
-        
-    /**
-     * Affichage carte modal
-     */
-     runMapModal = () => {
-
-        let inputHidden = document.getElementById('institution-location');
-        var map = null;
-        map = L.map('map-modal').setView([0, 0], 1);
-        let geocoder = L.Control.Geocoder.nominatim();
-        
-        if (inputHidden) {
-            let control = L.Control.geocoder({
-                collapsed: false,
-                placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
-                position: 'topleft',
-                geocoder: geocoder
-            }).on('markgeocode', function(e) {
-                if (e.geocode && e.geocode.center) {
-                    let lat = e.geocode.center.lat;
-                    let lng = e.geocode.center.lng;
-                    let name = e.geocode.name;
-                    
-                    let newCoords = {
-                        "city": name,
-                        "lat": lat,
-                        "lng": lng
-                    };
-                    newCoords = JSON.stringify(newCoords);
-                    
-                    let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
-                    leafletControlGeocoderForm.value = name;
-                    inputHidden.value = newCoords;
-                }
-            }).addTo(map);
-            
-            // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-            // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                attribution: '',
-                minZoom: 1,
-                maxZoom: 20
-            }).addTo(map);
-            
-            document.getElementById('searchmap-modal').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
-        }
-    }
-    
+    }    
 
     runModalAddUser = () => {
         let _this = this;
@@ -701,8 +653,21 @@ class Institutional {
                                             <div class="form-group">
                                             <label for="institution-location">${translationsJS && translationsJS.location ? translationsJS.location : 'Location'}</label>
                                             <input type="hidden" class="form-control" id="institution-location">
-                                            <div id="searchmap-modal"></div>
-                                            <div id="map-modal"></div>
+
+                                            <div class="grp-google-map">
+                                                <div class="input-group flex-nowrap mb-2">
+                                                    <input class="form-control" type="text" placeholer="address" id="address-google-map-modal-training">
+                                                    <span class="input-group-append">
+                                                        <button type="button" class="btn btn-primary" id="btn-geocode-modal-training" disabled="disabled">
+                                                            <div class="spinner-border spinner-border-sm inactive" role="status">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
+                                                            <i class="fa fa-search active"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                                <div id="map-modal-training" style="height: 250px;"></div>
+                                            </div>
                                         </div>
                                     </div>`;
                 $(formAddUser).appendTo($modal.find('.modal-body'));
@@ -782,40 +747,40 @@ class Institutional {
     
                 if (!coords) return false;
 
-                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
-                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                let geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(0, 0);
+                var mapOptions = {
+                    zoom: 1,
+                    center: latlng,
+                    scrollwheel: false,
+                    scaleControl: false,
+                    mapTypeControl: false,
+                    navigationControl: false,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                }
+                map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+                // Affichage du marker en edition
+                if (inputHiddenLat && inputHiddenLat.value != ''
+                    && inputHiddenLng && inputHiddenLng.value != ''
+                    && inputHiddenAddress && inputHiddenAddress.value != '') {
 
-                    coords = JSON.parse(coords);
-                    map = L.map(mapContent).setView([coords.lat, coords.lng], 10);
-                    
-                    let geocoder = L.Control.Geocoder.nominatim();
-                    
-                    let control = L.Control.geocoder({
-                        collapsed: false,
-                        placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
-                        position: 'topleft',
-                        geocoder: geocoder
-                    }).addTo(map);
-                    
-                    // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                    // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-                    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                        attribution: '',
-                        minZoom: 1,
-                        maxZoom: 20
-                    }).addTo(map);
-                    
-                    //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
-                    
-                    if (coords) {
-                        let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
-                        marker.bindPopup(coords.city); // Bulle d'info
-                        
-                        trainingAddress.value = coords.city;
-                    }
-                } else {
-                    blcMap.innerHTML = '<input type="text" class="form-control" disabled="disabled" name="name" value="' + coords + '">';
+                    let inputHiddenAddressVal = JSON.parse(inputHiddenAddress.value);
+                    let result = {};
+                    result.geometry = {};
+                    result.geometry.location = {lat: parseFloat(inputHiddenLat.value), lng: parseFloat(inputHiddenLng.value)};
+                    result.name = inputHiddenAddressVal && inputHiddenAddressVal.title ? inputHiddenAddressVal.title : '';
+                    createMarker(result);
+
+                    if (inputAddress) inputAddress.value = result.name;
+                    let marker = new google.maps.Marker({
+                        position: result.geometry.location,
+                        map,
+                        title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
+                    });
+                    map.setCenter(result.geometry.location);
+                    map.setZoom(10);
                 }
             }
 
@@ -824,94 +789,6 @@ class Institutional {
 
    runMapAddTraining = () => { 
         let copyLocationBtn = document.getElementById('copy-location');
-        let inputHidden = document.querySelector('form[name="training"] #training_location');
-        let inputHiddenLat = document.querySelector('form[name="training"] #training_latitude');
-        let inputHiddenLng = document.querySelector('form[name="training"] #training_longitude');
-        var map = null;
-        let statusCoords = true;
-
-        if (inputHidden) {
-            let coords = inputHidden.value;
-
-            if (coords) {
-                if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
-                replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-                replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-                    coords = JSON.parse(coords);
-                    map = L.map('map').setView([coords.lat, coords.lng], 10);
-                } else {
-                    map = L.map('map').setView([0, 0], 2);
-                    statusCoords = false;
-                }
-            } else {
-                map = L.map('map').setView([0, 0], 2);
-                statusCoords = false;
-            }
-            
-            let geocoder = L.Control.Geocoder.nominatim();
-            let control = L.Control.geocoder({
-                collapsed: false,
-                placeholder: (window.location.href).indexOf('institution') != -1 ?  translationsJS && translationsJS.address ? translationsJS.address : 'Address' : translationsJS && translationsJS.city ? translationsJS.city : 'City',
-                position: 'topleft',
-                geocoder: geocoder
-            }).on('markgeocode', function(e) {
-                if (e.geocode && e.geocode.center) {
-                    let lat = e.geocode.center.lat;
-                    let lng = e.geocode.center.lng;
-                    let name = e.geocode.name;
-                    
-                    let newCoords = {
-                        "city": name,
-                        "lat": lat, 
-                        "lng": lng
-                    };
-                    newCoords = JSON.stringify(newCoords);
-                    
-                    let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
-                    leafletControlGeocoderForm.value = name;
-                    inputHidden.value = newCoords;
-                    inputHiddenLat.value = lat;
-                    inputHiddenLng.value = lng;
-
-                    if (copyLocationBtn) {
-                        copyLocationBtn.disabled = false;
-                        copyLocationBtn.setAttribute('data-location', lat + ' ' + lng);
-                    }
-                }
-            }).addTo(map);
-
-            // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-            // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                attribution: '',
-                minZoom: 1,
-                maxZoom: 20
-            }).addTo(map);
-            
-            document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
-            
-
-            let $buttonSearch = $('button.leaflet-control-geocoder-icon');
-            let $inputSearch = $('.leaflet-control-geocoder.leaflet-bar input');
-            let timeout = false;
-            $inputSearch.on('keyup', function() {
-                if (timeout) clearTimeout(timeout);
-                timeout = setTimeout(function() {
-                    $buttonSearch.trigger('click');
-                }, 1000);
-            });
-
-            if (coords) { 
-                if (statusCoords) {
-                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
-                    marker.bindPopup(coords.city); // Bulle d'info
-                }
-                
-                let leafletControlGeocoderForm = document.querySelector('.leaflet-control-geocoder-form input');
-
-                leafletControlGeocoderForm.value = statusCoords ? coords.city : inputHidden.value;
-            }
-        }
 
         // Copy cliboard de la location
         if (copyLocationBtn) {
@@ -934,6 +811,144 @@ class Institutional {
         }
    }
     
+    /**
+     * Affichage carte modal
+     */
+     runMapModal = () => { 
+        var map;
+        var service;
+        var tabResults = [];
+        var marker = null;
+
+        let $modal = $('#modal-address');
+        let $modalBoby = $modal.find('.modal-body');
+
+        let inputAddress = document.getElementById('address-google-map-modal-training');
+        let inputHiddenAddress = document.querySelector('#institution-location');
+
+        $modal.removeAttr('id').attr('id', 'modal-address-modal');
+
+        // Creation d'un marker
+        let createMarker = function (result) {
+            marker = new google.maps.Marker({
+                position: result.geometry.location,
+                map,
+                title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
+            });
+            map.setCenter(result.geometry.location);
+            map.setZoom(10);
+        };
+
+        // Mise à jour des champs cachés
+        let updateFields = function (result) {
+            let title = result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address;
+
+            let coords = {
+                title: title,
+                lat: result.geometry.location.lat(),
+                lng: result.geometry.location.lng(),
+            }
+
+            if (inputAddress) inputAddress.value = title;
+            if (inputHiddenAddress) inputHiddenAddress.value = JSON.stringify(coords);
+        };
+        $('body').on('input', '#address-google-map-modal-training', function() {
+            if($(this).val().length > 0)
+                $('#btn-geocode-modal-training').prop('disabled', false);
+            else
+                $('#btn-geocode-modal-training').prop('disabled', true);
+        });
+
+        
+        $('body').on('keydown', '#address-google-map-modal-training', function(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                $(this).closest('.input-group').find('button').trigger('click');      
+            }
+        });
+
+        // Au clic sur rechercher
+        $('body').on('click', '#btn-geocode-modal-training', function() {
+
+            $('#btn-geocode-modal-training').prop('disabled', true);
+            $('#btn-geocode-modal-training').find('.spinner-border').toggleClass('inactive active');
+            $('#btn-geocode-modal-training').find('.fa-search').toggleClass('inactive active');
+
+            var address = document.getElementById('address-google-map-modal-training').value;
+            const request = {
+                query: address,
+                fields: ["name", "geometry"]
+            };
+            service = new google.maps.places.PlacesService(map);
+            service.textSearch(request, (results, status) => {               
+                
+                if (status === google.maps.places.PlacesServiceStatus.OK && results) {                      
+                    // Plusieurs resultats
+                    if (results.length > 1) {
+                        let listLocationHTML = '<ul>'
+                        for (let i = 0; i < results.length; i++) {
+                            tabResults[i] = results[i];
+                            let titleHTML = results[i].business_status ? `<p>${results[i].name}</p><p>${results[i].formatted_address}</p>` : `<p>${results[i].formatted_address}</p>`;
+                            listLocationHTML += `<li data-id="${i}">${titleHTML}</li>`;
+
+                        }
+                        listLocationHTML += '</ul>'
+                        $modalBoby.html(listLocationHTML);
+                        $modal.modal('show')
+                    }
+                    // 1 seul resultat
+                    if (results.length == 1) {
+                        if (marker) marker.setMap(null); // Suppression marker
+                        createMarker(results[0]);
+                        updateFields(results[0]);
+                    }
+                } else {
+                    // Pas de resultats
+                    if (marker) marker.setMap(null); // Suppression marker
+                    let zeroResultsHTML = `<p>No results</p>`;
+                    $modalBoby.html(zeroResultsHTML);
+                    $modal.modal('show');
+                }
+
+                $(this).find('.spinner-border').toggleClass('inactive active');
+                $(this).find('.fa-search').toggleClass('inactive active');
+                setTimeout(function() {
+                    $('#btn-geocode-modal-training').prop('disabled', false);
+                }, 200);
+            })
+        });
+
+        // Selection d'une adresse via la modal
+        $('body').on('click', '#modal-address-modal li', function() {
+            if (marker) marker.setMap(null); // Suppression marker
+            var id = $(this).attr('data-id');
+            $modal.modal('hide');
+            createMarker(tabResults[id]);
+            updateFields(tabResults[id]);
+        });
+        
+        $('#modal-address-modal').on('hidden.bs.modal', function (e) {
+            $modalBoby.children().remove();
+        })
+
+        function initialize() {
+            let geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(0, 0);
+            var mapOptions = {
+                zoom: 1,
+                center: latlng,
+                scrollwheel: false,
+                scaleControl: false,
+                mapTypeControl: false,
+                navigationControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+            }
+            map = new google.maps.Map(document.getElementById('map-modal-training'), mapOptions);
+        }
+        initialize();    
+    }
+
     init = function() {
         this.runAutocompletion();
         this.duplicateTraining();
@@ -942,7 +957,7 @@ class Institutional {
         this.getSkillsFromOccupation();
         this.removeSkillsToTraining();
         this.displayMessage();
-        this.runMap();
+        //this.runMap();
         this.runMapTraining();
         this.runMapAddTraining();
         this.runModalAddUser();

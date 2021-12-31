@@ -745,10 +745,6 @@ class Admin {
                 url: url,
                 success: function (data, textStatus, jqXHR) {
                     if (data) {
-
-
-                        console.log('data >>>> ', data)
-
                         let requireSkillsHTML = '';
                         let acquireSkillsHTML = '';
 
@@ -815,7 +811,6 @@ class Admin {
 										<div class="col-lg-8">
                                             <span id="location-modal">N/A</span>
                                             <input type="hidden" value='${location ? location : ''}' id="training_address_hidden" />
-                                            <div id="searchmap-modal"></div>
                                             <div id="map-modal"></div>
 										</div>
 									</div>
@@ -1340,74 +1335,64 @@ class Admin {
      * Affichage carte modal
      */
      runMapModal = (numModal = '') => { 
-
-        let inputHidden = document.getElementById('training_address_hidden');
-        let modalId = ''
-        if (numModal != '') {
-            modalId = '#common-modal-' + numModal;
-        } else {
-            modalId = '#common-modal';
-        }
-
-        let locationModal = document.querySelector(modalId + ' #location-modal');
-        var map = null;
-
-        if (inputHidden) {
-            let coords = inputHidden.value;
-
-            if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
-            replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-            replace(/(?:^|:|,)(?:\s*\[)+/g, '')) && coords.length > 0) {
-                coords = JSON.parse(coords);
-                map = L.map('map-modal').setView([coords.lat, coords.lng], 10);
-                let geocoder = L.Control.Geocoder.nominatim();
-            
-                let control = L.Control.geocoder({
-                    collapsed: false,
-                    placeholder: 'Search here...',
-                    position: 'topleft',
-                    geocoder: geocoder
-                }).on('markgeocode', function(e) {
-                    if (e.geocode && e.geocode.center) {
-                        let lat = e.geocode.center.lat;
-                        let lng = e.geocode.center.lng;
-                        let name = e.geocode.name;
-                        
-                        let newCoords = {
-                            "city": name,
-                            "lat": lat,
-                            "lng": lng
-                        };
-                        newCoords = JSON.stringify(newCoords);
-                        
-                        let leafletControlGeocoderForm = document.querySelector(modalId + ' .leaflet-control-geocoder-form input');
-                        leafletControlGeocoderForm.value = name;
-                        inputHidden.value = newCoords;
-                    }
-                }).addTo(map);
-                
-                // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                    attribution: '',
-                    minZoom: 1,
-                    maxZoom: 20
-                }).addTo(map);
-                
-                document.getElementById('searchmap-modal').appendChild(document.querySelector(modalId + ' .leaflet-control-geocoder.leaflet-bar'));
-
-                if (coords) {
-                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
-                    marker.bindPopup(coords.city); // Bulle d'info
-                    let leafletControlGeocoderForm = document.querySelector(modalId + ' .leaflet-control-geocoder-form input');
-                    leafletControlGeocoderForm.value = coords.city;
-                    locationModal.innerHTML = coords.city ? coords.city : 'N/A';
-                    leafletControlGeocoderForm.readOnly = true;
-                }
+         
+         let inputHidden = document.getElementById('training_address_hidden');
+         let modalId = ''
+         if (numModal != '') {
+             modalId = '#common-modal-' + numModal;
             } else {
-                locationModal.innerHTML = coords ? coords : 'N/A';
-                $('#map-modal').hide();
+                modalId = '#common-modal';
             }
+            
+        let locationModal = document.querySelector(modalId + ' #location-modal');
+        let mapContent = document.querySelector("#map-modal");
+
+        if (!mapContent || mapContent.innerHTML != "") {
+            locationModal.innerHTML = coords ? coords : 'N/A';
+            $('#map-modal').hide();
+        };
+
+        var map = null;
+        let coords = inputHidden.value;
+
+        if (!coords) {
+            locationModal.innerHTML = coords ? coords : 'N/A';
+            $('#map-modal').hide();
+        };
+
+        if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+        replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+        replace(/(?:^|:|,)(?:\s*\[)+/g, '')) && coords.length > 0) {
+
+            coords = JSON.parse(coords);
+
+
+            let geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(0, 0);
+            var mapOptions = {
+                zoom: 1,
+                center: latlng,
+                scrollwheel: false,
+                scaleControl: false,
+                mapTypeControl: false,
+                navigationControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+            }
+            map = new google.maps.Map(mapContent, mapOptions);
+
+            // Affichage du marker
+            let marker = new google.maps.Marker({
+                position: {lat: coords.lat, lng: coords.lng},
+                map,
+                title: coords.title,
+            });
+            locationModal.innerHTML = coords.title;
+            map.setCenter({lat: coords.lat, lng: coords.lng});
+            map.setZoom(10);
+        } else {
+            locationModal.innerHTML = coords ? coords : 'N/A';
+            $('#map-modal').hide();
         }
     }
 
@@ -1492,15 +1477,15 @@ class Admin {
             $('#datatable-training').DataTable().columns.adjust().draw();
             $('#datatable-user').DataTable().columns.adjust().draw();
 
-            if (e.target.hash == "#content-personal_informations") {
+            /*if (e.target.hash == "#content-personal_informations") {
                 _this.runMap();
-            }
+            }*/
             window.location.hash = e.target.hash;
         });
 
         // CREATE USER
         if (hrefLocation.indexOf('create_user') != -1) {
-            _this.runMap();
+           /* _this.runMap();*/
         }
     }
 }

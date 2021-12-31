@@ -21,8 +21,7 @@
 			</p>
 		{% endif %}
 
-        <div id="searchmap"></div>
-        <div id="map"></div>
+        {% include 'common/map.html.twig' %}
 
 		{{ form_row(form.location) }}
 		{{ form_row(form.description) }}

@@ -19,19 +19,12 @@
 		{{ form_row(form.email) }}
 	</div>
 </div>
-{#<div class="row">
-	<div class="form-group col-md-6">
-		{{ form_row(form.professionalExperience) }}
-	</div>
-</div>#}
 <div class="row">
-	<div
-		class="form-group col-md-6">
-		{# {{ form_row(form.address) }} #}
+	<div class="form-group col-md-6">
 		<label>{{ 'login.form.label.city'|trans }}</label>
-		<div id="searchmap"></div>
-		<div id="map"></div>
+        {% include 'common/map.html.twig' %}
 	</div>
+
 	<div class="form-group col-md-6">
 		{{ form_row(form.dateOfBirth) }}
 	</div>

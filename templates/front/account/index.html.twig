@@ -4,8 +4,6 @@
 {% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 	{{ encore_entry_link_tags('app') }}
 	{{ encore_entry_link_tags('account') }}
 {% endblock %}
@@ -96,8 +94,7 @@
 
 
 {% block javascripts %}
-	<script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
-	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 	{{ encore_entry_script_tags('account') }}
+	{{ encore_entry_script_tags('map') }}
 	{{ encore_entry_script_tags('common') }}
 {% endblock %}

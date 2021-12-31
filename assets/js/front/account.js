@@ -1173,64 +1173,47 @@ class Account {
 
         let inputHidden = document.getElementById('training_address_hidden');
         let locationModal = document.querySelector('#common-modal #location-modal');
+        let mapContent = document.querySelector("#map-modal");
+
+        if (!mapContent || mapContent.innerHTML != "") return false;
+
         var map = null;
+        let coords = inputHidden.value;
 
-        if (inputHidden) {
-            let coords = inputHidden.value;
+        if (!coords) return false;
 
-            if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
-            replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-            replace(/(?:^|:|,)(?:\s*\[)+/g, '')) && coords.length > 0) {
-                coords = JSON.parse(coords);
-                map = L.map('map-modal').setView([coords.lat, coords.lng], 10);
-                let geocoder = L.Control.Geocoder.nominatim();
-            
-                let control = L.Control.geocoder({
-                    collapsed: false,
-                    placeholder: translationsJS && translationsJS.search_here ? translationsJS.search_here : 'Search here...',
-                    position: 'topleft',
-                    geocoder: geocoder
-                }).on('markgeocode', function(e) {
-                    if (e.geocode && e.geocode.center) {
-                        let lat = e.geocode.center.lat;
-                        let lng = e.geocode.center.lng;
-                        let name = e.geocode.name;
-                        
-                        let newCoords = {
-                            "city": name,
-                            "lat": lat,
-                            "lng": lng
-                        };
-                        newCoords = JSON.stringify(newCoords);
-                        
-                        let leafletControlGeocoderForm = document.querySelector('#common-modal .leaflet-control-geocoder-form input');
-                        leafletControlGeocoderForm.value = name;
-                        inputHidden.value = newCoords;
-                    }
-                }).addTo(map);
-                
-                // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                    attribution: '',
-                    minZoom: 1,
-                    maxZoom: 20
-                }).addTo(map);
-                
-                document.getElementById('searchmap-modal').appendChild(document.querySelector('#common-modal .leaflet-control-geocoder.leaflet-bar'));
+        if (/^[\],:{}\s]*$/.test(coords.replace(/\\["\\\/bfnrtu]/g, '@').
+        replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+        replace(/(?:^|:|,)(?:\s*\[)+/g, '')) && coords.length > 0) {
 
-                if (coords) {
-                    let marker = L.marker([coords.lat, coords.lng]).addTo(map); // Markeur
-                    marker.bindPopup(coords.city); // Bulle d'info
-                    let leafletControlGeocoderForm = document.querySelector('#common-modal .leaflet-control-geocoder-form input');
-                    leafletControlGeocoderForm.value = coords.city;
-                    locationModal.innerHTML = coords.city ? coords.city : 'N/A';
-                    leafletControlGeocoderForm.readOnly = true;
-                }
-            } else {
-                locationModal.innerHTML = coords ? coords : 'N/A';
-                $('#map-modal').hide();
+            coords = JSON.parse(coords);
+
+            let geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(0, 0);
+            var mapOptions = {
+                zoom: 1,
+                center: latlng,
+                scrollwheel: false,
+                scaleControl: false,
+                mapTypeControl: false,
+                navigationControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
             }
+            map = new google.maps.Map(mapContent, mapOptions);
+
+            // Affichage du marker
+            let marker = new google.maps.Marker({
+                position: {lat: coords.lat, lng: coords.lng},
+                map,
+                title: coords.title,
+            });
+            trainingAddress.innerHTML = coords.title;
+            map.setCenter({lat: coords.lat, lng: coords.lng});
+            map.setZoom(10);
+        } else {
+            locationModal.innerHTML = coords ? coords : 'N/A';
+            $('#map-modal').hide();
         }
     }
 
@@ -1326,7 +1309,6 @@ class Account {
 										<div class="col-lg-8">
                                             <span id="location-modal">N/A</span>
 											<input type="hidden" value='${location ? location : ''}' id="training_address_hidden" />
-                                            <div id="searchmap-modal"></div>
                                             <div id="map-modal"></div>
 										</div>
 									</div>
@@ -1716,7 +1698,7 @@ class Account {
         this.displayInfosSkill();
         this.displayMessage();
         this.displayFeedback();
-        this.runMap();
+        //this.runMap();
         this.seeDetailTraining();
         this.runRater();
 

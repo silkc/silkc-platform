@@ -43,7 +43,7 @@ class Login {
      * Affichage carte
      */
     runMap = () => {       
-        let inputHiddenLat = document.querySelector('form input[type="hidden"].user_lat');
+        /*let inputHiddenLat = document.querySelector('form input[type="hidden"].user_lat');
         let inputHiddenLng = document.querySelector('form input[type="hidden"].user_lng');
 
         let inputUserHidden = document.getElementById("user_address");
@@ -58,10 +58,6 @@ class Login {
             ? inputInstitutionHidden
             : inputRecruiterHidden;
         var map = null;
-
-        /*$('body').on('click', '#map.not-allowed', function() {
-            return false;
-        })*/
 
         if (inputHidden) {
             let coords = inputHidden.value;
@@ -178,7 +174,7 @@ class Login {
                 );
                 leafletControlGeocoderForm.value = coords.city;
             }
-        }
+        }*/
     };
 
     /**

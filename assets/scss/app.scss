@@ -184,7 +184,7 @@ body button .spinner-border {
 // MAP
 #map-modal,
 #map {
-    height: 200px;
+    height: 250px;
     width: 100%;
     z-index: 0;
     margin-bottom: 15px;
@@ -560,4 +560,46 @@ footer#footer .content-footer > div {
     right: 0;
     left: 0;
     display: block;
+}
+
+
+body .grp-google-map {
+    button {        
+        &:focus,
+        &:hover {
+            outline: none;
+            box-shadow: 0 0 0;
+        }
+
+        .inactive {
+            display: none;
+        }
+
+        .active {
+            display: inline-block;
+        }
+    }
+}
+
+#modal-address-modal,
+#modal-address {
+    ul {
+        margin: 0;
+
+        li {
+            margin-bottom: 15px;
+            text-decoration: underline;
+            color: #18bc9c;
+            cursor: pointer;
+            font-size: 0.85rem;
+            
+            p {
+                margin-bottom: 0;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 }

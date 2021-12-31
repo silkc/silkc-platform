@@ -268,9 +268,7 @@ class SearchResults {
             if (blcMap) {
                 let mapContent = blcMap.querySelector(".map");
                 let trainingAddress = blcMap.querySelector(".training_address");
-                let trainingAddressHidden = blcMap.querySelector(
-                    ".training_address_hidden"
-                );
+                let trainingAddressHidden = blcMap.querySelector(".training_address_hidden");
 
                 if (!mapContent || mapContent.innerHTML != "") return false;
 
@@ -279,9 +277,7 @@ class SearchResults {
 
                 if (!coords) return false;
 
-                if (
-                    /^[\],:{}\s]*$/.test(
-                        coords
+                if (/^[\],:{}\s]*$/.test(coords
                             .replace(/\\["\\\/bfnrtu]/g, "@")
                             .replace(
                                 /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
@@ -291,45 +287,32 @@ class SearchResults {
                     )
                 ) {
                     coords = JSON.parse(coords);
-                    map = L.map(mapContent).setView(
-                        [coords.lat, coords.lng],
-                        10
-                    );
-                    let geocoder = L.Control.Geocoder.nominatim();
 
-                    let control = L.Control.geocoder({
-                        collapsed: false,
-                        placeholder:
-                            translationsJS && translationsJS.search_here
-                                ? translationsJS.search_here
-                                : "Search here...",
-                        position: "topleft",
-                        geocoder: geocoder,
-                    }).addTo(map);
-
-                    // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                    // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-                    L.tileLayer(
-                        "https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png",
-                        {
-                            attribution: "",
-                            minZoom: 1,
-                            maxZoom: 20,
-                        }
-                    ).addTo(map);
-
-                    //document.getElementById('searchmap').appendChild(document.querySelector('.leaflet-control-geocoder.leaflet-bar'));
-
-                    if (coords) {
-                        let marker = L.marker([coords.lat, coords.lng]).addTo(
-                            map
-                        ); // Markeur
-                        marker.bindPopup(coords.city); // Bulle d'info
-
-                        trainingAddress.innerHTML = coords.city;
+                    let geocoder = new google.maps.Geocoder();
+                    var latlng = new google.maps.LatLng(0, 0);
+                    var mapOptions = {
+                        zoom: 1,
+                        center: latlng,
+                        scrollwheel: false,
+                        scaleControl: false,
+                        mapTypeControl: false,
+                        navigationControl: false,
+                        streetViewControl: false,
+                        fullscreenControl: false,
                     }
+                    map = new google.maps.Map(mapContent, mapOptions);
+        
+                    // Affichage du marker
+                    let marker = new google.maps.Marker({
+                        position: {lat: coords.lat, lng: coords.lng},
+                        map,
+                        title: coords.title,
+                    });
+                    trainingAddress.innerHTML = coords.title;
+                    map.setCenter({lat: coords.lat, lng: coords.lng});
+                    map.setZoom(10);
                 } else {
-                    blcMap.innerHTML = coords;
+                    blcMap.innerHTML = trainingAddressHidden.value;
                 }
             }
         });
@@ -656,82 +639,126 @@ class SearchResults {
      */
     runMapFilter = () => {
         let _this = this;
-        var map = L.map("map").setView([0, 0], 2);
-        let geocoder = L.Control.Geocoder.nominatim();
+        let $modal = $('#modal-address');
+        let $modalBoby = $modal.find('.modal-body');
         let inputHidden = document.getElementById("city");
         let inputHiddenCity = document.getElementById("inputCity");
+        let inputAddress = document.getElementById("address-google-map");
+        var map;
+        var service;
+        var tabResults = [];
 
-        let control = L.Control.geocoder({
-            collapsed: false,
-            placeholder:
-                translationsJS && translationsJS.search_here
-                    ? translationsJS.search_here
-                    : "Search here...",
-            position: "topleft",
-            geocoder: geocoder,
-        })
-            .on("markgeocode", function (e) {
-                if (e.geocode && e.geocode.center) {
-
-                    let lat = e.geocode.center.lat;
-                    let lng = e.geocode.center.lng;
-                    let name = e.geocode.name;
-
-                    let newCoords = {
-                        lat: lat,
-                        lng: lng,
-                    };
-                    newCoords = JSON.stringify(newCoords);
-
-                    let leafletControlGeocoderForm = document.querySelector(
-                        "#search-results .leaflet-control-geocoder-form input"
-                    );
-                    leafletControlGeocoderForm.value = name;
-
-                    if (inputHidden) inputHidden.value = newCoords;
-                    if (inputHiddenCity) inputHiddenCity.value = name;
-
-                    _this.sliderDistance.enable();
-                }
-            })
-            .addTo(map);
-
-        // Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-        /*L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 20
-        }).addTo(map);*/
-
-        document
-            .getElementById("searchmap")
-            .appendChild(
-                document.querySelector(
-                    "#search-results .leaflet-control-geocoder.leaflet-bar"
-                )
-            );
-
-        if (inputHiddenCity) {
-            let leafletControlGeocoderForm = document.querySelector(
-                "#search-results .leaflet-control-geocoder-form input"
-            );
-            leafletControlGeocoderForm.value = inputHiddenCity.value;
+        function initialize() {
+            var latlng = new google.maps.LatLng(0, 0);
+            var mapOptions = {
+                zoom: 1,
+                center: latlng,
+                scrollwheel: false,
+                scaleControl: false,
+                mapTypeControl: false,
+                navigationControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+            }
+            map = new google.maps.Map(document.getElementById('map-filter'), mapOptions);
+            if (inputHiddenCity) inputAddress.value = inputHiddenCity.value;
         }
+        initialize(); 
 
-        $("body").on(
-            "keyup",
-            "#search-results .leaflet-control-geocoder-form input",
-            function (e) {
+        $("body").on("click", "#btn-geocode-filter", function (e) {
+
+                $(this).prop('disabled', true);
+                $(this).find('.spinner-border').toggleClass('inactive active');
+                $(this).find('.fa-search').toggleClass('inactive active');
+
                 let searchValue = $(this).val();
                 if (searchValue.length == 0) {
-                    _this.sliderDistance.setValue(0);
-                    $("#distanceVal").text("0km");
-                    $("#distance").val(0);
-                    _this.sliderDistance.disable();
+                    var address = document.getElementById('address-google-map').value;
+                    const request = {
+                        query: address,
+                        fields: ["name", "geometry"]
+                    };
+                    service = new google.maps.places.PlacesService(map);
+                    service.textSearch(request, (results, status) => {                    
+                        
+                        if (status === google.maps.places.PlacesServiceStatus.OK && results) {                      
+                            // Plusieurs resultats
+                            if (results.length > 1) {
+                                let listLocationHTML = '<ul>'
+                                for (let i = 0; i < results.length; i++) {
+                                    tabResults[i] = results[i];
+                                    let titleHTML = results[i].business_status ? `<p>${results[i].name}</p><p>${results[i].formatted_address}</p>` : `<p>${results[i].formatted_address}</p>`;
+                                    listLocationHTML += `<li data-id="${i}">${titleHTML}</li>`;
+        
+                                }
+                                listLocationHTML += '</ul>'
+                                $modalBoby.html(listLocationHTML);
+                                $modal.modal('show')
+                            }
+                            // 1 seul resultat
+                            if (results.length == 1) {
+                                inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
+                                _this.sliderDistance.setValue(0);
+                                $("#distanceVal").text("0km");
+                                $("#distance").val(0);
+                                _this.sliderDistance.enable();
+
+                                let newCoords = {
+                                    lat: results[0].geometry.location.lat(),
+                                    lng: results[0].geometry.location.lng(),
+                                };
+                                newCoords = JSON.stringify(newCoords);
+
+                                if (inputHidden) inputHidden.value = newCoords;
+                                if (inputHiddenCity) inputHiddenCity.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
+                            }
+                        } else {
+                            // Pas de resultats
+                            let zeroResultsHTML = `<p>No results</p>`;
+                            $modalBoby.html(zeroResultsHTML);
+                            $modal.modal('show');
+                            _this.sliderDistance.setValue(0);
+                            $("#distanceVal").text("0km");
+                            $("#distance").val(0);
+                            _this.sliderDistance.disable();
+                        }
+
+                        $(this).find('.spinner-border').toggleClass('inactive active');
+                        $(this).find('.fa-search').toggleClass('inactive active');
+                        setTimeout(function() {
+                            $('#btn-geocode-filter').prop('disabled', false);
+                        }, 200);
+                    })
                 }
             }
         );
+
+        $('body').on('keydown', '#address-google-map', function(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                $(this).closest('.input-group').find('button').trigger('click');      
+            }
+        });
+
+        // Selection d'une adresse via la modal
+        $('body').on('click', '#modal-address li', function() {
+            var id = $(this).attr('data-id');
+            inputAddress.value = tabResults[id].business_status ? `${tabResults[id].name} - ${tabResults[id].formatted_address}` : tabResults[id].formatted_address;
+            $modal.modal('hide');
+            _this.sliderDistance.setValue(0);
+            $("#distanceVal").text("0km");
+            $("#distance").val(0);
+            _this.sliderDistance.enable();
+
+            let newCoords = {
+                lat: tabResults[id].geometry.location.lat(),
+                lng: tabResults[id].geometry.location.lng(),
+            };
+            newCoords = JSON.stringify(newCoords);
+
+            if (inputHidden) inputHidden.value = newCoords;
+            if (inputHiddenCity) inputHiddenCity.value = tabResults[id].business_status ? `${tabResults[id].name} - ${tabResults[id].formatted_address}` : tabResults[id].formatted_address;
+        });
     };
 
     /**

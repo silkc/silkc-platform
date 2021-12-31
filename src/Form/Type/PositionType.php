@@ -52,14 +52,17 @@ class PositionType extends AbstractType
                 'label'              => 'label.name',
             ])
             ->add('location', HiddenType::class, [
+                'attr'               => ["class" => "input_user_address"],
                 'translation_domain' => 'messages',
                 'label'              => 'label.location',
                 'required'           => false,
             ])
             ->add('longitude', HiddenType::class, [
+                'attr'               => ["class" => "user_lng"],
                 'required'           => false,
             ])
             ->add('latitude', HiddenType::class, [
+                'attr'               => ["class" => "user_lat"],
                 'required'           => false,
             ])
             ->add('description', TextareaType::class, [
