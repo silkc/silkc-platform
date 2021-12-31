@@ -16,10 +16,10 @@ class Map {
     }
 
     initMap = () => {
-        var map;
-        var service;
-        var tabResults = [];
-        var marker = null;
+        let map;
+        let service;
+        let tabResults = [];
+        let marker = null;
 
         let $modal = $('#modal-address');
         let $modalBoby = $modal.find('.modal-body');
@@ -35,10 +35,36 @@ class Map {
                 position: result.geometry.location,
                 map,
                 title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
+                draggable: true,
             });
             map.setCenter(result.geometry.location);
-            map.setZoom(10);
+            map.setZoom(12);
+
+            google.maps.event.addListener(marker, 'dragend', function() 
+            {
+                geocodePosition(marker.getPosition());
+            });
         };
+
+        function geocodePosition(pos) {
+           let geocoder = new google.maps.Geocoder();
+           geocoder.geocode
+            ({
+                latLng: pos
+            }, 
+                function(results, status) 
+                {
+                    if (status == google.maps.GeocoderStatus.OK) 
+                    {
+                        updateFields(results[0]);
+                    } else {
+                        let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
+                        $modalBoby.html(zeroResultsHTML);
+                        $modal.modal('show');
+                    }
+                }
+            );
+        }
 
         // Mise à jour des champs cachés
         let updateFields = function (result) {
@@ -62,8 +88,12 @@ class Map {
         $('body').on('input', '#address-google-map', function(e) {
             if($(this).val().length > 0)
                 $('#btn-geocode').prop('disabled', false);
-            else
+            else {
+                inputHiddenAddress.value = '';
+                inputHiddenLat.value = '';
+                inputHiddenLng.value = '';
                 $('#btn-geocode').prop('disabled', true);
+            }
         });
 
         $('body').on('keydown', '#address-google-map', function(e) {
@@ -111,7 +141,7 @@ class Map {
                 } else {
                     // Pas de resultats
                     if (marker) marker.setMap(null); // Suppression marker
-                    let zeroResultsHTML = `<p>No results</p>`;
+                    let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
                     $modalBoby.html(zeroResultsHTML);
                     $modal.modal('show');
 
@@ -146,13 +176,11 @@ class Map {
             var mapOptions = {
                 zoom: 1,
                 center: latlng,
-                scrollwheel: false,
                 scaleControl: false,
                 mapTypeControl: false,
                 navigationControl: false,
                 streetViewControl: false,
                 fullscreenControl: false,
-                keyboardShortcuts: false,
             }
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
@@ -170,7 +198,6 @@ class Map {
                     if (inputAddress) inputAddress.value = result.name;
                     $('#btn-geocode').prop('disabled', false);
             }
-
         }
         initialize(); 
     }

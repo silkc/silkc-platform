@@ -1210,7 +1210,7 @@ class Account {
             });
             trainingAddress.innerHTML = coords.title;
             map.setCenter({lat: coords.lat, lng: coords.lng});
-            map.setZoom(10);
+            map.setZoom(12);
         } else {
             locationModal.innerHTML = coords ? coords : 'N/A';
             $('#map-modal').hide();

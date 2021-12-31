@@ -780,7 +780,7 @@ class Institutional {
                         title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
                     });
                     map.setCenter(result.geometry.location);
-                    map.setZoom(10);
+                    map.setZoom(12);
                 }
             }
 
@@ -834,10 +834,36 @@ class Institutional {
                 position: result.geometry.location,
                 map,
                 title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
+                draggable: true,
             });
             map.setCenter(result.geometry.location);
-            map.setZoom(10);
+            map.setZoom(12);
+
+            google.maps.event.addListener(marker, 'dragend', function() 
+            {
+                geocodePosition(marker.getPosition());
+            });
         };
+
+        function geocodePosition(pos) {
+            let geocoder = new google.maps.Geocoder();
+            geocoder.geocode
+             ({
+                 latLng: pos
+             }, 
+                 function(results, status) 
+                 {
+                     if (status == google.maps.GeocoderStatus.OK) 
+                     {
+                         updateFields(results[0]);
+                     } else {
+                         let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
+                         $modalBoby.html(zeroResultsHTML);
+                         $modal.modal('show');
+                     }
+                 }
+             );
+         }
 
         // Mise à jour des champs cachés
         let updateFields = function (result) {
@@ -905,7 +931,7 @@ class Institutional {
                 } else {
                     // Pas de resultats
                     if (marker) marker.setMap(null); // Suppression marker
-                    let zeroResultsHTML = `<p>No results</p>`;
+                    let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
                     $modalBoby.html(zeroResultsHTML);
                     $modal.modal('show');
                 }
@@ -937,7 +963,6 @@ class Institutional {
             var mapOptions = {
                 zoom: 1,
                 center: latlng,
-                scrollwheel: false,
                 scaleControl: false,
                 mapTypeControl: false,
                 navigationControl: false,

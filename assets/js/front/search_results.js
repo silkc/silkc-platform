@@ -310,7 +310,7 @@ class SearchResults {
                     });
                     trainingAddress.innerHTML = coords.title;
                     map.setCenter({lat: coords.lat, lng: coords.lng});
-                    map.setZoom(10);
+                    map.setZoom(12);
                 } else {
                     blcMap.innerHTML = trainingAddressHidden.value;
                 }
@@ -483,8 +483,8 @@ class SearchResults {
             // Distance - ville
             $("#city").val("");
             $("#inputCity").val("");
-            $("#distanceVal").text("0km");
-            $("#distance").val(0);
+            $("#distanceVal").text("1km");
+            $("#distance").val(1);
 
             // Prix
             let max = _this.sliderPrice.element.dataset.sliderMax;
@@ -518,8 +518,8 @@ class SearchResults {
             _this.sliderDistance.setValue(0);
             $("#city").val("");
             $("#inputCity").val("");
-            $("#distanceVal").text("0km");
-            $("#distance").val(0);
+            $("#distanceVal").text("1km");
+            $("#distance").val(1);
             $("#advanced-search .leaflet-control-geocoder-form input[type=text]").val("");
             $(this).remove();
             setTimeout(function () {
@@ -629,7 +629,7 @@ class SearchResults {
             }, 500);
         });
 
-        initSliderDistance(0);
+        initSliderDistance();
         initSliderPrice();
         initSliderDuration();
     };
@@ -644,16 +644,66 @@ class SearchResults {
         let inputHidden = document.getElementById("city");
         let inputHiddenCity = document.getElementById("inputCity");
         let inputAddress = document.getElementById("address-google-map");
-        var map;
-        var service;
-        var tabResults = [];
+        let map;
+        let service;
+        let marker;
+        let tabResults = [];
+
+        // Creation d'un marker
+        let createMarker = function (result) {
+            marker = new google.maps.Marker({
+                position: result.geometry.location,
+                map,
+                title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
+                draggable: true,
+            });
+            map.setCenter(result.geometry.location);
+            map.setZoom(12);
+            
+            google.maps.event.addListener(marker, 'dragend', function() 
+            {
+                geocodePosition(marker.getPosition());
+            });
+        };
+
+        function geocodePosition(pos) {
+            let geocoder = new google.maps.Geocoder();
+            geocoder.geocode
+            ({
+                 latLng: pos
+            }, 
+                 function(results, status) 
+                {
+                    if (status == google.maps.GeocoderStatus.OK) 
+                    {
+                        inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
+                        _this.sliderDistance.setValue(0);
+                        $("#distanceVal").text("1km");
+                        $("#distance").val(1);
+                        _this.sliderDistance.enable();
+
+                        let newCoords = {
+                            lat: results[0].geometry.location.lat(),
+                            lng: results[0].geometry.location.lng(),
+                        };
+                        newCoords = JSON.stringify(newCoords);
+
+                        if (inputHidden) inputHidden.value = newCoords;
+                        if (inputHiddenCity) inputHiddenCity.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
+                    } else {
+                         let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
+                         $modalBoby.html(zeroResultsHTML);
+                         $modal.modal('show');
+                    }
+                }
+            );
+        }
 
         function initialize() {
             var latlng = new google.maps.LatLng(0, 0);
             var mapOptions = {
                 zoom: 1,
                 center: latlng,
-                scrollwheel: false,
                 scaleControl: false,
                 mapTypeControl: false,
                 navigationControl: false,
@@ -662,6 +712,20 @@ class SearchResults {
             }
             map = new google.maps.Map(document.getElementById('map-filter'), mapOptions);
             if (inputHiddenCity) inputAddress.value = inputHiddenCity.value;
+
+            // Affichage du marker en edition
+            if (inputHidden && inputHidden.value != ''
+            && inputHiddenCity && inputHiddenCity.value != '') {
+                let coords = JSON.parse(inputHidden.value);
+                let result = {};
+                result.geometry = {};
+                result.geometry.location = {lat: coords.lat, lng: coords.lng};
+                result.name = inputHiddenCity.value;
+                createMarker(result);
+
+                if (inputAddress) inputAddress.value = result.name;
+                $('#btn-geocode').prop('disabled', false);
+        }
         }
         initialize(); 
 
@@ -697,10 +761,12 @@ class SearchResults {
                             }
                             // 1 seul resultat
                             if (results.length == 1) {
+                                if (marker) marker.setMap(null); // Suppression marker
+                                createMarker(results[0]);
                                 inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
                                 _this.sliderDistance.setValue(0);
-                                $("#distanceVal").text("0km");
-                                $("#distance").val(0);
+                                $("#distanceVal").text("1km");
+                                $("#distance").val(1);
                                 _this.sliderDistance.enable();
 
                                 let newCoords = {
@@ -714,12 +780,13 @@ class SearchResults {
                             }
                         } else {
                             // Pas de resultats
-                            let zeroResultsHTML = `<p>No results</p>`;
+                            if (marker) marker.setMap(null); // Suppression marker
+                            let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
                             $modalBoby.html(zeroResultsHTML);
                             $modal.modal('show');
-                            _this.sliderDistance.setValue(0);
-                            $("#distanceVal").text("0km");
-                            $("#distance").val(0);
+                            _this.sliderDistance.setValue(1);
+                            $("#distanceVal").text("1km");
+                            $("#distance").val(1);
                             _this.sliderDistance.disable();
                         }
 
@@ -740,14 +807,30 @@ class SearchResults {
             }
         });
 
+        $('body').on('keyup', '#address-google-map', function(e) {
+            if($(this).val().length == 0) {
+                $(this).closest('.input-group').find('button').prop('disabled', true);
+                _this.sliderDistance.setValue(1);
+                $("#distanceVal").text("1km");
+                $("#distance").val(1);
+                _this.sliderDistance.disable();
+                inputHidden.value = '';
+                inputHiddenCity.value = '';
+            } else {
+                $(this).closest('.input-group').find('button').prop('disabled', false);    
+            }
+        });
+
         // Selection d'une adresse via la modal
         $('body').on('click', '#modal-address li', function() {
+            if (marker) marker.setMap(null); // Suppression marker
             var id = $(this).attr('data-id');
             inputAddress.value = tabResults[id].business_status ? `${tabResults[id].name} - ${tabResults[id].formatted_address}` : tabResults[id].formatted_address;
             $modal.modal('hide');
-            _this.sliderDistance.setValue(0);
-            $("#distanceVal").text("0km");
-            $("#distance").val(0);
+            createMarker(tabResults[id]);
+            _this.sliderDistance.setValue(1);
+            $("#distanceVal").text("1km");
+            $("#distance").val(1);
             _this.sliderDistance.enable();
 
             let newCoords = {
@@ -840,7 +923,7 @@ class SearchResults {
         document.cookie =
             "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie =
-        "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
 
     init = function () {

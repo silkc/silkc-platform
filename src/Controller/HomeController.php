@@ -185,7 +185,7 @@ class HomeController extends AbstractController
 
         if (
             array_key_exists('distance', $rp) && !empty($rp['distance']) && is_numeric($rp['distance']) &&
-            array_key_exists('city', $rp) && !empty($rp['city']) && preg_match('#^\{"lat":([\d.]+),"lng":([\d.]+)}$#', $rp['city'], $matches)
+            array_key_exists('city', $rp) && !empty($rp['city']) && preg_match('#^\{"lat":([-\d.]+),"lng":([-\d.]+)}$#', $rp['city'], $matches)
         ) {
             $params['distance'] = intval($rp['distance']);
             $params['location'] = ['latitude' => $matches[1], 'longitude' => $matches[2]];

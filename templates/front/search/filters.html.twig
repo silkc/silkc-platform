@@ -9,7 +9,8 @@
                             <div class="input-group mb-2">
                                 <input class="form-control" type="text" placeholer="address" id="address-google-map">
                                 <span class="input-group-append">
-                                    <button type="button" class="btn btn-primary" id="btn-geocode-filter">
+                                    <button type="button" class="btn btn-primary" id="btn-geocode-filter" 
+                                            {{ requestParams.city is defined and requestParams.city is not empty ? '' : 'disabled="disabled"' }}>
                                         <div class="spinner-border spinner-border-sm inactive" role="status">
                                             <span class="sr-only">Loading...</span>
                                         </div>
@@ -17,7 +18,7 @@
                                     </button>
                                 </span>
                             </div>
-                            <div id="map-filter" style="width: 0; height: 0; overflow: hidden;"></div>
+                            <div id="map-filter" style="height: 150px;"></div>
                         </div>
 						<input type="hidden" id="city" name="city" value="{{ requestParams.city is defined ? requestParams.city : '' }}">
 						<input type="hidden" id="inputCity" name="inputCity" value="{{ requestParams.inputCity is defined ? requestParams.inputCity : '' }}">
@@ -27,10 +28,15 @@
 					<div class="form-group flex-column align-items-start">
 						<div class="d-flex flex-row">
 							<label for="formControlRangeDistance" class="mr-1">{{ 'label.distance'|trans }}</label>
-							<span id="distanceVal">{{ requestParams.distance is defined ? requestParams.distance : 0 }}km</span>
+							<span id="distanceVal">{{ requestParams.distance is defined ? requestParams.distance : 1 }}km</span>
 						</div>
-						<input id="formControlRangeDistance" data-slider-id='formControlRangeDistance' type="text" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="{{ requestParams.distance is defined ? requestParams.distance : 0 }}"/>
-						<input type="hidden" id="distance" name="distance" value="{{ requestParams.distance is defined ? requestParams.distance : 0 }}">
+						<input id="formControlRangeDistance" data-slider-id='formControlRangeDistance' 
+                                    type="text" 
+                                    data-slider-min="1" 
+                                    data-slider-max="1000" 
+                                    data-slider-step="1" 
+                                    data-slider-value="{{ requestParams.distance is defined ? requestParams.distance : 0 }}"/>
+						<input type="hidden" id="distance" name="distance" value="{{ requestParams.distance is defined ? requestParams.distance : 1 }}">
 					</div>
 				</div>
 			</div>
