@@ -7,7 +7,7 @@
 					<div class="form-group flex-column align-items-start">
                         <div class="grp-google-map" style="width: 100%;">
                             <div class="input-group mb-2">
-                                <input class="form-control" type="text" placeholer="address" id="address-google-map">
+                                <input class="form-control py-2" type="search" placeholer="address" id="address-google-map">
                                 <span class="input-group-append">
                                     <button type="button" class="btn btn-primary" id="btn-geocode-filter" 
                                             {{ requestParams.city is defined and requestParams.city is not empty ? '' : 'disabled="disabled"' }}>
@@ -18,7 +18,7 @@
                                     </button>
                                 </span>
                             </div>
-                            <div id="map-filter" style="height: 150px;"></div>
+                            <div id="map-filter"></div>
                         </div>
 						<input type="hidden" id="city" name="city" value="{{ requestParams.city is defined ? requestParams.city : '' }}">
 						<input type="hidden" id="inputCity" name="inputCity" value="{{ requestParams.inputCity is defined ? requestParams.inputCity : '' }}">

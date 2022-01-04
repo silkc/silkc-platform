@@ -46,6 +46,8 @@ class SearchResults {
     constructor() {
         this.sliderDistance;
         this.sliderPrice;
+        this.markerCircle;
+        this.mapFilter;
     }
 
     runRater = () => {
@@ -451,6 +453,27 @@ class SearchResults {
             _this.sliderDistance.on("change", function (obj) {
                 $("#distanceVal").text(obj.newValue + "km");
                 $("#distance").val(obj.newValue);
+
+                let inputHidden = document.getElementById("city");
+                let map = _this.mapFilter;
+
+                if (inputHidden && map) {
+                    let latLng = inputHidden.value;
+                    latLng = latLng.length > 0 ? JSON.parse(latLng) : false;
+                    if (inputHidden) {
+                        if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
+                        _this.markerCircle = new google.maps.Circle({
+                            strokeColor: "rgb(51, 136, 255)",
+                            strokeOpacity: 0.5,
+                            strokeWeight: 1,
+                            fillColor: "rgb(51, 136, 255)",
+                            fillOpacity: 0.2,
+                            map,
+                            center: latLng,
+                            radius: obj.newValue * 1000,
+                        });
+                    }
+                }
             });
         
             if (!$('#city').val() && !$('#input-city').val())
@@ -644,13 +667,14 @@ class SearchResults {
         let inputHidden = document.getElementById("city");
         let inputHiddenCity = document.getElementById("inputCity");
         let inputAddress = document.getElementById("address-google-map");
-        let map;
+        let mapElem = document.getElementById('map-filter');
         let service;
         let marker;
         let tabResults = [];
 
         // Creation d'un marker
-        let createMarker = function (result) {
+        let createMarker = function (result, distance = false) {
+            let map = _this.mapFilter;
             marker = new google.maps.Marker({
                 position: result.geometry.location,
                 map,
@@ -658,15 +682,44 @@ class SearchResults {
                 draggable: true,
             });
             map.setCenter(result.geometry.location);
-            map.setZoom(12);
-            
+            map.setZoom(8);
+
+            _this.markerCircle = new google.maps.Circle({
+                strokeColor: "rgb(51, 136, 255)",
+                strokeOpacity: 0.5,
+                strokeWeight: 1,
+                fillColor: "rgb(51, 136, 255)",
+                fillOpacity: 0.2,
+                map,
+                center: result.geometry.location,
+                radius: distance ? distance * 1000 : 1000,
+            });
+
             google.maps.event.addListener(marker, 'dragend', function() 
             {
                 geocodePosition(marker.getPosition());
             });
+
+            google.maps.event.addListener(marker, 'drag', function() 
+            {
+                _this.markerCircle.setMap(null);
+                _this.markerCircle = new google.maps.Circle({
+                    strokeColor: "rgb(51, 136, 255)",
+                    strokeOpacity: 0.5,
+                    strokeWeight: 1,
+                    fillColor: "rgb(51, 136, 255)",
+                    fillOpacity: 0.2,
+                    map,
+                    center: marker.getPosition(),
+                    radius: 1000,
+                });
+            });
+
+            mapElem.classList.add('active');
         };
 
         function geocodePosition(pos) {
+            let map = _this.mapFilter;
             let geocoder = new google.maps.Geocoder();
             geocoder.geocode
             ({
@@ -710,26 +763,29 @@ class SearchResults {
                 streetViewControl: false,
                 fullscreenControl: false,
             }
-            map = new google.maps.Map(document.getElementById('map-filter'), mapOptions);
+            
+            _this.mapFilter = new google.maps.Map(mapElem, mapOptions);
             if (inputHiddenCity) inputAddress.value = inputHiddenCity.value;
 
             // Affichage du marker en edition
             if (inputHidden && inputHidden.value != ''
-            && inputHiddenCity && inputHiddenCity.value != '') {
-                let coords = JSON.parse(inputHidden.value);
-                let result = {};
-                result.geometry = {};
-                result.geometry.location = {lat: coords.lat, lng: coords.lng};
-                result.name = inputHiddenCity.value;
-                createMarker(result);
+                && inputHiddenCity && inputHiddenCity.value != '') {
+                    let coords = JSON.parse(inputHidden.value);
+                    let result = {};
+                    result.geometry = {};
+                    result.geometry.location = {lat: coords.lat, lng: coords.lng};
+                    result.name = inputHiddenCity.value;
+                    let distance = $("#distance").val();
+                    createMarker(result, distance);
 
-                if (inputAddress) inputAddress.value = result.name;
-                $('#btn-geocode').prop('disabled', false);
-        }
+                    if (inputAddress) inputAddress.value = result.name;
+                    $('#btn-geocode').prop('disabled', false);
+            }
         }
         initialize(); 
 
         $("body").on("click", "#btn-geocode-filter", function (e) {
+                let map = _this.mapFilter;
 
                 $(this).prop('disabled', true);
                 $(this).find('.spinner-border').toggleClass('inactive active');
@@ -757,11 +813,12 @@ class SearchResults {
                                 }
                                 listLocationHTML += '</ul>'
                                 $modalBoby.html(listLocationHTML);
-                                $modal.modal('show')
+                                $modal.modal('show');
                             }
                             // 1 seul resultat
                             if (results.length == 1) {
                                 if (marker) marker.setMap(null); // Suppression marker
+                                if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
                                 createMarker(results[0]);
                                 inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
                                 _this.sliderDistance.setValue(0);
@@ -781,6 +838,7 @@ class SearchResults {
                         } else {
                             // Pas de resultats
                             if (marker) marker.setMap(null); // Suppression marker
+                            if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
                             let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
                             $modalBoby.html(zeroResultsHTML);
                             $modal.modal('show');
@@ -807,7 +865,7 @@ class SearchResults {
             }
         });
 
-        $('body').on('keyup', '#address-google-map', function(e) {
+        $('body').on('input', '#address-google-map', function(e) {
             if($(this).val().length == 0) {
                 $(this).closest('.input-group').find('button').prop('disabled', true);
                 _this.sliderDistance.setValue(1);
@@ -816,14 +874,16 @@ class SearchResults {
                 _this.sliderDistance.disable();
                 inputHidden.value = '';
                 inputHiddenCity.value = '';
+                mapElem.classList.remove('active');
             } else {
-                $(this).closest('.input-group').find('button').prop('disabled', false);    
+                $(this).closest('.input-group').find('button').prop('disabled', false);   
             }
         });
 
         // Selection d'une adresse via la modal
         $('body').on('click', '#modal-address li', function() {
             if (marker) marker.setMap(null); // Suppression marker
+            if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
             var id = $(this).attr('data-id');
             inputAddress.value = tabResults[id].business_status ? `${tabResults[id].name} - ${tabResults[id].formatted_address}` : tabResults[id].formatted_address;
             $modal.modal('hide');

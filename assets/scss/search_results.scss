@@ -309,3 +309,11 @@ code {
     font-weight: 400 !important;
     line-height: 1.5 !important;
 }
+
+#map-filter {
+    height: 0;
+}
+
+#map-filter.active {
+    height: 150px;
+}
