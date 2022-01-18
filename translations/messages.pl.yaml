@@ -10,7 +10,7 @@ title_page:
 
 label:
   address: Adres
-  label: Etykieta
+  label: Nazwa
   name: Nazwa
   location: Lokalizacja
   salary: pensja
@@ -19,7 +19,7 @@ label:
   duration_value: Okres obowiązywania (od daty rozpoczęcia do daty zakończenia)
   duration_details: Szczegóły czasu trwania
   description: Opis
-  roles: Role
+  roles: Funkcje
   price: Cena
   start_at: Data rozpoczęcia
   end_at: Data końcowa
@@ -55,8 +55,8 @@ label:
   weeks_filter: tygodnie
   months: Miesiące
   months_filter: miesiące
-  is_visible: Jest widoczny
-  listening_position: Jestem otwarty na stanowisko
+  is_visible: Widoczny
+  listening_position: Chcę pracować na stanowisku
   up_to_distance: Aż do
   save_and_validate: Zapisz i zatwierdź
   professional_experience: Doświadcz profesji
@@ -104,7 +104,7 @@ nav:
 notification:
   label:
     date: Data
-    subject: Podmiot
+    subject: Przedmiot
   mark_selected_as_read: Oznacz wybrane jako przeczytane
 
 content_training:
@@ -184,7 +184,7 @@ login:
       address: Adres
       city: Miasto
       homepage: Strona główna
-      roles: Role
+      roles: Funkcje
       year_of_birth: Rok urodzenia
       year_of_creation: Rok powstania
       date_of_birth: Data urodzenia
@@ -209,7 +209,7 @@ email:
   to_finalize_your_account_creation: Aby zakończyć tworzenie konta na platformie SILKC, kliknij poniższy link weryfikacyjny
   to_change_password: Aby zmienić hasło na platformie SILKC, kliknij poniższy link weryfikacyjny
   this_link_is_valid_for_minutes: Ten link jest ważny tylko przez 60 minut. Jeśli nie użyjesz go w tym okresie, będziesz musiał poprosić o nowy.
-  if_you_receive_this_email: Jeśli otrzymasz tę wiadomość e-mail bez wyraźnego powodu, zgłoś ją jako podejrzane zachowanie swojemu zespołowi pomocy.
+  if_you_receive_this_email: Jeśli nie zarejestrowałeś się na platformie, zgłoś do nas podejrzaną wiadomość e-mail.
   change_password: Zmień hasło
   change_password_content: "Witam, jeśli poprosiłeś o zmianę hasła, kliknij poniższy link:"
 home:
@@ -280,7 +280,7 @@ front_account_work_skills_tooltip: Liczba powiązanych umiejętności - kliknij,
 show_panel: Pokaż panel
 hide_panel: Ukryj panel
 km_away: km dalej
-markdown_support_info: To pole jest zgodne z przecenami
+markdown_support_info: To pole jest zgodne z formatem
 effective_duration_tooltip: Efektywny czas trwania szkolenia
 training_rating_tooltip: Średni ranking szkoleń dla 5 głosujących
 position: pozycja
@@ -375,7 +375,7 @@ language_it: Włoski
 language_pl: Polskie
 training_found: znaleziono szkolenie
 trainings_found: znalezione formacje
-passage_conditions: Warunki przejścia
+passage_conditions: Warunki
 additional_criteria: Dodatkowe kryteria
 sort_by: Sortuj według
 by_ascending_title: tytuł rosnąco
@@ -394,9 +394,9 @@ email_or_username_could_not_be_found: Nie znaleziono adresu e-mail lub nazwy uż
 suspended_account: Konto zawieszone.
 invalid_password: Nieprawidłowe hasło
 invalid_account: Nieważne konto
-number_total_of_affected_users: "Całkowita liczba dotkniętych użytkowników:"
+number_total_of_affected_users: "Łączna liczba użytkowników, których to dotyczy"
 number_of_interested_users: "Liczba zainteresowanych użytkowników:"
-calculate_the_number_of_affected_users: Oblicz liczbę dotkniętych użytkowników
+calculate_the_number_of_affected_users: Oblicz liczbę użytkowników, których to dotyczy
 Results: Wyniki
 number_total_of_affected_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej.
 number_of_interested_users_tuto: Liczba użytkowników posiadających wymagane umiejętności wymienione powyżej i poszukujących pracy.
