@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\TrainingSkill;
 use App\Entity\User;
+use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\OccupationRepository;
 use App\Repository\UserRepository;
@@ -19,6 +21,7 @@ class TrainingImportFixtures extends Fixture
 {
     private $_occupationRepository;
     private $_trainingRepository;
+    private $_skillRepository;
     private $_userRepository;
     private $_validator;
     private $_client;
@@ -26,12 +29,14 @@ class TrainingImportFixtures extends Fixture
     public function __construct(
         OccupationRepository $occupationRepository,
         TrainingRepository $trainingRepository,
+        SkillRepository $skillRepository,
         UserRepository $userRepository,
         ValidatorInterface $validator,
         HttpClientInterface $client
     )
     {
         $this->_trainingRepository = $trainingRepository;
+        $this->_skillRepository = $skillRepository;
         $this->_occupationRepository = $occupationRepository;
         $this->_userRepository = $userRepository;
         $this->_validator = $validator;
@@ -147,6 +152,52 @@ class TrainingImportFixtures extends Fixture
                             $training->setIsPresential(filter_var($trainingData->is_presential, FILTER_VALIDATE_BOOLEAN));
                         else
                             $training->setIsPresential(false);
+
+                        if (property_exists($trainingData, 'required_skills') && !empty($trainingData->required_skills)) {
+                            $requiredSkills = is_array($trainingData->required_skills) ? $trainingData->required_skills : (array) $trainingData->required_skills;
+
+                            if ($requiredSkills && count($requiredSkills) > 0) {
+                                foreach ($requiredSkills as $key => $concept_uri) {
+                                    $concept_uri = preg_replace('#(\\\)#', '', $concept_uri);
+                                    $skill = $this->_skillRepository->findOneBy(['conceptUri' => $concept_uri]);
+                                    if (!$skill) {
+                                        print "ERROR --- An error occurred while associating the skill to training {$concept_uri}" . PHP_EOL;
+                                        continue;
+                                    }
+
+                                    $trainingSkill = new TrainingSkill();
+                                    $trainingSkill->setTraining($training);
+                                    $trainingSkill->setSkill($skill);
+                                    $trainingSkill->setIsRequired(true);
+                                    $trainingSkill->setIsToAcquire(false);
+                                    $training->addTrainingSkill($trainingSkill);
+                                    $manager->persist($trainingSkill);
+                                }
+                            }
+                        }
+                        if (property_exists($trainingData, 'acquired_skills') && !empty($trainingData->acquired_skills)) {
+                            $acquiredSkills = is_array($trainingData->acquired_skills) ? $trainingData->acquired_skills : (array) $trainingData->acquired_skills;
+
+                            if ($acquiredSkills && count($acquiredSkills) > 0) {
+                                foreach ($acquiredSkills as $key => $concept_uri) {
+                                    $concept_uri = preg_replace('#(\\\)#', '', $concept_uri);
+                                    $skill = $this->_skillRepository->findOneBy(['conceptUri' => $concept_uri]);
+                                    if (!$skill) {
+                                        print "ERROR --- An error occurred while associating the skill to training {$concept_uri}" . PHP_EOL;
+                                        continue;
+                                    }
+
+                                    $trainingSkill = new TrainingSkill();
+                                    $trainingSkill->setTraining($training);
+                                    $trainingSkill->setSkill($skill);
+                                    $trainingSkill->setIsRequired(false);
+                                    $trainingSkill->setIsToAcquire(true);
+                                    $training->addTrainingSkill($trainingSkill);
+
+                                    $manager->persist($trainingSkill);
+                                }
+                            }
+                        }
 
                         $errors = $this->_validator->validate($training);
                         if ($errors && count($errors) > 0) {
