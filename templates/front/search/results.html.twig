@@ -42,7 +42,7 @@
 						<div class="custom-control custom-checkbox d-inline-block">
 							<input type="checkbox" {{ user is defined and user.isSearchesKept is defined and user.isSearchesKept ? 'checked' : '' }} class="custom-control-input" id="search-save-results">
 							<label class="custom-control-label" for="search-save-results">{{ 'flash.search_save_results_label'|trans }}</label>
-						</div>
+						</div
 					{% endif %}
 				</div>
 				<div class="row mt-2 mb-2">
@@ -69,14 +69,15 @@
 					        and (requestParams.minPrice != 0 or requestParams.maxPrice != defaultMaxPrice) and requestParams.priceType != "all")
                                 or (requestParams.priceType is defined and requestParams.priceType != "all") 
                             %}
+                            {% set currencySymbol = (requestParams.currency == 'euro') ? '€' : 'zł' %}
 							<button type="button" class="btn btn-sm btn-light mb-1 tag-price">
                                 {% if requestParams.priceType == "free" %}
                                     {{ 'free_training'|trans }}
                                 {% elseif requestParams.priceType == "range" %}
                                     {{ requestParams.minPrice }}
-                                    € -
+                                    {{ currencySymbol }} -
                                     {{ requestParams.maxPrice }}
-                                    €
+                                    {{ currencySymbol }}
                                 {% endif %}
 								<span class="delete">&times;</span>
 							</button>

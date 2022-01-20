@@ -16,9 +16,9 @@
     "build": "encore production --progress"
   },
   "dependencies": {
-    "@symfony/webpack-encore": "^1.2.0",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@popperjs/core": "^2.9.2",
+    "@symfony/webpack-encore": "^1.2.0",
     "autocompleter": "^6.1.0",
     "bazinga-translator": "^4.0.2",
     "bootbox": "^5.4.0",
@@ -44,6 +44,7 @@
     "marked": "^3.0.0",
     "moment": "^2.29.0",
     "momentjs": "^2.0.0",
+    "node-gyp": "^8.4.1",
     "tinymce": "^5.8.0"
   }
 }

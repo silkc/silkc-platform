@@ -379,7 +379,7 @@ class Admin {
                 { "className": "dt-center", "orderable": false, "render":
                     function (data, type, row) {
 
-                        let html = `<div class="d-flex justify-content-center"><a href="/${lang}/edit_user/${ row.id }" class="btn btn-sm btn-info" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.edit ? translationsJS.edit : 'Edit'}">
+                        let html = `<div class="d-flex justify-content-center"><a href="/admin/${lang}/edit_user/${ row.id }" class="btn btn-sm btn-info" data-id="${ row.id }" data-toggle="tooltip" title="${translationsJS && translationsJS.edit ? translationsJS.edit : 'Edit'}">
                                         <i class="fas fa-user-edit"></i>
                                     </a>`;
 

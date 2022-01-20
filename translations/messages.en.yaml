@@ -214,7 +214,7 @@ email:
   to_finalize_your_account_creation: To finalize your account creation on the SILKC platform, please click on the following validation link
   to_change_password: To change your password on the SILKC platform, please click on the following validation link
   this_link_is_valid_for_minutes: This link is only valid for 60 minutes. If you do not use it within this period, you will need to request a new one.
-  if_you_receive_this_email: If you receive this email for no apparent reason, please report it as suspicious behavior to your support team.
+  if_you_receive_this_email: If you receive this email for no apparent reason, please don't take it into account.
   change_password: Change password
   change_password_content: "Hello, if you have requested to change your password, please click on the following link :"
 home:
