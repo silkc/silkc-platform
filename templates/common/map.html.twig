@@ -1,6 +1,9 @@
 <div class="grp-google-map {{ page is defined ? page : '' }}">
     <div class="input-group flex-nowrap mb-2">
-        <input class="form-control" type="text" id="address-google-map">
+        <input class="form-control" 
+                type="text" 
+                id="address-google-map" 
+                {{ placeholder is defined and placeholder is not empty ? 'placeholder=' ~ placeholder ~ '' : '' }}>
         <span class="input-group-append">
             <button type="button" class="btn btn-primary" id="btn-geocode" disabled="disabled">
                 <div class="spinner-border spinner-border-sm inactive" role="status">

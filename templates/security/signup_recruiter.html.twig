@@ -86,9 +86,9 @@
 
 							<div class="form-group">
                                 <div class="map-login">
-                                    {% include 'common/map.html.twig' with {'allowed': true, 'page': 'login'} %}
+                                    {% include 'common/map.html.twig' with {'allowed': true, 'page': 'login', 'placeholder': 'login.form.label.address'|trans} %}
                                 </div>
-								{{ form_widget(form.address, {'attr' : {'placeholder': 'login.form.label.address'|trans} }) }}
+								{{ form_widget(form.address) }}
 							</div>
 
 							<div class="form-group">

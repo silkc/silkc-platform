@@ -1,8 +1,8 @@
 carousel:
-  text_1: Nigdy<br/>nie przestawaj<br/>nauki
-  text_2: POPRAW<br/>SWOJE<br/>UMIEJĘTNOŚCI
-  text_3: ZNAJDŹ<br/>TWOJĄ<br/>WYMARZONĄ PRACĘ
-  text_4: Nigdy<br/>nie przestawaj<br/>nauki
+  text_1: Nie<br/>przestawaj<br/>się uczyć 
+  text_2: ROZWIJAJ<br/>SWOJE<br/>UMIEJĘTNOŚCI
+  text_3: ZNAJDŹ<br/>WYMARZONĄ<br/> PRACĘ
+  text_4: Nie<br/>przestawaj<br/>się uczyć 
 
 title_page:
   results: Wyniki
@@ -13,163 +13,167 @@ label:
   label: Nazwa
   name: Nazwa
   location: Lokalizacja
-  salary: pensja
-  duration: Okres obowiązywania (od daty rozpoczęcia do daty zakończenia)
-  effective_duration: Ef. Trwanie
-  duration_value: Okres obowiązywania (od daty rozpoczęcia do daty zakończenia)
-  duration_details: Szczegóły czasu trwania
+  salary: Wynagrodzenie
+  duration: Czas trwania
+  effective_duration: Czas trwania
+  duration_value: Czas trwania (od daty rozpoczęcia do daty zakończenia)
+  duration_details: Szczegóły
   description: Opis
   roles: Funkcje
   price: Cena
   start_at: Data rozpoczęcia
-  end_at: Data końcowa
+  end_at: Data zakończenia
   start: Początek
-  end: Kończyć się
-  training_info_url: Adres URL informacji o szkoleniu
-  url: URL
-  online: Online
-  is_online_monitored: Monitorowane online
-  is_presential: Twarzą w twarz
-  save: Zapisać
-  create: Zapisać
-  edit_training: Zapisać
+  end: Koniec
+  training_info_url: Link do szkolenia
+  url: Link
+  online: Szkolenie online
+  is_online_monitored: Szkolenie monitorowane online
+  is_presential: Szkolenie stacjonarne
+  save: Zapisz
+  create: Zapisz
+  edit_training: Zapisz
   pseudo: Nazwa użytkownika
-  close: Blisko
+  close: Zamknij
   institution_name: Nazwa instytucji
   search: Szukaj
-  advanced_search: Zaawansowane wyszukiwanie
+  advanced_search: Wyszukiwanie zaawansowane
   date: Data
-  distance: Dystans
-  refine_my_search: Zawęź moje wyszukiwanie
-  city: Miasto
+  distance: Odległość
+  refine_my_search: Zawęź moje kryteria wyszukiwania
+  city: Miejscowość
   distance_from: Odległość od
-  exclude_training_without_a_completed_description: Wyklucz szkolenie bez wypełnionego opisu
-  without_specified_duration: Bez określonego czasu trwania
+  exclude_training_without_a_completed_description: Pomiń szkolenia bez szczegółowego opisu
+  without_specified_duration: Pomiń szkolenia bez określonego czasu trwania
   currency: Waluta
-  clear: Jasne
-  hours: godziny
-  hours_filter: godziny
+  clear: Wyczyść
+  hours: Godzin
+  hours_filter: godzin
   days: Dni
   days_filter: dni
-  weeks: Tygodnie
-  weeks_filter: tygodnie
-  months: Miesiące
-  months_filter: miesiące
+  weeks: Tygodni
+  weeks_filter: tygodni
+  months: Miesięcy
+  months_filter: miesięcy
   is_visible: Widoczny
   listening_position: Chcę pracować na stanowisku
-  up_to_distance: Aż do
+  up_to_distance: Do
   save_and_validate: Zapisz i zatwierdź
-  professional_experience: Doświadcz profesji
+  professional_experience: Doświadczenie zawodowe
   language: Język
   is_certified: Posiada certyfikat
   is_free: Jest wolny
   position_occupation: Zawód związany ze stanowiskiem
 placeholder:
-  training_price: "Np.: 1000.00"
+  training_price: "Np.: 1000,00"
   duration_details: "Np.: poniedziałki i wtorki od 8:00 do 10:00"
-  salary_price: Cena wynagrodzenia
+  salary_price: Wysokość wynagrodzenia
   up_to_distance: 200
+  professional_experience: np. 10 lat doświadczenia w wymienionych zawodach
 button:
-  see_related_trainings: Zobacz powiązane szkolenia
-  see_skills_to_be_learn: Zobacz umiejętności do nauczenia
-  suspend: Zawieszać
-  unsuspend: Anuluj zawieszenie
+  see_related_trainings: Pokaż powiązane szkolenia
+  see_skills_to_be_learn: Zobacz listę umiejętności do nabycia
+  suspend: Zablokuj
+  unsuspend: Przywróć
   suspect: Oznacz użytkownika jako „podejrzanego”
-  raise_suspicion: Oznacz podejrzane
-  edit: Edytować
-  delete: Kasować
-  approve: Zatwierdzić
-  detail: Detale
-  reject: Odrzucić
+  raise_suspicion: Oznacz jako podejrzane
+  edit: Edytuj
+  delete: Usuń
+  approve: Potwierdź
+  detail: Szczegóły
+  reject: Odrzuć
+  add_position: Dodaj stanowisko
 header:
   my_institution: Moja instytucja
   my_account: Moje konto
   full_search_page: Pełna strona wyszukiwania
-  intro: Integracja umiejętności w drodze uczenia się wiedzy i kariery
+  intro: integracja umiejętności w uczeniu się (ang. Skills Integration in Learning) oraz wyznaczenie ścieżki wiedzy i kariery (ang. Knowledge and Career PATHway)
   search_history: Historia wyszukiwania
 
 nav:
-  dashboard: Deska rozdzielcza
-  home: Dom
+  dashboard: Panel główny
+  home: Strona główna
   personal_informations: Moje konto
-  institutional_informations: Informacje instytucjonalne
-  work: Oferty pracy
-  training: Szkolenie
+  institutional_informations: Informacje o instytucji
+  company_informations: Informacje o firmie
+  work: Praca
+  training: Szkolenia
   change_password: Hasło
   skills: Umiejętności
   tasks: Zadania
   users: Użytkownicy
   search_page: Wróć do strony wyszukiwania
+  vacant_positions: Wolne stanowiska
 
 notification:
   label:
     date: Data
     subject: Przedmiot
-  mark_selected_as_read: Oznacz wybrane jako przeczytane
+  mark_selected_as_read: Oznacz jako przeczytane
 
 content_training:
   label:
     name: Nazwa
-    registered_on: Zarejestrowano dnia
-    registered_by: Zarejestrowany przez
+    registered_on: Data rejestracji
+    registered_by: Zarejestrowane przez
     status: Status
     action: Akcja
-    approved: Zatwierdzony
-    pending: Aż do
-    rejected: Odrzucony
+    approved: Potwierdzone
+    pending: Oczekujące
+    rejected: Odrzucone
   action:
-    approve: Zatwierdzić
-    see_details: Patrz szczegóły
-    delete: Kasować
-    reject: Odrzucić
+    approve: Zaakceptuj
+    see_details: Zobacz szczegóły
+    delete: Usuń
+    reject: Odrzuć
 
 work:
-  label: Etykieta
+  label: nazwa
   description: Opis
 
 user:
-  id: ID
+  id: Identyfikator
   firstname: Imię
   lastname: Nazwisko
   username: Nazwa użytkownika
-  is_suspended: Zawieszony ?
-  is_suspected: Podejrzany ?
+  is_suspended: Zablokowany
+  is_suspected: Podejrzany
   role_user: użytkownik
   role_institution: instytucja
   role_admin: Administrator
   role: Profil
-  create_user: Stwórz użytkownika
-  edit_user_breadcrumb: Edytować %username%
+  create_user: Stwórz profil użytkownika
+  edit_user_breadcrumb: Edytuj %username%
 task:
   label:
     name: Nazwa
-    registered_on: Zarejestrowano dnia
+    registered_on: Data rejestracji
     registered_by: Zarejestrowany przez
     status: Status
     action: Akcja
-    approved: Zatwierdzony
-    pending: Aż do
-    rejected: Odrzucony
+    approved: Zatwierdzone
+    pending: Oczekujące
+    rejected: Odrzucone
   action:
-    approve: Zatwierdzić
-    see_details: Patrz szczegóły
-    delete: Kasować
-    reject: Odrzucić
+    approve: Zaakceptuj
+    see_details: Zobacz szczegóły
+    delete: Usuń
+    reject: Odrzuć
 
 login:
   form:
-    you_have_an_account: Masz konto?
-    mandatory_field_info: (*) Wymagane pola
+    you_have_an_account: Masz już konto?
+    mandatory_firld_info: (*) Wymagane pola
     or: lub
-    disconnect_message: "%username%, jesteś już połączony, "
-    not_identical_password: Wprowadzone hasła nie są identyczne.
+    disconnect_message: "%username%, masz już konto na tej platformie, "
+    not_identical_password: Wprowadzone hasła różnią się od siebie
     disconnect_button: Wyloguj się
-    admin_access_button: Dostęp administracyjny
+    admin_access_button: Dostęp administratora
     user_access_button: Dostęp użytkownika
-    institution_access_button: Dostęp do instytucji
+    institution_access_button: Dostęp instytucji
     log_in: Zaloguj sie
     title:
-      connect: Łączyć
+      connect: Połącz
       signup: Napis
       you_do_not_have_an_account: Nie masz konta?
       forgot_password: Zapomniałeś hasła?
@@ -177,16 +181,17 @@ login:
       username: Nazwa użytkownika
       firstname: Imię
       institution_name: Nazwa instytucji
+      company_name: Nazwa firmy
       pseudo: Nazwa użytkownika
       lastname: Nazwisko
       email: Email
       email_or_username: Email lub nazwa użytkownika
       address: Adres
-      city: Miasto
-      homepage: Strona główna
+      city: Miejscowość
+      homepage: Strona internetowa
       roles: Funkcje
       year_of_birth: Rok urodzenia
-      year_of_creation: Rok powstania
+      year_of_creation: Rok założenia
       date_of_birth: Data urodzenia
       send_password_reset_email: Zresetuj hasło
       password:
@@ -196,32 +201,33 @@ login:
         first: Hasło
         second: Potwierdź hasło
     button:
-      save: Zapisać
+      save: Zapisz
       save_and_create: Zapisz i utwórz
 
     you_do_not_have_an_account: Nie masz konta?
-    sign_up: Zapisz się
+    sign_up: Zarejestruj się
     sign_in: Zaloguj się
     sign_out: Wyloguj się
 
 email:
   validate_your_account: Zweryfikuj swoje konto
-  to_finalize_your_account_creation: Aby zakończyć tworzenie konta na platformie SILKC, kliknij poniższy link weryfikacyjny
-  to_change_password: Aby zmienić hasło na platformie SILKC, kliknij poniższy link weryfikacyjny
-  this_link_is_valid_for_minutes: Ten link jest ważny tylko przez 60 minut. Jeśli nie użyjesz go w tym okresie, będziesz musiał poprosić o nowy.
+  to_finalize_your_account_creation: Aby dokończyć tworzenie konta na platformie SILKC, kliknij w poniższy link weryfikacyjny
+  to_change_password: Aby zmienić hasło na platformie SILKC, kliknij w poniższy link weryfikacyjny
+  this_link_is_valid_for_minutes: Ten link jest aktywny tylko przez 60 minut. Jeśli nie użyjesz go w tym czasie, będziesz musiał/a na nowo potwierdzić konto, aby dostać kolejny link.
   if_you_receive_this_email: Jeśli nie zarejestrowałeś się na platformie, zgłoś do nas podejrzaną wiadomość e-mail.
   change_password: Zmień hasło
-  change_password_content: "Witam, jeśli poprosiłeś o zmianę hasła, kliknij poniższy link:"
+  change_password_content: "Witaj, jeśli chcesz zmienić hasło, kliknij poniższy link:"
+
 home:
-  let_improve: <span>Améliorons</span><span>votre sytuacja professionnelle!</span>
-  find_out_how_to_get_there: Dowiedz się, jak się tam dostać!
+  let_improve: <span>Popraw</span><span>swoją sytuację zawodową!</span>
+  find_out_how_to_get_there: Sprawdź, jak go zdobyć!
   search_by_occupation: Szukaj według zawodu
   search_by_skill: Szukaj według umiejętności
-  training_available: dostępne szkolenie
+  training_available: dostępnych szkoleń
   people_have_found_a_trining_through_the_silkc_path: osób znalazło szkolenie przez platformę SILKC
-  registered_job: zarejestrowane oferty pracy
+  registered_job: zarejestrowanych ofert pracy
 
-no_result_found: nie znaleziono żadnych wyników
+no_result_found: Nie znaleziono wyników
 required_skills: Wymagane umiejętności
 acquired_skills: Nabyte umiejętności
 skills_you_can_acquire: Umiejętności, które możesz zdobyć
@@ -231,205 +237,201 @@ no_esco: Dodaj więcej umiejętności
 
 the_following_skills_have_been_calculated_based: Poniższa lista umiejętności została opracowana na podstawie Twojego doświadczenia zawodowego i historii szkoleń
 see_more: Zobacz więcej
-other_skills: Dodaj inne umiejętności, których Twoim zdaniem brakuje na powyższej liście.
+other_skills: Dodaj inne umiejętności, których Twoim zdaniem nie uwzględniono na powyższej liście.
 other_skills_label: Wybierz umiejętność
 previously_unselected: Wcześniej usunięte umiejętności z list.
-please_indicate_any_professional_training: Proszę wskazać wszelkie szkolenia zawodowe, które odbyłeś w ciągu ostatnich 5 lat
-don_t_find_your_training: Nie możesz znaleźć swojego szkolenia? Dodaj to tutaj!
-don_t_find_your_institution: Nie możesz znaleźć swojej instytucji? Dodaj to tutaj!
+please_indicate_any_professional_training: Wskaż wszystkie szkolenia zawodowe, które odbyłeś/łaś w ciągu ostatnich 5 lat
+don_t_find_your_training: Nie możesz znaleźć swojego szkolenia? Dodaj je tutaj!
+don_t_find_your_institution: Nie możesz znaleźć swojejinstytucji? Dodaj ją tutaj!
 training_name: Nazwa szkolenia
-please_indicate_your_current_job: Podaj swoją obecną pracę. Wykorzystamy go do odgadnięcia Twoich aktualnych umiejętności.
-please_indicate_any_previous_jobs: Proszę wskazać poprzednią pracę. Wykorzystamy je do odgadnięcia Twoich umiejętności. Użyj przycisku +, aby dodać więcej.
-please_indicate_your_desired_jobs: Wskaż żądane oferty pracy. Wykorzystamy je, aby zapewnić Ci najlepsze szkolenie w oparciu o Twoją lokalizację i aktualny zestaw umiejętności.
-current_job: Obecna praca
-previous_job: Poprzednia praca
-desired_job: Pożądana praca
+please_indicate_your_current_job: Podaj swoje  obecne stanowisko pracy. Na tej podstawie, wskażemy Twoje umiejętności związane z danym zawodem.
+please_indicate_any_previous_jobs: Podaj swoje poprzednie stanowiska pracy.  Na tej podstawie, wskażemy  Twoje umiejętności związane z danym zawodem. Użyj przycisku +, aby dodać więcej.
+please_indicate_your_desired_jobs: Podaj swoje wymarzone stanowisko pracy.  Na tej podstawie, będziemy mogli dopasować najlepsze szkolenie w oparciu o Twoją lokalizację i posiadane umiejętności.
+current_job: Obecnie wykonywany zawód
+previous_job: Poprzedni zawód
+desired_job: Wymarzony zawód
 more_info: Więcej informacji
-match: mecz
-login_to_finetune: Zaloguj się, aby dostroić
-training_opportunities_to_land_your_dream_job_as: Możliwości szkoleniowe, aby zdobyć wymarzoną pracę jako
-i_am_an_institution: jestem instytucją
+match: dopasuj
+login_to_finetune: Zaloguj się, aby dopasować wyniki
+training_opportunities_to_land_your_dream_job_as: Szkolenia, które pozwolą Ci zdobyć wymarzoną pracę jako
+i_am_an_institution: jestem przedstawicielem instytucji
 i_am_a_user: jestem użytkownikiem
-i_am_a_recruiter: jestem rekruterem
+i_am_a_recruiter: jestem osobą rekrutującą
 recruiter_name: Imię i nazwisko rekrutera
 training: Szkolenie
 yes: tak
 no: nie
-list_of_professional_training_you_have_previously_followed: Lista odbytych szkoleń zawodowych
+list_of_professional_training_you_have_previously_followed: Lista szkoleń zawodowych, które odbyłeś/łaś w przeszłości
 search_by_job_placeholder: Jaka jest twoja wymarzona praca?
 search_by_skill_placeholder: Jakie umiejętności chcesz zdobyć?
 user_formation_details_tooltip: Opis szkolenia
 user_formation_unlink_tooltip: Usuń to szkolenie
-user_formation_feedback_tooltip: Przekazać opinię
-user_had_done_this_training_btn: Przeszedłem to szkolenie
-user_had_not_done_this_training_btn: Nie uczestniczyłem w tym szkoleniu
-n_a: N/A
-duplicate_training_success: Szkolenie zostało pomyślnie zduplikowane
-training_duplicate_suffix: " - (duplikować)"
+user_formation_feedback_tooltip: Przekaż nam swoją opinię
+user_had_done_this_training_btn: Odbyłem/łam to szkolenie
+user_had_not_done_this_training_btn: Nie odbyłem/łam tego szkolenia
+n_a: nie dotyczy
+duplicate_training_success: Szkolenie zostało pomyślnie skopiowane
+training_duplicate_suffix:  (kopiuj)
 you_have_an_account: Masz konto?
 sign_in: Zaloguj się
-search_history_count_results_tooltip: to wyszukiwanie zwróciło %count% wyników
+search_history_count_results_tooltip: znaleziono %count% wyników
 to: do
-from: Z
-occupation_type_search: Wyszukiwanie typu zawodu
-skill_type_search: Wyszukiwanie typu umiejętności
+from: od
+occupation_type_search: Wyszukiwanie według zawodu
+skill_type_search: Wyszukiwanie według umiejętności
 front_last_searches_label: Ostatnie wyszukiwania
-see_details_tooltip: Patrz szczegóły
+see_details_tooltip: Zobacz szczegóły
 delete_search_tooltip: Usuń wyszukiwanie
-front_account_work_skills_tooltip: Liczba powiązanych umiejętności - kliknij, aby dowiedzieć się więcej
+front_account_work_skills_tooltip: Pozostałe powiązane umiejętności - kliknij, aby uzyskać więcej szczegółów
 show_panel: Pokaż panel
 hide_panel: Ukryj panel
-km_away: km dalej
-markdown_support_info: To pole jest zgodne z formatem
-effective_duration_tooltip: Efektywny czas trwania szkolenia
-training_rating_tooltip: Średni ranking szkoleń dla 5 głosujących
-position: pozycja
+km_away: odległość w km
+markdown_support_info: To pole jest zgodne z formatem 
+effective_duration_tooltip: Czas trwania szkolenia
+training_rating_tooltip: Średnia ocena szkolenia dla %voters% głosujących
+position: stanowisko
 add_a_training: Dodaj szkolenie
 
 tooltip:
   remove_this_skill: Usuń tę umiejętność
   add_this_skill_back_into_the_list_above: Dodaj tę umiejętność z powrotem do powyższej listy
-  remove_this_job: Usuń to zadanie
+  remove_this_job: Usuń to stanowisko pracy
   edit_this_training: Edytuj to szkolenie
-  clone_this_training: Sklonuj to szkolenie
+  clone_this_training: Skopiuj to szkolenie
 
-info_search_result:
-  "Informacje: Poniżej przedstawiamy propozycje szkoleń na podstawie informacji podanych w profilu (doświadczenie, szkolenie, umiejętności, wiek, lokalizacja) oraz doświadczeń
-  innych ludzi sukcesu w podobnych sytuacjach. Nasz system nieustannie ewoluuje, gdy nowe osoby szukają szkoleń i zgłaszają własne doświadczenia.
-  Dlatego ważne jest, aby przekazać nam informacje zwrotne na temat wcześniejszych szkoleń lub doświadczeń zawodowych. Twoje doświadczenie może pomóc innym znaleźć idealną pracę!"
+info_search_result: "Informacja: Poniżej przedstawiamy propozycje szkoleń na podstawie informacji podanych na Twoim profilu (doświadczenie, szkolenie, umiejętności, wiek, lokalizacja) oraz  na podstawie doświadczeń innych osób, które odniosły sukces w okolicznościach podobnych do Twoich. Nasz system stale się rozwija dzięki nowym użytkownikom poszukującym ofert szkoleniowych i dzielącym się własnymi doświadczeniami. Dlatego ważne jest, abyś przekazał/ła nam informacje zwrotne na temat swoich wcześniejszych szkoleń lub doświadczeń zawodowych. Twoje doświadczenie może pomóc innym znaleźć idealną pracę!"
 
 flash:
-  your_account_is_validated: Twoje konto zostało zweryfikowane, dziękuję.
+  your_account_is_validated: Twoje konto zostało zweryfikowane, dziękujemy.
   invalid_code: Kod weryfikacyjny jest nieprawidłowy.
   expired_code: Kod wygasł.
   unknown_email: Nieznany email.
   unknown_user: Nieznany użytkownik.
-  validation_link_has_been_sent: Link weryfikacyjny został wysłany na Twój e-mail
+  validation_link_has_been_sent: Kod weryfikacyjny został wysłany na Twój adres e-mail.
   an_error_occured: Wystąpił błąd
-  email_already_exists: Ten adres e-mail jest już w użyciu
+  email_already_exists: Ten adres e-mail jest już w użyciu.
   username_already_exists: Nazwa użytkownika zajęta
   your_password_is_changed: Twoje hasło zostało zmienione.
-  non_identical_password: Hasła nieidentyczne.
-  search_parameters_error: Wystąpił błąd w parametrach wyszukiwania
-  search_save_results_label: Zachowaj moje wyszukiwania
+  non_identical_password: Hasła różnią się od siebie.
+  search_parameters_error: Wystąpił błąd podczas wyszukiwania.
+  search_save_results_label: Zapamiętaj moje wyszukiwania
 
 search_history:
   label:
-    name: Przedmiot
-    type: Rodzaj
+    name: Nazwa
+    type: Rodzaj wyszukiwania
     date: Data ostatniego wyszukiwania
     count_result: Wyniki ostatniego wyszukiwania
     count_search: Liczba wyszukiwań
 
 Euro: Euro
+euro: euro
 Złoty: Złoty
-Save: Zapisać
+złoty: złoty
+Save: Zapisz
 Occupation: Zawód
-
+Invalid password: Nieprawidłowe hasło
+Copy location: Kopiuj lokalizację
+Copy location to cliboard: Skopiuj lokalizację do schowka
+Calculate the number of affected users: Oblicz liczbę użytkowników, których to dotyczy
+Results: Wyniki
 no_trainings: Brak szkoleń
-optional_skills: Umiejętności opcjonalne
+optional_skills: Umiejętności dodatkowe
 essential_skills: Podstawowe umiejętności
-skill_type: "Rodzaj umiejętności:"
+skill_type: Rodzaj "umiejętności:"
 are_you_sure_you_want_to_delete_this_training: Czy na pewno chcesz usunąć to szkolenie?
 do_you_really_want_to_reject_this_training: Czy na pewno chcesz odrzucić to szkolenie?
-are_you_sure_you_want_to_approve_this_training: Czy na pewno chcesz zatwierdzić to szkolenie?
+are_you_sure_you_want_to_approve_this_training: Czy na pewno chcesz potwierdzić to szkolenie?
 cancel: Anuluj
 are_you_sure_you_want_to_approve_this_user: Czy na pewno chcesz zatwierdzić tego użytkownika?
 do_you_really_want_to_reject_this_user: Czy na pewno chcesz odrzucić tego użytkownika?
 are_you_sure_you_want_to_delete_this_user: Czy na pewno chcesz usunąć tego użytkownika?
-are_you_sure_you_want_to_suspend_this_user: Czy na pewno chcesz zawiesić tego użytkownika?
-are_you_sure_you_want_to_unsuspend_this_user: Czy na pewno chcesz anulować zawieszenie tego użytkownika?
+are_you_sure_you_want_to_suspend_this_user: Czy na pewno chcesz zablokować tego użytkownika?
+are_you_sure_you_want_to_unsuspend_this_user: Czy na pewno chcesz odblokować tego użytkownika?
 are_you_sure_you_want_to_mark_this_user_as_suspect: Czy na pewno chcesz oznaczyć tego użytkownika jako „podejrzanego”
-are_you_sure_you_want_to_raise_suspicion_for_this_user: Czy na pewno chcesz wzbudzić podejrzenia wobec tego użytkownika?
-can_you_confirm_that_you_have_completed_this_training: Czy możesz potwierdzić, że ukończyłeś to szkolenie?
-can_you_confirm_that_you_did_not_take_this_training: Czy możesz potwierdzić, że nie uczestniczyłeś w tym szkoleniu?
-search_here: Szukaj tutaj...
+are_you_sure_you_want_to_raise_suspicion_for_this_user: Czy na pewno uważasz, że ten użytkownik jest podejrzany?
+can_you_confirm_that_you_have_completed_this_training: Czy potwierdzasz, że ukończyłeś/łaś to szkolenie?
+can_you_confirm_that_you_did_not_take_this_training: Czy potwierdzasz, że nie uczestniczyłeś/łaś w tym szkoleniu?
+search_here: Wyszukaj tutaj...
 all_associated: Powiąż wszystkie umiejętności
-all_unassociated: Wszyscy nieskojarzeni
-add: Dodać
+all_unassociated: Umiejętności niepowiązane
+add: Dodaj
 add_institution: Dodaj instytucję
 are_you_sure_you_want_to_delete_this_item: Czy na pewno chcesz usunąć ten element?
 the_email_format_is_incorrect: Format wiadomości e-mail jest nieprawidłowy!
 this_field_is_required: To pole jest wymagane!
-number_of_associated_skills_click_for_more_details: Liczba powiązanych umiejętności - kliknij, aby dowiedzieć się więcej
-search_for_training_required_for_this_job: Wyszukaj szkolenia wymagane do tej pracy
+number_of_associated_skills_click_for_more_details: Liczba powiązanych umiejętności - kliknij, aby zobaczyć szczegóły
+search_for_training_required_for_this_job: Wyszukaj szkolenia wymagane dla tego zawodu
 occupations: Zawody
 trainings: Szkolenia
 datatable_search: "Szukaj:"
-datatable_first: "Najpierw"
-datatable_previous: "Poprzedni"
-datatable_next: "Następny"
-datatable_last: "Najnowszy"
+datatable_first: Pierwsze
+datatable_previous: Poprzednia strona
+datatable_next: Następna strona
+datatable_last: Najnowsze
 datatable_loadingRecords: Ładowanie...
 datatable_processing: Przetwarzanie
-datatable_zeroRecords: dane niedostępne w tabeli
-top: Top
-disclaimer: "DISCLAIMER: This project has been funded with support from the European Commission.<br>
-				    This publication [communication] reflects the views only of the author, and the Commission 
-				    cannot be held responsible for any use which may be made of the information contained therein."
+datatable_zeroRecords: Brak danych w tabeli
+top: Przewiń w górę
+disclaimer: "DISCLAIMER: Projekt został zrealizowany przy wsparciu finansowym Komisji Europejskiej.<br> Publikacja odzwierciedla jedynie stanowisko jej autorów i Komisja Europejska oraz Narodowa Agencja Programu Erasmus+ nie ponoszą odpowiedzialności za jej zawartość merytoryczną."
 hide_info: Ukryj informacje
 show_info: Pokaż informacje
-language_fr: Francuski
-language_en: język angielski
-language_it: Włoski
-language_pl: Polskie
-training_found: znaleziono szkolenie
-trainings_found: znalezione formacje
-passage_conditions: Warunki
-additional_criteria: Dodatkowe kryteria
+language_fr: francuski
+language_en: angielski
+language_it: włoski
+language_pl: polski
+passage_conditions: Dodatkowe kryteria
+by_ascending_title: wg tytułu rosnąco
+by_descending_title: wg tytułu malejąco
+by_increasing_score: wg oceny rosnąco
+by_decreasing_score: wg oceny malejąco
+by_increasing_rating: wg dopasowania rosnąco
+by_decreasing_rating: wg dopasowania malejąco
 sort_by: Sortuj według
-by_ascending_title: tytuł rosnąco
-by_descending_title: tytuł malejący
-by_increasing_score: rosnący ranking
-by_decreasing_score: malejący ranking
-by_increasing_rating: rosnące dopasowanie
-by_decreasing_rating: malejące dopasowanie
-intro_home: SILKC pomoże Ci znaleźć najlepszy trening odpowiadający Twoim potrzebom.
-updated_data: Zaktualizowane dane
+intro_home: SILKC Path pomoże Ci znaleźć najlepsze szkolenie odpowiadające Twoim potrzebom.
+updated_data: Dane zaktualizowane
 update_failed: Aktualizacja nieudana
-please_indicate_your_experience: Proszę podać swoje doświadczenie zawodowe
-ex_year_experience: "ex: 10 lat doświadczenia"
-free_training: Darmowy trening
+please_indicate_your_experience: Proszę określić swoje doświadczenie zawodowe
+ex_year_experience: "np..: 10 lat doświadczenia"
+free_training: Szkolenie bezpłatne
 email_or_username_could_not_be_found: Nie znaleziono adresu e-mail lub nazwy użytkownika.
-suspended_account: Konto zawieszone.
-invalid_password: Nieprawidłowe hasło
-invalid_account: Nieważne konto
-number_total_of_affected_users: "Łączna liczba użytkowników, których to dotyczy"
-number_of_interested_users: "Liczba zainteresowanych użytkowników:"
+suspended_account: Konto zablokowane.
+invalid_password: Hasło nieprawidłowe
+invalid_account: Konto nieprawidłowe
+number_total_of_affected_users: Łączna liczba użytkowników, których to dotyczy
+number_of_interested_users: Liczba zainteresowanych użytkowników:
 calculate_the_number_of_affected_users: Oblicz liczbę użytkowników, których to dotyczy
-Results: Wyniki
-number_total_of_affected_users_tuto: Liczba użytkowników z wymaganymi umiejętnościami wymienionymi powyżej.
-number_of_interested_users_tuto: Liczba użytkowników posiadających wymagane umiejętności wymienione powyżej i poszukujących pracy.
+number_total_of_affected_users_tuto: Liczba użytkowników posiadających wymagane umiejętności opisane powyżej.
+number_of_interested_users_tuto: Liczba użytkowników posiadających wymagane umiejętności opisane powyżej i poszukujących pracy.
 add_skill: Dodaj umiejętność
 no_item_selected: Nie wybrano żadnego elementu
-send_an_email_to_the_affected_users: Wyślij wiadomość e-mail do dotkniętych użytkowników
-no_email_has_been_sent: Nie wysłano żadnego e-maila
+send_an_email_to_the_affected_users: Wyślij wiadomość e-mail do użytkowników
+no_email_has_been_sent: E-mail nie został wysłany
 an_email_was_sent_on: E-mail został wysłany w dniu
-summary: Streszczenie
-you_have_received_a_job_offer: Otrzymałeś ofertę pracy
+summary: Podsumowanie
+you_have_received_a_job_offer: Masz nową ofertę pracy
 position_offer: Oferta pracy
 sendsSuccess: e-maile wysłane pomyślnie
 sendsError: błędy
 sendSuccess: e-mail wysłany pomyślnie
 sendError: błąd
-training_rating_tooltip_js: Średni ranking szkoleń dla
+training_rating_tooltip_js: Średnia ocena szkolenia dla
 training_rating_voters_tooltip_js: głosujących
-skills_acquired_occupation_info: Te umiejętności są sugerowane przez ramy ESCO
-skills_acquired_info: Dodaj umiejętności, które nie są sugerowane przez ramy ESCO na powyższej liście.
-training_certified: Certyfikowane szkolenie
-jobs_and_skills_are_based_on_the_ESCO_framework: "Oferty pracy i umiejętności są oparte na ramach ESCO:"
+training_certified: Szkolenie certyfikowane
+jobs_and_skills_are_based_on_the_ESCO_framework: "Oferty pracy i umiejętności są oparte na klasyfikacji ESCO:"
 occupation_related_to_the_training: Zawód związany ze szkoleniem
-required_skills_for_this_training: Umiejętności wymagane do tego szkolenia
+required_skills_for_this_training: Umiejętności konieczne do rozpoczęcia tego szkolenia
 skills_acquired_through_this_training: Umiejętności nabyte podczas tego szkolenia
-the_training_was_created: Szkolenie powstało
+skills_acquired_occupation_info: Te umiejętności są określone w klasyfikacji ESCO
+skills_acquired_info: Dodaj umiejętności, które nie są zawarte w klasyfikacji ESCO na powyższej liście.
+the_training_was_created: Szkolenie zostało utworzone
 the_position_was_created: Stanowisko zostało utworzone
 position_duplicate_suffix: " - (duplikat)"
-duplicate_position_success: Pozycja została pomyślnie zduplikowana
+duplicate_position_success: Stanowisko zostało pomyślnie skopiowane
 no_skills_found_for_this_position: Nie znaleziono umiejętności na tym stanowisku
-no_position_found: Nie znaleziono pozycji
+no_position_found: Nie znaleziono stanowiska
 published_for_job_seekers: Opublikowane dla osób poszukujących pracy
-required_skills_for_this_occupation: Wymagane umiejętności do tego zawodu
-info_filters_by_price: Wyszukiwanie odbywa się na szkoleniach, których ceny podane są w wybranej walucie
-in_range_and_currendy_training: W zakresie i wybranej walucie
+info_filters_by_price: Wyszukiwanie odbywa się wśród szkoleń, których ceny podane są w wybranej walucie
+in_range_and_currendy_training: W wybranej walucie
 all_prices_training: Wszystkie ceny
-address_suggestion: Propozycje
+address_suggestion: Sugestie
