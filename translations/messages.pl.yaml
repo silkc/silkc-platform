@@ -380,6 +380,8 @@ language_fr: francuski
 language_en: angielski
 language_it: włoski
 language_pl: polski
+training_found: znaleziono formację
+trainings_found: znalezione formacje
 passage_conditions: Dodatkowe kryteria
 by_ascending_title: wg tytułu rosnąco
 by_descending_title: wg tytułu malejąco
