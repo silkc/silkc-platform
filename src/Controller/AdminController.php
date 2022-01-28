@@ -169,9 +169,10 @@ class AdminController extends AbstractController
     }
     
     /**
-     * @Route("/skills", name="skills")
+     * @Route("/skills/{lang}", name="skills")
      */
     public function skills(
+        $lang = 'en',
         SkillRepository $skillRepository
     ): Response
     {
@@ -189,7 +190,7 @@ class AdminController extends AbstractController
         return $this->json(
             [
                 'result' => true,
-                'skills' => $skillRepository->findAll(),
+                'skills' => $skillRepository->findAllByLocale($lang),
             ],
             200,
             ['Access-Control-Allow-Origin' => '*']
@@ -197,9 +198,10 @@ class AdminController extends AbstractController
     }
     
     /**
-     * @Route("/occupations", name="occupations")
+     * @Route("/occupations/{lang}", name="occupations")
      */
     public function occupations(
+        $lang = 'en',
         OccupationRepository $occupationRepository
     ): Response
     {
@@ -217,7 +219,7 @@ class AdminController extends AbstractController
         return $this->json(
             [
                 'result' => true,
-                'occupations' => $occupationRepository->findAll(),
+                'occupations' => $occupationRepository->findAllByLocale($lang),
             ],
             200,
             ['Access-Control-Allow-Origin' => '*']

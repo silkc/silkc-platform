@@ -942,7 +942,7 @@ class SearchResults {
             searching: true,
             info: false,
             lengthChange: false,
-            order: [[1, "asc"]],
+            order: [[3, "desc"]],
             language: tradsDatatable, 
             columnDefs: [
                 {

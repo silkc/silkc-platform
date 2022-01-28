@@ -414,13 +414,14 @@ class Admin {
 
      runDatatableWork = () => {
         let that = this;
+        let lang = $('body').attr('lang');
 
         let table = $('#datatable-work').DataTable({
             searching: true, 
             info: false,
             lengthChange: false,
             ajax: {
-                url: '/admin/occupations',
+                url: '/admin/occupations/' + lang,
                 type: 'GET',
                 dataSrc: function (json) {
                     return json.occupations;
@@ -455,12 +456,14 @@ class Admin {
 
     runDatatableSkill = () => {
         let that = this;
+        let lang = $('body').attr('lang');
+
         let table = $('#datatable-skill').DataTable({
             searching: true,
             info: false,
             lengthChange: false,
             ajax: {
-                url: '/admin/skills',
+                url: '/admin/skills/' + lang,
                 type: 'GET',
                 dataSrc: function (json) {
                     return json.skills;

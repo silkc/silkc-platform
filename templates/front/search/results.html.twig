@@ -168,12 +168,12 @@
                                 <label class="input-group-text" for="sort-by">{{ 'sort_by'|trans }}</label>
                             </div>
                             <select class="custom-select" id="sort-by">
+                                <option value="asc" data-col="rating">{{ 'by_increasing_rating'|trans }}</option>
+                                <option value="desc" data-col="rating" selected>{{ 'by_decreasing_rating'|trans }}</option>
                                 <option value="asc" data-col="name">{{ 'by_ascending_title'|trans }}</option>
                                 <option value="desc" data-col="name">{{ 'by_descending_title'|trans }}</option>
                                 <option value="asc" data-col="score">{{ 'by_increasing_score'|trans }}</option>
                                 <option value="desc" data-col="score">{{ 'by_decreasing_score'|trans }}</option>
-                                <option value="asc" data-col="rating">{{ 'by_increasing_rating'|trans }}</option>
-                                <option value="desc" data-col="rating">{{ 'by_decreasing_rating'|trans }}</option>
                             </select>
                         </div>
 
