@@ -228,7 +228,7 @@ class UserImportFixtures extends Fixture
                                             intval($matches[1]) :
                                             null,
                                         "duration_unity" => "hours",
-                                        "skills" => (property_exists($userData, 'previousTrainingSkill') && !empty($userData->previousTrainingSkill)) ?
+                                        "acquired_skills" => (property_exists($userData, 'previousTrainingSkill') && !empty($userData->previousTrainingSkill)) ?
                                             (array) $userData->previousTrainingSkill :
                                             null
                                     ]
