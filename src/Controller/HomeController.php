@@ -86,9 +86,12 @@ class HomeController extends AbstractController
         if ($skill_id && !empty($skill_id))
             setcookie('skill_id_silkc_search', $skill_id, time() + 86400, "/");
 
-        $type_search = (array_key_exists('type_search_silkc_search', $_COOKIE)) ? $_COOKIE['type_search_silkc_search'] : $type_search;
-        $occupation_id = (array_key_exists('occupation_id_silkc_search', $_COOKIE)) ? $_COOKIE['occupation_id_silkc_search'] : $occupation_id;
-        $skill_id = (array_key_exists('skill_id_silkc_search', $_COOKIE)) ? $_COOKIE['skill_id_silkc_search'] : $skill_id;
+        if ((!$type_search || empty($type_search)) && array_key_exists('type_search_silkc_search', $_COOKIE))
+            $type_search = $_COOKIE['type_search_silkc_search'];
+        if ((!$occupation_id || empty($occupation_id)) && array_key_exists('occupation_id_silkc_search', $_COOKIE))
+            $occupation_id = $_COOKIE['occupation_id_silkc_search'];
+        if ((!$skill_id || empty($skill_id)) && array_key_exists('skill_id_silkc_search', $_COOKIE))
+            $skill_id = $_COOKIE['skill_id_silkc_search'];
 
         $trainings = []; // Listes des formations
         $searchParams = []; // Parametres de recherche renvoyés à la vue
