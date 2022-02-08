@@ -262,11 +262,6 @@ class User implements UserInterface
     private $userOccupations;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Training::class)
-     */
-    private $trainings;
-
-    /**
      * @ORM\OneToMany(targetEntity=UserSkill::class, mappedBy="user", orphanRemoval=true)
      */
     private $userSkills;
@@ -282,7 +277,6 @@ class User implements UserInterface
         $this->currentOccupations = new ArrayCollection();
         $this->previousOccupations = new ArrayCollection();
         $this->desiredOccupations = new ArrayCollection();
-        $this->trainings = new ArrayCollection();
         $this->userSkills = new ArrayCollection();
         $this->userSearches = new ArrayCollection();
     }
@@ -642,27 +636,49 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Training[]
+     * @return Collection|UserTraining[]
      */
-    public function getTrainings(): Collection
+    public function getFollowedTrainings(): Collection
     {
-        return $this->trainings;
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isFollowed', 1));
+
+        return $this->userTrainings->matching($criteria);
     }
 
-    public function addTraining(Training $training): self
+    /**
+     * @return Collection|UserTraining[]
+     */
+    public function getInterestingForMeTrainings(): Collection
     {
-        if (!$this->trainings->contains($training)) {
-            $this->trainings[] = $training;
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isInterestingForMe', 1));
+
+        return $this->userTrainings->matching($criteria);
+    }
+
+    public function addUserTraining(UserTraining $userTraining): self
+    {
+        if (!$this->userTrainings->contains($userTraining)) {
+            $this->userTrainings[] = $userTraining;
         }
 
         return $this;
     }
 
-    public function removeTraining(Training $training): self
+    public function removeUserTraining(UserTraining $userTraining): self
     {
-        $this->trainings->removeElement($training);
+        $this->userTrainings->removeElement($userTraining);
 
         return $this;
+    }
+
+    /**
+     * @return Collection|UserTraining[]
+     */
+    public function getUserTrainings(): Collection
+    {
+        return $this->userTrainings;
     }
 
     /**
