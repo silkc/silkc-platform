@@ -566,13 +566,13 @@ class Account {
 
         let _this = this;
 
-        $('body').on('click', '#content-training .add-training button', function(e) {
+        $('body').on('click', '#content-training #training-followed .add-training button', function(e) {
             e.preventDefault();
 
             let user_id = $('#input_user_id').val();
             let training = {};
-            let inputTrainings = $('body').find('#trainings[type="hidden"]');
-            let ul = $('body').find('#content-training .list-trainings .list-group');
+            let inputTrainings = $('body').find('#trainingsIsFollowed[type="hidden"]');
+            let ul = $('body').find('#content-training #training-followed .list-trainings .list-group');
             let inputTrainingToAdd = $('body').find('#hidden_training[type="hidden"]');
             let inputAutocomplete = $('body').find('#training-input');
             let name = inputAutocomplete.val();
@@ -621,6 +621,62 @@ class Account {
                 }
             }
         });
+
+        $('body').on('click', '#content-training #training-interesting .add-training button', function(e) {
+            e.preventDefault();
+
+            let user_id = $('#input_user_id').val();
+            let training = {};
+            let inputTrainings = $('body').find('#trainingsIsInterestingForMe[type="hidden"]');
+            let ul = $('body').find('#content-training #training-interesting .list-trainings .list-group');
+            let inputTrainingToAdd = $('body').find('#hidden_training-interesting[type="hidden"]');
+            let inputAutocomplete = $('body').find('#training-input-interesting');
+            let name = inputAutocomplete.val();
+            let trainingsList = [];
+
+            if (inputTrainingToAdd && inputTrainingToAdd.val()) {
+                let trainingIdToAdd = inputTrainingToAdd.val();
+                inputAutocomplete.val('');
+                inputAutocomplete.removeAttr('data-description');
+                inputTrainingToAdd.val();
+                
+                if (!trainingIdToAdd) return false;
+
+                training.id = trainingIdToAdd;
+                training.name = name;
+                training.totalMark = parseInt(inputAutocomplete.attr('data-totalmark')) || 0;
+                training.avgMark = parseInt(inputAutocomplete.attr('data-avgmark')) || 0;
+
+                if (inputTrainings && inputTrainings.val()) {
+                    trainingsList = JSON.parse(inputTrainings.val());
+                }
+
+                if (trainingsList.length > 0) {
+                    for (let k in trainingsList) {
+                        if (trainingsList[k] == trainingIdToAdd) return false;
+                        if (k == trainingsList.length - 1) trainingsList = [trainingIdToAdd, ...trainingsList];
+                    }
+                } else {
+                    trainingsList = [trainingIdToAdd, ...trainingsList];
+                }
+                
+                inputTrainings.val(JSON.stringify(trainingsList))
+               console.log('ul>>> ', ul) 
+                if (ul) {
+                    let li = _this.tplTraining(training, user_id);
+                    $(ul).append(li);
+
+                    _this.runRater();
+
+                    if (ul.find('li.list-group-item').length == 0)
+                        $('.no_training_result').show();
+                    else
+                        $('.no_training_result').hide();
+
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
+            }
+        });
     }
 
     /**
@@ -634,10 +690,12 @@ class Account {
             e.preventDefault();
             $('[data-toggle="tooltip"]').tooltip('hide');
 
-            let inputTrainings = $('body').find('#trainings[type="hidden"]');
+
+            let $fieldset = $(this).closest('fieldset');
+            let inputTrainings = ($fieldset.attr('id') == 'training-followed') ? $('body').find('#trainingsIsFollowed[type="hidden"]') : $('body').find('#trainingsIsInterestingForMe[type="hidden"]');
             let id = $(this).attr('data-id');
             let li = $(this).closest('li');
-            let ul = $('body').find('#content-training .list-trainings .list-group');
+            let ul = $fieldset.find('#content-training .list-trainings .list-group');
             
             if (inputTrainings && inputTrainings.val()) {
                 let trainingsList = JSON.parse(inputTrainings.val());
@@ -733,15 +791,23 @@ class Account {
 
         $('body').on('click', '#content-training button[type="submit"]', function(e) {
             e.preventDefault();
-
-            let inputTraining = $('body').find('#trainings[type="hidden"]');
             let token = $('body').attr('data-token');
-            let trainings = [null];
 
-            if (inputTraining && inputTraining.val()) {
-                trainings = JSON.parse(inputTraining.val());
-                if (trainings && trainings.length == 0) {
-                    trainings = [null];
+            let inputTrainingIsFollowed = $('body').find('#trainingsIsFollowed[type="hidden"]');
+            let inputTrainingsIsInterestingForMe = $('body').find('#trainingsIsInterestingForMe[type="hidden"]');
+            let trainingsIsFollowed = [null];
+            let trainingsIsInterestingForMe = [null];
+
+            if (inputTrainingIsFollowed && inputTrainingIsFollowed.val()) {
+                trainingsIsFollowed = JSON.parse(inputTrainingIsFollowed.val());
+                if (trainingsIsFollowed && trainingsIsFollowed.length == 0) {
+                    trainingsIsFollowed = [null];
+                }
+            }
+            if (inputTrainingsIsInterestingForMe && inputTrainingsIsInterestingForMe.val()) {
+                trainingsIsInterestingForMe = JSON.parse(inputTrainingsIsInterestingForMe.val());
+                if (trainingsIsInterestingForMe && trainingsIsInterestingForMe.length == 0) {
+                    trainingsIsInterestingForMe = [null];
                 }
             }
     
@@ -756,7 +822,7 @@ class Account {
                 url: url,
                 type: "POST",
                 dataType: 'json',
-                data: {trainings: trainings},
+                data: {trainingsIsFollowed: trainingsIsFollowed, trainingsIsInterestingForMe: trainingsIsInterestingForMe},
                 headers: {"X-auth-token": token},
                 success: function (data, textStatus, jqXHR) {
                     let html = _this.tplMessageFlash();

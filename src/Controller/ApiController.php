@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\UserSkill;
 use App\Entity\Training;
 use App\Entity\User;
+use App\Entity\UserTraining;
 use App\Entity\UserOccupation;
 use App\Entity\OccupationSkill;
 use App\Entity\Position;
 use App\Repository\UserRepository;
+use App\Repository\UserTrainingRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
 use App\Repository\TrainingFeedbackRepository;
@@ -208,33 +210,62 @@ class ApiController extends AbstractController
     /**
      * @Route("/user_training", name="user_training", methods={"POST"})
      */
-    public function user_training(Request $request, TrainingRepository $trainingRepository)
+    public function user_training(Request $request, TrainingRepository $trainingRepository, UserTrainingRepository $userTrainingRepository)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $trainings_ids = $request->request->get('trainings');
-        if (!$user || !$trainings_ids || !is_array($trainings_ids))
-            return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
-        
-        $result = $trainingRepository->findBy(['id' => array_filter($trainings_ids, 'is_numeric')]);
-        $trainings = ($result) ? new ArrayCollection($result) : null;
-        $userTrainings = $user->getTrainings();
+        $params = $request->request->all();
 
-        if ($trainings) {
-            foreach ($trainings as $training) {
-                if (!$userTrainings || !$userTrainings->contains($training))
-                $user->addTraining($training);
+        if (
+            !$user ||
+            !is_array($params) ||
+            !array_key_exists('trainingsIsFollowed', $params) ||
+            !array_key_exists('trainingsIsInterestingForMe', $params)
+        )  return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
+            
+        $trainingsIsFollowed_ids = $request->request->get('trainingsIsFollowed');
+        $trainingsIsInterestingForMe_ids = $request->request->get('trainingsIsInterestingForMe');
+
+        $trainingsIsFollowed = new ArrayCollection();
+        $trainingsIsInterestingForMe = new ArrayCollection();
+        $userTrainings = $user->getUserTrainings();
+        $newTrainingsIsFollowed = new ArrayCollection($trainingRepository->findBy(['id' => array_filter($params['trainingsIsFollowed'], 'is_numeric')]));
+        $newTrainingsIsInterestingForMe = new ArrayCollection($trainingRepository->findBy(['id' => array_filter($params['trainingsIsInterestingForMe'], 'is_numeric')]));
+            
+            
+        foreach ($userTrainings as $userTraining) {
+            if ($userTraining->getIsFollowed() === true) {
+                $trainingsIsFollowed->add($userTraining->getTraining());
+                if (!$newTrainingsIsFollowed->contains($userTraining->getTraining()))
+                    $user->removeUserTraining($userTraining);
+            }
+            if ($userTraining->getIsInterestingForMe() === true) {
+                $trainingsIsInterestingForMe->add($userTraining->getTraining());
+                if (!$newTrainingsIsInterestingForMe->contains($userTraining->getTraining()))
+                    $user->removeUserTraining($userTraining);
             }
         }
         
-        if ($userTrainings) {
-            foreach ($userTrainings as $userTraining) {
-                if (($trainings && !$trainings->contains($userTraining)) || !$trainings) {
-                    $user->removeTraining($userTraining);
-                }
+        foreach ($newTrainingsIsFollowed as $training) {
+            if (!$trainingsIsFollowed->contains($training)) {
+                $userTraining = new UserTraining();
+                $userTraining->setUser($user);
+                $userTraining->setTraining($training);
+                $userTraining->setIsFollowed(true);
+                $em->persist($userTraining);
             }
         }
         
+        foreach ($newTrainingsIsInterestingForMe as $training) {
+            if (!$trainingsIsInterestingForMe->contains($training)) {
+                $userTraining = new UserTraining();
+                $userTraining->setUser($user);
+                $userTraining->setTraining($training);
+                $userTraining->setIsInterestingForMe(true);
+                $em->persist($userTraining);
+            }
+        }
+
         $em->persist($user);
         $em->flush();
 

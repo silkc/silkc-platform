@@ -8,6 +8,7 @@ use App\Entity\Training;
 use App\Entity\Position;
 use App\Entity\UserActivity;
 use App\Entity\UserSearch;
+use App\Entity\UserTraining;
 use App\Entity\SkillTranslation;
 use App\Entity\OccupationTranslation;
 use App\Form\Type\UserType;
@@ -17,6 +18,7 @@ use App\Entity\TrainingSkill;
 use App\Form\Type\PositionType;
 use App\Form\Type\TrainingType;
 use App\Repository\UserActivityRepository;
+use App\Repository\UserTrainingRepository;
 use App\Repository\UserRepository;
 use App\Form\Type\UserPasswordType;
 use App\Repository\SkillRepository;
@@ -270,7 +272,9 @@ class HomeController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         SkillRepository $skillRepository,
         UserRepository $userRepository,
-        OccupationSkillRepository $occupationSkillRepository
+        OccupationSkillRepository $occupationSkillRepository,
+        UserTrainingRepository $userTrainingRepository,
+        TrainingRepository $trainingRepository
     ):Response
     {
         if ($this->isGranted(User::ROLE_INSTITUTION))
@@ -343,6 +347,23 @@ class HomeController extends AbstractController
             }
         }
 
+        $trainingsIsFollowed = $user->getFollowedTrainings();
+        $trainingsIsInterestingForMe = $user->getInterestingForMeTrainings();
+
+        $trainingsIsFollowedInput = [];
+        $trainingsIsInterestingForMeInput = [];
+        
+        if ($trainingsIsFollowed && count($trainingsIsFollowed) > 0) {
+            foreach ($trainingsIsFollowed as $k => $trainingIsFollowed) {
+                array_push($trainingsIsFollowedInput, $trainingIsFollowed->getTraining()->getId());
+            }
+        }
+        
+        if ($trainingsIsInterestingForMe && count($trainingsIsInterestingForMe) > 0) {
+            foreach ($trainingsIsInterestingForMe as $k => $trainingIsInterestingForMe) {
+                array_push($trainingsIsInterestingForMeInput, $trainingIsInterestingForMe->getTraining()->getId());
+            }
+        }
         return $this->render(
             'front/account/index.html.twig',
             [
@@ -353,6 +374,10 @@ class HomeController extends AbstractController
                 'currentOccupationsInput' => $currentOccupationsInput,
                 'desiredOccupationsInput' => $desiredOccupationsInput,
                 'previousOccupationsInput' => $previousOccupationsInput,
+                'trainingsIsFollowed' => $trainingsIsFollowed,
+                'trainingsIsFollowedInput' => $trainingsIsFollowedInput,
+                'trainingsIsInterestingForMe' => $trainingsIsInterestingForMe,
+                'trainingsIsInterestingForMeInput' => $trainingsIsInterestingForMeInput,
                 'form' => $form->createView(),
                 'password_form' => $passwordForm->createView(),
                 'related_skills' => $skillRepository->getByOccupationAndTraining($user),

@@ -257,6 +257,11 @@ class User implements UserInterface
     private $prePersisted = false;
 
     /**
+     * @ORM\OneToMany(targetEntity=UserTraining::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $userTrainings;
+
+    /**
      * @ORM\OneToMany(targetEntity=UserOccupation::class, mappedBy="user", orphanRemoval=true)
      */
     private $userOccupations;
@@ -273,6 +278,7 @@ class User implements UserInterface
 
     public function __construct()
     {
+        $this->userTrainings = new ArrayCollection();
         $this->userOccupations = new ArrayCollection();
         $this->currentOccupations = new ArrayCollection();
         $this->previousOccupations = new ArrayCollection();

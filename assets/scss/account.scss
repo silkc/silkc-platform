@@ -18,156 +18,156 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     =   Account
 ============================================================================= */
 .link-description {
-  color: #18bc9c;
-  cursor: pointer;
+    color: #18bc9c;
+    cursor: pointer;
 
-  &:hover {
-    color: #0f7864;
-  }
+    &:hover {
+        color: #0f7864;
+    }
 }
 
 .rating-stars,
 .rating-stars:hover,
 .rating-stars:focus {
-  outline: none !important;
+    outline: none !important;
 }
 
 .ul-trainings-feedback {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-  li {
-    margin-bottom: 30px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #ddd;
+    li {
+        margin-bottom: 30px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #ddd;
 
-    &:last-child {
-        border: 0;
+        &:last-child {
+            border: 0;
+        }
     }
-  }
 
-  .comment {
-    font-style: italic;
-    font-size: 0.9rem;
-  }
+    .comment {
+        font-style: italic;
+        font-size: 0.9rem;
+    }
 
-  .date {
-    font-style: italic;
-    font-size: 0.9rem;
-  }
+    .date {
+        font-style: italic;
+        font-size: 0.9rem;
+    }
 }
 
 .form-feedback {
-  position: relative;
+    position: relative;
 
-  .spinner {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    display: none;
-    align-items: center;
-    justify-content: center;
-  }
+    .spinner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #fff;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .form-feedback {
-  .comment {
-    width: 100%;
-    height: 200px;
-    resize: none;
-  }
+    .comment {
+        width: 100%;
+        height: 200px;
+        resize: none;
+    }
 }
 
 #account {
-  margin-top: 60px;
-
-  #profile-completion {
-    margin-bottom: 20px;
-    max-width: 200px;
-    width: 100%;
-
-    > span {
-      font-weight: 300;
-    }
-
-    .progress {
-      height: 20px;
-      width: 100%;
-    }
-  }
-
-  .form-block {
     margin-top: 60px;
-  }
 
-  .button-group {
-    margin-top: 30px;
-  }
+    #profile-completion {
+        margin-bottom: 20px;
+        max-width: 200px;
+        width: 100%;
 
-  /* TAB WORK */
-  #content-work {
-    label {
-      white-space: nowrap;
-      margin-right: 15px;
-      text-align: left;
-    }
-
-    input[type="text"] {
-      width: 300px;
-    }
-
-    .info {
-      font-weight: bold;
-      margin: 15px 0 30px;
-    }
-
-    fieldset {
-      //text-align: center;
-      margin: 15px 0;
-    }
-
-    .list-job {
-      margin: 60px 0 30px;
-
-      > div {
-        margin-bottom: 15px;
-
-        > div {
-          &:first-child {
-            width: 400px;
-            text-align: left;
-
-            a {
-              span {
-                color: #292b2c;
-              }
-
-              &:hover,
-              &:focus {
-                text-decoration: none;
-              }
-            }
-          }
-
-          &:last-child {
-            width: 80px;
-            text-align: right;
-          }
+        > span {
+            font-weight: 300;
         }
-      }
 
-      .rmv {
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
+        .progress {
+            height: 20px;
+            width: 100%;
+        }
+    }
 
-      .jobs-linked {
-        line-height: 1;
-        /*background-color: #18bc9c;
+    .form-block {
+        margin-top: 60px;
+    }
+
+    .button-group {
+        margin-top: 30px;
+    }
+
+    /* TAB WORK */
+    #content-work {
+        label {
+            white-space: nowrap;
+            margin-right: 15px;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        .info {
+            font-weight: bold;
+            margin: 15px 0 30px;
+        }
+
+        fieldset {
+            //text-align: center;
+            margin: 15px 0;
+        }
+
+        .list-job {
+            margin: 60px 0 30px;
+
+            > div {
+                margin-bottom: 15px;
+
+                > div {
+                    &:first-child {
+                        width: 400px;
+                        text-align: left;
+
+                        a {
+                            span {
+                                color: #292b2c;
+                            }
+
+                            &:hover,
+                            &:focus {
+                                text-decoration: none;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        width: 80px;
+                        text-align: right;
+                    }
+                }
+            }
+
+            .rmv {
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            .jobs-linked {
+                line-height: 1;
+                /*background-color: #18bc9c;
                 color: #fff;
                 width: 22px;
                 height: 22px;
@@ -177,84 +177,84 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 justify-content: center;
                 border-radius: 25px;
                 font-size: 0.8rem;*/
-      }
-
-      .search {
-        color: #007bff;
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  /* TAB TRAINING */
-  #content-training {
-    .group-add-search {
-      margin: 0 10px;
-      .input-group-append button {
-        border: 1px solid #ced4da;
-      }
-    }
-
-    label {
-      white-space: nowrap;
-      width: 150px;
-      text-align: left;
-    }
-
-    input[type="text"] {
-      width: 300px;
-    }
-
-    .info {
-      font-weight: bold;
-      margin: 15px 0 30px;
-    }
-
-    fieldset {
-      //text-align: center;
-      margin: 15px 0;
-    }
-
-    .list-trainings {
-      margin: 60px 0 30px;
-
-      > div {
-        margin-bottom: 15px;
-
-        > div {
-          &:first-child {
-            width: 400px;
-            text-align: left;
-
-            a {
-              span {
-                color: #292b2c;
-              }
-
-              &:hover,
-              &:focus {
-                text-decoration: none;
-              }
             }
-          }
 
-          &:last-child {
-            width: 80px;
-            text-align: right;
-          }
+            .search {
+                color: #007bff;
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
         }
-      }
+    }
 
-      .rmv {
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
+    /* TAB TRAINING */
+    #content-training {
+        .group-add-search {
+            margin: 0 10px;
+            .input-group-append button {
+                border: 1px solid #ced4da;
+            }
+        }
 
-      .link {
-        line-height: 1;
-        color: #007bff;
-        /*background-color: #007bff;
+        label {
+            white-space: nowrap;
+            width: 150px;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        .info {
+            font-weight: bold;
+            margin: 15px 0 30px;
+        }
+
+        fieldset {
+            //text-align: center;
+            margin: 15px 0;
+        }
+
+        .list-trainings {
+            margin: 60px 0 30px;
+
+            > div {
+                margin-bottom: 15px;
+
+                > div {
+                    &:first-child {
+                        width: 400px;
+                        text-align: left;
+
+                        a {
+                            span {
+                                color: #292b2c;
+                            }
+
+                            &:hover,
+                            &:focus {
+                                text-decoration: none;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        width: 80px;
+                        text-align: right;
+                    }
+                }
+            }
+
+            .rmv {
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            .link {
+                line-height: 1;
+                color: #007bff;
+                /*background-color: #007bff;
                 color: #fff;
                 width: 22px;
                 height: 22px;
@@ -264,97 +264,105 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
                 justify-content: center;
                 border-radius: 25px;
                 font-size: 0.8rem;*/
-      }
+            }
 
-      .feedback {
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
-    }
-  }
+            .feedback {
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
+        }
 
-  /* TAB SKILLS */
-  #content-skills {
-    label {
-      white-space: nowrap;
-      width: 150px;
-      text-align: left;
-    }
-
-    input[type="text"] {
-      width: 300px;
+        #training-interesting,  
+        #training-followed {
+            .group-add-search {
+                width: 500px;
+            }
+        }
     }
 
-    .info {
-      font-weight: bold;
-      margin: 15px 0 30px;
+    /* TAB SKILLS */
+    #content-skills {
+        label {
+            white-space: nowrap;
+            width: 150px;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        .info {
+            font-weight: bold;
+            margin: 15px 0 30px;
+        }
+
+        fieldset {
+            //text-align: center;
+            margin: 15px 0;
+        }
+
+        .icon[data-toggle="collapse"] {
+            //font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .list-skills {
+            .rmv {
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            .add {
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
+
+            .more {
+                //font-size: 1.4rem;
+                line-height: 1;
+            }
+        }
+
+        .see-more,
+        .see-less {
+            font-weight: 600;
+            margin-top: 10px;
+            display: inline-block;
+        }
     }
-
-    fieldset {
-      //text-align: center;
-      margin: 15px 0;
-    }
-
-    .icon[data-toggle="collapse"] {
-      //font-size: 1.4rem;
-      line-height: 1;
-    }
-
-    .list-skills {
-      .rmv {
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
-
-      .add {
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
-
-      .more {
-        //font-size: 1.4rem;
-        line-height: 1;
-      }
-    }
-
-    .see-more, .see-less {
-      font-weight: 600;
-      margin-top: 10px;
-      display: inline-block;
-    }
-  }
 }
 
 .text-field {
-  -moz-box-sizing: border-box;
-  border: 1px solid #eeeeee;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 0.73684em;
-  font-weight: 600;
-  height: 37px;
-  margin: 0;
-  padding: 5px;
-  width: 100%;
+    -moz-box-sizing: border-box;
+    border: 1px solid #eeeeee;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    font-size: 0.73684em;
+    font-weight: 600;
+    height: 37px;
+    margin: 0;
+    padding: 5px;
+    width: 100%;
 }
 .autocomplete-suggestion {
-  overflow: hidden;
-  padding: 2px 5px;
-  white-space: nowrap;
+    overflow: hidden;
+    padding: 2px 5px;
+    white-space: nowrap;
 }
 .autocomplete-suggestions strong {
-  color: #3399ff;
-  font-weight: normal;
+    color: #3399ff;
+    font-weight: normal;
 }
 .autocomplete-selected {
-  background: #f0f0f0;
+    background: #f0f0f0;
 }
 
 .title-skill {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .no_training_result {
-  list-style: none;
+    list-style: none;
 }
 
 .switch-langue {

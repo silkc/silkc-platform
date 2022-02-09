@@ -1,6 +1,6 @@
 {% set trainingsInput = [] %}
 
-<fieldset>
+<fieldset id="training-followed">
 	<div class="info">
         {{ 'please_indicate_any_professional_training'|trans }}
 	</div>
@@ -26,9 +26,9 @@
 		</div>
 
 		<ul class="list-group">
-			{% if user.trainings is defined %}
-				{% for k, training in user.trainings %}
-                    {% set trainingsInput = trainingsInput|merge([training.id]) %}
+			{% if trainingsIsFollowed is defined and trainingsIsFollowed|length > 0 %}
+				{% for k, training in trainingsIsFollowed %}
+                    {% set training = training.training %}
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 						<div>
 							<span>{{ training.name }}</span>
@@ -57,13 +57,81 @@
 						</div>
 					</li>
 				{% endfor %}
+			{% else %}
+			    <li class="no_training_result" style="{{ (user.trainings is defined and user.trainings|length > 0) ? 'display: none;' }}">{{ 'no_result_found'|trans }}</li>
 			{% endif %}
-			<li class="no_training_result" style="{{ (user.trainings is defined and user.trainings|length > 0) ? 'display: none;' }}">{{ 'no_result_found'|trans }}</li>
 		</ul>
 	</div>
 </fieldset>
 
-<input type="hidden" name="trainings" id="trainings" value="{{ trainingsInput|json_encode() }}" />
+<hr />
+
+
+<fieldset id="training-interesting">
+	<div class="info">
+        {{ 'you_can_save_any_professional_training_that_interests_you'|trans }}
+	</div>
+
+	<div class="d-inline-flex align-items-end add-training">
+		<label for="training-input">{{ 'training_name'|trans }}</label>
+        {% include 'front/elements/input_add_search.html.twig'
+            with {
+                'id': 'training-input-interesting',
+                'url': '/apip/trainings',
+                'autocomplete': true,
+                'formats': 'json',
+                'pagination': 'false',
+                'name': 'training-interesting'
+            }
+        %}
+	</div>
+
+	<div class="list-trainings">
+		<div class="info">
+			{{ 'list_of_professional_training_courses_that_interest_you'|trans }}
+		</div>
+
+		<ul class="list-group">
+			{% if trainingsIsInterestingForMe is defined and trainingsIsInterestingForMe|length > 0 %}
+				{% for k, training in trainingsIsInterestingForMe %}
+                    {% set training = training.training %}
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						<div>
+							<span>{{ training.name }}</span>
+						</div>
+						<div class="d-inline-flex align-items-center justify-content-end">
+							<div class="d-flex flex-row justify-content-start align-items-center mr-4">
+								<span class="rating" data-value="{{ training.avgMark }}"></span>
+								<span
+										title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}"
+										data-toggle="tooltip"
+										style="font-size: 0.8rem;"
+								>
+									({{ training.totalMark }})
+								</span>
+							</div>
+
+							<button class="btn btn-link p-0 see-detail mr-2" data-id="{{ training.id }}" data-toggle="tooltip" title="{{ 'user_formation_details_tooltip'|trans }}">
+								<i class="fas fa-search text-primary"></i>
+							</button>
+							<button class="btn btn-link p-0 text-danger item rmv mr-2" data-toggle="tooltip" title="{{ 'user_formation_unlink_tooltip'|trans }}" data-name="{{ training.name }}" data-id="{{ training.id }}">
+								<i class="fas fa-unlink text-danger"></i>
+							</button>
+							<button class="btn btn-link p-0 text-success feedback" data-toggle="tooltip" title="{{ 'user_formation_feedback_tooltip'|trans }}" data-name="{{ training.name }}" data-id="{{ training.id }}" data-user-id="{{ user.id }}">
+								<i class="fas fa-plus text-primary"></i>
+							</button>
+						</div>
+					</li>
+				{% endfor %}
+            {% else %}
+			    <li class="no_training_result" style="{{ (user.trainings is defined and user.trainings|length > 0) ? 'display: none;' }}">{{ 'no_result_found'|trans }}</li>
+			{% endif %}
+		</ul>
+	</div>
+</fieldset>
+
+<input type="hidden" name="trainingsIsFollowed" id="trainingsIsFollowed" value="{{ trainingsIsFollowedInput|json_encode() }}" />
+<input type="hidden" name="trainingsIsInterestingForMe" id="trainingsIsInterestingForMe" value="{{ trainingsIsInterestingForMeInput|json_encode() }}" />
 
 <div class="form-group button-group text-right">
 	<button type="submit" class="btn btn-primary">{{ 'label.save'|trans }}</button>
