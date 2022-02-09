@@ -168,11 +168,29 @@ class HomeController extends AbstractController
 
         }
 
+        $trainingsIsFollowed = $user->getFollowedTrainings();
+        $trainingsIsInterestingForMe = $user->getInterestingForMeTrainings();
+        $trainingIsFollowedIds = [];
+        $trainingIsInterestingForMeIds = [];
+        
+        if ($trainingsIsFollowed && count($trainingsIsFollowed) > 0) {
+            foreach ($trainingsIsFollowed as $k => $training) {
+                array_push($trainingIsFollowedIds, $training->getTraining()->getId());
+            }
+        }
+        if ($trainingsIsInterestingForMe && count($trainingsIsInterestingForMe) > 0) {
+            foreach ($trainingsIsInterestingForMe as $k => $training) {
+                array_push($trainingIsInterestingForMeIds, $training->getTraining()->getId());
+            }
+        }
+
         $searches = ($user) ? $userSearchRepository->getLast($user) : null;
 
         return $this->render(
             'front/search/index.html.twig',
             [
+                'trainingIsFollowedIds' => $trainingIsFollowedIds,
+                'trainingIsInterestingForMeIds' => $trainingIsInterestingForMeIds,
                 'trainings' => $trainings,
                 'search' => $searchParams,
                 'searches' => $searches,

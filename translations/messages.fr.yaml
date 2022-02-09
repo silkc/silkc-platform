@@ -435,3 +435,7 @@ all_prices_training: Tous les prix
 address_suggestion: Suggestions
 you_can_save_any_professional_training_that_interests_you: Vous pouvez sauvegarder toute formation professionnelle qui vous intéresse
 list_of_professional_training_courses_that_interest_you: Liste des formations professionnelles qui vous intéresse
+i_am_interested_in_this_training: Cette formation m'interesse
+this_training_no_longer_interests_me: Cette formation ne m'intéresse plus
+can_you_confirm_that_you_are_interested_in_this_training: Pouvez-vous confirmer que vous êtes interessé cette formation ?
+can_you_confirm_that_you_are_not_interested_in_this_training: Pouvez-vous confirmer que vous n'êtes pas insteressé cette formation ?

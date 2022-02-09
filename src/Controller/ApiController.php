@@ -222,9 +222,6 @@ class ApiController extends AbstractController
             !array_key_exists('trainingsIsFollowed', $params) ||
             !array_key_exists('trainingsIsInterestingForMe', $params)
         )  return new JsonResponse(['message' => 'Missing parameter'], Response::HTTP_BAD_REQUEST);
-            
-        $trainingsIsFollowed_ids = $request->request->get('trainingsIsFollowed');
-        $trainingsIsInterestingForMe_ids = $request->request->get('trainingsIsInterestingForMe');
 
         $trainingsIsFollowed = new ArrayCollection();
         $trainingsIsInterestingForMe = new ArrayCollection();
@@ -307,12 +304,70 @@ class ApiController extends AbstractController
     /**
      * @Route("/done_training/{id}", name="done_training", methods={"POST"})
      */
-    public function done_training(Training $training)
+    public function done_training(Training $training, UserTrainingRepository $userTrainingRepository)
     {
         $user = $this->getUser();
-        $user->addTraining($training);
+        $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
 
+        if ($userTraining) {
+            $userTraining->setIsFollowed(true);
+        } else {
+            $userTraining = new UserTraining();
+            $userTraining->setUser($user);
+            $userTraining->setTraining($training);
+            $userTraining->setIsFollowed(true);
+            $user->addUserTraining($userTraining);
+        }
+        
         $em = $this->getDoctrine()->getManager();
+        $em->persist($userTraining);
+        $em->persist($user);
+        $em->flush();
+        
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/undone_training/{id}", name="undone_training", methods={"POST"})
+     */
+    public function undone_training(Training $training, UserTrainingRepository $userTrainingRepository)
+    {
+        $user = $this->getUser();
+        $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
+        $em = $this->getDoctrine()->getManager();
+        if ($userTraining->getIsInterestingForMe() == false) {
+            $user->removeUserTraining($userTraining);
+        } else {
+            $userTraining->setIsFollowed(false);
+            $em->persist($userTraining);
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+  
+    
+    /**
+     * @Route("/interested_training/{id}", name="interesting_training", methods={"POST"})
+     */
+    public function interested_training(Training $training, UserTrainingRepository $userTrainingRepository)
+    {
+        $user = $this->getUser();
+        $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
+        if ($userTraining) {
+            $userTraining->setIsInterestingForMe(true);
+        } else {
+            $userTraining = new UserTraining();
+            $userTraining->setUser($user);
+            $userTraining->setTraining($training);
+            $userTraining->setIsInterestingForMe(true);
+            $user->addUserTraining($userTraining);
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($userTraining);
         $em->persist($user);
         $em->flush();
 
@@ -320,14 +375,20 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/undone_training/{id}", name="undone_training", methods={"POST"})
+     * @Route("/notinterested_training/{id}", name="notinterested_training", methods={"POST"})
      */
-    public function undone_training(Training $training)
+    public function notinterested_training(Training $training, UserTrainingRepository $userTrainingRepository)
     {
         $user = $this->getUser();
-        $user->removeTraining($training);
-
+        $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
         $em = $this->getDoctrine()->getManager();
+        if ($userTraining && $userTraining->getIsFollowed() == false) {
+            $user->removeUserTraining($userTraining);
+        } else {
+            $userTraining->setIsInterestingForMe(false);
+            $em->persist($userTraining);
+        }
+
         $em->persist($user);
         $em->flush();
 

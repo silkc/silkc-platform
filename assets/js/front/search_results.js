@@ -180,7 +180,10 @@ class SearchResults {
                                             .removeClass("btn-success")
                                             .addClass("btn-warning");
                                         $(_this).html(
-                                            "I did not do this training"
+                                            translationsJS &&
+                                            translationsJS.user_had_not_done_this_training_btn
+                                                ? translationsJS.user_had_not_done_this_training_btn
+                                                : "I did not follow this training",
                                         );
                                     } else {
                                         bootbox.alert("An error occured");
@@ -242,7 +245,140 @@ class SearchResults {
                                             .removeClass("btn-warning")
                                             .addClass("btn-success");
                                         $(_this).html(
-                                            "I've done this training"
+                                            translationsJS &&
+                                            translationsJS.user_had_done_this_training_btn
+                                                ? translationsJS.user_had_done_this_training_btn
+                                                : "I've followed this training",
+                                        );
+                                    } else {
+                                        bootbox.alert("An error occured");
+                                    }
+                                },
+                                error: function (resultat, statut, erreur) {
+                                    bootbox.alert("An error occured");
+                                },
+                                complete: function () {
+                                    $(_this).attr("disabled", false);
+                                },
+                            });
+                        } else {
+                            $(_this).attr("disabled", false);
+                        }
+                    },
+                });
+            }
+        );
+
+        $("body").on(
+            "click",
+            "#search-results #accordion .btn-interested",
+            function () {
+                let _this = this;
+                $(_this).attr("disabled", true);
+
+                let token = $("body").attr("data-token");
+                let id = $(this).attr("data-id");
+                let url = "/api/interested_training/" + id;
+
+                bootbox.confirm({
+                    message:
+                        translationsJS &&
+                        translationsJS.can_you_confirm_that_you_are_interested_in_this_training
+                            ? translationsJS.can_you_confirm_that_you_are_interested_in_this_training
+                            : "Confirm",
+                    buttons: {
+                        cancel: { label: "Cancel" },
+                        confirm: { label: "Yes" },
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                url: url,
+                                type: "POST",
+                                dataType: "json",
+                                data: {},
+                                headers: { "X-auth-token": token },
+                                success: function (data, textStatus, jqXHR) {
+                                    if (
+                                        data.result != undefined &&
+                                        data.result == true
+                                    ) {
+                                        $(_this)
+                                            .removeClass("btn-interested")
+                                            .addClass("btn-notinterested");
+                                        $(_this)
+                                            .removeClass("btn-success")
+                                            .addClass("btn-warning");
+                                        $(_this).html(
+                                            translationsJS &&
+                                            translationsJS.this_training_no_longer_interests_me
+                                                ? translationsJS.this_training_no_longer_interests_me
+                                                : "This training no longer interests me",
+                                        );
+                                    } else {
+                                        bootbox.alert("An error occured");
+                                    }
+                                },
+                                error: function (resultat, statut, erreur) {
+                                    bootbox.alert("An error occured");
+                                },
+                                complete: function () {
+                                    $(_this).attr("disabled", false);
+                                },
+                            });
+                        } else {
+                            $(_this).attr("disabled", false);
+                        }
+                    },
+                });
+            }
+        );
+
+        $("body").on(
+            "click",
+            "#search-results #accordion .btn-notinterested",
+            function () {
+                let _this = this;
+                $(_this).attr("disabled", true);
+
+                let token = $("body").attr("data-token");
+                let id = $(this).attr("data-id");
+                let url = "/api/notinterested_training/" + id;
+
+                bootbox.confirm({
+                    message:
+                        translationsJS &&
+                        translationsJS.can_you_confirm_that_you_are_not_interested_in_this_training
+                            ? translationsJS.can_you_confirm_that_you_are_not_interested_in_this_training
+                            : "Confirm",
+                    buttons: {
+                        cancel: { label: "Cancel" },
+                        confirm: { label: "Yes" },
+                    },
+                    callback: function (result) {
+                        if (result == true) {
+                            $.ajax({
+                                url: url,
+                                type: "POST",
+                                dataType: "json",
+                                data: {},
+                                headers: { "X-auth-token": token },
+                                success: function (data, textStatus, jqXHR) {
+                                    if (
+                                        data.result != undefined &&
+                                        data.result == true
+                                    ) {
+                                        $(_this)
+                                            .removeClass("btn-notinterested")
+                                            .addClass("btn-interested");
+                                        $(_this)
+                                            .removeClass("btn-warning")
+                                            .addClass("btn-success");
+                                        $(_this).html(
+                                            translationsJS &&
+                                            translationsJS.i_am_interested_in_this_training
+                                                ? translationsJS.i_am_interested_in_this_training
+                                                : "I am interested in this training",
                                         );
                                     } else {
                                         bootbox.alert("An error occured");
