@@ -168,8 +168,8 @@ class HomeController extends AbstractController
 
         }
 
-        $trainingsIsFollowed = $user->getFollowedTrainings();
-        $trainingsIsInterestingForMe = $user->getInterestingForMeTrainings();
+        $trainingsIsFollowed = ($user) ? $user->getFollowedTrainings() : null;
+        $trainingsIsInterestingForMe = ($user) ? $user->getInterestingForMeTrainings() : null;
         $trainingIsFollowedIds = [];
         $trainingIsInterestingForMeIds = [];
         
