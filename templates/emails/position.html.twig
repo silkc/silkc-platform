@@ -108,10 +108,10 @@
                                                         <span>{{ 'label.salary'|trans }}</span> <span style="font-weight: bold;">{{ position.salary }}</span><span>{{ position.currency }}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.start_at'|trans }}</span> <span style="font-weight: bold;">{{ position.startAt is defined ? position.startAt : 'N/A'}}</span>
+                                                        <span>{{ 'label.start_at'|trans }}</span> <span style="font-weight: bold;">{{ position.startAt is defined ? position.startAt|date('d/m/Y H:i') : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.end_at'|trans }}</span> <span style="font-weight: bold;">{{ position.endAt is defined ? position.endAt : 'N/A'}}</span>
+                                                        <span>{{ 'label.end_at'|trans }}</span> <span style="font-weight: bold;">{{ position.endAt is defined ? position.endAt|date('d/m/Y H:i') : 'N/A'}}</span>
                                                     </p>
                                                 </div>
                                             </td>
