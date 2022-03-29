@@ -71,7 +71,7 @@ placeholder:
   up_to_distance: 200
   professional_experience: "Ex: 10 for years of experience in all occupations included"
 button:
-  see_related_trainings: See related trainings
+  see_related_trainings: Related training
   see_skills_to_be_learn: See skills to be learnt
   suspend: Suspend
   unsuspend: Restore
@@ -82,7 +82,7 @@ button:
   approve: Approve
   detail: Details
   reject: Reject
-  add_position: Add a position
+  add_position: Add a vacancy
 header:
   my_institution: My institution
   my_account: My account
@@ -96,7 +96,7 @@ nav:
   personal_informations: My profile
   institutional_informations: Institution information
   company_informations: Company information
-  work: Jobs
+  work: Vacancies
   training: Trainings
   change_password: Password
   skills: Skills
@@ -288,7 +288,7 @@ km_away: km away
 markdown_support_info: This field is markdown compliant
 effective_duration_tooltip: Effective duration of training
 training_rating_tooltip: Average training ranking for %voters% voters
-position: position
+position: Vacancies
 add_a_training: Add a training
 
 tooltip:
@@ -405,15 +405,15 @@ email_or_username_could_not_be_found: Email or username could not be found.
 suspended_account: Suspended account.
 invalid_password: Invalid password
 invalid_account: Invalid account
-number_total_of_affected_users: "Number total of affected users:"
-number_of_interested_users: "Number of interested users:"
-calculate_the_number_of_affected_users: Calculate the number of affected users
+number_total_of_affected_users: "Number of matching users:"
+number_of_interested_users: "Affected users opened to job offers:"
+calculate_the_number_of_affected_users: Calculate the number of matching users
 Results: Results
 number_total_of_affected_users_tuto: Number of users with the required skills listed above.
 number_of_interested_users_tuto: Number of users with the required skills listed above and who are job seekers.
 add_skill: Add skill
 no_item_selected: No item selected
-send_an_email_to_the_affected_users: Send an email to the affected users
+send_an_email_to_the_affected_users: Send an email to job seekers
 no_email_has_been_sent: No email has been sent
 an_email_was_sent_on: An email was sent on
 summary: Summary
@@ -428,7 +428,7 @@ training_rating_voters_tooltip_js: voters
 skills_acquired_occupation_info: These skills are suggested by the ESCO framework
 skills_acquired_info: Add skills that are not suggested by the ESCO framework on the above list.
 training_certified: Training certified
-jobs_and_skills_are_based_on_the_ESCO_framework: "Jobs and skills are based on the ESCO framework :"
+jobs_and_skills_are_based_on_the_ESCO_framework: "Occupations and skills are based on the ESCO framework :"
 occupation_related_to_the_training: Occupation related to the training
 required_skills_for_this_training: Required skills for this training
 skills_acquired_through_this_training: Skills acquired through this training
