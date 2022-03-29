@@ -303,18 +303,10 @@ class SearchResults {
                                         data.result != undefined &&
                                         data.result == true
                                     ) {
-                                        $(_this)
-                                            .removeClass("btn-interested")
-                                            .addClass("btn-notinterested");
-                                        $(_this)
-                                            .removeClass("btn-success")
-                                            .addClass("btn-warning");
-                                        $(_this).html(
-                                            translationsJS &&
-                                            translationsJS.this_training_no_longer_interests_me
-                                                ? translationsJS.this_training_no_longer_interests_me
-                                                : "This training no longer interests me",
-                                        );
+                                        $(_this).closest('tr')
+                                            .find("btn-uninterested")
+                                            .removeClass("active");
+                                        $(_this).addClass("active");
                                     } else {
                                         bootbox.alert("An error occured");
                                     }
@@ -336,14 +328,14 @@ class SearchResults {
 
         $("body").on(
             "click",
-            "#search-results #accordion .btn-notinterested",
+            "#search-results #accordion .btn-uninterested",
             function () {
                 let _this = this;
                 $(_this).attr("disabled", true);
 
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = "/api/notinterested_training/" + id;
+                let url = "/api/uninterested_training/" + id;
 
                 bootbox.confirm({
                     message:
@@ -368,18 +360,10 @@ class SearchResults {
                                         data.result != undefined &&
                                         data.result == true
                                     ) {
-                                        $(_this)
-                                            .removeClass("btn-notinterested")
-                                            .addClass("btn-interested");
-                                        $(_this)
-                                            .removeClass("btn-warning")
-                                            .addClass("btn-success");
-                                        $(_this).html(
-                                            translationsJS &&
-                                            translationsJS.i_am_interested_in_this_training
-                                                ? translationsJS.i_am_interested_in_this_training
-                                                : "I am interested in this training",
-                                        );
+                                        $(_this).closest('tr')
+                                            .find("btn-interested")
+                                            .removeClass("active");
+                                        $(_this).addClass("active");
                                     } else {
                                         bootbox.alert("An error occured");
                                     }
