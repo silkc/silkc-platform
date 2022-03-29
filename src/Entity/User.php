@@ -663,6 +663,17 @@ class User implements UserInterface
         return $this->userTrainings->matching($criteria);
     }
 
+    /**
+     * @return Collection|UserTraining[]
+     */
+    public function getUninterestingToMeTrainings(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isUninterestingToMe', 1));
+
+        return $this->userTrainings->matching($criteria);
+    }
+
     public function addUserTraining(UserTraining $userTraining): self
     {
         if (!$this->userTrainings->contains($userTraining)) {

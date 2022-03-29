@@ -39,6 +39,11 @@ class UserTraining
      */
     private $isInterestingForMe = 0;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     */
+    private $isUninterestingToMe = 0;
+
 
     public function getId(): ?int
     {
@@ -89,6 +94,18 @@ class UserTraining
     public function setIsInterestingForMe(bool $isInterestingForMe): self
     {
         $this->isInterestingForMe = $isInterestingForMe;
+
+        return $this;
+    }
+
+    public function getIsUninterestingToMe(): ?bool
+    {
+        return $this->isUninterestingToMe;
+    }
+
+    public function setIsUninterestingToMe(bool $isUninterestingToMe): self
+    {
+        $this->isUninterestingToMe = $isUninterestingToMe;
 
         return $this;
     }

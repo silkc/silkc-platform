@@ -291,6 +291,19 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         width: 0 !important;
         opacity: 0 !important;
     }
+
+    .btn-interested, .btn-uninterested,
+    .btn-interested:focus, .btn-uninterested:focus,
+    .btn-interested:active, .btn-uninterested:active,
+    .btn-interested:hover, .btn-uninterested:hover {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .btn-interested.active { color: $success; }
+    .btn-uninterested.active { color: $warning; }
 }
 
 #datatable-results_filter {

@@ -213,7 +213,7 @@
                                                         <span class="{{ classScore }} font-weight-normal">{{ score }}%
                                                             {{ 'match'|trans  }}</span>
                                                     </div>
-                                                    <div class="d-flex flex-row justify-content-start align-items-center mr-2">
+                                                    <div class="d-flex flex-row justify-content-start align-items-center mr-2" data-toggle="tooltip" title="{{ 'average_ranking'|trans }}">
                                                         <span class="rating" data-value="{{ training.avgMark }}"></span>
                                                         <span title="{{ 'training_rating_tooltip'|trans({'%voters%': training.totalMark}) }}" data-toggle="tooltip" style="font-size: 0.8rem;">
                                                             ({{ training.totalMark }})
@@ -247,7 +247,7 @@
                                                                 <div class="col-lg-4">
                                                                     <span class="title">{{ 'label.institution_name'|trans  }}</span>
                                                                 </div>
-                                                                <div class="col-lg-8">
+                                                                <div class="col-lg-8" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; ">
                                                                     <span>
                                                                         {% if training.user is defined and training.user.roles is defined and 'ROLE_INSTITUTION' in training.user.roles %}
                                                                             {{ training.user.username|capitalize }}
@@ -257,6 +257,16 @@
                                                                             {{ 'n_a'|trans }}
                                                                         {% endif %}
                                                                     </span>
+
+                                                                    <div>
+                                                                        <span>{{ 'like_this_suggestion'|trans }}</span>
+                                                                        <button type="button" class="btn btn-interested {{ (training.id in trainingIsInterestingForMeIds) ? 'active' }}" data-id="{{ training.id }}">
+                                                                            <i class="fas fa-thumbs-up"></i>
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-uninterested {{ (training.id in trainingIsUninterestingToMeIds) ? 'active' }}" data-id="{{ training.id }}">
+                                                                            <i class="fas fa-thumbs-down"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -423,12 +433,6 @@
                                                             <a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
                                                         {% endif %}
                                                         {% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
-                                                            {% if training.id in trainingIsInterestingForMeIds %}
-                                                                <button type="button" class="btn btn-warning btn-notinterested" data-id="{{ training.id }}">{{ 'this_training_no_longer_interests_me'|trans }}</button>
-                                                            {% else %}
-                                                                <button type="button" class="btn btn-success btn-interested" data-id="{{ training.id }}">{{ 'i_am_interested_in_this_training'|trans }}</button>
-                                                            {% endif %}
-
                                                             {% if training.id in trainingIsFollowedIds %}
                                                                 <button type="button" class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
                                                             {% else %}

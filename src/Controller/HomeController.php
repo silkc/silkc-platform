@@ -170,9 +170,11 @@ class HomeController extends AbstractController
 
         $trainingsIsFollowed = ($user) ? $user->getFollowedTrainings() : null;
         $trainingsIsInterestingForMe = ($user) ? $user->getInterestingForMeTrainings() : null;
+        $trainingsIsUninterestingToMe = ($user) ? $user->getUninterestingToMeTrainings() : null;
         $trainingIsFollowedIds = [];
         $trainingIsInterestingForMeIds = [];
-        
+        $trainingIsUninterestingToMeIds = [];
+
         if ($trainingsIsFollowed && count($trainingsIsFollowed) > 0) {
             foreach ($trainingsIsFollowed as $k => $training) {
                 array_push($trainingIsFollowedIds, $training->getTraining()->getId());
@@ -183,6 +185,11 @@ class HomeController extends AbstractController
                 array_push($trainingIsInterestingForMeIds, $training->getTraining()->getId());
             }
         }
+        if ($trainingsIsUninterestingToMe && count($trainingsIsUninterestingToMe) > 0) {
+            foreach ($trainingsIsUninterestingToMe as $k => $training) {
+                array_push($trainingIsUninterestingToMeIds, $training->getTraining()->getId());
+            }
+        }
 
         $searches = ($user) ? $userSearchRepository->getLast($user) : null;
 
@@ -191,6 +198,7 @@ class HomeController extends AbstractController
             [
                 'trainingIsFollowedIds' => $trainingIsFollowedIds,
                 'trainingIsInterestingForMeIds' => $trainingIsInterestingForMeIds,
+                'trainingIsUninterestingToMeIds' => $trainingIsUninterestingToMeIds,
                 'trainings' => $trainings,
                 'search' => $searchParams,
                 'searches' => $searches,

@@ -274,54 +274,38 @@ class SearchResults {
             "#search-results #accordion .btn-interested",
             function () {
                 let _this = this;
-                $(_this).attr("disabled", true);
-
+                let isActive = _this.classList.contains('active');
+                let $oppositeButton = $(_this).closest('div').find('.btn-uninterested');
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = "/api/interested_training/" + id;
+                let url = (isActive) ? "/api/interested_training/" + id : "/api/notinterested_training/" + id;
 
-                bootbox.confirm({
-                    message:
-                        translationsJS &&
-                        translationsJS.can_you_confirm_that_you_are_interested_in_this_training
-                            ? translationsJS.can_you_confirm_that_you_are_interested_in_this_training
-                            : "Confirm",
-                    buttons: {
-                        cancel: { label: "Cancel" },
-                        confirm: { label: "Yes" },
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                url: url,
-                                type: "POST",
-                                dataType: "json",
-                                data: {},
-                                headers: { "X-auth-token": token },
-                                success: function (data, textStatus, jqXHR) {
-                                    if (
-                                        data.result != undefined &&
-                                        data.result == true
-                                    ) {
-                                        $(_this).closest('tr')
-                                            .find("btn-uninterested")
-                                            .removeClass("active");
-                                        $(_this).addClass("active");
-                                    } else {
-                                        bootbox.alert("An error occured");
-                                    }
-                                },
-                                error: function (resultat, statut, erreur) {
-                                    bootbox.alert("An error occured");
-                                },
-                                complete: function () {
-                                    $(_this).attr("disabled", false);
-                                },
-                            });
-                        } else {
-                            $(_this).attr("disabled", false);
+                if (isActive)
+                    _this.classList.remove('active');
+                else {
+                    _this.classList.add('active');
+                    $oppositeButton.removeClass('active');
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: {},
+                    headers: { "X-auth-token": token },
+                    success: function (data, textStatus, jqXHR) {
+                        if (
+                            data.result != undefined &&
+                            data.result == true
+                        ) {}
+                        else {
+                            bootbox.alert("An error occured");
                         }
                     },
+                    error: function (resultat, statut, erreur) {
+                        bootbox.alert("An error occured");
+                    },
+                    complete: function () {},
                 });
             }
         );
@@ -331,54 +315,37 @@ class SearchResults {
             "#search-results #accordion .btn-uninterested",
             function () {
                 let _this = this;
-                $(_this).attr("disabled", true);
-
+                let $oppositeButton = $(_this).closest('div').find('.btn-interested');
+                let isActive = _this.classList.contains('active');
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = "/api/uninterested_training/" + id;
+                let url = (isActive) ? "/api/uninterested_training/" + id : "/api/notuninterested_training/" + id;
 
-                bootbox.confirm({
-                    message:
-                        translationsJS &&
-                        translationsJS.can_you_confirm_that_you_are_not_interested_in_this_training
-                            ? translationsJS.can_you_confirm_that_you_are_not_interested_in_this_training
-                            : "Confirm",
-                    buttons: {
-                        cancel: { label: "Cancel" },
-                        confirm: { label: "Yes" },
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                url: url,
-                                type: "POST",
-                                dataType: "json",
-                                data: {},
-                                headers: { "X-auth-token": token },
-                                success: function (data, textStatus, jqXHR) {
-                                    if (
-                                        data.result != undefined &&
-                                        data.result == true
-                                    ) {
-                                        $(_this).closest('tr')
-                                            .find("btn-interested")
-                                            .removeClass("active");
-                                        $(_this).addClass("active");
-                                    } else {
-                                        bootbox.alert("An error occured");
-                                    }
-                                },
-                                error: function (resultat, statut, erreur) {
-                                    bootbox.alert("An error occured");
-                                },
-                                complete: function () {
-                                    $(_this).attr("disabled", false);
-                                },
-                            });
-                        } else {
-                            $(_this).attr("disabled", false);
+                if (isActive)
+                    _this.classList.remove('active');
+                else {
+                    _this.classList.add('active');
+                    $oppositeButton.removeClass('active');
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: {},
+                    headers: { "X-auth-token": token },
+                    success: function (data, textStatus, jqXHR) {
+                        if (
+                            data.result != undefined &&
+                            data.result == true
+                        ) {} else {
+                            bootbox.alert("An error occured");
                         }
                     },
+                    error: function (resultat, statut, erreur) {
+                        bootbox.alert("An error occured");
+                    },
+                    complete: function () {},
                 });
             }
         );
