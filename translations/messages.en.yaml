@@ -46,7 +46,7 @@ label:
   exclude_training_without_a_completed_description: Exclude training without a complete description
   without_specified_duration: Exclude training without specified duration
   currency: Currency
-  clear: Clear
+  clear: Reset
   hours: Hours
   hours_filter: hours
   days: Days
