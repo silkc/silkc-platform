@@ -441,3 +441,5 @@ can_you_confirm_that_you_are_interested_in_this_training: Pouvez-vous confirmer 
 can_you_confirm_that_you_are_not_interested_in_this_training: Pouvez-vous confirmer que vous n'êtes pas insteressé cette formation ?
 average_ranking: Classement moyen
 position_fulfilled: Poste occupé
+view_email_template: Voir le modèle de l'e-mail
+tpl_email: Email template

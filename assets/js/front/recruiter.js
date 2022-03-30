@@ -617,7 +617,6 @@ class Recruiter {
             let data = {skills: skillsList};
             let url = '/api/send_position_to_affected_users/' + positionId;
 
-
             $.ajax({
                 type: "GET",
                 dataType: 'json',
@@ -655,9 +654,10 @@ class Recruiter {
                 },
                 error : function(jqXHR, textStatus, errorThrown){
                     bootbox.alert('An error occured');
-                    $button.find('span.loader').remove();
                 },
-                complete : function(jqXHR, textStatus ){}
+                complete : function(jqXHR, textStatus ){
+                    $button.attr('disabled', 'disabled').find('span.loader').remove();
+                }
             });
         });
     }
@@ -671,6 +671,58 @@ class Recruiter {
         }
     }
 
+    viewEmailTemplate = () => {
+
+        let _this = this;
+        
+        $('body').on('click', '#view-email-template', function() {
+            
+            const $inputSkillsList = $('input#hidden_positionSkills');
+
+            let $button = $(this);
+    
+            $button.attr('disabled', 'disabled').find('span.loader').remove();
+            $button.append('<span class="loader">&nbsp;<i class="fas fa-spinner fa-spin"></i></span>');
+
+            let token = $('body').attr('data-token');
+            let skillsList = JSON.parse($inputSkillsList.val()) || {};
+            let positionId = $('#position_id').val().length > 0 ? $('#position_id').val() : ''
+            if (!positionId) return false;
+            let data = {skills: skillsList};
+            let url = '/api/template_send_position_to_affected_users/' + positionId;
+
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                data: data,
+                headers: {"X-auth-token": token},
+                url: url,
+                success: function (data, textStatus, jqXHR) {
+                    $button.find('span.loader').remove();
+
+                    if (data && data.result) {
+                        let $modal = $('#common-modal');
+
+                        if ($modal) {
+                            $modal.find('.modal-title').html(translationsJS && translationsJS.tpl_email ? translationsJS.tpl_email : 'Email template');
+                            $modal.find('.modal-dialog').addClass('modal-lg');
+                            let contentHTML = data.html;
+                            $(contentHTML).appendTo($modal.find('.modal-body'));
+                            $('#common-modal').modal('show');
+                        }
+                    }
+
+                },
+                error : function(jqXHR, textStatus, errorThrown){
+                    bootbox.alert('An error occured');
+                },
+                complete : function(jqXHR, textStatus ){
+                    $button.attr('disabled', 'disabled').find('span.loader').remove();
+                }
+            });
+        });
+    }
+
     init = function() {
         this.runAutocompletion();
         this.duplicatePosition();
@@ -681,6 +733,7 @@ class Recruiter {
         this.displayMessage();
         this.runCalculateAffectedUsers();
         this.sendEmailPosition();
+        this.viewEmailTemplate();
 
         $('#common-modal').on('hidden.bs.modal', function (e) {
             $(this).find('.modal-title').children().remove();

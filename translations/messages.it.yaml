@@ -440,3 +440,5 @@ can_you_confirm_that_you_are_interested_in_this_training: Puoi confermare di ess
 can_you_confirm_that_you_are_not_interested_in_this_training: Puoi confermare che non sei interessato a questa formazione?
 average_ranking: Classifica media
 position_fulfilled: Posizione soddisfatta
+view_email_template: Visualizza modello e-mail
+tpl_email: Modello e-mail

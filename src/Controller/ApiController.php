@@ -651,6 +651,36 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Route("/template_send_position_to_affected_users/{position_id}", name="template_send_position_to_affected_users", methods={"GET"})
+     */
+    public function template_send_position_to_affected_users($position_id, Request $request, UserRepository $userRepository, PositionRepository $positionRepository, TranslatorInterface $translator, MailerInterface $mailer)
+    {
+        $position = $positionRepository->find($position_id);
+        if (!$position)
+            return new JsonResponse(['message' => $translator->trans('no_position_found')], Response::HTTP_BAD_REQUEST);
+
+
+        $address = $position->getLocation();
+        if ($position->getLocation() && json_decode($position->getLocation())) {
+            $address = json_decode($position->getLocation());
+            if ($address && property_exists($address, 'title')) {
+                $address = $address->title;
+            }
+        }
+
+        $position->address = $address;
+
+        $html = $this->render(
+            'emails/position.html.twig',
+            [
+                'position' => $position,
+            ])->getContent();
+
+
+        return $this->json(['result' => true, 'html' => $html], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
      * @Route("/cron/fetch_lat_and_long", name="fetch_lat_and_long", methods={"GET"})
      */
     public function fetch_lat_and_long(HttpClientInterface $client, TrainingRepository $trainingRepository, UserRepository $userRepository)

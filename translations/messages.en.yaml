@@ -453,3 +453,5 @@ can_you_confirm_that_you_are_interested_in_this_training: Can you confirm that y
 can_you_confirm_that_you_are_not_interested_in_this_training: Can you confirm that you are not interested in this training?
 average_ranking: Average ranking
 position_fulfilled: Position fulfilled
+view_email_template: View email template
+tpl_email: Email template

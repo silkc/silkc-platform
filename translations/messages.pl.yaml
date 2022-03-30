@@ -445,3 +445,5 @@ can_you_confirm_that_you_are_interested_in_this_training: Czy możesz potwierdzi
 can_you_confirm_that_you_are_not_interested_in_this_training: Czy możesz potwierdzić, że nie jesteś zainteresowany tym szkoleniem?
 average_ranking: Średnia pozycja
 position_fulfilled: Stanowisko spełnione
+view_email_template: Wyświetl szablon wiadomości e-mail
+tpl_email: Szablon e-maila
