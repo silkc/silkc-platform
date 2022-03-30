@@ -551,6 +551,81 @@ class Recruiter {
         const $button = $('button#display-affected-users');
         const $resultContainer = $('p#affected-users');
 
+        $('body').on('click', '#show-sent-history', function(e) {
+
+            let skillsList = JSON.parse($inputSkillsList.val()) || {};
+            let positionId = $('#position_id').val().length > 0 ? $('#position_id').val() : ''
+            if (!positionId) return false;
+            let data = {skills: skillsList};
+            let url = '/api/send_position_to_affected_users/' + positionId;
+            let token = $('body').attr('data-token');
+
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                data: data,
+                headers: {"X-auth-token": token},
+                url: url,
+                success: function (data, textStatus, jqXHR) {
+                    if (data && data.result) {
+                        let $modal = $('#common-modal');
+
+                        if ($modal) {
+                            $modal.find('.modal-dialog').addClass('modal-lg');
+                            $modal.find('.modal-title').html(translationsJS && translationsJS.user_details ? translationsJS.user_details : 'User details');
+                            let contentHTML = '';
+                            if (data.affected_users && data.affected_users.length > 0) {
+                                contentHTML += '<table id="status-details-email" class="display" style="width:100%"><thead><tr>'
+                                contentHTML += '<th>ID</th>'
+                                contentHTML += '<th>' + translationsJS.firstname + '</th>'
+                                contentHTML += '<th>' + translationsJS.lastname + '</th>'
+                                contentHTML += '<th>' + translationsJS.e_mail + '</th>'
+                                contentHTML += '<th>' + translationsJS.error + '</th>'
+                                contentHTML += '</tr></thead>'
+                                contentHTML += '<tbody>'
+                                for(let i = 0; i < data.affected_users.length; i++) {
+                                    contentHTML += '<tr>'
+                                    contentHTML += '<td>' + data.affected_users[i].id + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].firstname + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].lastname + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].email + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].error + '</td>'
+                                    contentHTML += '</tr>'
+                                }
+                                contentHTML += '</tbody></table>'
+                            } else {
+                                contentHTML += '<p>' + translationsJS.not_user + '</p>';
+                            }
+                            
+                            $(contentHTML).appendTo($modal.find('.modal-body'));
+
+                            $('#status-details-email').DataTable({
+                                searching: false, 
+                                info: false,
+                                lengthChange: false,
+                                order: [[ 1, 'asc' ]],
+                                language: {
+                                    search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                                    paginate: {
+                                        first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                                        previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                                        next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                                        last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                                    }
+                                }
+                            });
+
+                            $('#common-modal').modal('show');
+                        }
+                    }
+                },
+                error : function(jqXHR, textStatus, errorThrown){
+                    $resultContainer.addClass('hidden');
+                    bootbox.alert('An error occured');
+                },
+                complete : function(jqXHR, textStatus ){}
+            });
+        });
         $('body').on('click', '#view-list-user', function(e) {
             let token = $('body').attr('data-token');
             let skillsList = JSON.parse($inputSkillsList.val()) || {};
