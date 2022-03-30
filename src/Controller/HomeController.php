@@ -133,6 +133,17 @@ class HomeController extends AbstractController
                             $trainings = $trainingRepository->searchTrainingByOccupation($user, $occupation, $advanceSearchParams);
                             $search->setOccupation($occupation);
                             $search->setCountResults(count($trainings));
+
+                            foreach ($trainings as $training) {
+                                $address = $training->getLocation();
+                                if ($training->getLocation() && json_decode($training->getLocation())) {
+                                    $address = json_decode($training->getLocation());
+                                    if ($address && property_exists($address, 'title')) {
+                                        $address = $address->title;
+                                    }
+                                }
+                                $training->address = $address;
+                            }
                         }
                     break;
                 case 'skill':
@@ -153,6 +164,17 @@ class HomeController extends AbstractController
                             $trainings = $trainingRepository->searchTrainingBySkill($skill, $advanceSearchParams);
                             $search->setSkill($skill);
                             $search->setCountResults(count($trainings));
+                            
+                            foreach ($trainings as $training) {
+                                $address = $training->getLocation();
+                                if ($training->getLocation() && json_decode($training->getLocation())) {
+                                    $address = json_decode($training->getLocation());
+                                    if ($address && property_exists($address, 'title')) {
+                                        $address = $address->title;
+                                    }
+                                }
+                                $training->address = $address;
+                            }
                         }
                     break;
                 default:
@@ -503,6 +525,7 @@ class HomeController extends AbstractController
         $tab = 'personal_informations',
         Request $request,
         PositionRepository $positionRepository,
+        UserRepository $userRepository,
         ValidatorInterface $validator,
         TranslatorInterface $translator,
         UserPasswordEncoderInterface $passwordEncoder
@@ -554,6 +577,27 @@ class HomeController extends AbstractController
         setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
         $positions = $positionRepository->findBy(['user' => $user]);
+
+        // Calcul du nombre d'utilisateurs concernés
+        $skills = [];
+        $defaultData = ['count_all' => 0, 'count_listening' => 0];
+        foreach ($positions as $position) {
+            foreach ($position->getSkills() as $skill) {
+                array_push($skills, $skill->getId());
+            }
+            if ($skills && is_array($skills) && count($skills) > 0)
+                $result = $userRepository->searchAffectedUsers($skills);
+
+            $position->affectedUsers = (
+                isset($result) &&
+                is_array($result) &&
+                array_key_exists('count_all', $result) &&
+                array_key_exists('count_listening', $result)
+            ) ?
+                $result :
+                $defaultData;
+        }
+
         return $this->render(
             'front/recruiter/index.html.twig',
             [

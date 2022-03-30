@@ -185,6 +185,11 @@ class Position
      */
     private $sentToAffectedUsersAt;
 
+    /**
+     * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
+     */
+    private $isFulfilled = 0;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
@@ -539,7 +544,7 @@ class Position
 
         return $this;
     }
-
+    
     public function getRejectedAt(): ?\DateTimeInterface
     {
         return $this->rejectedAt;
@@ -548,7 +553,7 @@ class Position
     public function setRejectedAt(?\DateTimeInterface $rejectedAt): self
     {
         $this->rejectedAt = $rejectedAt;
-
+        
         return $this;
     }
 
@@ -556,22 +561,34 @@ class Position
     {
         return $this->isSentToAffectedUsers;
     }
-
+    
     public function setIsSentToAffectedUsers(bool $isSentToAffectedUsers): self
     {
         $this->isSentToAffectedUsers = $isSentToAffectedUsers;
-
+        
         return $this;
     }
-
+    
     public function getSentToAffectedUsersAt(): ?\DateTimeInterface
     {
         return $this->sentToAffectedUsersAt;
     }
-
+    
     public function setSentToAffectedUsersAt(\DateTimeInterface $sentToAffectedUsersAt): self
     {
         $this->sentToAffectedUsersAt = $sentToAffectedUsersAt;
+        
+        return $this;
+    }
+
+    public function getIsFulfilled(): ?bool
+    {
+        return $this->isFulfilled;
+    }
+
+    public function setIsFulfilled(bool $isFulfilled): self
+    {
+        $this->isFulfilled = $isFulfilled;
 
         return $this;
     }

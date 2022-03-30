@@ -28,12 +28,14 @@ class SkillRepository extends ServiceEntityRepository
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult( 'id', 'id');
         $rsm->addScalarResult( 'preferred_label', 'preferredLabel');
+        $rsm->addScalarResult( 'alt_labels', 'altLabels');
 
         $query = $this->getEntityManager()
             ->createNativeQuery('
                 SELECT 
                     s.id,
-                    st.preferred_label 
+                    st.preferred_label,
+                    st.alt_labels 
                 FROM 
                      skill AS s
                 INNER JOIN skill_translation AS st ON st.skill_id = s.id AND locale = :locale

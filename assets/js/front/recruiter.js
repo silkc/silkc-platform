@@ -36,11 +36,12 @@ class Recruiter {
                 if (lang == sk.locale) skill = sk;
             });
         }
-
+        
         return `<li class="list-group-item ${!associated ? 'no-linked' : ''}">
             <div class="d-flex flex-nowrap justify-content-between">
                 <div>
                     <span>${skill.preferredLabel}</span>
+                    <span class="badge" data-toggle="tooltip" title="" data-original-title="${skill.description}"><i class="fas fa-info-circle"></i></span>
                 </div>
                 <div>
                     <div class="custom-control custom-switch">
@@ -283,6 +284,8 @@ class Recruiter {
                             }
                         }
                     });
+
+                    $('[data-toggle="tooltip"]').tooltip();
                 },
                 error : function(jqXHR, textStatus, errorThrown){},
                 complete : function(jqXHR, textStatus ){}
@@ -417,7 +420,13 @@ class Recruiter {
                 },
                 fetch: function(text, callback) {
                     text = text.toLowerCase();
-                    let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().includes(text) : (n.name != undefined) ? n.name.toLowerCase().includes(text) : '' );
+                    let suggestions = data.filter((n) =>
+                        n.preferredLabel != undefined
+                            ? n.preferredLabel.toLowerCase().includes(text) || n.altLabels.toLowerCase().includes(text)
+                            : n.name != undefined
+                            ? n.name.toLowerCase().includes(text)
+                            : ""
+                    );
                     callback(suggestions);
                 },
                 onSelect: function(item) {

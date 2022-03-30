@@ -46,9 +46,9 @@ class Main {
                 minLength: minLength,
                 emptyMsg: "No elements found",
                 render: function (item, currentValue) {
-                    /*if (item.translations) {
-                        item = item.translations[Object.keys(item.translations)[0]]
-                    }*/
+
+                    let altLabels = item.altLabels ? item.altLabels : false;
+
                     let div = document.createElement("div");
                     div.dataset.id = item.id;
                     div.textContent =
@@ -63,7 +63,7 @@ class Main {
                     text = text.toLowerCase();
                     let suggestions = data.filter((n) =>
                         n.preferredLabel != undefined
-                            ? n.preferredLabel.toLowerCase().includes(text)
+                            ? n.preferredLabel.toLowerCase().includes(text) || n.altLabels.toLowerCase().includes(text)
                             : n.name != undefined
                             ? n.name.toLowerCase().includes(text)
                             : ""

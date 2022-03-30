@@ -122,6 +122,33 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     .results {
+        .address-title {
+            font-weight: 300;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .date-title {
+            font-weight: 300;
+            font-size: 14px;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            
+            span {
+                flex: none !important;
+
+                &:first-child {
+                    margin-right: 5px;
+                }
+            }
+
+            &.date-title-start {
+                margin-top: 15px;
+            }
+        }
+
         h4 {
             margin: 0;
             font-size: 1.1rem;
@@ -292,18 +319,26 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
         opacity: 0 !important;
     }
 
-    .btn-interested, .btn-uninterested,
-    .btn-interested:focus, .btn-uninterested:focus,
-    .btn-interested:active, .btn-uninterested:active,
-    .btn-interested:hover, .btn-uninterested:hover {
+    .btn-interested,
+    .btn-uninterested,
+    .btn-interested:focus,
+    .btn-uninterested:focus,
+    .btn-interested:active,
+    .btn-uninterested:active,
+    .btn-interested:hover,
+    .btn-uninterested:hover {
         padding-left: 5px !important;
         padding-right: 5px !important;
         outline: none !important;
         border: none !important;
         box-shadow: none !important;
     }
-    .btn-interested.active { color: $success; }
-    .btn-uninterested.active { color: $warning; }
+    .btn-interested.active {
+        color: $success;
+    }
+    .btn-uninterested.active {
+        color: $warning;
+    }
 }
 
 #datatable-results_filter {

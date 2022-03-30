@@ -87,6 +87,10 @@ class PositionType extends AbstractType
                 'label'    => 'published_for_job_seekers',
                 'required' => false,
             ])
+            ->add('isFulfilled', CheckboxType::class, [
+                'label'    => 'position_fulfilled',
+                'required' => false,
+            ])
             ->add('startAt', DateTimeType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.start_at',

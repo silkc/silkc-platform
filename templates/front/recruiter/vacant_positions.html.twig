@@ -28,6 +28,7 @@
 								</div>
 								<div class="d-inline-flex align-items-center justify-content-end">
 									<div class="block-clone">
+                                        <span class="badge" data-toggle="tooltip" title="" data-html="true" data-original-title="{{ 'number_of_interested_users'|trans ~ ' <strong>' ~  position.affectedUsers.count_listening ~ '</strong>' }}" style="font-size: 14px;"><i class="fas fa-info-circle"></i></span>
 										<span class="spinner-border spinner-border-sm loader" role="status" aria-hidden="true"></span>
 										<a href="{{ path('app_position_edit', {id: position.id}) }}" data-toggle="tooltip" title="Edit this position">
 											<i class="far fa-edit text-primary"></i>

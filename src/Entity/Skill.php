@@ -95,6 +95,7 @@ class Skill
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"occupation:read", "skill:read", "skill:read:main", "occupationSkill:read", "trainingSkill:read", "training:read"})
      */
     private $altLabels;
 
@@ -225,8 +226,23 @@ class Skill
         return $this;
     }
 
-    public function getAltLabels(): ?string
+    public function getAltLabels(string $locale = null): ?string
     {
+        $locale = Locale::getDefaultFallback();
+        if(isset($GLOBALS['request']) && $GLOBALS['request']) {
+            $locale = $GLOBALS['request']->getLocale();    
+        }
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('locale', $locale));
+
+        if (
+            $this->translations &&
+            $this->translations instanceof Collection &&
+            $this->translations->count() > 0 &&
+            $this->translations->matching($criteria)->count() > 0
+        )
+            return $this->translations->matching($criteria)->first()->getAltLabels();
+
         return $this->altLabels;
     }
 

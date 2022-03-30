@@ -32,13 +32,15 @@ class OccupationRepository extends ServiceEntityRepository
         $rsm->addScalarResult( 'id', 'id');
         $rsm->addScalarResult( 'preferred_label', 'preferredLabel');
         $rsm->addScalarResult( 'description', 'description');
+        $rsm->addScalarResult( 'alt_labels', 'altLabels');
 
         $query = $this->getEntityManager()
             ->createNativeQuery('
                 SELECT 
                     o.id,
                     ot.preferred_label,
-                    ot.description 
+                    ot.description,
+                    ot.alt_labels
                 FROM 
                      occupation AS o
                 INNER JOIN occupation_translation AS ot ON ot.occupation_id = o.id AND locale = :locale
@@ -61,7 +63,8 @@ class OccupationRepository extends ServiceEntityRepository
                 SELECT
                     o.id,
                     ot.preferred_label,
-                    ot.description
+                    ot.description,
+                    ot.alt_labels
                 FROM occupation AS o
                 LEFT JOIN occupation_translation AS ot 
                 ON ot.occupation_id = o.id AND ot.locale = :locale

@@ -40,6 +40,7 @@ class OccupationTranslation
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"occupation:read", "occupation:write", "occupationSkill:read"})
      */
     private $altLabels;
 

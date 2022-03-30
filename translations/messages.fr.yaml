@@ -367,8 +367,8 @@ top: Top
 disclaimer: "CLAUSE DE NON-RESPONSABILITÉ : Ce projet a été financé avec le soutien de la Commission européenne.<br>
               Cette publication [communication] reflète uniquement les vues de l'auteur, et la Commission
               ne peut être tenu responsable de l'usage qui pourrait être fait des informations qu'il contient."
-hide_info: Voir
-show_info: Masquer
+hide_info: Masquer
+show_info: Voir
 language_fr: Français
 language_en: Anglais
 language_it: Italien
@@ -439,3 +439,5 @@ i_am_interested_in_this_training: Cette formation m'interesse
 this_training_no_longer_interests_me: Cette formation ne m'intéresse plus
 can_you_confirm_that_you_are_interested_in_this_training: Pouvez-vous confirmer que vous êtes interessé cette formation ?
 can_you_confirm_that_you_are_not_interested_in_this_training: Pouvez-vous confirmer que vous n'êtes pas insteressé cette formation ?
+average_ranking: Classement moyen
+position_fulfilled: Poste occupé

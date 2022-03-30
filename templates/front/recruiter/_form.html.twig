@@ -36,6 +36,10 @@
 		{{ form_row(form.startAt) }}
 		{{ form_row(form.endAt) }}
 		{{ form_row(form.isVisible) }}
+
+        <div {% if edit is not defined %}class="d-none"{% endif %}>
+            {{ form_widget(form.isFulfilled) }}
+        </div>
 	</div>
 
 	<div class="col-6">
