@@ -457,3 +457,9 @@ average_ranking: Average ranking
 position_fulfilled: Position fulfilled
 view_email_template: View email template
 tpl_email: Email template
+user_details: User details
+not_user: No affected users
+firstname: Prénom
+lastname: Nom de famille
+username: Nom d'utilisateur
+e_mail: Email

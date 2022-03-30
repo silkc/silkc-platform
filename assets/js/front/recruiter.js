@@ -9,6 +9,11 @@ import '../../scss/elements/header.scss';
 import '../../scss/recruiter.scss';
 
 
+import 'datatables.net';
+import 'datatables.net-select-dt';
+import 'datatables.net-dt/css/jquery.dataTables.min.css';
+import 'datatables.net-select-dt/css/select.dataTables.min.css';
+
 const bootstrap = require('bootstrap');
 //require('popper');
 var moment = require('moment');
@@ -546,6 +551,77 @@ class Recruiter {
         const $button = $('button#display-affected-users');
         const $resultContainer = $('p#affected-users');
 
+        $('body').on('click', '#view-list-user', function(e) {
+            let token = $('body').attr('data-token');
+            let skillsList = JSON.parse($inputSkillsList.val()) || {};
+            let url = '/api/search_affected_users';
+            let data = {skills: skillsList};
+
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                data: data,
+                headers: {"X-auth-token": token},
+                url: '/api/search_affected_users',
+                success: function (data, textStatus, jqXHR) {
+                    if (data && data.result) {
+                        let $modal = $('#common-modal');
+
+                        if ($modal) {
+                            $modal.find('.modal-dialog').addClass('modal-lg');
+                            $modal.find('.modal-title').html(translationsJS && translationsJS.user_details ? translationsJS.user_details : 'User details');
+                            let contentHTML = '';
+                            if (data.affected_users && data.affected_users.length > 0) {
+                                contentHTML += '<table id="user-details-email" class="display" style="width:100%"><thead><tr>'
+                                contentHTML += '<th>' + translationsJS.username + '</th>'
+                                contentHTML += '<th>' + translationsJS.firstname + '</th>'
+                                contentHTML += '<th>' + translationsJS.lastname + '</th>'
+                                contentHTML += '<th>' + translationsJS.e_mail + '</th>'
+                                contentHTML += '</tr></thead>'
+                                contentHTML += '<tbody>'
+                                for(let i = 0; i < data.affected_users.length; i++) {
+                                    contentHTML += '<tr>'
+                                    contentHTML += '<td>' + data.affected_users[i].username + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].firstname + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].lastname + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].email + '</td>'
+                                    contentHTML += '</tr>'
+                                }
+                                contentHTML += '</tbody></table>'
+                            } else {
+                                contentHTML += '<p>' + translationsJS.not_user + '</p>';
+                            }
+                            
+                            $(contentHTML).appendTo($modal.find('.modal-body'));
+
+                            $('#user-details-email').DataTable({
+                                searching: false, 
+                                info: false,
+                                lengthChange: false,
+                                order: [[ 1, 'asc' ]],
+                                language: {
+                                    search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
+                                    paginate: {
+                                        first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
+                                        previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
+                                        next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
+                                        last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
+                                    }
+                                }
+                            });
+
+                            $('#common-modal').modal('show');
+                        }
+                    }
+                },
+                error : function(jqXHR, textStatus, errorThrown){
+                    $resultContainer.addClass('hidden');
+                    bootbox.alert('An error occured');
+                },
+                complete : function(jqXHR, textStatus ){}
+            });
+        });
+
         $('body').on('click', 'button#display-affected-users', function(e) {
             e.preventDefault();
 
@@ -577,6 +653,10 @@ class Recruiter {
                             <span data-toggle="tooltip" title="${translationsJS.number_of_interested_users_tuto}" style="cursor: help;">
                                 <i class="fas fa-info-circle"></i>
                             </span>
+                            ${data.data.count_listening > 0 ? 
+                                `<span data-toggle="tooltip" title="${translationsJS.user_details}" style="cursor: help;" id="view-list-user">
+                                <i class="fas fa-eye"></i>
+                            </span>` : ''}
                         `);
 
                     $resultContainer.find('[data-toggle="tooltip"]').tooltip();

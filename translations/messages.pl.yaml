@@ -450,3 +450,9 @@ average_ranking: Średnia pozycja
 position_fulfilled: Stanowisko spełnione
 view_email_template: Wyświetl szablon wiadomości e-mail
 tpl_email: Szablon e-maila
+user_details: Dane użytkownika
+not_user: Brak dotkniętych użytkowników
+firstname: Imię
+lastname: Nazwisko
+username: Nazwa Użytkownika
+e_mail: E-mail

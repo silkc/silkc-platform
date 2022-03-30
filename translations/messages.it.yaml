@@ -445,3 +445,9 @@ average_ranking: Classifica media
 position_fulfilled: Posizione soddisfatta
 view_email_template: Visualizza modello e-mail
 tpl_email: Modello e-mail
+user_details: dettagli dell'utente
+not_user: Nessun utente interessato
+firstname: Nome
+lastname: Cognome
+username: nome utente
+e_mail: E-mail

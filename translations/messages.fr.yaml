@@ -446,3 +446,10 @@ average_ranking: Classement moyen
 position_fulfilled: Poste occupé
 view_email_template: Voir le modèle de l'e-mail
 tpl_email: Email template
+user_details: Détails utilisateurs
+not_user: Pas d'utilisateurs concernés
+firstname: Prénom
+lastname: Nom de famille
+username: Nom d'utilisateur
+e_mail: Email
+
