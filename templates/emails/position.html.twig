@@ -95,10 +95,12 @@
                                             <td style="width: 580px;" width="580" align="left">
                                                 <div align="left" class="article-content">
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.name'|trans }}</span> <span style="font-weight: bold;">{{ position.name is defined ? position.name : 'N/A'}}</span>
+                                                        <span>{{ 'label.name'|trans }}</span>: <span style="font-weight: bold;">{{ position.name is defined ? position.name : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.location'|trans }}</span> <br>
+                                                        <span>{{ 'label.location'|trans }}</span>:
+                                                        {% if position.location_title is defined and position.location_title is not empty %}
+                                                        <br>
                                                         <ul>
                                                             <li>
                                                                 <span>{{ 'label.title'|trans }}</span> : <span style="font-weight: bold;">{{ position.location_title is defined ? position.location_title : 'N/A'}}</span>
@@ -110,19 +112,22 @@
                                                                 <span>{{ 'label.longitude'|trans }}</span> : <span style="font-weight: bold;">{{ position.location_longitude is defined ? position.location_longitude : 'N/A'}}</span>
                                                             </li>
                                                         </ul>
+                                                        {% else %}
+                                                            <span style="font-weight: bold;">{{ position.location is defined ? position.location : 'N/A'}}</span>
+                                                        {% endif %}
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.description'|trans }}</span><br />
+                                                        <span>{{ 'label.description'|trans }}</span>:<br />
                                                         <span style="font-weight: bold;">{{ position.description is defined ? position.description : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.salary'|trans }}</span> <span style="font-weight: bold;">{{ position.salary }}</span><span>{{ position.currency }}</span>
+                                                        <span>{{ 'label.salary'|trans }}</span>: <span style="font-weight: bold;">{{ position.salary }}</span> <span>{{ position.currency }}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.start_at'|trans }}</span> <span style="font-weight: bold;">{{ position.startAt is defined ? position.startAt|date('d/m/Y H:i') : 'N/A'}}</span>
+                                                        <span>{{ 'label.start_at'|trans }}</span>: <span style="font-weight: bold;">{{ position.startAt is defined ? position.startAt|date('d/m/Y H:i') : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.end_at'|trans }}</span> <span style="font-weight: bold;">{{ position.endAt is defined ? position.endAt|date('d/m/Y H:i') : 'N/A'}}</span>
+                                                        <span>{{ 'label.end_at'|trans }}</span>: <span style="font-weight: bold;">{{ position.endAt is defined ? position.endAt|date('d/m/Y H:i') : 'N/A'}}</span>
                                                     </p>
                                                 </div>
                                             </td>

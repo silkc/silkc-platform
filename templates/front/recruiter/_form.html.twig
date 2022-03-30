@@ -119,14 +119,17 @@
             {% if edit is defined %}
                 <input type="hidden" value="{{ position.id }}" id="position_id">
 
-                <button type="button" class="btn-primary btn" id="send-email-position">{{ 'send_an_email_to_the_affected_users'|trans }}</button>
-                {% if position is defined and attribute(position, 'sentToAffectedUsersAt') is defined and position.sentToAffectedUsersAt is not empty %}
+                <button type="button" class="btn-primary btn mb-2" id="send-email-position">{{ 'send_an_email_to_the_affected_users'|trans }}</button>
+
+				<button type="button" class="btn-primary btn mb-2" id="view-email-template">
+					<i class="fas fa-search-plus"></i> {{ 'view_email_template'|trans }}
+				</button>
+
+				{% if position is defined and attribute(position, 'sentToAffectedUsersAt') is defined and position.sentToAffectedUsersAt is not empty %}
                     <p id="send-email-position-info">{{ 'an_email_was_sent_on'|trans }} <span>{{ position.sentToAffectedUsersAt|date('Y/m/d') }}</span></p>
                 {% else %}
                     <p id="no-send-email-position-info">{{ 'no_email_has_been_sent'|trans }}</p>
                 {% endif %}
-
-                <button type="button" class="btn-primary btn" id="view-email-template">{{ 'view_email_template'|trans }}</button>
             {% endif %}
 		</div>
 	</div>

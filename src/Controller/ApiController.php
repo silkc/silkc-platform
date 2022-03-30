@@ -589,7 +589,9 @@ class ApiController extends AbstractController
             $result :
             $defaultData;
 
-        return $this->json(['result' => true, 'data' => $data], 200, ['Access-Control-Allow-Origin' => '*']);
+        $affectedUsers = $userRepository->fetchAffectedUsers($skills);
+
+        return $this->json(['result' => true, 'data' => $data, 'affected_users' => $affectedUsers], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 
     /**
