@@ -186,6 +186,11 @@ class Position
     private $sentToAffectedUsersAt;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $sentHistory;
+
+    /**
      * @ORM\Column(type="boolean", options={"unsigned": true, "default": 0})
      */
     private $isFulfilled = 0;
@@ -578,6 +583,18 @@ class Position
     {
         $this->sentToAffectedUsersAt = $sentToAffectedUsersAt;
         
+        return $this;
+    }
+
+    public function getSentHistory(): ?string
+    {
+        return $this->sentHistory;
+    }
+
+    public function setSentHistory(string $sentHistory): self
+    {
+        $this->sentHistory = $sentHistory;
+
         return $this;
     }
 

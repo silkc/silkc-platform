@@ -616,6 +616,7 @@ class ApiController extends AbstractController
 
         $countUsers = 0;
         $countErrors = 0;
+        $errors = [];
 
         $em = $this->getDoctrine()->getManager();
 
@@ -639,17 +640,24 @@ class ApiController extends AbstractController
                     $countUsers++;
                 } catch (TransportExceptionInterface $exception) {
                     $countErrors++;
+                    $errors[] = $exception->getMessage();
                 }
             }
         }
 
+        $sentHistory = $position->getSentHistory();
+        $dates = ($sentHistory && is_string($sentHistory) && !empty($sentHistory) && @unserialize($sentHistory)) ?
+            unserialize($sentHistory) :
+            [];
+        $dates[] = (object) ['date' => $now, 'countUsers' => $countUsers, 'countErrors' => $countErrors, 'errors' => $errors];
 
         $position->setSentToAffectedUsersAt($now);
+        $position->setSentHistory((@serialize($dates)) ? serialize($dates) : null);
         $position->setIsSentToAffectedUsers(true);
         $em->persist($position);
         $em->flush();
 
-        return $this->json(['result' => true, 'countUsers' => $countUsers, 'countErrors' => $countErrors], 200, ['Access-Control-Allow-Origin' => '*']);
+        return $this->json(['result' => true, 'countUsers' => $countUsers, 'countErrors' => $countErrors, 'errors' => $errors], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 
     /**

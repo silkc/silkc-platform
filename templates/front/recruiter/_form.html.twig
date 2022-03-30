@@ -126,7 +126,10 @@
 				</button>
 
 				{% if position is defined and attribute(position, 'sentToAffectedUsersAt') is defined and position.sentToAffectedUsersAt is not empty %}
-                    <p id="send-email-position-info">{{ 'an_email_was_sent_on'|trans }} <span>{{ position.sentToAffectedUsersAt|date('Y/m/d') }}</span></p>
+                    <p id="send-email-position-info" style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end;">
+						{{ 'an_email_was_sent_on'|trans }} <span> {{ position.sentToAffectedUsersAt|date('Y/m/d H:i') }} - </span>
+						<button class="btn btn-link" style="padding-left: 0; padding-right: 0;" id="show-sent-history">{{ 'show_sent_history' }} <i class="fas fa-search-plus"></i></button>
+					</p>
                 {% else %}
                     <p id="no-send-email-position-info">{{ 'no_email_has_been_sent'|trans }}</p>
                 {% endif %}

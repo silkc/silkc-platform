@@ -950,10 +950,13 @@ class HomeController extends AbstractController
 
         setcookie('tab_recruiter_silkc', 2, time() + 86400, "/");
 
+        $sentHistory = $position->getSentHistory();
+
         return $this->render('front/recruiter/position_create.html.twig', [
             'controller_name' => 'HomeController',
             'form' => $form->createView(),
             'position' => $position,
+            'sentHistory' => ($sentHistory && is_string($sentHistory) && !empty($sentHistory) && @unserialize($sentHistory)) ? unserialize($sentHistory) : null,
             'edit' => true,
         ]);
     }
