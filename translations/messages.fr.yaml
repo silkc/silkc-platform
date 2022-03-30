@@ -9,6 +9,9 @@ title_page:
   administration: Administration
 
 label:
+  title: Adresse
+  longitude: Longitude
+  latitude: Latitude
   address: Adresse
   label: Intitulé
   name: Nom

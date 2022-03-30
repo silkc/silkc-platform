@@ -9,6 +9,9 @@ title_page:
   administration: Administracja
 
 label:
+  title: Adres
+  longitude: Długość geograficzna
+  latitude: Szerokość
   address: Adres
   label: Nazwa
   name: Nazwa
