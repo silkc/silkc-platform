@@ -656,7 +656,7 @@ class Recruiter {
                     bootbox.alert('An error occured');
                 },
                 complete : function(jqXHR, textStatus ){
-                    $button.attr('disabled', 'disabled').find('span.loader').remove();
+                    $button.prop('disabled', false).find('span.loader').remove();
                 }
             });
         });
@@ -717,7 +717,7 @@ class Recruiter {
                     bootbox.alert('An error occured');
                 },
                 complete : function(jqXHR, textStatus ){
-                    $button.attr('disabled', 'disabled').find('span.loader').remove();
+                    $button.prop('disabled', false).find('span.loader').remove();
                 }
             });
         });
