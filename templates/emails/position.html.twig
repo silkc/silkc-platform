@@ -98,7 +98,18 @@
                                                         <span>{{ 'label.name'|trans }}</span> <span style="font-weight: bold;">{{ position.name is defined ? position.name : 'N/A'}}</span>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
-                                                        <span>{{ 'label.location'|trans }}</span> <span style="font-weight: bold;">{{ position.location is defined ? position.location : 'N/A'}}</span>
+                                                        <span>{{ 'label.location'|trans }}</span> <br>
+                                                        <ul>
+                                                            <li>
+                                                                <span>{{ 'label.title'|trans }}</span> : <span style="font-weight: bold;">{{ position.location_title is defined ? position.location_title : 'N/A'}}</span>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{ 'label.latitude'|trans }}</span> : <span style="font-weight: bold;">{{ position.location_latitude is defined ? position.location_latitude : 'N/A'}}</span>
+                                                            </li>
+                                                            <li>
+                                                                <span>{{ 'label.longitude'|trans }}</span> : <span style="font-weight: bold;">{{ position.location_longitude is defined ? position.location_longitude : 'N/A'}}</span>
+                                                            </li>
+                                                        </ul>
                                                     </p>
                                                     <p style="font-family: 'Fakt Pro','Segoe UI','SanFrancisco Display',Arial,sans-serif; color: rgb(121, 124, 127); font-size: 14px;">
                                                         <span>{{ 'label.description'|trans }}</span><br />

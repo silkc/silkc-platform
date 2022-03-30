@@ -664,11 +664,15 @@ class ApiController extends AbstractController
         if ($position->getLocation() && json_decode($position->getLocation())) {
             $address = json_decode($position->getLocation());
             if ($address && property_exists($address, 'title')) {
-                $address = $address->title;
+                $position->location_title = $address->title;
+            }
+            if ($address && property_exists($address, 'lat')) {
+                $position->location_latitude = $address->lat;
+            }
+            if ($address && property_exists($address, 'lng')) {
+                $position->location_longitude = $address->lng;
             }
         }
-
-        $position->address = $address;
 
         $html = $this->render(
             'emails/position.html.twig',
