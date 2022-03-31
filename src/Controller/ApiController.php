@@ -661,15 +661,10 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/get_logs_send_mails/{position_id}", name="get_logs_send_mails", methods={"GET"})
+     * @Route("/get_logs_send_mails/{id}", name="get_logs_send_mails", methods={"GET"})
      */
-    public function get_logs_send_mails($position_id, Request $request, UserRepository $userRepository, PositionRepository $positionRepository, TranslatorInterface $translator, MailerInterface $mailer)
+    public function get_logs_send_mails(Position $position)
     {
-
-        $position = $positionRepository->find($position_id);
-        if (!$position)
-            return new JsonResponse(['message' => $translator->trans('no_position_found')], Response::HTTP_BAD_REQUEST);
-
         $sentHistory = $position->getSentHistory();
         $dates = ($sentHistory && is_string($sentHistory) && !empty($sentHistory) && @unserialize($sentHistory)) ?
             unserialize($sentHistory) :
