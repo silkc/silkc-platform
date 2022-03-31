@@ -278,7 +278,7 @@ class SearchResults {
                 let $oppositeButton = $(_this).closest('div').find('.btn-uninterested');
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = (isActive) ? "/api/interested_training/" + id : "/api/notinterested_training/" + id;
+                let url = (isActive) ? "/api/notinterested_training/" + id : "/api/interested_training/" + id;
 
                 if (isActive)
                     _this.classList.remove('active');
@@ -319,7 +319,7 @@ class SearchResults {
                 let isActive = _this.classList.contains('active');
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = (isActive) ? "/api/uninterested_training/" + id : "/api/notuninterested_training/" + id;
+                let url = (isActive) ? "/api/notuninterested_training/" + id : "/api/uninterested_training/" + id;
 
                 if (isActive)
                     _this.classList.remove('active');
