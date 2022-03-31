@@ -575,7 +575,6 @@ class Recruiter {
                             let contentHTML = '';
                             if (data.dates && data.dates.length > 0) {
                                 contentHTML += '<table id="status-details-email" class="display" style="width:100%"><thead><tr>'
-                                contentHTML += '<th></th>'
                                 contentHTML += '<th>' + translationsJS.date + '</th>'
                                 contentHTML += '<th>' + translationsJS.count_users + '</th>'
                                 contentHTML += '<th>' + translationsJS.count_errors + '</th>'
@@ -587,10 +586,13 @@ class Recruiter {
                                     let errors = data.dates[i].errors ? data.dates[i].errors.join('<br />') : '';
 
                                     contentHTML += '<tr>'
-                                    contentHTML += '<td></td>'
                                     contentHTML += '<td>' + data.dates[i].date + '</td>'
                                     contentHTML += '<td>' + data.dates[i].countUsers + '</td>'
-                                    contentHTML += '<td>' + data.dates[i].countErrors + '</td>'
+                                    if(data.dates[i].countErrors > 0) {
+                                        contentHTML += '<td><div class="d-flex justify-content-between"><span>' + data.dates[i].countErrors + '</span><span class="detail-error btn-link" style="cursor: pointer;"><i class="fas fa-search-plus"></i></span></div></td>'
+                                    } else {
+                                        contentHTML += '<td><div class="d-flex justify-content-between"><span>' + data.dates[i].countErrors + '</span></div></td>'
+                                    }
                                     contentHTML += '<td>' + errors + '</td>'
                                     contentHTML += '</tr>'
                                 }
@@ -607,12 +609,6 @@ class Recruiter {
                                 lengthChange: false,
                                 order: [[ 1, 'asc' ]],
                                 "columns": [
-                                    {
-                                        "className":      'dt-control',
-                                        "orderable":      false,
-                                        "data":           null,
-                                        "defaultContent": '<i class="fas fa-plus-circle"></i>'
-                                    },
                                     { "data": "date" },
                                     { "data": "countUsers" },
                                     { "data": "countErrors" },
@@ -637,7 +633,7 @@ class Recruiter {
                                 '</table>';
                             }
 
-                            $('#status-details-email tbody').on('click', 'td.dt-control', function () {
+                            $('#status-details-email tbody').on('click', '.detail-error', function () {
                                 var tr = $(this).closest('tr');
                                 var row = table.row( tr );
                                 if ( row.child.isShown() ) {
@@ -645,7 +641,6 @@ class Recruiter {
                                     tr.removeClass('shown');
                                 }
                                 else {
-
                                     row.child( format(row.data()) ).show();
                                     tr.addClass('shown');
                                 }
