@@ -557,7 +557,7 @@ class Recruiter {
             let positionId = $('#position_id').val().length > 0 ? $('#position_id').val() : ''
             if (!positionId) return false;
             let data = {skills: skillsList};
-            let url = '/api/send_position_to_affected_users/' + positionId;
+            let url = '/api/get_logs_send_mails/' + positionId;
             let token = $('body').attr('data-token');
 
             $.ajax({
@@ -570,6 +570,9 @@ class Recruiter {
                     if (data && data.result) {
                         let $modal = $('#common-modal');
 
+
+                        console.log('data >>> ', data)
+
                         if ($modal) {
                             $modal.find('.modal-dialog').addClass('modal-lg');
                             $modal.find('.modal-title').html(translationsJS && translationsJS.user_details ? translationsJS.user_details : 'User details');
@@ -577,6 +580,7 @@ class Recruiter {
                             if (data.affected_users && data.affected_users.length > 0) {
                                 contentHTML += '<table id="status-details-email" class="display" style="width:100%"><thead><tr>'
                                 contentHTML += '<th>ID</th>'
+                                contentHTML += '<th>' + translationsJS.date + '</th>'
                                 contentHTML += '<th>' + translationsJS.firstname + '</th>'
                                 contentHTML += '<th>' + translationsJS.lastname + '</th>'
                                 contentHTML += '<th>' + translationsJS.e_mail + '</th>'
@@ -586,6 +590,7 @@ class Recruiter {
                                 for(let i = 0; i < data.affected_users.length; i++) {
                                     contentHTML += '<tr>'
                                     contentHTML += '<td>' + data.affected_users[i].id + '</td>'
+                                    contentHTML += '<td>' + data.affected_users[i].date + '</td>'
                                     contentHTML += '<td>' + data.affected_users[i].firstname + '</td>'
                                     contentHTML += '<td>' + data.affected_users[i].lastname + '</td>'
                                     contentHTML += '<td>' + data.affected_users[i].email + '</td>'

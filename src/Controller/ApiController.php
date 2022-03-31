@@ -661,6 +661,24 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Route("/get_logs_send_mails/{position_id}", name="get_logs_send_mails", methods={"GET"})
+     */
+    public function get_logs_send_mails($position_id, Request $request, UserRepository $userRepository, PositionRepository $positionRepository, TranslatorInterface $translator, MailerInterface $mailer)
+    {
+
+        $position = $positionRepository->find($position_id);
+        if (!$position)
+            return new JsonResponse(['message' => $translator->trans('no_position_found')], Response::HTTP_BAD_REQUEST);
+
+        $sentHistory = $position->getSentHistory();
+        $dates = ($sentHistory && is_string($sentHistory) && !empty($sentHistory) && @unserialize($sentHistory)) ?
+            unserialize($sentHistory) :
+            [];
+
+        return $this->json(['result' => true, 'dates' => $dates], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
      * @Route("/template_send_position_to_affected_users/{position_id}", name="template_send_position_to_affected_users", methods={"GET"})
      */
     public function template_send_position_to_affected_users($position_id, Request $request, UserRepository $userRepository, PositionRepository $positionRepository, TranslatorInterface $translator, MailerInterface $mailer)
