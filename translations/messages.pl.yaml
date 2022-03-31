@@ -457,3 +457,6 @@ lastname: Nazwisko
 username: Nazwa Użytkownika
 e_mail: E-mail
 error: Błąd
+errors: Błędy
+count_errors: Liczba błędów
+count_users: Liczba użytkowników

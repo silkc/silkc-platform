@@ -464,3 +464,6 @@ lastname: Nom de famille
 username: Nom d'utilisateur
 e_mail: Email
 error: Error
+errors: Errors
+count_errors: Number of errors
+count_users: Number of users

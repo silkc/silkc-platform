@@ -453,4 +453,7 @@ lastname: Nom de famille
 username: Nom d'utilisateur
 e_mail: Email
 error: Erreur
+errors: Erreurs
+count_errors: Nombre d'erreur
+count_users: Nombre d'utilisateur
 

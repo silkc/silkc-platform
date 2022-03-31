@@ -569,32 +569,29 @@ class Recruiter {
                 success: function (data, textStatus, jqXHR) {
                     if (data && data.result) {
                         let $modal = $('#common-modal');
-
-
-                        console.log('data >>> ', data)
-
                         if ($modal) {
                             $modal.find('.modal-dialog').addClass('modal-lg');
                             $modal.find('.modal-title').html(translationsJS && translationsJS.user_details ? translationsJS.user_details : 'User details');
                             let contentHTML = '';
-                            if (data.affected_users && data.affected_users.length > 0) {
+                            if (data.dates && data.dates.length > 0) {
                                 contentHTML += '<table id="status-details-email" class="display" style="width:100%"><thead><tr>'
-                                contentHTML += '<th>ID</th>'
+                                contentHTML += '<th></th>'
                                 contentHTML += '<th>' + translationsJS.date + '</th>'
-                                contentHTML += '<th>' + translationsJS.firstname + '</th>'
-                                contentHTML += '<th>' + translationsJS.lastname + '</th>'
-                                contentHTML += '<th>' + translationsJS.e_mail + '</th>'
-                                contentHTML += '<th>' + translationsJS.error + '</th>'
+                                contentHTML += '<th>' + translationsJS.count_users + '</th>'
+                                contentHTML += '<th>' + translationsJS.count_errors + '</th>'
+                                contentHTML += '<th></th>'
                                 contentHTML += '</tr></thead>'
                                 contentHTML += '<tbody>'
-                                for(let i = 0; i < data.affected_users.length; i++) {
+                                for(let i = 0; i < data.dates.length; i++) {
+
+                                    let errors = data.dates[i].errors ? data.dates[i].errors.join('<br />') : '';
+
                                     contentHTML += '<tr>'
-                                    contentHTML += '<td>' + data.affected_users[i].id + '</td>'
-                                    contentHTML += '<td>' + data.affected_users[i].date + '</td>'
-                                    contentHTML += '<td>' + data.affected_users[i].firstname + '</td>'
-                                    contentHTML += '<td>' + data.affected_users[i].lastname + '</td>'
-                                    contentHTML += '<td>' + data.affected_users[i].email + '</td>'
-                                    contentHTML += '<td>' + data.affected_users[i].error + '</td>'
+                                    contentHTML += '<td></td>'
+                                    contentHTML += '<td>' + data.dates[i].date + '</td>'
+                                    contentHTML += '<td>' + data.dates[i].countUsers + '</td>'
+                                    contentHTML += '<td>' + data.dates[i].countErrors + '</td>'
+                                    contentHTML += '<td>' + errors + '</td>'
                                     contentHTML += '</tr>'
                                 }
                                 contentHTML += '</tbody></table>'
@@ -604,11 +601,23 @@ class Recruiter {
                             
                             $(contentHTML).appendTo($modal.find('.modal-body'));
 
-                            $('#status-details-email').DataTable({
+                            let table = $('#status-details-email').DataTable({
                                 searching: false, 
                                 info: false,
                                 lengthChange: false,
                                 order: [[ 1, 'asc' ]],
+                                "columns": [
+                                    {
+                                        "className":      'dt-control',
+                                        "orderable":      false,
+                                        "data":           null,
+                                        "defaultContent": '<i class="fas fa-plus-circle"></i>'
+                                    },
+                                    { "data": "date" },
+                                    { "data": "countUsers" },
+                                    { "data": "countErrors" },
+                                    { "data": "errors", "visible": false }
+                                ],
                                 language: {
                                     search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
                                     paginate: {
@@ -619,6 +628,28 @@ class Recruiter {
                                     }
                                 }
                             });
+
+                            function format (d) {
+                                return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                                    '<tr>'+
+                                        '<td>' + d && d.errors ? d.errors : '' + '</td>'+
+                                    '</tr>'+
+                                '</table>';
+                            }
+
+                            $('#status-details-email tbody').on('click', 'td.dt-control', function () {
+                                var tr = $(this).closest('tr');
+                                var row = table.row( tr );
+                                if ( row.child.isShown() ) {
+                                    row.child.hide();
+                                    tr.removeClass('shown');
+                                }
+                                else {
+
+                                    row.child( format(row.data()) ).show();
+                                    tr.addClass('shown');
+                                }
+                            } );
 
                             $('#common-modal').modal('show');
                         }
