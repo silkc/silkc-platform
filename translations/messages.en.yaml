@@ -467,3 +467,4 @@ error: Error
 errors: Errors
 count_errors: Number of errors
 count_users: Number of users
+show_sent_history: Voir l'historique des envois
