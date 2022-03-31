@@ -571,7 +571,7 @@ class Recruiter {
                         let $modal = $('#common-modal');
                         if ($modal) {
                             $modal.find('.modal-dialog').addClass('modal-lg');
-                            $modal.find('.modal-title').html(translationsJS && translationsJS.user_details ? translationsJS.user_details : 'User details');
+                            $modal.find('.modal-title').html(translationsJS && translationsJS.title_show_sent_history ? translationsJS.title_show_sent_history : 'Email send history');
                             let contentHTML = '';
                             if (data.dates && data.dates.length > 0) {
                                 contentHTML += '<table id="status-details-email" class="display" style="width:100%"><thead><tr>'
@@ -580,7 +580,7 @@ class Recruiter {
                                 contentHTML += '<th>' + translationsJS.count_errors + '</th>'
                                 contentHTML += '<th></th>'
                                 contentHTML += '</tr></thead>'
-                                contentHTML += '<tbody>'
+                                contentHTML += '<tbody>' 
                                 for(let i = 0; i < data.dates.length; i++) {
 
                                     let errors = data.dates[i].errors ? data.dates[i].errors.join('<br />') : '';

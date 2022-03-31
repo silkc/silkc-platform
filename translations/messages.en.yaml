@@ -467,4 +467,5 @@ error: Error
 errors: Errors
 count_errors: Number of errors
 count_users: Number of users
-show_sent_history: View shipping history
+show_sent_history: View email send history
+title_show_sent_history: Email send history
