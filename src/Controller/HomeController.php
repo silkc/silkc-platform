@@ -454,7 +454,7 @@ class HomeController extends AbstractController
      * @Route("/{_locale<en|fr|pl|it>}/institution/{tab}", name="institution")
      */
     public function institution(
-        $tab = 'personal_informations',
+        $tab = 'training',
         Request $request,
         TrainingRepository $trainingRepository,
         ValidatorInterface $validator,
@@ -522,7 +522,7 @@ class HomeController extends AbstractController
      * @Route("/{_locale<en|fr|pl|it>}/recruiter/{tab}", name="recruiter")
      */
     public function recruiter(
-        $tab = 'personal_informations',
+        $tab = 'vacant_positions',
         Request $request,
         PositionRepository $positionRepository,
         UserRepository $userRepository,
