@@ -866,6 +866,11 @@ class Account {
                     setTimeout(function() {
                         $('#content-training button[type="submit"]').find('svg').remove();
                     }, 1500);
+
+                                        
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 },
                 error: function () {
                     let html = _this.tplMessageFlash(false);
