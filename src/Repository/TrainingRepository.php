@@ -412,8 +412,7 @@ class TrainingRepository extends ServiceEntityRepository
         $filter = '';
         $select = '';
         $having = '';
-
-        if ($params && is_array($params)) {
+        if (isset($params) && is_array($params)) {
             // Recherche par ville
             if (
                 array_key_exists('distance', $params) &&
@@ -445,6 +444,7 @@ class TrainingRepository extends ServiceEntityRepository
             }
 
             $filterParams = [];
+            $filterParams[] = "t.is_rejected = 0";
             if (array_key_exists('excludeWithoutDescription', $params) && $params['excludeWithoutDescription'] === true)
                 $filterParams[] = "t.description IS NOT NULL";
             if (array_key_exists('excludeWithoutDuration', $params) && $params['excludeWithoutDuration'] === true)

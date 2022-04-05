@@ -672,6 +672,7 @@ class Recruiter {
                 complete : function(jqXHR, textStatus ){}
             });
         });
+        /*
         $('body').on('click', '#view-list-user', function(e) {
             let token = $('body').attr('data-token');
             let skillsList = JSON.parse($inputSkillsList.val()) || {};
@@ -742,6 +743,7 @@ class Recruiter {
                 complete : function(jqXHR, textStatus ){}
             });
         });
+        */
 
         $('body').on('click', 'button#display-affected-users', function(e) {
             e.preventDefault();
@@ -774,10 +776,6 @@ class Recruiter {
                             <span data-toggle="tooltip" title="${translationsJS.number_of_interested_users_tuto}" style="cursor: help;">
                                 <i class="fas fa-info-circle"></i>
                             </span>
-                            ${data.data.count_listening > 0 ? 
-                                `<span data-toggle="tooltip" title="${translationsJS.user_details}" style="cursor: help;" id="view-list-user">
-                                <i class="fas fa-eye"></i>
-                            </span>` : ''}
                         `);
 
                     $resultContainer.find('[data-toggle="tooltip"]').tooltip();
@@ -795,6 +793,17 @@ class Recruiter {
         let _this = this;
         const $inputSkillsList = $('input#hidden_positionSkills');
 
+        const renderErrors = (errors) => {
+            let r = '';
+            if (errors === undefined || !(errors instanceof Array) || errors.length == 0)
+                return r;
+
+            for (let i = 0; i < errors.length; i++) {
+                r += `<li>${errors[i]}</li>`;
+            }
+
+            return r;
+        }
         $('body').on('click', '#send-email-position', function() {
             let $button = $(this);
 
@@ -842,7 +851,13 @@ class Recruiter {
                             $modal.find('.modal-title').html(translationsJS && translationsJS.summary ? translationsJS.summary : 'Summary');
                             let contentHTML = `<div class="send-mail-modal">
                             <p style="font-size: 1.1rem;" class="text-success"><span>${data.countUsers}</span> <span>${msgSuccess}</span></p>
-                            <p style="font-size: 1.1rem;" class="text-danger"><span>${data.countErrors}</span> <span>${msgError}</span></p>
+                            <p style="font-size: 1.1rem;" class="text-danger">
+                                <span>${data.countErrors}</span> <span>${msgError}</span>
+                            </p>
+                            ${(data.errors != undefined && data.errors instanceof Array && data.errors.length > 0) ? 
+                                `<ul>${renderErrors(data.errors)}</ul>` : 
+                                ''
+                            }
                             </div>`;
                             $(contentHTML).appendTo($modal.find('.modal-body'));
                             $('#common-modal').modal('show');
