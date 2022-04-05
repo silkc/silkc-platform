@@ -74,7 +74,7 @@
 				{% if userSkill.isSelected == true %}
 					{% set skill = userSkill.skill %}
                     {% if skill.id|number_format not in associatedSkills %}
-                        {% set associatedSkills = associatedSkills|merge([skill.id|number_format]) %}
+                        {% set associatedSkills = associatedSkills|merge([skill.id]) %}
                     {% endif %}
 					{% set translation = {'preferredLabel': skill.preferredLabel, 'description': skill.description } %}
 					{% if app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty %}
@@ -129,7 +129,7 @@
 				{% if userSkill.isSelected == false %}
 					{% set skill = userSkill.skill %}
                     {% if skill.id|number_format not in disassociatedSkills %}
-					    {% set disassociatedSkills = disassociatedSkills|merge([skill.id|number_format]) %}
+					    {% set disassociatedSkills = disassociatedSkills|merge([skill.id]) %}
                     {% endif %}
 					<div class="card">
 						<div class="card-header" id="heading_{{ k }}">

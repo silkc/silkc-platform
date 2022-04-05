@@ -1073,7 +1073,10 @@ class Account {
         if (inputSkills && inputSkills.val())
             skillsList = JSON.parse(inputSkills.val());
             if (type in skillsList) {
-                if (skillsList[type].includes(skillId)) {
+
+                console.log('el != skillId')
+
+                if (skillsList[type].includes(skillId) || skillsList[type].includes(parseInt(skillId))) {
                     skillsList[type] = skillsList[type].filter(function (el) {
                         return el != skillId;
                     });

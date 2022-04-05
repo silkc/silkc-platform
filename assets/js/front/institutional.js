@@ -754,57 +754,61 @@ class Institutional {
     runMapTraining = () => { 
 
         $('#institutional #list-trainings').on('shown.bs.collapse', function (e) {
-            let blcMap = e.target.querySelector('.blc-map');
-            if (blcMap) {
-                let mapContent = blcMap.querySelector('.map');
-                let trainingAddress = blcMap.querySelector('.training_address');
-                let trainingAddressHidden = blcMap.querySelector('.training_address_hidden');
+            
 
-                if (mapContent.innerHTML != '') return false;
+            let blcMap = e.target.querySelector(".blc-map");
+            if (blcMap) {
+                let mapContent = blcMap.querySelector(".map");
+                let trainingAddress = blcMap.querySelector(".training_address");
+                let trainingAddressHidden = blcMap.querySelector(".training_address_hidden");
+
+                if (!mapContent || mapContent.innerHTML != "") return false;
 
                 let map = null;
                 let coords = trainingAddressHidden.value;
-    
+
                 if (!coords) return false;
 
-                let geocoder = new google.maps.Geocoder();
-                var latlng = new google.maps.LatLng(0, 0);
-                var mapOptions = {
-                    zoom: 1,
-                    center: latlng,
-                    scrollwheel: false,
-                    scaleControl: false,
-                    mapTypeControl: false,
-                    navigationControl: false,
-                    streetViewControl: false,
-                    fullscreenControl: false,
-                }
-                map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
-                // Affichage du marker en edition
-                if (inputHiddenLat && inputHiddenLat.value != ''
-                    && inputHiddenLng && inputHiddenLng.value != ''
-                    && inputHiddenAddress && inputHiddenAddress.value != '') {
+                if (/^[\],:{}\s]*$/.test(coords
+                            .replace(/\\["\\\/bfnrtu]/g, "@")
+                            .replace(
+                                /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+                                "]"
+                            )
+                            .replace(/(?:^|:|,)(?:\s*\[)+/g, "")
+                    )
+                ) {
+                    coords = JSON.parse(coords);
 
-                    let inputHiddenAddressVal = JSON.parse(inputHiddenAddress.value);
-                    let result = {};
-                    result.geometry = {};
-                    result.geometry.location = {lat: parseFloat(inputHiddenLat.value), lng: parseFloat(inputHiddenLng.value)};
-                    result.name = inputHiddenAddressVal && inputHiddenAddressVal.title ? inputHiddenAddressVal.title : '';
-                    createMarker(result);
-
-                    if (inputAddress) inputAddress.value = result.name;
+                    let geocoder = new google.maps.Geocoder();
+                    var latlng = new google.maps.LatLng(0, 0);
+                    var mapOptions = {
+                        zoom: 1,
+                        center: latlng,
+                        scrollwheel: false,
+                        scaleControl: false,
+                        mapTypeControl: false,
+                        navigationControl: false,
+                        streetViewControl: false,
+                        fullscreenControl: false,
+                    }
+                    map = new google.maps.Map(mapContent, mapOptions);
+        
+                    // Affichage du marker
                     let marker = new google.maps.Marker({
-                        position: result.geometry.location,
+                        position: {lat: coords.lat, lng: coords.lng},
                         map,
-                        title: result.business_status ? `${result.name} - ${result.formatted_address}` : result.formatted_address,
+                        title: coords.title,
                     });
-                    map.setCenter(result.geometry.location);
+                    trainingAddress.value = coords.title;
+                    map.setCenter({lat: coords.lat, lng: coords.lng});
                     map.setZoom(12);
+                } else {
+                    trainingAddress.value = trainingAddressHidden.value;
+                    mapContent.style.display = 'none';
                 }
             }
-
-        })
+        });
    }
 
    runMapAddTraining = () => { 
