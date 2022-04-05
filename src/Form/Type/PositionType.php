@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -91,13 +92,13 @@ class PositionType extends AbstractType
                 'label'    => 'position_fulfilled',
                 'required' => false,
             ])
-            ->add('startAt', DateTimeType::class, [
+            ->add('startAt', DateType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.start_at',
                 'required'           => false,
                 'widget'             => 'single_text',
             ])
-            ->add('endAt', DateTimeType::class, [
+            ->add('endAt', DateType::class, [
                 'translation_domain' => 'messages',
                 'label'              => 'label.end_at',
                 'required'           => false,

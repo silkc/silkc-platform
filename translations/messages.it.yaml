@@ -457,3 +457,5 @@ count_errors: Numero di errori
 count_users: Numero di utenti
 show_sent_history: Visualizza la cronologia delle spedizioni
 title_show_sent_history: Cronologia di invio e-mail
+confirm_deletion: Sei sicuro di voler eliminare questo articolo?
+profile_completion: Profilo completato

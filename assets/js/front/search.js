@@ -1,5 +1,6 @@
 //import $ from 'jquery';
 const $ = require("jquery");
+const bootbox = require('bootbox/bootbox');
 
 //import '../../css/bootstrap-extended.css';
 

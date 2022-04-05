@@ -284,8 +284,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     #content-skills {
         label {
             white-space: nowrap;
-            width: 150px;
             text-align: left;
+            margin-right: 7px;
         }
 
         input[type="text"] {

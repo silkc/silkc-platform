@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import autocomplete from 'autocompleter';
 //import '../../css/bootstrap-extended.css';
+const bootbox = require('bootbox/bootbox');
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../../scss/elements/header.scss';
@@ -297,12 +298,23 @@ class Account {
             On desactive le bouton de recherche */
             input.addEventListener('keyup', function() {
                 let search = this.value.toLowerCase();
+                let suggestions = data.filter((n) =>
+                n.preferredLabel != undefined
+                    ? n.preferredLabel.toLowerCase().includes(search) || n.altLabels.toLowerCase().includes(search)
+                    : n.name.toLowerCase().includes(search)
+                );
+                
                 if (!search || search.length == 0) {
                     input.value = '';
                     input.dataset.description = '';
                     if (hiddenField) {
                         hiddenField.value = '';
                         elemsDisabled.prop('disabled', true);
+                    }
+                }
+                if (!search || search.length == 0 || suggestions.length == 0) {
+                    if (hiddenField) {
+                        hiddenField.value = "";
                     }
                 }
             });
@@ -320,18 +332,23 @@ class Account {
                     return true;
 
                 let search = this.value.toLowerCase();
-                let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().includes(search) : n.name.toLowerCase().includes(search));
-                if (suggestions && suggestions.length > 0 && search.length > 0) {
-                    let suggestion = suggestions[0];
-                    input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';
-                    input.dataset.description = (suggestion.description != undefined) ? suggestion.description : '';
-                    if (hiddenField) hiddenField.value = (suggestion.id != undefined) ? suggestion.id : '';
-                    elemsDisabled.prop('disabled', false);
-                } else {
-                    input.value = '';
-                    if (hiddenField) {
-                        hiddenField.value = '';
-                        elemsDisabled.prop('disabled', true);
+                let suggestions = data.filter(n => (n.preferredLabel != undefined) 
+                    ? n.preferredLabel.toLowerCase().includes(search) || n.altLabels.toLowerCase().includes(search)
+                    : n.name.toLowerCase().includes(search));
+
+                if (hiddenField.value == "") {
+                    if (suggestions && suggestions.length > 0 && search.length > 0) {
+                        let suggestion = suggestions[0];
+                        input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';
+                        input.dataset.description = (suggestion.description != undefined) ? suggestion.description : '';
+                        if (hiddenField) hiddenField.value = (suggestion.id != undefined) ? suggestion.id : '';
+                        elemsDisabled.prop('disabled', false);
+                    } else {
+                        input.value = '';
+                        if (hiddenField) {
+                            hiddenField.value = '';
+                            elemsDisabled.prop('disabled', true);
+                        }
                     }
                 }
             });
@@ -547,21 +564,26 @@ class Account {
             let type = $(this).attr('data-type');
             let li = $(this).closest('li');
             
-            if (inputJobs && inputJobs.val()) {
-                let jobsList = JSON.parse(inputJobs.val());
-                if (id && type) {
-                    if (type in jobsList) {
-                        jobsList[type] = jobsList[type].filter(function (el) {
-                            return el != id;
-                        });
-                        inputJobs.val(JSON.stringify(jobsList));
+
+            bootbox.confirm({message : translationsJS.confirm_deletion, buttons : { cancel : { label :translationsJS.cancel}, confirm : { label : translationsJS.yes}}, callback : function(result) {
+                if (result == true) {
+                    if (inputJobs && inputJobs.val()) {
+                        let jobsList = JSON.parse(inputJobs.val());
+                        if (id && type) {
+                            if (type in jobsList) {
+                                jobsList[type] = jobsList[type].filter(function (el) {
+                                    return el != id;
+                                });
+                                inputJobs.val(JSON.stringify(jobsList));
+                            }
+                        }
+        
+                        if (li) {
+                            li.remove();
+                        }
                     }
                 }
-
-                if (li) {
-                    li.remove();
-                }
-            }
+            }});
         });
     }
 
@@ -703,24 +725,28 @@ class Account {
             let li = $(this).closest('li');
             let ul = $fieldset.find('#content-training .list-trainings .list-group');
             
-            if (inputTrainings && inputTrainings.val()) {
-                let trainingsList = JSON.parse(inputTrainings.val());
-                
-                if (id) {
-                    trainingsList = trainingsList.filter(function (el) {
-                        return el != id;
-                    });
-                    inputTrainings.val(JSON.stringify(trainingsList));
+            bootbox.confirm({message : translationsJS.confirm_deletion, buttons : { cancel : { label :translationsJS.cancel}, confirm : { label : translationsJS.yes}}, callback : function(result) {
+                if (result == true) {
+                    if (inputTrainings && inputTrainings.val()) {
+                        let trainingsList = JSON.parse(inputTrainings.val());
+                        
+                        if (id) {
+                            trainingsList = trainingsList.filter(function (el) {
+                                return el != id;
+                            });
+                            inputTrainings.val(JSON.stringify(trainingsList));
+                        }
+        
+                        if (li) {
+                            li.remove();
+                            if (ul.find('li.list-group-item').length == 0)
+                                $('.no_training_result').show();
+                            else
+                                $('.no_training_result').hide();
+                        }
+                    }
                 }
-
-                if (li) {
-                    li.remove();
-                    if (ul.find('li.list-group-item').length == 0)
-                        $('.no_training_result').show();
-                    else
-                        $('.no_training_result').hide();
-                }
-            }
+            }});
         });
     }
 
@@ -907,28 +933,34 @@ class Account {
         // Remove skills
         $('body').on('click', '#content-skills .rmv.item', function(e) {
             e.preventDefault();
-            $('[data-toggle="tooltip"]').tooltip('hide');
+            
+            let that = this;
 
-            let status = true;
-            let skillId = $(this).attr('data-id');
-            let skillName = $(this).attr('data-name');
-            let card = $(this).closest('.card');
-            let div = $(this).closest('.card').find('.card-header > div > div:last-child');
-            let links = `<a href="#" data-toggle="tooltip" class="text-success back-skill item" title="${translationsJS && translationsJS.add_this_skill_back_into_the_list_above ? translationsJS.add_this_skill_back_into_the_list_above : 'Add this skill back into the list above'}" data-name="${skillName}" data-id="${skillId}">
-                            <i class="fas fa-plus text-primary"></i>
-                        </a>`;
-
-            _this.removeSkill(skillId, 'associatedSkills');
-            status = _this.addSkill(skillId, 'disassociatedSkills');
-
-            div.children().remove();
-            $(links).prependTo(div);
-            let html = card.html();
-            if (status)
-                $('<div class="card">' + html + '</div>').prependTo($('#list-previously_unselected'));
-            card.remove();
-
-            $('[data-toggle="tooltip"]').tooltip();
+            bootbox.confirm({message : translationsJS.confirm_deletion, buttons : { cancel : { label :translationsJS.cancel}, confirm : { label : translationsJS.yes}}, callback : function(result) {
+                if (result == true) {
+                    $('[data-toggle="tooltip"]').tooltip('hide');
+                    let status = true;
+                    let skillId = $(that).attr('data-id');
+                    let skillName = $(that).attr('data-name');
+                    let card = $(that).closest('.card');
+                    let div = $(that).closest('.card').find('.card-header > div > div:last-child');
+                    let links = `<a href="#" data-toggle="tooltip" class="text-success back-skill item" title="${translationsJS && translationsJS.add_this_skill_back_into_the_list_above ? translationsJS.add_this_skill_back_into_the_list_above : 'Add this skill back into the list above'}" data-name="${skillName}" data-id="${skillId}">
+                                    <i class="fas fa-plus text-primary"></i>
+                                </a>`;
+        
+                    _this.removeSkill(skillId, 'associatedSkills');
+                    status = _this.addSkill(skillId, 'disassociatedSkills');
+        
+                    div.children().remove();
+                    $(links).prependTo(div);
+                    let html = card.html();
+                    if (status)
+                        $('<div class="card">' + html + '</div>').prependTo($('#list-previously_unselected'));
+                    card.remove();
+        
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
+            }});
         });
 
         // Back skills
@@ -1802,6 +1834,7 @@ class Account {
         }
         $('#account [data-toggle="tab"]').on('shown.bs.tab', function (e) {
             window.location.hash = e.target.hash;
+            $('html, body').animate({scrollTop:0}, 0);
         });
     }
 }

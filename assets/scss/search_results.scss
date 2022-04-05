@@ -122,6 +122,14 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     }
 
     .results {
+        .title {
+            .institution-name {
+                font-weight: 400;
+                font-size: 14px;
+                margin-top: 15px;
+            }
+        }
+
         .address-title {
             font-weight: 300;
             font-size: 14px;

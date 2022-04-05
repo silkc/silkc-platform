@@ -7,7 +7,7 @@
 				{% if currentPath != '/' %}
 					<ul class="text-right">
 						<li><a class="scrolltop" href="#page"><span class="fa fa-angle-up"></span>{{ 'top'|trans }}</a></li>
-						<li><a title="Home" href="/">{{ 'nav.home'|trans }}</a></li>
+						<li><a title="Home" href="{{ path('app_home_root') }}">{{ 'nav.home'|trans }}</a></li>
 					</ul>
 				{% endif %}
 			</div>

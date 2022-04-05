@@ -458,4 +458,6 @@ count_errors: Nombre d'erreur
 count_users: Nombre d'utilisateur
 show_sent_history: Voir l'historique des envois
 title_show_sent_history: Historique des envois
+confirm_deletion: Êtes-vous sûr de bien vouloir supprimer cet élément?
+profile_completion: Profile completion
 

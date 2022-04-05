@@ -16,7 +16,7 @@
 
 					<div class="d-flex justify-content-end">
 						<div class="d-flex flex-column" id="profile-completion">
-							<span>Profile completion</span>
+							<span>{{ 'profile_completion'|trans }}</span>
 							<div class="progress">
 								<div class="progress-bar" role="progressbar" style="width: {{ app.user.completion }}%;" aria-valuenow="{{ app.user.completion }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.completion }}%</div>
 							</div>

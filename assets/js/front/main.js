@@ -77,6 +77,7 @@ class Main {
                         item.preferredLabel != undefined
                             ? item.preferredLabel
                             : item.name;
+
                     elemsDisabled.prop("disabled", false);
                     if (hiddenField && item.id) {
                         hiddenField.value = item.id;
@@ -88,11 +89,21 @@ class Main {
             On desactive le bouton de recherche */
             input.addEventListener("keyup", function () {
                 let search = this.value.toLowerCase();
+                let suggestions = data.filter((n) =>
+                n.preferredLabel != undefined
+                    ? n.preferredLabel.toLowerCase().includes(search) || n.altLabels.toLowerCase().includes(search)
+                    : n.name.toLowerCase().includes(search)
+                );
                 if (!search || search.length == 0) {
                     input.value = "";
                     if (hiddenField) {
                         hiddenField.value = "";
                         elemsDisabled.prop("disabled", true);
+                    }
+                }
+                if (!search || search.length == 0 || suggestions.length == 0) {
+                    if (hiddenField) {
+                        hiddenField.value = "";
                     }
                 }
             });
@@ -103,30 +114,32 @@ class Main {
                 let search = this.value.toLowerCase();
                 let suggestions = data.filter((n) =>
                     n.preferredLabel != undefined
-                        ? n.preferredLabel.toLowerCase().includes(search)
+                        ? n.preferredLabel.toLowerCase().includes(search) || n.altLabels.toLowerCase().includes(search)
                         : n.name.toLowerCase().includes(search)
                 );
-                if (
-                    suggestions &&
-                    suggestions.length > 0 &&
-                    search.length > 0
-                ) {
-                    let suggestion = suggestions[0];
-                    input.value =
-                        suggestion.preferredLabel != undefined
-                            ? suggestion.preferredLabel
-                            : suggestion.name != undefined
-                            ? suggestion.name
-                            : "";
-                    if (hiddenField)
-                        hiddenField.value =
-                            suggestion.id != undefined ? suggestion.id : "";
-                    elemsDisabled.prop("disabled", false);
-                } else {
-                    input.value = "";
-                    if (hiddenField) {
-                        hiddenField.value = "";
-                        elemsDisabled.prop("disabled", true);
+                if (hiddenField.value == "") {
+                    if (
+                        suggestions &&
+                        suggestions.length > 0 &&
+                        search.length > 0
+                    ) {
+                        let suggestion = suggestions[0];
+                        input.value =
+                            suggestion.preferredLabel != undefined
+                                ? suggestion.preferredLabel
+                                : suggestion.name != undefined
+                                ? suggestion.name
+                                : "";
+                        if (hiddenField)
+                            hiddenField.value =
+                                suggestion.id != undefined ? suggestion.id : "";
+                        elemsDisabled.prop("disabled", false);
+                    } else {
+                        input.value = "";
+                        if (hiddenField) {
+                            hiddenField.value = "";
+                            elemsDisabled.prop("disabled", true);
+                        }
                     }
                 }
             });

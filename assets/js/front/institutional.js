@@ -470,11 +470,21 @@ class Institutional {
             On desactive le bouton de recherche */
             input.addEventListener('keyup', function() {
                 let search = this.value.toLowerCase();
+                let suggestions = data.filter((n) =>
+                n.preferredLabel != undefined
+                    ? n.preferredLabel.toLowerCase().includes(search) || n.altLabels.toLowerCase().includes(search)
+                    : n.name.toLowerCase().includes(search)
+                );
                 if (!search || search.length == 0) {
                     input.value = '';
                     if (hiddenField) {
                         hiddenField.value = '';
                         elemsDisabled.prop('disabled', true);
+                    }
+                }
+                if (!search || search.length == 0 || suggestions.length == 0) {
+                    if (hiddenField) {
+                        hiddenField.value = "";
                     }
                 }
             });
@@ -483,17 +493,21 @@ class Institutional {
             Si il n'y a pas de propositions, on vide le champs */
             input.addEventListener('focusout', function() {
                 let search = this.value.toLowerCase();
-                let suggestions = data.filter(n => (n.preferredLabel != undefined) ? n.preferredLabel.toLowerCase().includes(search) : n.name.toLowerCase().includes(search));
-                if (suggestions && suggestions.length > 0 && search.length > 0) {
-                    let suggestion = suggestions[0];
-                    input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';
-                    if (hiddenField) hiddenField.value = (suggestion.id != undefined) ? suggestion.id : '';
-                    elemsDisabled.prop('disabled', false);
-                } else {
-                    input.value = '';
-                    if (hiddenField) {
-                        hiddenField.value = '';
-                        elemsDisabled.prop('disabled', true);
+                let suggestions = data.filter(n => (n.preferredLabel != undefined) 
+                    ? n.preferredLabel.toLowerCase().includes(search) || n.altLabels.toLowerCase().includes(search)
+                    : n.name.toLowerCase().includes(search));
+                if (hiddenField.value == "") {
+                    if (suggestions && suggestions.length > 0 && search.length > 0) {
+                        let suggestion = suggestions[0];
+                        input.value = (suggestion.preferredLabel != undefined) ? suggestion.preferredLabel : (suggestion.name != undefined) ? suggestion.name : '';
+                        if (hiddenField) hiddenField.value = (suggestion.id != undefined) ? suggestion.id : '';
+                        elemsDisabled.prop('disabled', false);
+                    } else {
+                        input.value = '';
+                        if (hiddenField) {
+                            hiddenField.value = '';
+                            elemsDisabled.prop('disabled', true);
+                        }
                     }
                 }
             });
@@ -1016,6 +1030,7 @@ class Institutional {
         }
         $('#institutional [data-toggle="tab"]').on('shown.bs.tab', function (e) {
             window.location.hash = e.target.hash;
+            $('html, body').animate({scrollTop:0}, 0);
         });
     }
 }

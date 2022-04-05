@@ -1484,6 +1484,7 @@ class Admin {
                 _this.runMap();
             }*/
             window.location.hash = e.target.hash;
+            $('html, body').animate({scrollTop:0}, 0);
         });
 
         // CREATE USER
