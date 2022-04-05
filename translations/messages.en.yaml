@@ -472,3 +472,4 @@ title_show_sent_history: Email send history
 confirm_deletion: Are you sure you want to delete this item?
 profile_completion: Profile completed
 sent_affected_users_position_tooltip: Sent to candidates who match the search and have marked themselves as open to job offers.
+firefox_alert: You are currently using the Firefox browser. For an optimal browsing experience, we recommend that you use another browser.

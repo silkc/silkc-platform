@@ -21,6 +21,7 @@
 
 
 {% block javascripts %}
+	{{ parent() }}
 	{{ encore_entry_script_tags('main') }}
 	{{ encore_entry_script_tags('search_results') }}
 {% endblock %}

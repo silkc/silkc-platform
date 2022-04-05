@@ -31,7 +31,18 @@
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDER4cAfda1DD7Xuxa9JrpM7jlUP2sQyWc&libraries=places"></script>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script type="text/javascript">
+            // Si l'utilisateur est sur un navigateur Firefox, et qu'il n'a pas déjà été prévenu, on lui propose de choisir un autre navigateur
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') != -1){
+                if (document.cookie.indexOf('firefox_alert=true') == -1) {
+                    alert("{{ 'firefox_alert'|trans }}")
+
+                    document.cookie = 'firefox_alert=true';
+                }
+            }
+        </script>
+        {% endblock %}
 
         <!-- Modal map -->
         <div class="modal fade" id="modal-address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

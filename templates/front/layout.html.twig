@@ -32,5 +32,7 @@
     {% include 'front/elements/footer.html.twig' %}
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
 

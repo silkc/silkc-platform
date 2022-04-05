@@ -94,6 +94,7 @@
 
 
 {% block javascripts %}
+	{{ parent() }}
 	{{ encore_entry_script_tags('account') }}
 	{{ encore_entry_script_tags('map') }}
 	{{ encore_entry_script_tags('common') }}
