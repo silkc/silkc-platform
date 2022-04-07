@@ -9,6 +9,7 @@ title_page:
   administration: Administration
 
 label:
+  training_name: Training name
   title: Address
   longitude: Longitude
   latitude: Latitude
@@ -473,3 +474,17 @@ confirm_deletion: Are you sure you want to delete this item?
 profile_completion: Profile completed
 sent_affected_users_position_tooltip: Sent to candidates who match the search and have marked themselves as open to job offers.
 firefox_alert: You are currently using the Firefox browser. For an optimal browsing experience, we recommend that you use another browser.
+contact_us: Contact us
+contact_page_title: Contact us
+contact_send_button: Send
+contact_email_label: Email
+contact_message_label: Message
+contact_name_label: Name
+contact_send_error: Your message has not been sent
+contact_send_success: Your message has been sent
+current_trainings: Current trainings
+outdated_trainings: Outdated trainings
+consult_gdpr_button: Consult GDPR
+gdpr_modal_title: GDPR
+gdpr_modal_content: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+delete_my_account_button: Remove my account

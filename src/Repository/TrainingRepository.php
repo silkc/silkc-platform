@@ -11,6 +11,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @method Training|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,9 +21,39 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrainingRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $tokenStorage;
+
+    public function __construct(ManagerRegistry $registry, TokenStorageInterface $tokenStorage)
     {
         parent::__construct($registry, Training::class);
+
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    public function findCurrents()
+    {
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        return $this->createQueryBuilder('t')
+            ->where('t.user = :user')
+            ->andWhere('t.endAt > :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOutdated()
+    {
+        $user = $this->tokenStorage->getToken()->getUser();
+
+        return $this->createQueryBuilder('t')
+            ->where('t.user = :user')
+            ->andWhere('t.endAt > :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -445,6 +476,7 @@ class TrainingRepository extends ServiceEntityRepository
 
             $filterParams = [];
             $filterParams[] = "t.is_rejected = 0";
+            $filterParams[] = "(t.end_at > NOW() OR t.end_at IS NULL)";
             if (array_key_exists('excludeWithoutDescription', $params) && $params['excludeWithoutDescription'] === true)
                 $filterParams[] = "t.description IS NOT NULL";
             if (array_key_exists('excludeWithoutDuration', $params) && $params['excludeWithoutDuration'] === true)

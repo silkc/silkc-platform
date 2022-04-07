@@ -1,3 +1,9 @@
+<p class="text-right mb-2">
+	<button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#gdprModal">
+		<i class="fas fa-info-circle"></i> {{ 'consult_gdpr_button'|trans }}
+	</button>
+</p>
+
 {{ form_start(form, {attr: attr|default({})}) }}
 
 <div class="form-block">
@@ -54,7 +60,27 @@
 {% endif %}
 
 <div class="form-group button-group text-right">
+	<button class="btn btn-danger mr-2">
+		{{ 'delete_my_account_button'|trans }}
+	</button>
 	{{ form_widget(form.save, {'label': 'label.save'|trans}) }}
 </div>
 
 {{ form_end(form) }}
+
+<div id="gdprModal" class="modal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ 'gdpr_modal_title'|trans }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>{{ 'gdpr_modal_content'|trans }}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'close'|trans }}</button>
+			</div>
+		</div>
+	</div>
+</div>

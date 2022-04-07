@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Message;
 use App\Entity\Skill;
 use App\Entity\Training;
 use App\Entity\Position;
@@ -17,6 +18,7 @@ use App\Form\Type\InstitutionType;
 use App\Entity\TrainingSkill;
 use App\Form\Type\PositionType;
 use App\Form\Type\TrainingType;
+use App\Repository\MessageRepository;
 use App\Repository\UserActivityRepository;
 use App\Repository\UserTrainingRepository;
 use App\Repository\UserRepository;
@@ -31,6 +33,7 @@ use App\Repository\UserSearchRepository;
 use App\Repository\SkillTranslationRepository;
 use App\Repository\OccupationTranslationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +45,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * @Route("", name="app_")
@@ -55,6 +60,76 @@ class HomeController extends AbstractController
     public function index(Request $request): Response
     {
         return $this->render('front/home/search.html.twig');
+    }
+
+    /**
+     * @Route("/{_locale<en|fr|pl|it>?en}/contact", name="contact")
+     */
+    public function contact(
+        Request $request,
+        ValidatorInterface $validator,
+        TranslatorInterface $translator,
+        MailerInterface $mailer
+    ): Response
+    {
+        $data = [];
+
+        if ($request->getMethod() === 'POST') {
+            $data = $request->request->all();
+
+            $constraints = new Assert\Collection(
+                [
+                    'name' => [new Assert\Length(['min' => 2]), new Assert\NotBlank],
+                    'email' => [new Assert\Email(), new Assert\notBlank],
+                    'message' => [new Assert\notBlank],
+                ]
+            );
+
+            $violations = $validator->validate($data, $constraints);
+
+            if ($violations && count($violations) > 0) {
+                $errorMessage = '';
+                foreach ($violations as $violation) {
+                    $errorMessage .= " - " . $violation->getPropertyPath() . ": ";
+                    $errorMessage .= $violation->getMessage();
+                }
+
+                $this->addFlash('danger', $translator->trans('contact_send_error') . $errorMessage);
+            }
+            else {
+                $message = new Message();
+                $message->setName($data['name']);
+                $message->setMessage($data['message']);
+                $message->setEmail($data['email']);
+
+                $email = (new Email())
+                    ->from('contact@silkc-platform.org')
+                    ->to('t.sahraoui@haikara.fr')
+                    ->subject(sprintf('Un message a été posté sur SILKC Platform par %s', $data['name']))
+                    ->text($data['message']);
+
+                $result = true;
+                try {
+                    $mailer->send($email);
+
+                } catch (TransportExceptionInterface $exception) {
+                    $result = false;
+                    $this->addFlash('danger', $translator->trans('contact_send_error') . ' - ' . $exception->getMessage());
+                    $message->setError($exception->getMessage());
+                }
+
+                if ($result)
+                    $this->addFlash('success', $translator->trans('contact_send_success'));
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($message);
+                $em->flush();
+
+                $data = [];
+            }
+        }
+
+        return $this->render('front/home/contact.html.twig', $data);
     }
 
     /**
@@ -507,10 +582,12 @@ class HomeController extends AbstractController
         $tab = (array_key_exists('tab_institution_silkc', $_COOKIE)) ? $_COOKIE['tab_institution_silkc'] : ($tab ? $tab : false);
         setcookie('tab_institution_silkc', "", time() - 3600, "/");
 
-        $trainings = $trainingRepository->findBy(['user' => $user]);
+        $current_trainings = $trainingRepository->findCurrents();
+        $outdated_trainings = $trainingRepository->findOutdated();
         return $this->render('front/institutional/index.html.twig',
             [
-                'trainings'   => $trainings,
+                'current_trainings'   => $current_trainings,
+                'outdated_trainings'   => $outdated_trainings,
                 'form' => $form->createView(),
                 'password_form' => $passwordForm->createView(),
                 'tab' => $tab

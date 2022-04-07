@@ -55,7 +55,7 @@ class TrainingType extends AbstractType
             ->add('name', TextType::class, [
                 'attr'               => ['autofocus' => true],
                 'translation_domain' => 'messages',
-                'label'              => 'label.name',
+                'label'              => 'label.training_name',
             ])
             ->add('location', HiddenType::class, [
                 'attr'               => ["class" => "input_user_address"],

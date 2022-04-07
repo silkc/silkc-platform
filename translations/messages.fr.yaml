@@ -9,6 +9,7 @@ title_page:
   administration: Administration
 
 label:
+  training_name: Nom de la formation
   title: Adresse
   longitude: Longitude
   latitude: Latitude
