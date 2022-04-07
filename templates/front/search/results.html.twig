@@ -446,7 +446,7 @@
                                                         {% endif %}
                                                         {% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
                                                             {% if training.id in trainingIsInterestingForMeIds %}
--                                                                <button type="button" class="btn btn-warning btn-notinterested" data-id="{{ training.id }}">{{ 'this_training_no_longer_interests_me'|trans }}</button>
+                                                                <button type="button" class="btn btn-warning btn-notinterested" data-id="{{ training.id }}">{{ 'this_training_no_longer_interests_me'|trans }}</button>
                                                             {% else %}
                                                                 <button type="button" class="btn btn-success btn-interested" data-id="{{ training.id }}">{{ 'i_am_interested_in_this_training'|trans }}</button>
                                                             {% endif %}

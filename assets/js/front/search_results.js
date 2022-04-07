@@ -25,16 +25,16 @@ require("chart.js");
 require("@fortawesome/fontawesome-free/js/all.min");
 
 let tradsDatatable = {
-    search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : 'Search:',
-    loadingRecords:  "&nbsp;",
+    search: translationsJS && translationsJS.datatable_search ? translationsJS.datatable_search : "Search:",
+    loadingRecords: "&nbsp;",
     processing: '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>',
     zeroRecords: "&nbsp;",
     paginate: {
-        first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : 'First:',
-        previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : 'Previous:',
-        next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : 'Next:',
-        last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : 'Last:'
-    }
+        first: translationsJS && translationsJS.datatable_first ? translationsJS.datatable_first : "First:",
+        previous: translationsJS && translationsJS.datatable_previous ? translationsJS.datatable_previous : "Previous:",
+        next: translationsJS && translationsJS.datatable_next ? translationsJS.datatable_next : "Next:",
+        last: translationsJS && translationsJS.datatable_last ? translationsJS.datatable_last : "Last:",
+    },
 };
 
 class SearchResults {
@@ -92,10 +92,7 @@ class SearchResults {
                 $formSkill.show();
             }
 
-            $(this)
-                .closest("form")
-                .find(".disabled-search")
-                .prop("disabled", true);
+            $(this).closest("form").find(".disabled-search").prop("disabled", true);
         });
     };
 
@@ -119,236 +116,267 @@ class SearchResults {
         });
 
         // More info
-        $("body").on(
-            "click",
-            "#search-results #accordion .btn-more",
-            function (e) {
-                let card = $(this).closest(".card");
-                let id = card.attr("data-id");
+        $("body").on("click", "#search-results #accordion .btn-more", function (e) {
+            let card = $(this).closest(".card");
+            let id = card.attr("data-id");
 
-                let params = $.param({ id: id, score: 100 });
-                let url = `/set_score?${params}`;
+            let params = $.param({ id: id, score: 100 });
+            let url = `/set_score?${params}`;
 
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function (data, textStatus, jqXHR) {},
-                });
-            }
-        );
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data, textStatus, jqXHR) {},
+            });
+        });
     };
 
     runDonetraining = () => {
-        $("body").on(
-            "click",
-            "#search-results #accordion .btn-done",
-            function () {
-                let _this = this;
-                $(_this).attr("disabled", true);
+        $("body").on("click", "#search-results #accordion .btn-done", function () {
+            let _this = this;
+            $(_this).attr("disabled", true);
 
-                let token = $("body").attr("data-token");
-                let id = $(this).attr("data-id");
-                let url = "/api/done_training/" + id;
+            let token = $("body").attr("data-token");
+            let id = $(this).attr("data-id");
+            let url = "/api/done_training/" + id;
 
-                bootbox.confirm({
-                    message:
-                        translationsJS &&
-                        translationsJS.can_you_confirm_that_you_have_completed_this_training
-                            ? translationsJS.can_you_confirm_that_you_have_completed_this_training
-                            : "Confirm",
-                    buttons: {
-                        cancel: { label: "Cancel" },
-                        confirm: { label: "Yes" },
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                url: url,
-                                type: "POST",
-                                dataType: "json",
-                                data: {},
-                                headers: { "X-auth-token": token },
-                                success: function (data, textStatus, jqXHR) {
-                                    if (
-                                        data.result != undefined &&
-                                        data.result == true
-                                    ) {
-                                        $(_this)
-                                            .removeClass("btn-done")
-                                            .addClass("btn-notdone");
-                                        $(_this)
-                                            .removeClass("btn-success")
-                                            .addClass("btn-warning");
-                                        $(_this).html(
-                                            translationsJS &&
-                                            translationsJS.user_had_not_done_this_training_btn
-                                                ? translationsJS.user_had_not_done_this_training_btn
-                                                : "I did not follow this training",
-                                        );
-                                    } else {
-                                        bootbox.alert("An error occured");
-                                    }
-                                },
-                                error: function (resultat, statut, erreur) {
+            bootbox.confirm({
+                message: translationsJS && translationsJS.can_you_confirm_that_you_have_completed_this_training ? translationsJS.can_you_confirm_that_you_have_completed_this_training : "Confirm",
+                buttons: {
+                    cancel: { label: "Cancel" },
+                    confirm: { label: "Yes" },
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            dataType: "json",
+                            data: {},
+                            headers: { "X-auth-token": token },
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $(_this).removeClass("btn-done").addClass("btn-notdone");
+                                    $(_this).removeClass("btn-success").addClass("btn-warning");
+                                    $(_this).html(translationsJS && translationsJS.user_had_not_done_this_training_btn ? translationsJS.user_had_not_done_this_training_btn : "I did not follow this training");
+                                } else {
                                     bootbox.alert("An error occured");
-                                },
-                                complete: function () {
-                                    $(_this).attr("disabled", false);
-                                },
-                            });
-                        } else {
-                            $(_this).attr("disabled", false);
-                        }
-                    },
-                });
-            }
-        );
+                                }
+                            },
+                            error: function (resultat, statut, erreur) {
+                                bootbox.alert("An error occured");
+                            },
+                            complete: function () {
+                                $(_this).attr("disabled", false);
+                            },
+                        });
+                    } else {
+                        $(_this).attr("disabled", false);
+                    }
+                },
+            });
+        });
 
-        $("body").on(
-            "click",
-            "#search-results #accordion .btn-notdone",
-            function () {
-                let _this = this;
-                $(_this).attr("disabled", true);
+        $("body").on("click", "#search-results #accordion .btn-notdone", function () {
+            let _this = this;
+            $(_this).attr("disabled", true);
 
-                let token = $("body").attr("data-token");
-                let id = $(this).attr("data-id");
-                let url = "/api/undone_training/" + id;
+            let token = $("body").attr("data-token");
+            let id = $(this).attr("data-id");
+            let url = "/api/undone_training/" + id;
 
-                bootbox.confirm({
-                    message:
-                        translationsJS &&
-                        translationsJS.can_you_confirm_that_you_did_not_take_this_training
-                            ? translationsJS.can_you_confirm_that_you_did_not_take_this_training
-                            : "Confirm",
-                    buttons: {
-                        cancel: { label: "Cancel" },
-                        confirm: { label: "Yes" },
-                    },
-                    callback: function (result) {
-                        if (result == true) {
-                            $.ajax({
-                                url: url,
-                                type: "POST",
-                                dataType: "json",
-                                data: {},
-                                headers: { "X-auth-token": token },
-                                success: function (data, textStatus, jqXHR) {
-                                    if (
-                                        data.result != undefined &&
-                                        data.result == true
-                                    ) {
-                                        $(_this)
-                                            .removeClass("btn-notdone")
-                                            .addClass("btn-done");
-                                        $(_this)
-                                            .removeClass("btn-warning")
-                                            .addClass("btn-success");
-                                        $(_this).html(
-                                            translationsJS &&
-                                            translationsJS.user_had_done_this_training_btn
-                                                ? translationsJS.user_had_done_this_training_btn
-                                                : "I've followed this training",
-                                        );
-                                    } else {
-                                        bootbox.alert("An error occured");
-                                    }
-                                },
-                                error: function (resultat, statut, erreur) {
+            bootbox.confirm({
+                message: translationsJS && translationsJS.can_you_confirm_that_you_did_not_take_this_training ? translationsJS.can_you_confirm_that_you_did_not_take_this_training : "Confirm",
+                buttons: {
+                    cancel: { label: "Cancel" },
+                    confirm: { label: "Yes" },
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            dataType: "json",
+                            data: {},
+                            headers: { "X-auth-token": token },
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $(_this).removeClass("btn-notdone").addClass("btn-done");
+                                    $(_this).removeClass("btn-warning").addClass("btn-success");
+                                    $(_this).html(translationsJS && translationsJS.user_had_done_this_training_btn ? translationsJS.user_had_done_this_training_btn : "I've followed this training");
+                                } else {
                                     bootbox.alert("An error occured");
-                                },
-                                complete: function () {
-                                    $(_this).attr("disabled", false);
-                                },
-                            });
-                        } else {
-                            $(_this).attr("disabled", false);
-                        }
-                    },
-                });
+                                }
+                            },
+                            error: function (resultat, statut, erreur) {
+                                bootbox.alert("An error occured");
+                            },
+                            complete: function () {
+                                $(_this).attr("disabled", false);
+                            },
+                        });
+                    } else {
+                        $(_this).attr("disabled", false);
+                    }
+                },
+            });
+        });
+
+        $("body").on("click", "#search-results #accordion .btn-liked", function () {
+            let _this = this;
+            let isActive = _this.classList.contains("active");
+            let $oppositeButton = $(_this).closest("div").find(".btn-disliked");
+            let token = $("body").attr("data-token");
+            let id = $(this).attr("data-id");
+            let url = isActive ? "/api/notliked_training/" + id : "/api/liked_training/" + id;
+
+            if (isActive) _this.classList.remove("active");
+            else {
+                _this.classList.add("active");
+                $oppositeButton.removeClass("active");
             }
-        );
 
-        $("body").on(
-            "click",
-            "#search-results #accordion .btn-liked",
-            function () {
-                let _this = this;
-                let isActive = _this.classList.contains('active');
-                let $oppositeButton = $(_this).closest('div').find('.btn-disliked');
-                let token = $("body").attr("data-token");
-                let id = $(this).attr("data-id");
-                let url = (isActive) ? "/api/notliked_training/" + id : "/api/liked_training/" + id;
-
-                if (isActive)
-                    _this.classList.remove('active');
-                else {
-                    _this.classList.add('active');
-                    $oppositeButton.removeClass('active');
-                }
-
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "json",
-                    data: {},
-                    headers: { "X-auth-token": token },
-                    success: function (data, textStatus, jqXHR) {
-                        if (
-                            data.result != undefined &&
-                            data.result == true
-                        ) {}
-                        else {
-                            bootbox.alert("An error occured");
-                        }
-                    },
-                    error: function (resultat, statut, erreur) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: {},
+                headers: { "X-auth-token": token },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.result != undefined && data.result == true) {
+                    } else {
                         bootbox.alert("An error occured");
-                    },
-                    complete: function () {},
-                });
+                    }
+                },
+                error: function (resultat, statut, erreur) {
+                    bootbox.alert("An error occured");
+                },
+                complete: function () {},
+            });
+        });
+
+        $("body").on("click", "#search-results #accordion .btn-disliked", function () {
+            let _this = this;
+            let $oppositeButton = $(_this).closest("div").find(".btn-liked");
+            let isActive = _this.classList.contains("active");
+            let token = $("body").attr("data-token");
+            let id = $(this).attr("data-id");
+            let url = isActive ? "/api/notdisliked_training/" + id : "/api/disliked_training/" + id;
+
+            if (isActive) _this.classList.remove("active");
+            else {
+                _this.classList.add("active");
+                $oppositeButton.removeClass("active");
             }
-        );
 
-        $("body").on(
-            "click",
-            "#search-results #accordion .btn-disliked",
-            function () {
-                let _this = this;
-                let $oppositeButton = $(_this).closest('div').find('.btn-liked');
-                let isActive = _this.classList.contains('active');
-                let token = $("body").attr("data-token");
-                let id = $(this).attr("data-id");
-                let url = (isActive) ? "/api/notdisliked_training/" + id : "/api/disliked_training/" + id;
-
-                if (isActive)
-                    _this.classList.remove('active');
-                else {
-                    _this.classList.add('active');
-                    $oppositeButton.removeClass('active');
-                }
-
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "json",
-                    data: {},
-                    headers: { "X-auth-token": token },
-                    success: function (data, textStatus, jqXHR) {
-                        if (
-                            data.result != undefined &&
-                            data.result == true
-                        ) {} else {
-                            bootbox.alert("An error occured");
-                        }
-                    },
-                    error: function (resultat, statut, erreur) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: {},
+                headers: { "X-auth-token": token },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.result != undefined && data.result == true) {
+                    } else {
                         bootbox.alert("An error occured");
-                    },
-                    complete: function () {},
-                });
-            }
-        );
+                    }
+                },
+                error: function (resultat, statut, erreur) {
+                    bootbox.alert("An error occured");
+                },
+                complete: function () {},
+            });
+        });
+
+        $("body").on("click", "#search-results #accordion .btn-interested", function () {
+            let _this = this;
+            $(_this).attr("disabled", true);
+
+            let token = $("body").attr("data-token");
+            let id = $(this).attr("data-id");
+            let url = "/api/interested_training/" + id;
+
+            bootbox.confirm({
+                message: translationsJS && translationsJS.can_you_confirm_that_you_are_interested_in_this_training ? translationsJS.can_you_confirm_that_you_are_interested_in_this_training : "Confirm",
+                buttons: {
+                    cancel: { label: "Cancel" },
+                    confirm: { label: "Yes" },
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            dataType: "json",
+                            data: {},
+                            headers: { "X-auth-token": token },
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $(_this).removeClass("btn-interested").addClass("btn-notinterested");
+                                    $(_this).removeClass("btn-success").addClass("btn-warning");
+                                    $(_this).html(translationsJS && translationsJS.this_training_no_longer_interests_me ? translationsJS.this_training_no_longer_interests_me : "This training no longer interests me");
+                                } else {
+                                    bootbox.alert("An error occured");
+                                }
+                            },
+                            error: function (resultat, statut, erreur) {
+                                bootbox.alert("An error occured");
+                            },
+                            complete: function () {
+                                $(_this).attr("disabled", false);
+                            },
+                        });
+                    } else {
+                        $(_this).attr("disabled", false);
+                    }
+                },
+            });
+        });
+
+        $("body").on("click", "#search-results #accordion .btn-notinterested", function () {
+            let _this = this;
+            $(_this).attr("disabled", true);
+
+            let token = $("body").attr("data-token");
+            let id = $(this).attr("data-id");
+            let url = "/api/notinterested_training/" + id;
+
+            bootbox.confirm({
+                message: translationsJS && translationsJS.can_you_confirm_that_you_are_not_interested_in_this_training ? translationsJS.can_you_confirm_that_you_are_not_interested_in_this_training : "Confirm",
+                buttons: {
+                    cancel: { label: "Cancel" },
+                    confirm: { label: "Yes" },
+                },
+                callback: function (result) {
+                    if (result == true) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            dataType: "json",
+                            data: {},
+                            headers: { "X-auth-token": token },
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.result != undefined && data.result == true) {
+                                    $(_this).removeClass("btn-notinterested").addClass("btn-interested");
+                                    $(_this).removeClass("btn-warning").addClass("btn-success");
+                                    $(_this).html(translationsJS && translationsJS.i_am_interested_in_this_training ? translationsJS.i_am_interested_in_this_training : "I am interested in this training");
+                                } else {
+                                    bootbox.alert("An error occured");
+                                }
+                            },
+                            error: function (resultat, statut, erreur) {
+                                bootbox.alert("An error occured");
+                            },
+                            complete: function () {
+                                $(_this).attr("disabled", false);
+                            },
+                        });
+                    } else {
+                        $(_this).attr("disabled", false);
+                    }
+                },
+            });
+        });
     };
 
     runMap = () => {
@@ -366,12 +394,11 @@ class SearchResults {
 
                 if (!coords) return false;
 
-                if (/^[\],:{}\s]*$/.test(coords
+                if (
+                    /^[\],:{}\s]*$/.test(
+                        coords
                             .replace(/\\["\\\/bfnrtu]/g, "@")
-                            .replace(
-                                /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-                                "]"
-                            )
+                            .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]")
                             .replace(/(?:^|:|,)(?:\s*\[)+/g, "")
                     )
                 ) {
@@ -388,17 +415,17 @@ class SearchResults {
                         navigationControl: false,
                         streetViewControl: false,
                         fullscreenControl: false,
-                    }
+                    };
                     map = new google.maps.Map(mapContent, mapOptions);
-        
+
                     // Affichage du marker
                     let marker = new google.maps.Marker({
-                        position: {lat: coords.lat, lng: coords.lng},
+                        position: { lat: coords.lat, lng: coords.lng },
                         map,
                         title: coords.title,
                     });
                     trainingAddress.innerHTML = coords.title;
-                    map.setCenter({lat: coords.lat, lng: coords.lng});
+                    map.setCenter({ lat: coords.lat, lng: coords.lng });
                     map.setZoom(12);
                 } else {
                     blcMap.innerHTML = trainingAddressHidden.value;
@@ -442,18 +469,14 @@ class SearchResults {
         let initSliderPrice = function () {
             _this.sliderPrice = new Slider("#formControlRangePrice", {
                 formatter: function (value) {
-                    let currencyAcronym = $("#currency")
-                        .find("option:selected")
-                        .attr("data-acronym");
+                    let currencyAcronym = $("#currency").find("option:selected").attr("data-acronym");
                     return value + currencyAcronym;
                 },
             });
             _this.sliderPrice.on("change", function (slideEvt) {
                 let min = slideEvt.newValue[0];
                 let max = slideEvt.newValue[1];
-                let currencyAcronym = $("#currency")
-                    .find("option:selected")
-                    .attr("data-acronym");
+                let currencyAcronym = $("#currency").find("option:selected").attr("data-acronym");
 
                 $("#priceValMin > span:first-child").text(min);
                 $("#priceValMax > span:first-child").text(max);
@@ -466,33 +489,31 @@ class SearchResults {
 
             // Range
             $("body").on("click", "#priceTypeRange", function () {
-                if($(this).is(':checked') ){
+                if ($(this).is(":checked")) {
                     _this.sliderPrice.enable();
-                    $('#currency').attr('disabled', false);
+                    $("#currency").attr("disabled", false);
                 }
             });
             // free training
             $("body").on("click", "#priceTypeFree", function () {
                 _this.sliderPrice.disable();
-                $('#currency').attr('disabled', true);
+                $("#currency").attr("disabled", true);
             });
             $("body").on("click", "#priceTypeAll", function () {
                 _this.sliderPrice.disable();
-                $('#currency').attr('disabled', true);
+                $("#currency").attr("disabled", true);
             });
 
-            if ($('input#priceTypeFree').is(':checked') || $('input#priceTypeAll').is(':checked')) {
+            if ($("input#priceTypeFree").is(":checked") || $("input#priceTypeAll").is(":checked")) {
                 _this.sliderPrice.disable();
-                $('#currency').attr('disabled', true);
+                $("#currency").attr("disabled", true);
             }
         };
-        
-        $("#currency").on("change", function () {
-            $("#priceValMax > span:last-child").text(
-                $(this).find("option:selected").attr("data-acronym")
-            );
 
-            let maxPrice = $(this).find("option:selected").attr('data-max-price');
+        $("#currency").on("change", function () {
+            $("#priceValMax > span:last-child").text($(this).find("option:selected").attr("data-acronym"));
+
+            let maxPrice = $(this).find("option:selected").attr("data-max-price");
 
             $("#minPrice").val(0);
             $("#maxPrice").val(maxPrice);
@@ -503,9 +524,8 @@ class SearchResults {
             $("#minPrice").val(0);
             $("#maxPrice").val(maxPrice);
 
-            _this.sliderPrice.setAttribute('max', parseInt(maxPrice));
+            _this.sliderPrice.setAttribute("max", parseInt(maxPrice));
             _this.sliderPrice.setValue([0, parseInt(maxPrice)]);
-
         });
 
         // DURATION
@@ -535,7 +555,7 @@ class SearchResults {
             _this.sliderDistance = new Slider("#formControlRangeDistance", {
                 formatter: function (value) {
                     return value + " km";
-                }
+                },
             });
             _this.sliderDistance.on("change", function (obj) {
                 $("#distanceVal").text(obj.newValue + "km");
@@ -562,15 +582,12 @@ class SearchResults {
                     }
                 }
             });
-        
-            if (!$('#city').val() && !$('#input-city').val())
-                _this.sliderDistance.disable();
+
+            if (!$("#city").val() && !$("#input-city").val()) _this.sliderDistance.disable();
         };
 
         $("#unity").on("change", function () {
-            $("#durationValMax > span:last-child").text(
-                $(this).find("option:selected").val()
-            );
+            $("#durationValMax > span:last-child").text($(this).find("option:selected").val());
 
             let max = _this.sliderDuration.element.dataset.sliderMax;
             $("#durationValMin > span:first-child").text(0);
@@ -584,7 +601,6 @@ class SearchResults {
 
         // Clear filter
         $("body").on("click", "button.btn-clear", function () {
-
             _this.removeCookiesParamsSearch();
 
             _this.sliderDistance.setValue(0);
@@ -614,9 +630,7 @@ class SearchResults {
             _this.sliderDuration.setValue([0, 100]);
 
             // Input text, date ...
-            $(
-                "#advanced-search input[type=date], #advanced-search input[type=text], #advanced-search input[type=datetime-local]"
-            ).val("");
+            $("#advanced-search input[type=date], #advanced-search input[type=text], #advanced-search input[type=datetime-local]").val("");
 
             // Checkbox
             $("#advanced-search input[type=checkbox]").prop("checked", false);
@@ -638,14 +652,14 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-price", function () {
             _this.removeCookiesParamsSearch();
-            let maxPrice = $("#currency").find("option:selected").attr('data-max-price');
+            let maxPrice = $("#currency").find("option:selected").attr("data-max-price");
             _this.sliderPrice.setValue([0, parseInt(maxPrice)]);
             $("#priceTypeAll").trigger("click");
             $("#priceValMin > span:first-child").text(0);
             $("#priceValMax > span:first-child").text(maxPrice);
             $("#minPrice").val(0);
             $("#maxPrice").val(maxPrice);
-            $("#isFree").prop('checked', false);
+            $("#isFree").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -683,7 +697,7 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-isOnline", function () {
             _this.removeCookiesParamsSearch();
-            $('#isOnline').prop("checked", false);
+            $("#isOnline").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -691,10 +705,7 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-isOnlineMonitored", function () {
             _this.removeCookiesParamsSearch();
-            $('#isOnlineMonitored').prop(
-                "checked",
-                false
-            );
+            $("#isOnlineMonitored").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -702,7 +713,7 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-isPresential", function () {
             _this.removeCookiesParamsSearch();
-            $('#isPresential').prop("checked", false);
+            $("#isPresential").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -710,7 +721,7 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-excludeTraining", function () {
             _this.removeCookiesParamsSearch();
-            $('#exclude-training-without-completed-description').prop("checked", false);
+            $("#exclude-training-without-completed-description").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -718,10 +729,7 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-specifiedDuration", function () {
             _this.removeCookiesParamsSearch();
-            $('#without-specified-duration').prop(
-                "checked",
-                false
-            );
+            $("#without-specified-duration").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -729,10 +737,7 @@ class SearchResults {
         });
         $("body").on("click", "button.tag-isCertified", function () {
             _this.removeCookiesParamsSearch();
-            $('#isCertified').prop(
-                "checked",
-                false
-            );
+            $("#isCertified").prop("checked", false);
             $(this).remove();
             setTimeout(function () {
                 $(".form-results").submit();
@@ -749,12 +754,12 @@ class SearchResults {
      */
     runMapFilter = () => {
         let _this = this;
-        let $modal = $('#modal-address');
-        let $modalBoby = $modal.find('.modal-body');
+        let $modal = $("#modal-address");
+        let $modalBoby = $modal.find(".modal-body");
         let inputHidden = document.getElementById("city");
         let inputHiddenCity = document.getElementById("inputCity");
         let inputAddress = document.getElementById("address-google-map");
-        let mapElem = document.getElementById('map-filter');
+        let mapElem = document.getElementById("map-filter");
         let service;
         let marker;
         let tabResults = [];
@@ -782,13 +787,11 @@ class SearchResults {
                 radius: distance ? distance * 1000 : 1000,
             });
 
-            google.maps.event.addListener(marker, 'dragend', function() 
-            {
+            google.maps.event.addListener(marker, "dragend", function () {
                 geocodePosition(marker.getPosition());
             });
 
-            google.maps.event.addListener(marker, 'drag', function() 
-            {
+            google.maps.event.addListener(marker, "drag", function () {
                 _this.markerCircle.setMap(null);
                 _this.markerCircle = new google.maps.Circle({
                     strokeColor: "rgb(51, 136, 255)",
@@ -802,20 +805,18 @@ class SearchResults {
                 });
             });
 
-            mapElem.classList.add('active');
+            mapElem.classList.add("active");
         };
 
         function geocodePosition(pos) {
             let map = _this.mapFilter;
             let geocoder = new google.maps.Geocoder();
-            geocoder.geocode
-            ({
-                 latLng: pos
-            }, 
-                 function(results, status) 
+            geocoder.geocode(
                 {
-                    if (status == google.maps.GeocoderStatus.OK) 
-                    {
+                    latLng: pos,
+                },
+                function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
                         inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
                         _this.sliderDistance.setValue(0);
                         $("#distanceVal").text("1km");
@@ -831,9 +832,9 @@ class SearchResults {
                         if (inputHidden) inputHidden.value = newCoords;
                         if (inputHiddenCity) inputHiddenCity.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
                     } else {
-                         let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
-                         $modalBoby.html(zeroResultsHTML);
-                         $modal.modal('show');
+                        let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : "No results"}</p>`;
+                        $modalBoby.html(zeroResultsHTML);
+                        $modal.modal("show");
                     }
                 }
             );
@@ -849,131 +850,127 @@ class SearchResults {
                 navigationControl: false,
                 streetViewControl: false,
                 fullscreenControl: false,
-            }
-            
+            };
+
             _this.mapFilter = new google.maps.Map(mapElem, mapOptions);
             if (inputHiddenCity) inputAddress.value = inputHiddenCity.value;
 
             // Affichage du marker en edition
-            if (inputHidden && inputHidden.value != ''
-                && inputHiddenCity && inputHiddenCity.value != '') {
-                    let coords = JSON.parse(inputHidden.value);
-                    let result = {};
-                    result.geometry = {};
-                    result.geometry.location = {lat: coords.lat, lng: coords.lng};
-                    result.name = inputHiddenCity.value;
-                    let distance = $("#distance").val();
-                    createMarker(result, distance);
+            if (inputHidden && inputHidden.value != "" && inputHiddenCity && inputHiddenCity.value != "") {
+                let coords = JSON.parse(inputHidden.value);
+                let result = {};
+                result.geometry = {};
+                result.geometry.location = { lat: coords.lat, lng: coords.lng };
+                result.name = inputHiddenCity.value;
+                let distance = $("#distance").val();
+                createMarker(result, distance);
 
-                    if (inputAddress) inputAddress.value = result.name;
-                    $('#btn-geocode').prop('disabled', false);
+                if (inputAddress) inputAddress.value = result.name;
+                $("#btn-geocode").prop("disabled", false);
             }
         }
-        initialize(); 
+        initialize();
 
         $("body").on("click", "#btn-geocode-filter", function (e) {
-                let map = _this.mapFilter;
+            let map = _this.mapFilter;
 
-                $(this).prop('disabled', true);
-                $(this).find('.spinner-border').toggleClass('inactive active');
-                $(this).find('.fa-search').toggleClass('inactive active');
+            $(this).prop("disabled", true);
+            $(this).find(".spinner-border").toggleClass("inactive active");
+            $(this).find(".fa-search").toggleClass("inactive active");
 
-                let searchValue = $(this).val();
-                if (searchValue.length == 0) {
-                    var address = document.getElementById('address-google-map').value;
-                    const request = {
-                        query: address,
-                        fields: ["name", "geometry"]
-                    };
-                    service = new google.maps.places.PlacesService(map);
-                    service.textSearch(request, (results, status) => {                    
-                        
-                        if (status === google.maps.places.PlacesServiceStatus.OK && results) {                      
-                            // Plusieurs resultats
-                            if (results.length > 1) {
-                                let listLocationHTML = '<ul>'
-                                for (let i = 0; i < results.length; i++) {
-                                    tabResults[i] = results[i];
-                                    let titleHTML = results[i].business_status ? `<p>${results[i].name}</p><p>${results[i].formatted_address}</p>` : `<p>${results[i].formatted_address}</p>`;
-                                    listLocationHTML += `<li data-id="${i}">${titleHTML}</li>`;
-        
-                                }
-                                listLocationHTML += '</ul>'
-                                $modalBoby.html(listLocationHTML);
-                                $modal.modal('show');
+            let searchValue = $(this).val();
+            if (searchValue.length == 0) {
+                var address = document.getElementById("address-google-map").value;
+                const request = {
+                    query: address,
+                    fields: ["name", "geometry"],
+                };
+                service = new google.maps.places.PlacesService(map);
+                service.textSearch(request, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                        // Plusieurs resultats
+                        if (results.length > 1) {
+                            let listLocationHTML = "<ul>";
+                            for (let i = 0; i < results.length; i++) {
+                                tabResults[i] = results[i];
+                                let titleHTML = results[i].business_status ? `<p>${results[i].name}</p><p>${results[i].formatted_address}</p>` : `<p>${results[i].formatted_address}</p>`;
+                                listLocationHTML += `<li data-id="${i}">${titleHTML}</li>`;
                             }
-                            // 1 seul resultat
-                            if (results.length == 1) {
-                                if (marker) marker.setMap(null); // Suppression marker
-                                if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
-                                createMarker(results[0]);
-                                inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
-                                _this.sliderDistance.setValue(0);
-                                $("#distanceVal").text("1km");
-                                $("#distance").val(1);
-                                _this.sliderDistance.enable();
-
-                                let newCoords = {
-                                    lat: results[0].geometry.location.lat(),
-                                    lng: results[0].geometry.location.lng(),
-                                };
-                                newCoords = JSON.stringify(newCoords);
-
-                                if (inputHidden) inputHidden.value = newCoords;
-                                if (inputHiddenCity) inputHiddenCity.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
-                            }
-                        } else {
-                            // Pas de resultats
+                            listLocationHTML += "</ul>";
+                            $modalBoby.html(listLocationHTML);
+                            $modal.modal("show");
+                        }
+                        // 1 seul resultat
+                        if (results.length == 1) {
                             if (marker) marker.setMap(null); // Suppression marker
                             if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
-                            let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : 'No results'}</p>`;
-                            $modalBoby.html(zeroResultsHTML);
-                            $modal.modal('show');
-                            _this.sliderDistance.setValue(1);
+                            createMarker(results[0]);
+                            inputAddress.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
+                            _this.sliderDistance.setValue(0);
                             $("#distanceVal").text("1km");
                             $("#distance").val(1);
-                            _this.sliderDistance.disable();
+                            _this.sliderDistance.enable();
+
+                            let newCoords = {
+                                lat: results[0].geometry.location.lat(),
+                                lng: results[0].geometry.location.lng(),
+                            };
+                            newCoords = JSON.stringify(newCoords);
+
+                            if (inputHidden) inputHidden.value = newCoords;
+                            if (inputHiddenCity) inputHiddenCity.value = results[0].business_status ? `${results[0].name} - ${results[0].formatted_address}` : results[0].formatted_address;
                         }
+                    } else {
+                        // Pas de resultats
+                        if (marker) marker.setMap(null); // Suppression marker
+                        if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
+                        let zeroResultsHTML = `<p>${translationsJS && translationsJS.no_result_found ? translationsJS.no_result_found : "No results"}</p>`;
+                        $modalBoby.html(zeroResultsHTML);
+                        $modal.modal("show");
+                        _this.sliderDistance.setValue(1);
+                        $("#distanceVal").text("1km");
+                        $("#distance").val(1);
+                        _this.sliderDistance.disable();
+                    }
 
-                        $(this).find('.spinner-border').toggleClass('inactive active');
-                        $(this).find('.fa-search').toggleClass('inactive active');
-                        setTimeout(function() {
-                            $('#btn-geocode-filter').prop('disabled', false);
-                        }, 200);
-                    })
-                }
-            }
-        );
-
-        $('body').on('keydown', '#address-google-map', function(e) {
-            if(e.key === 'Enter') {
-                e.preventDefault();
-                $(this).closest('.input-group').find('button').trigger('click');      
+                    $(this).find(".spinner-border").toggleClass("inactive active");
+                    $(this).find(".fa-search").toggleClass("inactive active");
+                    setTimeout(function () {
+                        $("#btn-geocode-filter").prop("disabled", false);
+                    }, 200);
+                });
             }
         });
 
-        $('body').on('input', '#address-google-map', function(e) {
-            if($(this).val().length == 0) {
-                $(this).closest('.input-group').find('button').prop('disabled', true);
+        $("body").on("keydown", "#address-google-map", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                $(this).closest(".input-group").find("button").trigger("click");
+            }
+        });
+
+        $("body").on("input", "#address-google-map", function (e) {
+            if ($(this).val().length == 0) {
+                $(this).closest(".input-group").find("button").prop("disabled", true);
                 _this.sliderDistance.setValue(1);
                 $("#distanceVal").text("1km");
                 $("#distance").val(1);
                 _this.sliderDistance.disable();
-                inputHidden.value = '';
-                inputHiddenCity.value = '';
-                mapElem.classList.remove('active');
+                inputHidden.value = "";
+                inputHiddenCity.value = "";
+                mapElem.classList.remove("active");
             } else {
-                $(this).closest('.input-group').find('button').prop('disabled', false);   
+                $(this).closest(".input-group").find("button").prop("disabled", false);
             }
         });
 
         // Selection d'une adresse via la modal
-        $('body').on('click', '#modal-address li', function() {
+        $("body").on("click", "#modal-address li", function () {
             if (marker) marker.setMap(null); // Suppression marker
             if (_this.markerCircle) _this.markerCircle.setMap(null); // Suppression circle
-            var id = $(this).attr('data-id');
+            var id = $(this).attr("data-id");
             inputAddress.value = tabResults[id].business_status ? `${tabResults[id].name} - ${tabResults[id].formatted_address}` : tabResults[id].formatted_address;
-            $modal.modal('hide');
+            $modal.modal("hide");
             createMarker(tabResults[id]);
             _this.sliderDistance.setValue(1);
             $("#distanceVal").text("1km");
@@ -1006,16 +1003,15 @@ class SearchResults {
      * Affiche/masque un resultat
      */
     btnShowResult = () => {
-        $("body").on( "click", "#datatable-results .card-header h4 button", function () {
-                $(this).find("span").toggleClass("hide show");
-            }
-        );
+        $("body").on("click", "#datatable-results .card-header h4 button", function () {
+            $(this).find("span").toggleClass("hide show");
+        });
     };
 
     /**
      * Affiche/masque info resultats
      */
-     btnShowInfo = () => {
+    btnShowInfo = () => {
         $("body").on("click", ".info-results .see-more span", function () {
             $(this).parent("span").hide().closest("p").find(".hide").show();
         });
@@ -1030,7 +1026,7 @@ class SearchResults {
             info: false,
             lengthChange: false,
             order: [[3, "desc"]],
-            language: tradsDatatable, 
+            language: tradsDatatable,
             columnDefs: [
                 {
                     targets: [0],
@@ -1049,28 +1045,21 @@ class SearchResults {
             let colName = $(this).find(":selected").attr("data-col");
 
             if (!direction || !colName) return false;
-            let idxCol = $("#datatable-results")
-                .find(`thead th[data-colname=${colName}]`)
-                .index();
+            let idxCol = $("#datatable-results").find(`thead th[data-colname=${colName}]`).index();
             if (idxCol == -1) return false;
-            $('#search-results .collapse[data-parent="#accordion"]').collapse('hide');
-            $("#datatable-results .card-header h4 button span:first-child").removeClass('hide').addClass('show');
-            $("#datatable-results .card-header h4 button span:last-child").removeClass('show').addClass('hide');
+            $('#search-results .collapse[data-parent="#accordion"]').collapse("hide");
+            $("#datatable-results .card-header h4 button span:first-child").removeClass("hide").addClass("show");
+            $("#datatable-results .card-header h4 button span:last-child").removeClass("show").addClass("hide");
             tableResults.order([idxCol, direction ? direction : "asc"]).draw();
         });
     };
 
-    removeCookiesParamsSearch () {
-        document.cookie =
-            "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie =
-            "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie =
-            "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie =
-            "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie =
-            "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    removeCookiesParamsSearch() {
+        document.cookie = "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
 
     init = function () {
@@ -1087,25 +1076,16 @@ class SearchResults {
         this.btnShowInfo();
         this.runDatatableresults();
 
-        $("body").on(
-            "click",
-            'form.form-search button[type="submit"]',
-            function (e) {
-                e.preventDefault();
-                document.cookie =
-                    "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                document.cookie =
-                    "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                document.cookie =
-                    "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                document.cookie =
-                    "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                document.cookie =
-                    "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        $("body").on("click", 'form.form-search button[type="submit"]', function (e) {
+            e.preventDefault();
+            document.cookie = "type_search_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "occupation_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "skill_id_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "filters_silkc_search=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "params_request_all=null; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-                $(this).closest("form").submit();
-            }
-        );
+            $(this).closest("form").submit();
+        });
 
         $('[data-toggle="tooltip"]').tooltip;
     };
