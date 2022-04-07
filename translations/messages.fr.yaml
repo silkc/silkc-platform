@@ -1,8 +1,8 @@
 carousel:
-  text_1: Ne jamais<br/>Arrêter<br/>l'Apprentissage
+  text_1: N'ARRETEZ JAMAIS<br/>D'APPRENDRE
   text_2: AMÉLIORER<br/>VOS COMPÉTENCES<br/>
-  text_3: TROUVEZ<br/>VOTRE<br/>EMPLOI DE RÊVE
-  text_4: Ne jamais<br/>Arrêter<br/>l'Apprentissage
+  text_3: TROUVEZ<br/>L'EMPLOI<br/>DE VOS RÊVES
+  text_4: N'ARRETEZ JAMAIS<br/>D'APPRENDRE
 
 title_page:
   results: Résultats
@@ -31,8 +31,8 @@ label:
   end: Fin
   training_info_url: URL formation
   url: URL
-  online: En ligne
-  is_online_monitored: Surveillé en ligne
+  online: Autoformation en ligne
+  is_online_monitored: Monitoré en ligne
   is_presential: En présentiel
   save: Sauvegarder
   create: Sauvegarder
@@ -60,7 +60,7 @@ label:
   months: Mois
   months_filter: mois
   is_visible: Est visible
-  listening_position: Je suis à l’écoute de propositions de postes
+  listening_position: Je suis prêt à recevoir des propositions de postes correspondants à mes compétences 
   up_to_distance: Jusqu'à
   save_and_validate: Enregistrer et valider
   professional_experience: Expérience professionnelle
@@ -89,14 +89,14 @@ header:
   my_institution: Mon institution
   my_account: Mon compte
   full_search_page: Accueil
-  intro: Intégration des compétences dans un parcours d'apprentissage et de carrière
+  intro: Intégration des Compétences dans un Parcours d'Apprentissage et de Carrière
   search_history: Historique des recherches
 
 nav:
   dashboard: Dashboard
   home: Accueil
   personal_informations: Mon compte
-  institutional_informations: Information institutional
+  institutional_informations: Information institution
   work: Postes
   training: Formations
   change_password: Mot de passe
@@ -217,13 +217,13 @@ email:
   change_password: Change password
   change_password_content: "Bonjour, si vous avez demandé à changer votre mot de passe, veuillez cliquer sur le lien suivant :"
 home:
-  let_improve: <span>Améliorons</span><span>votre situation professionnelle !</span>
-  find_out_how_to_get_there: Découvrez comment vous y rendre !
+  let_improve: <span>Améliorons</span><span>votre carrière !</span>
+  find_out_how_to_get_there: Découvrez comment l'obtenir !
   search_by_occupation: Recherche par profession
   search_by_skill: Recherche par compétence
   training_available: formations disponibles
   people_have_found_a_trining_through_the_silkc_path: personnes ont trouvé une formation via la plateforme SILKC
-  registered_job: emplois enregistrés
+  registered_job: emplois disponibles
 
 no_result_found: Aucun résultat trouvé
 required_skills: Compétences requises
@@ -233,18 +233,18 @@ no_item: Aucun élément
 esco: Sélectionnez les compétences dans la liste ci-dessous
 no_esco: Ajouter plus de compétences
 
-the_following_skills_have_been_calculated_based: La liste de compétences suivante a été compilée sur la base de votre expérience professionnelle et de votre historique de formation
+the_following_skills_have_been_calculated_based: La liste de compétences suivante a été déduite sur la base de votre expérience professionnelle et de votre historique de formation.
 see_more: Voir plus
-other_skills: Ajoutez d'autres compétences qui vous manquent dans la liste ci-dessus.
+other_skills: Ajoutez d'autres compétences qui manquent dans la liste ci-dessus.
 other_skills_label: Sélectionnez une compétence
-previously_unselected: Compétences précédemment supprimées des listes.
-please_indicate_any_professional_training: Veuillez indiquer toute formation professionnelle que vous avez suivie au cours des 5 dernières années
+previously_unselected: Compétences précédemment supprimées des listes ci-dessus.
+please_indicate_any_professional_training: Veuillez indiquer les formations professionnelles que vous avez suivies au cours des 5 dernières années
 don_t_find_your_training: Vous ne trouvez pas votre formation ? Ajoutez-la ici !
 don_t_find_your_institution: Vous ne trouvez pas votre établissement ? Ajoutez-le ici !
 training_name: Nom de la formation
-please_indicate_your_current_job: Veuillez indiquer votre emploi actuel. Nous l'utiliserons pour deviner vos compétences actuelles.
-please_indicate_any_previous_jobs: Veuillez indiquer tout emploi précédent. Nous les utiliserons pour deviner vos compétences. Utilisez le bouton + pour en ajouter d'autres.
-please_indicate_your_desired_jobs: Veuillez indiquer vos emplois souhaités. Nous les utiliserons pour vous donner la meilleure formation en fonction de votre emplacement et de vos compétences actuelles.
+please_indicate_your_current_job: Veuillez indiquer votre emploi actuel. Nous l'utiliserons pour en déduire vos compétences actuelles.
+please_indicate_any_previous_jobs: Veuillez indiquer tout emploi précédent. Nous les utiliserons pour en déduire vos compétences. Utilisez le bouton + pour en ajouter d'autres.
+please_indicate_your_desired_jobs: Veuillez indiquer vos emplois souhaités.<br/>Nous les utiliserons pour vous recommander la meilleure formation en fonction de votre emplacement et de vos compétences actuelles.
 current_job: Emploi actuel
 previous_job: Emploi précédent
 desired_job: Emploi désiré
@@ -252,7 +252,7 @@ more_info: More info
 match: match
 login_to_finetune: Connectez-vous pour affiner
 training_opportunities_to_land_your_dream_job_as: Des opportunités de formation pour décrocher l'emploi de vos rêves en tant que
-i_am_an_institution: je suis une institution
+i_am_an_institution: Je suis un formateur
 i_am_a_user: Je suis un utilisateur
 i_am_a_recruiter: Je suis un recruteur
 recruiter_name: Nom du recruteur
@@ -322,7 +322,7 @@ search_history:
     name: Item
     type: Type
     date: Date de la dernière recherche
-    count_result: Derniers résultats de recherche
+    count_result: Nombre de résultats
     count_search: Nombre de recherches
 
 Euro: Euro
@@ -437,8 +437,8 @@ info_filters_by_price: La recherche s’effectue sur les formations dont les pri
 in_range_and_currendy_training: Dans la plage et la monnaie sélectionnée
 all_prices_training: Tous les prix
 address_suggestion: Suggestions
-you_can_save_any_professional_training_that_interests_you: Vous pouvez sauvegarder toute formation professionnelle qui vous intéresse
-list_of_professional_training_courses_that_interest_you: Liste des formations professionnelles qui vous intéresse
+you_can_save_any_professional_training_that_interests_you: Vous pouvez sauvegarder toute formation professionnelle qui vous intéressent
+list_of_professional_training_courses_that_interest_you: Liste des formations professionnelles qui vous intéressent
 i_am_interested_in_this_training: Cette formation m'interesse
 this_training_no_longer_interests_me: Cette formation ne m'intéresse plus
 can_you_confirm_that_you_are_interested_in_this_training: Pouvez-vous confirmer que vous êtes interessé cette formation ?
