@@ -16,7 +16,11 @@
 	</div>
 
 	<div class="d-inline-flex align-items-end add-job add-current-job">
-		<label for="current_job-input">{{ 'current_job'|trans }}</label>
+		<label for="current_job-input">{{ 'current_job'|trans }}
+			<span data-toggle="tooltip" title="{{ 'enter_at_least_3_characters'|trans }}">
+				&nbsp;<i class="fas fa-info-circle"></i>
+			</span>
+		</label>
 		{% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'current_job-input',
@@ -52,15 +56,7 @@
 							</a>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
-							<a
-								href="#"
-								class="detail mr-2"
-								data-name="{{ curTranslation.preferredLabel }}"
-								data-description="{{ curTranslation.description }}"
-								data-id="{{ occupation.id }}"
-								data-toggle="tooltip"
-								title="{{ 'front_account_work_skills_tooltip'|trans }}"
-							>
+							<a href="#" class="detail mr-2" data-name="{{ curTranslation.preferredLabel }}" data-description="{{ curTranslation.description }}" data-id="{{ occupation.id }}" data-toggle="tooltip" title="{{ 'front_account_work_skills_tooltip'|trans }}">
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
 							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ curTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="currentOccupations">
@@ -82,7 +78,11 @@
 	</div>
 
 	<div class="d-inline-flex align-items-end add-job add-previous-job">
-		<label for="previous_job-input">{{ 'previous_job'|trans }}</label>
+		<label for="previous_job-input">{{ 'previous_job'|trans }}
+			<span data-toggle="tooltip" title="{{ 'enter_at_least_3_characters'|trans }}">
+				&nbsp;<i class="fas fa-info-circle"></i>
+			</span>
+		</label>
 		{% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'previous_job-input',
@@ -117,12 +117,7 @@
 							</a>
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
-							<a href="#" class="detail mr-2" 
-                                data-name="{{ prevTranslation.preferredLabel }}"
-                                data-description="{{ prevTranslation.description }}"
-                                data-id="{{ occupation.id }}"
-                                data-toggle="tooltip"
-								title="{{ 'front_account_work_skills_tooltip'|trans }}">
+							<a href="#" class="detail mr-2" data-name="{{ prevTranslation.preferredLabel }}" data-description="{{ prevTranslation.description }}" data-id="{{ occupation.id }}" data-toggle="tooltip" title="{{ 'front_account_work_skills_tooltip'|trans }}">
 								<span class="badge badge-success">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
 							<a href="#" class="text-danger item rmv" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ prevTranslation.preferredLabel }}" data-type="previousOccupations" data-id="{{ occupation.id }}">
@@ -144,7 +139,11 @@
 	</div>
 
 	<div class="d-inline-flex align-items-end add-job add-desired-job">
-		<label for="previous_job-input">{{ 'desired_job'|trans }}</label>
+		<label for="previous_job-input">{{ 'desired_job'|trans }}
+			<span data-toggle="tooltip" title="{{ 'enter_at_least_3_characters'|trans }}">
+				&nbsp;<i class="fas fa-info-circle"></i>
+			</span>
+		</label>
 		{% include 'front/elements/input_add_search.html.twig'
             with {
                 'id': 'desired_job-input',
@@ -181,17 +180,15 @@
 						</div>
 						<div class="d-inline-flex align-items-center justify-content-end">
 							<a href="#" class="detail mr-2" data-name="{{ desTranslation.preferredLabel }}" data-description="{{ desTranslation.description }}" data-id="{{ occupation.id }}">
-								<span class="badge badge-success d-block"
-                                data-toggle="tooltip"
-								title="{{ 'front_account_work_skills_tooltip'|trans }}">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
+								<span class="badge badge-success d-block" data-toggle="tooltip" title="{{ 'front_account_work_skills_tooltip'|trans }}">{{ skills is defined and skills is not empty ? skills|length : 0 }}</span>
 							</a>
 							<a href="#" class="text-danger item rmv mr-2" data-toggle="tooltip" title="{{ 'tooltip.remove_this_job'|trans }}" data-name="{{ desTranslation.preferredLabel }}" data-id="{{ occupation.id }}" data-type="desiredOccupations">
 								<i class="fas fa-trash-alt text-danger"></i>
 							</a>
-                            {% set localCurrent = app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty ? app.request.locale : 'en' %}
-                            <a href="/{{ localCurrent }}/search_results/occupation/{{ occupation.id }}" class="search-training" data-toggle="tooltip" title="{{ 'search_for_training_required_for_this_job'|trans }}">
-                                <i class="fas fa-search-plus text-primary"></i>
-                            </a>
+							{% set localCurrent = app is defined and app.request is defined and app.request.locale is defined and app.request.locale is not empty ? app.request.locale : 'en' %}
+							<a href="/{{ localCurrent }}/search_results/occupation/{{ occupation.id }}" class="search-training" data-toggle="tooltip" title="{{ 'search_for_training_required_for_this_job'|trans }}">
+								<i class="fas fa-search-plus text-primary"></i>
+							</a>
 						</div>
 					</li>
 				{% endfor %}

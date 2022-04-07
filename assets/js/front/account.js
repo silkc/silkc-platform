@@ -251,7 +251,7 @@ class Account {
             let name = input.getAttribute('name');
             let hiddenField = document.getElementById('hidden_' + name);
             let loader = document.getElementById('loader_' + name);
-            let minLength = 2;
+            let minLength = $(input).closest('#content-work').length > 0 ? 3 : 2;
 
             $(input).closest('form').attr('autocomplete', 'off');
 
