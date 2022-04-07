@@ -445,6 +445,11 @@
                                                             <a href="{{ training.url }}" target="_blank" class="btn btn-primary btn-more">{{ 'more_info'|trans  }}</a>
                                                         {% endif %}
                                                         {% if is_granted('IS_AUTHENTICATED_FULLY') == true and is_granted('ROLE_INSTITUTION') == false %}
+                                                            {% if training.id in trainingIsInterestingForMeIds %}
+-                                                                <button type="button" class="btn btn-warning btn-notinterested" data-id="{{ training.id }}">{{ 'this_training_no_longer_interests_me'|trans }}</button>
+                                                            {% else %}
+                                                                <button type="button" class="btn btn-success btn-interested" data-id="{{ training.id }}">{{ 'i_am_interested_in_this_training'|trans }}</button>
+                                                            {% endif %}
                                                             {% if training.id in trainingIsFollowedIds %}
                                                                 <button type="button" class="btn btn-warning btn-notdone" data-id="{{ training.id }}">{{ 'user_had_not_done_this_training_btn'|trans }}</button>
                                                             {% else %}
