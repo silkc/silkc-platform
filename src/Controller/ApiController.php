@@ -347,7 +347,6 @@ class ApiController extends AbstractController
 
         return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
     }
-  
     
     /**
      * @Route("/interested_training/{id}", name="interesting_training", methods={"POST"})
@@ -358,13 +357,11 @@ class ApiController extends AbstractController
         $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
         if ($userTraining) {
             $userTraining->setIsInterestingForMe(true);
-            $userTraining->setIsUninterestingToMe(false);
         } else {
             $userTraining = new UserTraining();
             $userTraining->setUser($user);
             $userTraining->setTraining($training);
             $userTraining->setIsInterestingForMe(true);
-            $userTraining->setIsUninterestingToMe(false);
             $user->addUserTraining($userTraining);
         }
         
@@ -401,21 +398,21 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/uninterested_training/{id}", name="uninteresting_training", methods={"POST"})
+     * @Route("/liked_training/{id}", name="liked_training", methods={"POST"})
      */
-    public function uninterested_training(Training $training, UserTrainingRepository $userTrainingRepository)
+    public function liked_training(Training $training, UserTrainingRepository $userTrainingRepository)
     {
         $user = $this->getUser();
         $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
         if ($userTraining) {
-            $userTraining->setIsUninterestingToMe(true);
-            $userTraining->setIsInterestingForMe(false);
+            $userTraining->setIsLikedByMe(true);
+            $userTraining->setIsDislikedByMe(false);
         } else {
             $userTraining = new UserTraining();
             $userTraining->setUser($user);
             $userTraining->setTraining($training);
-            $userTraining->setIsUninterestingToMe(true);
-            $userTraining->setIsInterestingForMe(false);
+            $userTraining->setIsLikedByMe(true);
+            $userTraining->setIsDislikedByMe(false);
             $user->addUserTraining($userTraining);
         }
 
@@ -428,20 +425,71 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/notuninterested_training/{id}", name="notuninterested_training", methods={"POST"})
+     * @Route("/notliked_training/{id}", name="notliked_training", methods={"POST"})
      */
-    public function notuninterested_training(Training $training, UserTrainingRepository $userTrainingRepository)
+    public function notliked_training(Training $training, UserTrainingRepository $userTrainingRepository)
     {
         $user = $this->getUser();
         $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
         $em = $this->getDoctrine()->getManager();
         if ($userTraining) {
-            $userTraining->setIsUninterestingToMe(false);
+            $userTraining->setIsLikedByMe(false);
         } else {
             $userTraining = new UserTraining();
             $userTraining->setUser($user);
             $userTraining->setTraining($training);
-            $userTraining->setIsInterestingForMe(false);
+            $userTraining->setIsLikedByMe(false);
+            $user->addUserTraining($userTraining);
+        }
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/disliked_training/{id}", name="disliked_training", methods={"POST"})
+     */
+    public function disliked_training(Training $training, UserTrainingRepository $userTrainingRepository)
+    {
+        $user = $this->getUser();
+        $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
+        if ($userTraining) {
+            $userTraining->setIsDislikedByMe(true);
+            $userTraining->setIsLikedByMe(false);
+        } else {
+            $userTraining = new UserTraining();
+            $userTraining->setUser($user);
+            $userTraining->setTraining($training);
+            $userTraining->setIsDislikedByMe(true);
+            $userTraining->setIsLikedByMe(false);
+            $user->addUserTraining($userTraining);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($userTraining);
+        $em->persist($user);
+        $em->flush();
+
+        return $this->json(['result' => true], 200, ['Access-Control-Allow-Origin' => '*']);
+    }
+
+    /**
+     * @Route("/notdisliked_training/{id}", name="notdisliked_training", methods={"POST"})
+     */
+    public function notdisliked_training(Training $training, UserTrainingRepository $userTrainingRepository)
+    {
+        $user = $this->getUser();
+        $userTraining = $userTrainingRepository->findOneBy(['training' => $training, 'user' => $user]);
+        $em = $this->getDoctrine()->getManager();
+        if ($userTraining) {
+            $userTraining->setIsDislikedByMe(false);
+        } else {
+            $userTraining = new UserTraining();
+            $userTraining->setUser($user);
+            $userTraining->setTraining($training);
+            $userTraining->setIsLikedByMe(false);
             $user->addUserTraining($userTraining);
         }
 

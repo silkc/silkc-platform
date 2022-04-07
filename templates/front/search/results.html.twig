@@ -272,10 +272,10 @@
                                                                     
                                                                     <div>
                                                                         <span>{{ 'like_this_suggestion'|trans }}</span>
-                                                                        <button type="button" class="btn btn-interested {{ (training.id in trainingIsInterestingForMeIds) ? 'active' }}" data-id="{{ training.id }}">
+                                                                        <button type="button" class="btn btn-liked {{ (training.id in trainingIsLikedByMeIds) ? 'active' }}" data-id="{{ training.id }}">
                                                                             <i class="fas fa-thumbs-up"></i>
                                                                         </button>
-                                                                        <button type="button" class="btn btn-uninterested {{ (training.id in trainingIsUninterestingToMeIds) ? 'active' }}" data-id="{{ training.id }}">
+                                                                        <button type="button" class="btn btn-disliked {{ (training.id in trainingIsDislikedByMeIds) ? 'active' }}" data-id="{{ training.id }}">
                                                                             <i class="fas fa-thumbs-down"></i>
                                                                         </button>
                                                                     </div>

@@ -267,10 +267,12 @@ class HomeController extends AbstractController
 
         $trainingsIsFollowed = ($user) ? $user->getFollowedTrainings() : null;
         $trainingsIsInterestingForMe = ($user) ? $user->getInterestingForMeTrainings() : null;
-        $trainingsIsUninterestingToMe = ($user) ? $user->getUninterestingToMeTrainings() : null;
+        $trainingsIsLikedByMe = ($user) ? $user->getLikedByMeTrainings() : null;
+        $trainingsIsDislikedByMe = ($user) ? $user->getDislikedByMeTrainings() : null;
         $trainingIsFollowedIds = [];
         $trainingIsInterestingForMeIds = [];
-        $trainingIsUninterestingToMeIds = [];
+        $trainingIsLikedByMeIds = [];
+        $trainingIsDislikedByMeIds = [];
 
         if ($trainingsIsFollowed && count($trainingsIsFollowed) > 0) {
             foreach ($trainingsIsFollowed as $k => $training) {
@@ -282,9 +284,14 @@ class HomeController extends AbstractController
                 array_push($trainingIsInterestingForMeIds, $training->getTraining()->getId());
             }
         }
-        if ($trainingsIsUninterestingToMe && count($trainingsIsUninterestingToMe) > 0) {
-            foreach ($trainingsIsUninterestingToMe as $k => $training) {
-                array_push($trainingIsUninterestingToMeIds, $training->getTraining()->getId());
+        if ($trainingsIsLikedByMe && count($trainingsIsLikedByMe) > 0) {
+            foreach ($trainingsIsLikedByMe as $k => $training) {
+                array_push($trainingIsLikedByMeIds, $training->getTraining()->getId());
+            }
+        }
+        if ($trainingsIsDislikedByMe && count($trainingsIsDislikedByMe) > 0) {
+            foreach ($trainingsIsDislikedByMe as $k => $training) {
+                array_push($trainingIsDislikedByMeIds, $training->getTraining()->getId());
             }
         }
 
@@ -295,7 +302,8 @@ class HomeController extends AbstractController
             [
                 'trainingIsFollowedIds' => $trainingIsFollowedIds,
                 'trainingIsInterestingForMeIds' => $trainingIsInterestingForMeIds,
-                'trainingIsUninterestingToMeIds' => $trainingIsUninterestingToMeIds,
+                'trainingIsLikedByMeIds' => $trainingIsLikedByMeIds,
+                'trainingIsDislikedByMeIds' => $trainingIsDislikedByMeIds,
                 'trainings' => $trainings,
                 'search' => $searchParams,
                 'searches' => $searches,
@@ -382,6 +390,21 @@ class HomeController extends AbstractController
             $params['endAt'] = $rp['endAt'];
 
         return $params;
+    }
+
+    /**
+     * @Route("/{_locale<en|fr|pl|it>}/remove_my_account", name="remove_my_account")
+     */
+    public function remove_my_account(TranslatorInterface $translator)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user->setIsSuspended(true);
+        $em->persist($user);
+        $em->flush($user);
+
+        $this->addFlash('success', $translator->trans('account_suspension_success'));
+        return $this->redirectToRoute('app_logout');
     }
 
     /**
@@ -756,8 +779,13 @@ class HomeController extends AbstractController
             // Si l'utilisateur est un admin ou institution, la formation est validée par défaut
             $training->setIsValidated($this->isGranted(User::ROLE_INSTITUTION));
             // S'il s'agit d'une création par un utilisateur, on lui associe la formation
-            if (!$this->isGranted(User::ROLE_INSTITUTION))
-                $user->addTraining($training);
+            if (!$this->isGranted(User::ROLE_INSTITUTION)) {
+                $userTraining = new UserTraining();
+                $userTraining->setUser($user);
+                $userTraining->setTraining($training);
+                $userTraining->setIsFollowed(true);
+                $em->persist($userTraining);
+            }
 
             $em->persist($training);
             $em->flush();

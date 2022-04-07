@@ -666,10 +666,21 @@ class User implements UserInterface
     /**
      * @return Collection|UserTraining[]
      */
-    public function getUninterestingToMeTrainings(): Collection
+    public function getLikedByMeTrainings(): Collection
     {
         $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->eq('isUninterestingToMe', 1));
+            ->andWhere(Criteria::expr()->eq('isLikedByMe', 1));
+
+        return $this->userTrainings->matching($criteria);
+    }
+
+    /**
+     * @return Collection|UserTraining[]
+     */
+    public function getDislikedByMeTrainings(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isDislikedByMe', 1));
 
         return $this->userTrainings->matching($criteria);
     }

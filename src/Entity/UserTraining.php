@@ -42,7 +42,12 @@ class UserTraining
     /**
      * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
      */
-    private $isUninterestingToMe = 0;
+    private $isLikedByMe = 0;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0, "unsigned": true})
+     */
+    private $isDislikedByMe = 0;
 
 
     public function getId(): ?int
@@ -98,14 +103,26 @@ class UserTraining
         return $this;
     }
 
-    public function getIsUninterestingToMe(): ?bool
+    public function getIsLikedByMe(): ?bool
     {
-        return $this->isUninterestingToMe;
+        return $this->isLikedByMe;
     }
 
-    public function setIsUninterestingToMe(bool $isUninterestingToMe): self
+    public function setIsLikedByMe(bool $isLikedByMe): self
     {
-        $this->isUninterestingToMe = $isUninterestingToMe;
+        $this->isLikedByMe = $isLikedByMe;
+
+        return $this;
+    }
+
+    public function getIsDislikedByMe(): ?bool
+    {
+        return $this->isDislikedByMe;
+    }
+
+    public function setIsDislikedByMe(bool $isDislikedByMe): self
+    {
+        $this->isDislikedByMe = $isDislikedByMe;
 
         return $this;
     }

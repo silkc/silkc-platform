@@ -271,14 +271,14 @@ class SearchResults {
 
         $("body").on(
             "click",
-            "#search-results #accordion .btn-interested",
+            "#search-results #accordion .btn-liked",
             function () {
                 let _this = this;
                 let isActive = _this.classList.contains('active');
-                let $oppositeButton = $(_this).closest('div').find('.btn-uninterested');
+                let $oppositeButton = $(_this).closest('div').find('.btn-disliked');
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = (isActive) ? "/api/notinterested_training/" + id : "/api/interested_training/" + id;
+                let url = (isActive) ? "/api/notliked_training/" + id : "/api/liked_training/" + id;
 
                 if (isActive)
                     _this.classList.remove('active');
@@ -312,14 +312,14 @@ class SearchResults {
 
         $("body").on(
             "click",
-            "#search-results #accordion .btn-uninterested",
+            "#search-results #accordion .btn-disliked",
             function () {
                 let _this = this;
-                let $oppositeButton = $(_this).closest('div').find('.btn-interested');
+                let $oppositeButton = $(_this).closest('div').find('.btn-liked');
                 let isActive = _this.classList.contains('active');
                 let token = $("body").attr("data-token");
                 let id = $(this).attr("data-id");
-                let url = (isActive) ? "/api/notuninterested_training/" + id : "/api/uninterested_training/" + id;
+                let url = (isActive) ? "/api/notdisliked_training/" + id : "/api/disliked_training/" + id;
 
                 if (isActive)
                     _this.classList.remove('active');
