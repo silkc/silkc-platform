@@ -460,3 +460,6 @@ show_sent_history: Visualizza la cronologia delle spedizioni
 title_show_sent_history: Cronologia di invio e-mail
 confirm_deletion: Sei sicuro di voler eliminare questo articolo?
 profile_completion: Profilo completato
+your_account_will_be_deleted: Il tuo account verrà eliminato
+btn_confirm_deletion: Confermare la cancellazione
+btn_undelete: Annulla eliminazione

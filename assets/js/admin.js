@@ -1491,6 +1491,11 @@ class Admin {
         if (hrefLocation.indexOf('create_user') != -1) {
            /* _this.runMap();*/
         }
+
+        $(".scrolltop").on("click", function (e) {
+            e.preventDefault();
+            window.scrollTo(0, 0);
+        });
     }
 }
 

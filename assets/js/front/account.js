@@ -1793,6 +1793,19 @@ class Account {
         });
     }
 
+    rmvAccount = () => {
+
+        // Remove skills
+        $('body').on('click', '#rmv-account', function(e) {
+            e.preventDefault();
+            bootbox.confirm({message : translationsJS.your_account_will_be_deleted, buttons : { cancel : { label :translationsJS.btn_undelete}, confirm : { label : translationsJS.btn_confirm_deletion, className: 'btn-danger'}}, callback : function(result) {
+                if (result == true) {
+                    window.location='/';
+                }
+            }});
+        });
+    }
+
     init = function() {
 
         let _this = this;
@@ -1813,6 +1826,7 @@ class Account {
         //this.runMap();
         this.seeDetailTraining();
         this.runRater();
+        this.rmvAccount();
 
 
         $('#common-modal').on('shown.bs.modal', function (e) {
@@ -1843,6 +1857,11 @@ class Account {
         $('#account [data-toggle="tab"]').on('shown.bs.tab', function (e) {
             window.location.hash = e.target.hash;
             $('html, body').animate({scrollTop:0}, 0);
+        });
+
+        $(".scrolltop").on("click", function (e) {
+            e.preventDefault();
+            window.scrollTo(0, 0);
         });
     }
 }

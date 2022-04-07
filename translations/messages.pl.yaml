@@ -465,3 +465,6 @@ show_sent_history: Wyświetl historię wysyłek
 title_show_sent_history: Historia wysyłania wiadomości e-mail
 confirm_deletion: Czy na pewno chcesz usunąć ten element?
 profile_completion: Profil ukończony
+your_account_will_be_deleted: Twoje konto zostanie usunięte
+btn_confirm_deletion:  Potwierdź usunięcie
+btn_undelete: Cofnij usunięcie

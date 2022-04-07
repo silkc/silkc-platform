@@ -461,4 +461,7 @@ show_sent_history: Voir l'historique des envois
 title_show_sent_history: Historique des envois
 confirm_deletion: Êtes-vous sûr de bien vouloir supprimer cet élément?
 profile_completion: Profile completion
+your_account_will_be_deleted: Votre compte sera supprimé
+btn_confirm_deletion: Confirmer la suppression
+btn_undelete: Annuler la suppression
 
