@@ -49,7 +49,7 @@ class TrainingRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('t')
             ->where('t.user = :user')
-            ->andWhere('t.endAt > :now')
+            ->andWhere('t.endAt < :now')
             ->setParameter('user', $user)
             ->setParameter('now', new \DateTime())
             ->getQuery()
