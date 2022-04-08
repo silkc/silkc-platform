@@ -13,7 +13,7 @@
 			</h2>
 
 			<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-parent="#switch-trainings">
-				<div class="accordion-body">
+				<div class="accordion-body p-2 bg-light">
 					<div class="accordion" id="list-trainings">
 						{% if current_trainings is defined %}
 							{% for k, training in current_trainings %}
@@ -193,14 +193,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="accordion-item">
+		<div class="accordion-item mt-4">
 			<h2 class="accordion-header" id="headingTwo">
             <button class="btn btn-primary" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 					{{ 'outdated_trainings'|trans }}
 				</button>
 			</h2>
 			<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#switch-trainings">
-				<div class="accordion-body">
+				<div class="accordion-body p-2 bg-light">
 					<div class="accordion" id="list-trainings">
 						{% if outdated_trainings is defined %}
 							{% for k, training in outdated_trainings %}
