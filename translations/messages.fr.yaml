@@ -465,4 +465,10 @@ your_account_will_be_deleted: Votre compte sera supprimé
 btn_confirm_deletion: Confirmer la suppression
 btn_undelete: Annuler la suppression
 enter_at_least_3_characters: Saisissez au moins 3 caractères
-
+account_suspension_success: Votre compte a été supprimé avec succès
+you_do_not_have_a_training_registered_please_consider_registering_one_by_clicking_the_button_above: Vous n'avez pas de formation enregistrée, pensez à en enregistrer une en cliquant sur le bouton ci-dessus.
+training_create_top_information: Veuillez fournir le plus d'informations possible sur votre formation. Ces informations seront traitées pour donner de meilleures recommandations aux utilisateurs. Dans la section compétences à droite, indiquez le métier connexe, puis sélectionnez les compétences que votre formation permettra *réellement* à l'apprenant d'acquérir. Fournir des informations erronées peut avoir un impact négatif sérieux sur la carrière de l'apprenant.
+clone_this_position: Cloner cette position
+user_progress_tooltip: '<p class="text-left">Calcul de progression:<br>Prénom reseigné : %firstname%<br>Nom renseigné: %lastname%<br>Email renseigné: %email%<br>Nom utilisateur renseigné: %username%<br>Adresse renseignée: %address%<br>Année de naissance renseignée: %dateOfBirth%</p>'
+institution_progress_tooltip: '<p class="text-left">Calcul de progression:<br>Nom : %username%<br>Email renseigné: %email%<br>Adresse renseignée: %address%<br>Page accueil renseignée: %homepage%</p>'
+recruiter_progress_tooltip: '<p class="text-left">Calcul de progression:</p>'

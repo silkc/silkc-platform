@@ -464,3 +464,10 @@ your_account_will_be_deleted: Il tuo account verrà eliminato
 btn_confirm_deletion: Confermare la cancellazione
 btn_undelete: Annulla eliminazione
 enter_at_least_3_characters: Inserisci almeno 3 caratteri
+account_suspension_success: Il tuo account è stato eliminato con successo
+you_do_not_have_a_training_registered_please_consider_registering_one_by_clicking_the_button_above: Non hai una formazione registrata, ti preghiamo di considerare di registrarne una facendo clic sul pulsante in alto.
+training_create_top_information: Per favore, completa quante più informazioni possibili sulla tua formazione. Queste informazioni saranno trattate per fornire migliori consigli agli utenti. Nella sezione delle abilità a destra, indica la relativa occupazione, quindi seleziona le abilità che la tua formazione consentirà *realmente* di acquisire allo studente. Fornire informazioni errate può avere un grave impatto negativo sulla carriera dello studente.
+clone_this_position: Clona questa posizione
+user_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:<br>Nome completato: %firstname%<br>Nome completato: %lastname%<br>E-mail completata: %email%<br>Nome utente completato: %username %<br>Indirizzo inserito: %address%<br>Anno di nascita inserito: %dateOfBirth%</p>'
+institution_progress_tooltip: '<p class="text-left">Calcolo dello stato di avanzamento:<br>Nome: %username%<br>E-mail completata: %email%<br>Indirizzo completato: %address%<br>Homepage completata: %homepage% </ p>'
+recruiter_progress_tooltip: '<p class="text-left">Calcolo dell'avanzamento:</p>'

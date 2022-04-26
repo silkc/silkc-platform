@@ -27,6 +27,11 @@
 
 {{ form_start(form, {attr: attr|default({})}) }}
 <div class="row">
+	<div class="col">
+		<p><em>{{ 'training_create_top_information'|trans }}</em></p>
+	</div>
+</div>
+<div class="row">
 	<div class="col-6">
 		{{ form_row(form.name) }}
 		{% if app.user is defined and app.user is not null and is_granted('ROLE_INSTITUTION') == false %}

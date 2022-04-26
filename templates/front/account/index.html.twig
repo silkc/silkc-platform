@@ -18,7 +18,43 @@
 						<div class="d-flex flex-column" id="profile-completion">
 							<span>{{ 'profile_completion'|trans }}</span>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: {{ app.user.completion }}%;" aria-valuenow="{{ app.user.completion }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.completion }}%</div>
+								{% set progress_title = '' %}
+								{% set _true = '<i class="far fa-check-square"></i>' %}
+								{% set _false = '<i class="far fa-square"></i>' %}
+								{% if is_granted('ROLE_INSTITUTION')  %}
+									{% set progress_title = 'institution_progress_tooltip'|trans({
+										'%email%': (user.email is defined and user.email is not empty) ? _true : _false,
+										'%username%': (user.username is defined and user.username is not empty) ? _true : _false,
+										'%address%': (user.address is defined and user.address is not empty) ? _true : _false,
+										'%homepage%': (user.homepage is defined and user.homepage is not empty) ? _true : _false
+									}) %}
+								{% elseif is_granted('ROLE_RECRUITER') %}
+									{% set progress_title = 'recruiter_progress_tooltip'|trans({
+
+									}) %}
+								{% else %}
+									{% set progress_title = 'user_progress_tooltip'|trans({
+										'%firstname%': (user.firstname is defined and user.firstname is not empty) ? _true : _false,
+										'%lastname%': (user.lastname is defined and user.lastname is not empty) ? _true : _false,
+										'%email%': (user.email is defined and user.email is not empty) ? _true : _false,
+										'%username%': (user.username is defined and user.username is not empty) ? _true : _false,
+										'%address%': (user.address is defined and user.address is not empty) ? _true : _false,
+										'%dateOfBirth%': (user.dateOfBirth is defined and user.dateOfBirth is not empty) ? _true : _false
+									}) %}
+								{% endif %}
+								<div
+									class="progress-bar"
+									role="progressbar"
+									style="width: {{ app.user.completion }}%;"
+									aria-valuenow="{{ app.user.completion }}"
+									aria-valuemin="0"
+									aria-valuemax="100"
+									data-toggle="tooltip"
+									data-html="true"
+									title="{{ progress_title }}"
+								>
+									{{ app.user.completion }}%
+								</div>
 							</div>
 						</div>
 					</div>

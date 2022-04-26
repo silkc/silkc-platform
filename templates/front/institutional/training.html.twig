@@ -15,7 +15,7 @@
 			<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-parent="#switch-trainings">
 				<div class="accordion-body p-2 bg-light">
 					<div class="accordion" id="list-trainings">
-						{% if current_trainings is defined %}
+						{% if current_trainings is defined and current_trainings is iterable and current_trainings|length > 0 %}
 							{% for k, training in current_trainings %}
 								<div class="card mb-1" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
 									<form method="POST" action="{{ path('app_institution') }}">
@@ -188,6 +188,8 @@
 									</form>
 								</div>
 							{% endfor %}
+						{% else %}
+							<p class="mt-3">{{ 'you_do_not_have_a_training_registered_please_consider_registering_one_by_clicking_the_button_above'|trans }}</p>
 						{% endif %}
 					</div>
 				</div>
@@ -202,7 +204,7 @@
 			<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-parent="#switch-trainings">
 				<div class="accordion-body p-2 bg-light">
 					<div class="accordion" id="list-trainings">
-						{% if outdated_trainings is defined %}
+						{% if outdated_trainings is defined and outdated_trainings is iterable and outdated_trainings|length > 0 %}
 							{% for k, training in outdated_trainings %}
 								<div class="card mb-1" data-id="{{ attribute(training, 'id') is defined ? training.id : '' }}">
 									<form method="POST" action="{{ path('app_institution') }}">
@@ -375,6 +377,8 @@
 									</form>
 								</div>
 							{% endfor %}
+						{% else %}
+							<p class="mt-3">{{ 'you_do_not_have_a_training_registered_please_consider_registering_one_by_clicking_the_button_above'|trans }}</p>
 						{% endif %}
 					</div>
 				</div>

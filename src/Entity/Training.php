@@ -252,13 +252,15 @@ class Training
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type("datetime")
+     * @Assert\GreaterThan("today")
      * @Groups({"training:read", "training:write"})
      */
-    private $startAt;
+    public $startAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type("datetime")
+     * @Assert\Expression("value > this.startAt", message="training_create_ent_at_have_to_be_greather_than_start_at")
      * @Groups({"training:read", "training:write"})
      */
     private $endAt;

@@ -493,3 +493,9 @@ btn_confirm_deletion: Confirm deletion
 btn_undelete: Undelete
 enter_at_least_3_characters: Enter at least 3 characters
 account_suspension_success: Your account has been successfully deleted
+you_do_not_have_a_training_registered_please_consider_registering_one_by_clicking_the_button_above: You do not have a training registered, please consider registering one by clicking the button above.
+training_create_top_information: Please complete as much information as possible on your training. This information will be treated to give better recommendations to users. In the skills section on the right, indicate the related occupation, then select the skills that your training will *really* allow the learner to acquire. Providing erroneous information can have a serious negative impact on the learner's career.
+clone_this_position: Clone this position
+user_progress_tooltip: '<p class="text-left">Progress calculation:<br>Completed first name: %firstname%<br>Completed name: %lastname%<br>Completed email: %email%<br>Completed user name: %username %<br>Entered address: %address%<br>Entered year of birth: %dateOfBirth%</p>'
+institution_progress_tooltip: '<p class="text-left">Progress calculation:<br>Name: %username%<br>Completed email: %email%<br>Completed address: %address%<br>Completed homepage: %homepage% </p>'
+recruiter_progress_tooltip: '<p class="text-left">Progress calculation:</p>'
