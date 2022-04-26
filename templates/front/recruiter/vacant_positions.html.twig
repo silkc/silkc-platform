@@ -76,12 +76,26 @@
 
 										<div class="form-group">
 											<label for="start-date_{{ k }}">{{ 'label.start_at'|trans }}</label>
-											<input type="date" class="form-control" disabled id="start-date_{{ k }}" name="start_at" value="{{ attribute(position, 'start_at') is defined ? position.start_at : '' }}">
+											<input type="text" class="form-control" disabled id="start-date_{{ k }}" name="start_at" value="{{ position.startAt is defined ? position.startAt|date('d/m/Y') : '' }}">
 										</div>
 
 										<div class="form-group">
 											<label for="end-date_{{ k }}">{{ 'label.end_at'|trans }}</label>
-											<input type="date" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ attribute(position, 'end_at') is defined ? position.end_at : '' }}">
+											<input type="text" class="form-control" disabled id="end-date_{{ k }}" name="end_at" value="{{ position.endAt is defined ? position.endAt|date('d/m/Y') : '' }}">
+										</div>
+
+										<div class="form-group">
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input" disabled id="is-visible_{{ k }}" value="1" name="is_visible" {{ position.isVisible is defined and position.isVisible == true ? 'checked="checked"' : '' }}">
+												<label for="is-visible_{{ k }}">{{ 'label.is_visible'|trans }}</label>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input" disabled id="is-fulfilled_{{ k }}" value="1" name="is_fulfilled" {{ position.isFulfilled is defined and position.isFulfilled == true ? 'checked="checked"' : '' }}">
+												<label for="is-fulfilled_{{ k }}">{{ 'position_fulfilled'|trans }}</label>
+											</div>
 										</div>
 									</div>
 
