@@ -470,4 +470,4 @@ training_create_top_information: Per favore, completa quante più informazioni p
 clone_this_position: Clona questa posizione
 user_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:<br>Nome completato: %firstname%<br>Nome completato: %lastname%<br>E-mail completata: %email%<br>Nome utente completato: %username %<br>Indirizzo inserito: %address%<br>Anno di nascita inserito: %dateOfBirth%</p>'
 institution_progress_tooltip: '<p class="text-left">Calcolo dello stato di avanzamento:<br>Nome: %username%<br>E-mail completata: %email%<br>Indirizzo completato: %address%<br>Homepage completata: %homepage% </ p>'
-recruiter_progress_tooltip: '<p class="text-left">Calcolo dell'avanzamento:</p>'
+recruiter_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:</p>'
