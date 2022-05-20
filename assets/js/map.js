@@ -188,11 +188,17 @@ class Map {
             if (inputHiddenLat && inputHiddenLat.value != ''
                 && inputHiddenLng && inputHiddenLng.value != ''
                 && inputHiddenAddress && inputHiddenAddress.value != '') {
-                    let inputHiddenAddressVal = JSON.parse(inputHiddenAddress.value);
+                    let inputHiddenAddressVal;
+                    try {
+                        inputHiddenAddressVal = JSON.parse(inputHiddenAddress.value);
+                    } catch (e) {
+                        inputHiddenAddressVal = inputHiddenAddress.value;
+                    }
+
                     let result = {};
                     result.geometry = {};
                     result.geometry.location = {lat: parseFloat(inputHiddenLat.value), lng: parseFloat(inputHiddenLng.value)};
-                    result.name = inputHiddenAddressVal && inputHiddenAddressVal.title ? inputHiddenAddressVal.title : '';
+                    result.name = inputHiddenAddressVal && inputHiddenAddressVal.title ? inputHiddenAddressVal.title : inputHiddenAddressVal;
                     createMarker(result);
 
                     if (inputAddress) inputAddress.value = result.name;
