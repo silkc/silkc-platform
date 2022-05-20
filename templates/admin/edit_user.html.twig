@@ -94,10 +94,6 @@
 							</div>
 						{% endif %}
 					</div>
-					<div class="form-group col-md-6 {% if (user.roles is defined and 'ROLE_ADMIN' in user.roles) %}blc-hide{% endif %}">
-                        <label>{{ 'login.form.label.city'|trans }}</label>
-                        {% include 'common/map.html.twig' %}
-					</div>
 				</div>
 
 				<div class="form-group button-group text-right">
