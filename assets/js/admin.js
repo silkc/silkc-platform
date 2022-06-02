@@ -69,6 +69,11 @@ class Admin {
         return this.instanceProperty;
     }
 
+    constructor() {
+        this.taskStatus = false;
+        this.tableTraining;
+    }
+
 
     runDataTableEmpty = (table, $table) => {
         if (table.data().count() == 0) {
@@ -499,7 +504,7 @@ class Admin {
 
     runDatatableTraining = () => {
         let that = this;
-        let table = $('#datatable-training').DataTable({
+        that.tableTraining = $('#datatable-training').DataTable({
             searching: true,
             info: false,
             lengthChange: false,
@@ -512,7 +517,7 @@ class Admin {
             },
             processing: true,
             initComplete: function(settings, json) {
-                that.runDataTableEmpty(table, $('#datatable-training'));
+                that.runDataTableEmpty(that.tableTraining, $('#datatable-training'));
             },
             columns: [
                 { data: 'name' },
@@ -1009,6 +1014,9 @@ class Admin {
      * Actions sur les trainings
      */
      runTrainingsActions = () => {
+
+        let _this = this;
+
         // APPROVE
         $('body').on('click', 'button.approve_training', function() {
             let $button = $(this);
@@ -1021,9 +1029,10 @@ class Admin {
                         url: url,
                         success: function (data, textStatus, jqXHR) {
                             if (data.result != undefined && data.result == true) {
+                                _this.taskStatus = true;
                                 let $td = $button.closest('tr').find('td:eq(3)');
                                 if ($td && $td.length > 0)
-                                    $td.html('<span class="text-success">Approve</span>');
+                                    $td.html('<span class="text-success">' + translationsJS.approved + '</span>');
                                 $button.removeClass('btn-success').addClass('btn-warning');
                                 $button.find('i, svg').removeClass('fa-check').addClass('fa-ban');
                                 $button.removeClass('approve_training').addClass('reject_training').attr('data-original-title', 'Reject');
@@ -1047,6 +1056,7 @@ class Admin {
                             url: url,
                             success: function (data, textStatus, jqXHR) {
                                 if (data.result != undefined && data.result == true) {
+                                    _this.taskStatus = true;
                                     let $td = $button.closest('tr').find('td:eq(3)');
                                     if ($td && $td.length > 0)
                                         $td.html('<span class="text-warning">Rejected</span>');
@@ -1495,6 +1505,14 @@ class Admin {
         $(".scrolltop").on("click", function (e) {
             e.preventDefault();
             window.scrollTo(0, 0);
+        });
+
+        $('#admin [data-toggle="tab"][name="content-training"]').on('shown.bs.tab', function (e) {
+            if (_this.taskStatus) {
+                _this.tableTraining.ajax.reload();
+                /*_this.taskStatus = false;
+                location.reload();*/
+            }
         });
     }
 }

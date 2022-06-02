@@ -42,7 +42,8 @@ class User implements UserInterface
 
     protected static $rolesList = [
         self::ROLE_USER         => 'User',
-        self::ROLE_MODERATOR    => 'Moderator',
+        //self::ROLE_MODERATOR    => 'Moderator',
+        self::ROLE_RECRUITER    => 'Recruiter',
         self::ROLE_INSTITUTION  => 'Institution',
         self::ROLE_ADMIN        => 'Administrator',
     ];

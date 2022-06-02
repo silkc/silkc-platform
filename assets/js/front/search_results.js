@@ -1004,7 +1004,14 @@ class SearchResults {
      */
     btnShowResult = () => {
         $("body").on("click", "#datatable-results .card-header h4 button", function () {
-            $(this).find("span").toggleClass("hide show");
+            if ($(this).find("span:first-child").hasClass("show")) {
+                $("#datatable-results .card-header h4 button span:first-child").removeClass("hide").addClass("show");
+                $("#datatable-results .card-header h4 button span:last-child").removeClass("show").addClass("hide");
+                $(this).find("span:first-child").removeClass("show").addClass("hide");
+                $(this).find("span:last-child").removeClass("hide").addClass("show");
+            } else {
+                $(this).find("span").toggleClass("show hide");
+            }
         });
     };
 

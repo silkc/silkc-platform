@@ -332,14 +332,31 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_edit_user', ['id' => $user->getId()]);
         }
 
-        return $this->render(
-            'admin/edit_user.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView(),
-                'role' => $role
-            ]
-        );
+        if ($type === 'recruiter') {
+            return $this->render(
+                'admin/edit_recruiter.html.twig',
+                [
+                    'user' => $user,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else if ($type === 'institution') {
+            return $this->render(
+                'admin/edit_institution.html.twig',
+                [
+                    'user' => $user,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            return $this->render(
+                'admin/edit_user.html.twig',
+                [
+                    'user' => $user,
+                    'form' => $form->createView(),
+                ]
+            );
+        }
     }
 
     /**
@@ -358,7 +375,7 @@ class AdminController extends AbstractController
         else if ($user->getRoles() !== null && in_array(User::ROLE_INSTITUTION, $user->getRoles()))
             $form = $this->createForm(InstitutionType::class, $user, ['is_personal' => true, 'by_admin' => true]);
         else
-            $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true]);
+            $form = $this->createForm(UserType::class, $user, ['is_personal' => true]);
 
         $form->handleRequest($request);
 
@@ -376,13 +393,33 @@ class AdminController extends AbstractController
             $this->addFlash('success', $translator->trans('updated_data'));
         }
 
-        return $this->render(
-            'admin/edit_user.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView()
-            ]
-        );
+        
+        if ($user->getRoles() !== null && in_array(User::ROLE_RECRUITER, $user->getRoles())) {
+
+            return $this->render(
+                'admin/edit_recruiter.html.twig',
+                [
+                    'user' => $user,
+                    'form' => $form->createView()
+                    ]
+                );
+        } else if ($user->getRoles() !== null && in_array(User::ROLE_INSTITUTION, $user->getRoles()))
+            return $this->render(
+                'admin/edit_institution.html.twig',
+                [
+                    'user' => $user,
+                    'form' => $form->createView()
+                ]
+            );
+        else {
+            return $this->render(
+                'admin/edit_user.html.twig',
+                [
+                    'user' => $user,
+                    'form' => $form->createView()
+                    ]
+                );
+        }
     }
 
     /**

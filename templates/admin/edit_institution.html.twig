@@ -39,20 +39,20 @@
 				<div class="form-block">
 					<div class="row">
 						<div class="form-group col-md-6">
-							{{ form_row(form.firstname) }}
+							{{ form_row(form.username) }}
 						</div>
 
 						<div class="form-group col-md-6">
-							{{ form_row(form.lastname) }}
+							{{ form_row(form.homepage) }}
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-md-6">
-						{{ form_row(form.username) }}
-					</div>
-					<div class="form-group col-md-6">
 						{{ form_row(form.email) }}
+					</div>
+					<div class="form-group col-md-6 {% if (user.roles is defined and 'ROLE_ADMIN' in user.roles) %}blc-hide{% endif %}">
+						{{ form_row(form.dateOfBirth) }}
 					</div>
 				</div>
 				<div class="row">
@@ -60,37 +60,19 @@
 						<label>{{ 'login.form.label.city'|trans }}</label>
 						{% include 'common/map.html.twig' with {'placeholder': 'login.form.label.address'|trans} %}
 					</div>
-
-					<div class="form-group col-md-6 {% if (user.roles is defined and 'ROLE_ADMIN' in user.roles) %}blc-hide{% endif %}">
-						{{ form_row(form.dateOfBirth) }}
-					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-md-6">
 						{{ form_row(form.roles) }}
-					</div>
-					<div class="form-group col-md-6">
-						{{ form_row(form.isListeningPosition) }}
-					</div>
-				</div>
-				<div class="row">
-					<div class="form-group col-md-6">
-						<div class="input-group mb-3">
-							<span class="input-group-text">
-								{{ 'label.up_to_distance'|trans }}
-							</span>
-							{{ form_widget(form.upToDistance) }}
-							<span class="input-group-text">km</span>
-						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-md-6">
 						{% if form.offsetExists('password') %}
 							<div class="row special">
-                                <div class="col-12">
-                                    {{ form_row(form.password) }}
-                                </div>
+								<div class="col-12">
+									{{ form_row(form.password) }}
+								</div>
 							</div>
 						{% endif %}
 					</div>

@@ -45,18 +45,17 @@ class RecruiterType extends AbstractType
             ->add('latitude', HiddenType::class, [
                 'attr'               => ["class" => "user_lat"],
                 'required'           => false,
+            ])
+            ->add('roles', ChoiceType::class, [
+                'label' => 'label.roles',
+                'attr' => ["disabled" => "disabled"],
+                "disabled" => true,
+                'multiple' => true,
+                'expanded' => true,
+                'required'   => true,
+                'choices' => User::getRolesList(),
             ]);
-
-        if (array_key_exists('by_admin', $options) && $options['by_admin'] === true) {
-            $builder
-                ->add('roles', ChoiceType::class, [
-                    'label' => 'label.roles',
-                    'multiple' => true,
-                    'expanded' => true,
-                    'required'   => true,
-                    'choices' => User::getRolesList(),
-                ]);
-        }
+        
 
         $currentYear = intval(date('Y'));
         for ($i = $currentYear; 1900 <= $i; $i--) {
