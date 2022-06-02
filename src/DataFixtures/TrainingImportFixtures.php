@@ -131,7 +131,7 @@ class TrainingImportFixtures extends Fixture
                                 $training->setStartAt($startAt);
                         }
                         if ($rate && $training->getPrice() !== null && $training->getPrice() > 0 && $training->getCurrency() === Training::CURRENCY_ZLOTY) {
-                            $training->setEuroPrice(number_format($training->getPrice() / $rate, 2));
+                            $training->setEuroPrice(floatval(number_format($training->getPrice() / $rate, 2)));
                         } else if ($training->getCurrency() === Training::CURRENCY_EURO) {
                             $training->setEuroPrice($training->getPrice());
                         }
@@ -152,6 +152,20 @@ class TrainingImportFixtures extends Fixture
                             $training->setIsPresential(filter_var($trainingData->is_presential, FILTER_VALIDATE_BOOLEAN));
                         else
                             $training->setIsPresential(false);
+
+                        $errors = $this->_validator->validate($training);
+                        if ($errors && count($errors) > 0) {
+                            $errorString = (string) $errors;
+                            print "ERROR --- An error occurred while check data before saving the training :  {$errorString}" . PHP_EOL;
+                            continue;
+                        }
+
+                        // Validation par défaut de la formation
+                        $training->setIsValidated(true);
+                        $training->setValidatedAt($createdAt);
+
+                        $manager->persist($training);
+                        $manager->flush();
 
                         if (property_exists($trainingData, 'required_skills') && !empty($trainingData->required_skills)) {
                             $requiredSkills = is_array($trainingData->required_skills) ? $trainingData->required_skills : (array) $trainingData->required_skills;
@@ -198,17 +212,6 @@ class TrainingImportFixtures extends Fixture
                                 }
                             }
                         }
-
-                        $errors = $this->_validator->validate($training);
-                        if ($errors && count($errors) > 0) {
-                            $errorString = (string) $errors;
-                            print "ERROR --- An error occurred while check data before saving the training :  {$errorString}" . PHP_EOL;
-                            continue;
-                        }
-
-                        $manager->persist($training);
-                        $manager->flush();
-
                     } catch(\Throwable $e) {
                         print "ERROR --- An error occurred while saving the training in the database :  {$e->getMessage()}" . PHP_EOL;
                         $error = true;

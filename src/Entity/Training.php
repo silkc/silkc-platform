@@ -260,7 +260,7 @@ class Training
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type("datetime")
-     * @Assert\Expression("value > this.startAt", message="training_create_ent_at_have_to_be_greather_than_start_at")
+     * @Assert\Expression("value == null or value > this.startAt", message="training_create_ent_at_have_to_be_greather_than_start_at")
      * @Groups({"training:read", "training:write"})
      */
     private $endAt;
@@ -449,8 +449,10 @@ class Training
 
         $training = $args->getObject();
         // Si la formation est gratuite, on supprime le prix
-        if ($training->getIsFree() === true)
+        if ($training->getIsFree() === true) {
             $training->setPrice(null);
+            $training->setEuroPrice(null);
+        }
 
         $this->_defineCompletion($training);
     }
@@ -465,8 +467,10 @@ class Training
 
         $training = $args->getObject();
         // Si la formation est gratuite, on supprime le prix
-        if ($training->getIsFree() === true)
+        if ($training->getIsFree() === true) {
             $training->setPrice(null);
+            $training->setEuroPrice(null);
+        }
 
         $this->_defineCompletion($training);
     }

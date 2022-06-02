@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Training;
 use App\Entity\TrainingSkill;
 use App\Entity\UserOccupation;
+use App\Entity\UserTraining;
 use App\Repository\OccupationRepository;
 use App\Repository\SkillRepository;
 use App\Repository\TrainingRepository;
@@ -362,51 +363,9 @@ class UserImportFixtures extends Fixture
                                         else
                                             $training->setIsPresential(false);
 
-                                        if (property_exists($trainingData, 'required_skills') && !empty($trainingData->required_skills)) {
-                                            $requiredSkills = is_array($trainingData->required_skills) ? $trainingData->required_skills : (array) $trainingData->required_skills;
-
-                                            if ($requiredSkills && count($requiredSkills) > 0) {
-                                                foreach ($requiredSkills as $key => $concept_uri) {
-                                                    $concept_uri = preg_replace('#(\\\)#', '', $concept_uri);
-                                                    $skill = $this->_skillRepository->findOneBy(['conceptUri' => $concept_uri]);
-                                                    if (!$skill) {
-                                                        print "ERROR --- An error occurred while associating the skill to training {$concept_uri}" . PHP_EOL;
-                                                        continue;
-                                                    }
-
-                                                    $trainingSkill = new TrainingSkill();
-                                                    $trainingSkill->setTraining($training);
-                                                    $trainingSkill->setSkill($skill);
-                                                    $trainingSkill->setIsRequired(true);
-                                                    $trainingSkill->setIsToAcquire(false);
-                                                    $training->addTrainingSkill($trainingSkill);
-                                                    $manager->persist($trainingSkill);
-                                                }
-                                            }
-                                        }
-                                        if (property_exists($trainingData, 'acquired_skills') && !empty($trainingData->acquired_skills)) {
-                                            $acquiredSkills = is_array($trainingData->acquired_skills) ? $trainingData->acquired_skills : (array) $trainingData->acquired_skills;
-
-                                            if ($acquiredSkills && count($acquiredSkills) > 0) {
-                                                foreach ($acquiredSkills as $key => $concept_uri) {
-                                                    $concept_uri = preg_replace('#(\\\)#', '', $concept_uri);
-                                                    $skill = $this->_skillRepository->findOneBy(['conceptUri' => $concept_uri]);
-                                                    if (!$skill) {
-                                                        print "ERROR --- An error occurred while associating the skill to training {$concept_uri}" . PHP_EOL;
-                                                        continue;
-                                                    }
-
-                                                    $trainingSkill = new TrainingSkill();
-                                                    $trainingSkill->setTraining($training);
-                                                    $trainingSkill->setSkill($skill);
-                                                    $trainingSkill->setIsRequired(false);
-                                                    $trainingSkill->setIsToAcquire(true);
-                                                    $training->addTrainingSkill($trainingSkill);
-
-                                                    $manager->persist($trainingSkill);
-                                                }
-                                            }
-                                        }
+                                        // Validation par défaut de la formation
+                                        $training->setIsValidated(true);
+                                        $training->setValidatedAt($createdAt);
 
                                         $errors = $this->_validator->validate($training);
                                         if ($errors && count($errors) > 0) {
@@ -414,10 +373,62 @@ class UserImportFixtures extends Fixture
                                             print "ERROR --- An error occurred while check data before saving the training :  {$errorString}" . PHP_EOL;
                                             continue;
                                         }
+                                        else {
 
-                                        $manager->persist($training);
+                                            $manager->persist($training);
 
-                                        $user->addTraining($training);
+                                            if (property_exists($trainingData, 'required_skills') && !empty($trainingData->required_skills)) {
+                                                $requiredSkills = is_array($trainingData->required_skills) ? $trainingData->required_skills : (array)$trainingData->required_skills;
+
+                                                if ($requiredSkills && count($requiredSkills) > 0) {
+                                                    foreach ($requiredSkills as $key => $concept_uri) {
+                                                        $concept_uri = preg_replace('#(\\\)#', '', $concept_uri);
+                                                        $skill = $this->_skillRepository->findOneBy(['conceptUri' => $concept_uri]);
+                                                        if (!$skill) {
+                                                            print "ERROR --- An error occurred while associating the skill to training {$concept_uri}" . PHP_EOL;
+                                                            continue;
+                                                        }
+
+                                                        $trainingSkill = new TrainingSkill();
+                                                        $trainingSkill->setTraining($training);
+                                                        $trainingSkill->setSkill($skill);
+                                                        $trainingSkill->setIsRequired(true);
+                                                        $trainingSkill->setIsToAcquire(false);
+                                                        $training->addTrainingSkill($trainingSkill);
+                                                        $manager->persist($trainingSkill);
+                                                    }
+                                                }
+                                            }
+                                            if (property_exists($trainingData, 'acquired_skills') && !empty($trainingData->acquired_skills)) {
+                                                $acquiredSkills = is_array($trainingData->acquired_skills) ? $trainingData->acquired_skills : (array)$trainingData->acquired_skills;
+
+                                                if ($acquiredSkills && count($acquiredSkills) > 0) {
+                                                    foreach ($acquiredSkills as $key => $concept_uri) {
+                                                        $concept_uri = preg_replace('#(\\\)#', '', $concept_uri);
+                                                        $skill = $this->_skillRepository->findOneBy(['conceptUri' => $concept_uri]);
+                                                        if (!$skill) {
+                                                            print "ERROR --- An error occurred while associating the skill to training {$concept_uri}" . PHP_EOL;
+                                                            continue;
+                                                        }
+
+                                                        $trainingSkill = new TrainingSkill();
+                                                        $trainingSkill->setTraining($training);
+                                                        $trainingSkill->setSkill($skill);
+                                                        $trainingSkill->setIsRequired(false);
+                                                        $trainingSkill->setIsToAcquire(true);
+                                                        $training->addTrainingSkill($trainingSkill);
+
+                                                        $manager->persist($trainingSkill);
+                                                    }
+                                                }
+                                            }
+
+                                            $userTraining = new UserTraining();
+                                            $userTraining->setTraining($training);
+                                            $userTraining->setUser($user);
+                                            $userTraining->setIsFollowed(true);
+                                            $manager->persist($userTraining);
+                                        }
 
                                     } catch(\Throwable $e) {
                                         print "ERROR A --- An error occurred while saving the training in the database :  {$e->getMessage()}" . PHP_EOL;
@@ -435,7 +446,6 @@ class UserImportFixtures extends Fixture
                         $manager->persist($user);
                         $manager->flush();
                     } catch(\Throwable $e) {
-                        dump($e);
                         print "ERROR B --- An error occurred while saving the institution in the database :  {$e->getMessage()}" . PHP_EOL;
                         $error = true;
                     }
