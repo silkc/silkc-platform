@@ -7,6 +7,8 @@ use App\Entity\Skill;
 use App\Entity\Training;
 use App\Entity\Occupation;
 use App\Form\Type\UserPasswordType;
+use App\Form\Type\RecruiterType;
+use App\Form\Type\InstitutionType;
 use App\Form\Type\UserType;
 use App\Repository\NotificationRepository;
 use App\Repository\SkillRepository;
@@ -281,9 +283,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/{_locale<en|fr|pl|it>}/create_user", name="create_user", methods={"GET", "POST"})
+     * @Route("/{_locale<en|fr|pl|it>}/create_user/{type}", name="create_user", requirements={"type"="user|institution|recruiter"}, methods={"GET", "POST"})
      */
     public function create_user(
+        string $type = 'user',
         Request $request,
         ValidatorInterface $validator,
         TranslatorInterface $translator,
@@ -291,7 +294,16 @@ class AdminController extends AbstractController
     )
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true, 'enable_password' => true]);
+        if ($type === 'recruiter') {
+            $user->setRoles(['ROLE_RECRUITER']);
+            $form = $this->createForm(RecruiterType::class, $user, ['is_personal' => true, 'by_admin' => true, 'enable_password' => true]);
+        } else if ($type === 'institution') {
+            $user->setRoles(['ROLE_INSTITUTION']);
+            $form = $this->createForm(InstitutionType::class, $user, ['is_personal' => true, 'by_admin' => true, 'enable_password' => true]);
+        } else {
+            $user->setRoles(['ROLE_USER']);
+            $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true, 'enable_password' => true]);
+        }
 
         $form->handleRequest($request);
 
@@ -324,7 +336,8 @@ class AdminController extends AbstractController
             'admin/edit_user.html.twig',
             [
                 'user' => $user,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'role' => $role
             ]
         );
     }
@@ -340,7 +353,12 @@ class AdminController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder
     )
     {
-        $form = $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true]);
+        if ($user->getRoles() !== null && in_array(User::ROLE_RECRUITER, $user->getRoles()))
+            $form = $this->createForm(RecruiterType::class, $user, ['is_personal' => true, 'by_admin' => true]);
+        else if ($user->getRoles() !== null && in_array(User::ROLE_INSTITUTION, $user->getRoles()))
+            $form = $this->createForm(InstitutionType::class, $user, ['is_personal' => true, 'by_admin' => true]);
+        else
+            $this->createForm(UserType::class, $user, ['is_personal' => true, 'by_admin' => true]);
 
         $form->handleRequest($request);
 

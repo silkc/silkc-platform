@@ -1,4 +1,12 @@
 <p class="text-right">
+    <a href="{{ path('admin_create_user', { type: 'recruiter' }) }}" class="btn btn-success">
+        <i class="fas fa-industry"></i>
+        {{ 'user.create_recruiter'|trans }}
+    </a>
+    <a href="{{ path('admin_create_user', { type: 'institution' }) }}" class="btn btn-success">
+        <i class="fas fa-school"></i>
+        {{ 'user.create_institution'|trans }}
+    </a>
     <a href="{{ path('admin_create_user') }}" class="btn btn-success">
         <i class="fas fa-user-plus"></i>
         {{ 'user.create_user'|trans }}

@@ -143,6 +143,8 @@ user:
   role_admin: admin
   role: Profil
   create_user: Créer un utilisateur
+  create_institution: Créer une institution
+  create_recruiter: Créer un recruteur
   edit_user_breadcrumb: Éditer %username%
 task:
   label:
