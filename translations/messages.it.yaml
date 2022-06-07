@@ -474,3 +474,4 @@ user_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:<br>Nome c
 institution_progress_tooltip: '<p class="text-left">Calcolo dello stato di avanzamento:<br>Nome: %username%<br>E-mail completata: %email%<br>Indirizzo completato: %address%<br>Homepage completata: %homepage% </ p>'
 recruiter_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:</p>'
 workuser: Lavori 
+workadmin: Lavori  

@@ -502,3 +502,4 @@ user_progress_tooltip: '<p class="text-left">Progress calculation:<br>Completed 
 institution_progress_tooltip: '<p class="text-left">Progress calculation:<br>Name: %username%<br>Completed email: %email%<br>Completed address: %address%<br>Completed homepage: %homepage% </p>'
 recruiter_progress_tooltip: '<p class="text-left">Progress calculation:</p>'
 workuser: Occupations 
+workadmin: Jobs  

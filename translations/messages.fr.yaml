@@ -475,3 +475,4 @@ user_progress_tooltip: '<p class="text-left">Calcul de progression:<br>Prénom r
 institution_progress_tooltip: '<p class="text-left">Calcul de progression:<br>Nom : %username%<br>Email renseigné: %email%<br>Adresse renseignée: %address%<br>Page accueil renseignée: %homepage%</p>'
 recruiter_progress_tooltip: '<p class="text-left">Calcul de progression:</p>'
 workuser: Postes 
+workadmin: Postes  
