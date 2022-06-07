@@ -474,3 +474,4 @@ clone_this_position: Cloner cette position
 user_progress_tooltip: '<p class="text-left">Calcul de progression:<br>Prénom reseigné : %firstname%<br>Nom renseigné: %lastname%<br>Email renseigné: %email%<br>Nom utilisateur renseigné: %username%<br>Adresse renseignée: %address%<br>Année de naissance renseignée: %dateOfBirth%</p>'
 institution_progress_tooltip: '<p class="text-left">Calcul de progression:<br>Nom : %username%<br>Email renseigné: %email%<br>Adresse renseignée: %address%<br>Page accueil renseignée: %homepage%</p>'
 recruiter_progress_tooltip: '<p class="text-left">Calcul de progression:</p>'
+workuser: Postes 

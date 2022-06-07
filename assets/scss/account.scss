@@ -380,3 +380,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     font-style: italic;
     display: block;
 }
+.roles_user {
+    position: absolute;
+    left: 99999px;
+    opacity: 0;
+}

@@ -59,14 +59,14 @@ label:
   months: Months
   months_filter: months
   is_visible: Is visible
-  listening_position: I'm open to a position
+  listening_position: I'm open to job offers
   up_to_distance: Up to
   save_and_validate: Save and validate
   professional_experience: Professional experience
   language: Language
   is_certified: Is certified
   is_free: Is free
-  position_occupation: Occupation related to the position
+  position_occupation: Occupation related to the vacancy
 placeholder:
   training_price: "Ex: 1000.00"
   duration_details: "Ex: Mondays and Tuesdays from 8 a.m. to 10 a.m."
@@ -239,7 +239,7 @@ no_item: No element
 esco: Select skills from the list below
 no_esco: Add more skills
 
-the_following_skills_have_been_calculated_based: The following skills list has been compiled based on your work experience and training history
+the_following_skills_have_been_calculated_based: The following skills list has been deducted on your occupations and training history
 see_more: See more
 other_skills: Add other skills that you feel are missing in the above list.
 other_skills_label: Select skill
@@ -501,3 +501,4 @@ clone_this_position: Clone this position
 user_progress_tooltip: '<p class="text-left">Progress calculation:<br>Completed first name: %firstname%<br>Completed name: %lastname%<br>Completed email: %email%<br>Completed user name: %username %<br>Entered address: %address%<br>Entered year of birth: %dateOfBirth%</p>'
 institution_progress_tooltip: '<p class="text-left">Progress calculation:<br>Name: %username%<br>Completed email: %email%<br>Completed address: %address%<br>Completed homepage: %homepage% </p>'
 recruiter_progress_tooltip: '<p class="text-left">Progress calculation:</p>'
+workuser: Occupations 

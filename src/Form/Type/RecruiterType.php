@@ -47,8 +47,8 @@ class RecruiterType extends AbstractType
                 'required'           => false,
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'label.roles',
-                'attr' => ["disabled" => "disabled"],
+                'label' => false,
+                'attr' => ["disabled" => "disabled", "class" => "roles_user"],
                 "disabled" => true,
                 'multiple' => true,
                 'expanded' => true,

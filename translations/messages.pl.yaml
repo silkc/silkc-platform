@@ -474,3 +474,4 @@ clone_this_position: Sklonuj tę pozycję
 user_progress_tooltip: '<p class="text-left">Obliczanie postępu:<br>Uzupełnione imię: %firstname%<br>Uzupełnione imię i nazwisko: %lastname%<br>Uzupełniony adres e-mail: %email%<br>Uzupełniony nazwa użytkownika: %username %<br>Wprowadzony adres: %address%<br>Wprowadzony rok urodzenia: %dateOfBirth%</p>'
 institution_progress_tooltip: '<p class="text-left">Obliczanie postępu:<br>Nazwa: %username%<br>Ukończony adres e-mail: %email%<br>Uzupełniony adres: %address%<br>Ukończony adres strony głównej: %homepage% </ p>'
 recruiter_progress_tooltip: '<p class="text-left">Obliczanie postępów:</p>'
+workuser: Stanowiska pracy 
