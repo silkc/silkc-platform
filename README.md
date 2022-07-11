@@ -1,10 +1,10 @@
 Requirements
 ============
 
- - Apache ^2.4.25
+ - Apache ^2.4
  - Linux Debian/Ubuntu
- - PHP ^7.4.14
- - MariaDB ^10.1.48
+ - PHP ^7.4.14 (PHP 8.* not supported yet)
+ - MariaDB ^10.1
  - composer
  - yarn
 
@@ -80,7 +80,14 @@ Import user profiles from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=UserImportFixtures --append --env dev
 
-** Start using SILKC **
+**Development environment**
+
+For development environments, make sure the following is present in the .env.local file:
+
+    APP_ENV=dev
+    APP_DEBUG=true
+
+**Start using SILKC**
 
 Load the application URL and login as admin/admin.
 If any error appears, make sure you apply the right permissions for var/log and var/cache as described above.
