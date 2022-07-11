@@ -11,11 +11,11 @@ Requirements
 # Installation Silk
 **Fetch git repository**
 
-    git clone https://github.com/TonyHaikara/silk-platform.git silk
+    git clone https://github.com/silkc/silkc-platform.git silkc
 
 **Move into Silk installation folder**
 
-    cd silk
+    cd silkc
 
 **Create and edit file .env.local**
 
@@ -57,11 +57,23 @@ Import institution profiles from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=InstitutionImportFixtures --append --env dev
 
-Import training from src/DataFixtures/JSON/xxx.json file
+Import training from src/DataFixtures/JSON/xxx.json file.
+Training data like startAt and endAt is date-checked in src/Entity/Training.php through `@Assert` clauses.
+To avoid validation issues while importing, we recommend removing the following lines in Training.php and 
+launching `composer install` to register those changes, before importing training and users (which can also
+contain training declarations).
+```
+# In $startAt declaration block (line ~255), remove
+     * @Assert\GreaterThan("today")
+# In $endAt declaration block (line ~263), remove
+     * @Assert\Expression("value == null or value > this.startAt", message="training_create_ent_at_have_to_be_greather_than_start_at")
+```
+You can then issue the import command:
 
     php bin/console doctrine:fixtures:load --group=TrainingImportFixtures --append --env dev
 
 To fetch or generate latitude and longitude for trainings with only location, run this url :
+
     https://mydomain.ext/api/cron/fetch_lat_and_long
 
 Import user profiles from src/DataFixtures/JSON/xxx.json file
