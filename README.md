@@ -26,7 +26,7 @@ Requirements
 
     composer install
 
-**Set folder rights**
+**Set folder permissions**
 
     chmod -R 777 var/log
     chmod -R 777 var/cache
@@ -80,3 +80,7 @@ Import user profiles from src/DataFixtures/JSON/xxx.json file
 
     php bin/console doctrine:fixtures:load --group=UserImportFixtures --append --env dev
 
+** Start using SILKC **
+
+Load the application URL and login as admin/admin.
+If any error appears, make sure you apply the right permissions for var/log and var/cache as described above.
