@@ -8,7 +8,7 @@ Requirements
  - composer
  - yarn
 
-# Installation Silk
+# Silkc platform installation
 **Fetch git repository**
 
     git clone https://github.com/silkc/silkc-platform.git silkc
