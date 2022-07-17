@@ -1,4 +1,6 @@
-# Add
+# Add support for a new language
+
+This page describes the procedure to add support for a new language, including importing the database of skills and occupations from the ESCO framework.
 
 **On the resource files download page ESCO : https://ec.europa.eu/esco/portal/download**
 
