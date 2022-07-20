@@ -7,6 +7,7 @@ parameters:
     router.request_context.scheme: '%env(SECURE_SCHEME)%'
     asset.request_context.secure: '%env(SECURE)%'
 
+    app.external_search_is_active: '%env(EXTERNAL_SEARCH_IS_ACTIVE)%'
     app.supported_locales: ['en', 'it', 'fr', 'pl']
 
 services:
