@@ -150,6 +150,7 @@ class HomeController extends AbstractController
     {
         $locale = $request->getLocale();
         $user = $this->getUser();
+        $isExternalSearch = $this->getParameter('app.external_search_is_active') == 'true';
         $type_search = ($type) ? $type : $request->get('type_search'); // Type de recherche (occupation ou skill)
         $occupation_id = ($id) ? $id : $request->get('hidden_training_search_by_occupation');
         $skill_id = ($id) ? $id :$request->get('hidden_training_search_by_skill');
