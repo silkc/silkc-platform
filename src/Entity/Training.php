@@ -252,7 +252,6 @@ class Training
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type("datetime")
-     * @Assert\GreaterThan("today")
      * @Groups({"training:read", "training:write"})
      */
     public $startAt;

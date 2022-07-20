@@ -69,6 +69,7 @@ class OccupationRepository extends ServiceEntityRepository
                 LEFT JOIN occupation_translation AS ot 
                 ON ot.occupation_id = o.id AND ot.locale = :locale
                 GROUP BY o.id
+                ORDER BY o.preferred_label ASC
             ", $rsm)
             ->setParameter('locale', $locale);
 
