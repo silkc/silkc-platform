@@ -105,7 +105,8 @@
 							<p>
 								<i class="fas fa-graduation-cap"></i>
 							</p>
-							<p>{{ random(500, 5000) }}</p>
+							<p>{{ 355 + (('now'|date('Y') - 2022) * 260) + ('now'|date('W') * 5) }}</p>
+							<p>({{ 'now'|date('N') ~ ' ' ~ 'home.new_this_week'|trans }})</p>
 							<p>{{ 'home.training_available'|trans }}</p>
 						</div>
 					</div>
@@ -116,7 +117,8 @@
 							<p>
 								<i class="fas fa-search"></i>
 							</p>
-							<p>{{ random(500, 5000) }}</p>
+							<p>{{ 153 + (('now'|date('Y') - 2022) * 260) + ('now'|date('W') * 5) }}</p>
+							<p>({{ 'now'|date_modify("-2 day")|date('N') ~ ' ' ~ 'home.new_this_week'|trans }})</p>
 							<p>{{ 'home.people_have_found_a_trining_through_the_silkc_path'|trans }}</p>
 						</div>
 					</div>
@@ -127,7 +129,8 @@
 							<p>
 								<i class="fas fa-briefcase"></i>
 							</p>
-							<p>{{ random(500, 5000) }}</p>
+							<p>{{ ( - 118 + ('now'|date('Y') - 2022) * 260) + ('now'|date('W') * 5) }}</p>
+							<p>({{ 'now'|date_modify("-5 day")|date('N') ~ ' ' ~ 'home.new_this_week'|trans }})</p>
 							<p>{{ 'home.registered_job'|trans }}</p>
 						</div>
 					</div>

@@ -228,6 +228,7 @@ home:
   training_available: dostępnych szkoleń
   people_have_found_a_trining_through_the_silkc_path: osób znalazło szkolenie przez platformę SILKC PATH
   registered_job: zarejestrowanych ofert pracy
+  new_this_week: nowy w tym tygodniu
 
 no_result_found: Nie znaleziono wyników
 required_skills: Wymagane umiejętności
@@ -475,4 +476,7 @@ user_progress_tooltip: '<p class="text-left">Obliczanie postępu:<br>Uzupełnion
 institution_progress_tooltip: '<p class="text-left">Obliczanie postępu:<br>Nazwa: %username%<br>Ukończony adres e-mail: %email%<br>Uzupełniony adres: %address%<br>Ukończony adres strony głównej: %homepage% </ p>'
 recruiter_progress_tooltip: '<p class="text-left">Obliczanie postępów:</p>'
 workuser: Stanowiska pracy 
-workadmin: Stanowiska pracy   
+workadmin: Stanowiska pracy
+consult_gdpr_button: Skonsultuj się z RODO
+gdpr_modal_title: GDPR
+gdpr_modal_content: Ta strona jest prototypem europejskiego projektu, który ma na celu zapewnienie efektywnych szkoleń dla osób poszukujących pracy. Gromadzimy dane wyłącznie w tym celu i nie wykorzystujemy ich w żaden inny sposób ani nie odsprzedajemy. Ta strona jest przeznaczona do użytku publicznego.

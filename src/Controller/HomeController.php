@@ -136,8 +136,8 @@ class HomeController extends AbstractController
      * @Route("/{_locale<en|fr|pl|it>?en}/search_results/{type}/{id}", name="search_results", requirements={"id"="\d+"})
      */
     public function searchResults(
-        $type = null,
-        $id = null,
+        ?string $type = null,
+        ?int $id = null,
         Request $request,
         OccupationRepository $occupationRepository,
         TrainingRepository $trainingRepository,

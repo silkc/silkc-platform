@@ -226,6 +226,7 @@ home:
   training_available: formazione disponibile
   people_have_found_a_trining_through_the_silkc_path: le persone hanno trovato una formazione attraverso la piattaforma SILKC
   registered_job: lavori registrati
+  new_this_week: nuovo questa settimana
 
 no_result_found: nessun risultato trovato
 required_skills: Competenze richieste
@@ -474,4 +475,7 @@ user_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:<br>Nome c
 institution_progress_tooltip: '<p class="text-left">Calcolo dello stato di avanzamento:<br>Nome: %username%<br>E-mail completata: %email%<br>Indirizzo completato: %address%<br>Homepage completata: %homepage% </ p>'
 recruiter_progress_tooltip: '<p class="text-left">Calcolo dell avanzamento:</p>'
 workuser: Lavori 
-workadmin: Lavori  
+workadmin: Lavori
+consult_gdpr_button: Consulta GDPR
+gdpr_modal_title: GDPR
+gdpr_modal_content: Questo sito è un prototipo per un progetto europeo che mira a fornire una formazione efficiente per le persone in cerca di lavoro. Raccogliamo i dati solo per questo scopo e non li utilizziamo in nessun altro modo di alcun tipo né li rivendiamo. Questo sito è di pubblica utilità.

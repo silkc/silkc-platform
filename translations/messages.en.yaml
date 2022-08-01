@@ -230,6 +230,7 @@ home:
   training_available: training available
   people_have_found_a_trining_through_the_silkc_path: people have found a training through SILKC platform
   registered_job: registered jobs
+  new_this_week: new this week
 
 no_result_found: No result found
 required_skills: Required skills
@@ -488,7 +489,7 @@ current_trainings: Current trainings
 outdated_trainings: Outdated trainings
 consult_gdpr_button: Consult GDPR
 gdpr_modal_title: GDPR
-gdpr_modal_content: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+gdpr_modal_content: This site is a prototype for a european project that aims to provide efficient trainings for people looking for a job. We only collect data for this purpose and don't use it in any other way of any kind nor we resale it. This site is for public utility.
 delete_my_account_button: Remove my account
 your_account_will_be_deleted: Your account will be deleted
 btn_confirm_deletion: Confirm deletion
