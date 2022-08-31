@@ -44,10 +44,11 @@ Requirements
 
 **Load fixtures data**
 
-Loading fixtures will create 3 user accounts:
+Loading fixtures will create 4 user accounts:
 - Admin role: admin/admin
 - Final user role: user/user
 - Institution role: institution/institution
+- Recruiter role: recruiter/recruiter
 
 These accounts *must* be secured later on by changing their password or removing them. The admin account must not be removed.
 
